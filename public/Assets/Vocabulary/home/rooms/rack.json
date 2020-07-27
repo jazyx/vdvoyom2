@@ -1,0 +1,208 @@
+{
+	"set": {
+		"tag": "rooms",
+		"name": {
+			"en": "Rooms",
+			"fr": "Pièces",
+			"ru": "Kомнаты"
+		},
+		"icon": {
+			"src": "/Assets/Vocabulary/home/rooms/icon.jpg"
+		},
+		"parent": "/Vocabulary/home",
+		"path": "/Vocabulary/home/rooms",
+		"_id": "q4hcocXChZ2uXXhea"
+	},
+	"phrases": [
+		{
+			"name": "balcony",
+			"phrase": {
+				"en": "balcony",
+				"fr": "un balcon",
+				"ru": "балкон"
+			},
+			"tags": [
+				"outside",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/balcony.jpg",
+					"size": 56441
+				}
+			],
+			"_id": "i7PeQhmrrZA9NZTYF"
+		},
+		{
+			"name": "bedroom",
+			"phrase": {
+				"en": "bedroom",
+				"fr": "une chambre",
+				"ru": "спальная комната"
+			},
+			"tags": [
+				"bedroom",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/bedroom.jpg",
+					"size": 49345
+				}
+			],
+			"_id": "MJ8KLJBgH9vBZ24b7"
+		},
+		{
+			"name": "garden",
+			"phrase": {
+				"en": "garden",
+				"fr": "un jardin",
+				"ru": "сад"
+			},
+			"tags": [
+				"outside",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/garden.jpg",
+					"size": 49652
+				}
+			],
+			"_id": "sAwHfscYJaacaQ68T"
+		},
+		{
+			"name": "kitchen",
+			"phrase": {
+				"en": "kitchen",
+				"fr": "une cuisine",
+				"ru": "кухня"
+			},
+			"tags": [
+				"kitchen",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/kitchen.jpg",
+					"size": 49737
+				}
+			],
+			"_id": "fgfyCn7MEBjpz7DHR"
+		},
+		{
+			"name": "living_room",
+			"phrase": {
+				"en": "living_room",
+				"fr": "un salon",
+				"ru": "гостиная"
+			},
+			"tags": [
+				"living_room",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/living_room.jpg",
+					"size": 49472
+				}
+			],
+			"_id": "oCjxrmunk7tKAgFc6"
+		},
+		{
+			"name": "bathroom",
+			"phrase": {
+				"en": "bathroom",
+				"fr": "une salle_de_bains",
+				"ru": "ванная"
+			},
+			"tags": [
+				"bathroom",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/bathroom.jpg",
+					"size": 95749
+				}
+			],
+			"_id": "bnnxEk58qXioDzk68"
+		},
+		{
+			"name": "dining_room",
+			"phrase": {
+				"en": "dining room",
+				"fr": "une salle_à_manger",
+				"ru": "столовая"
+			},
+			"tags": [
+				"dining_room",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/dining_room.jpg",
+					"size": 99774
+				}
+			],
+			"_id": "SPQy48q4fhPcB4iMq"
+		},
+		{
+			"name": "entrance",
+			"phrase": {
+				"en": "entrance",
+				"fr": "une entrée",
+				"ru": "вход"
+			},
+			"tags": [
+				"entrance",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/entrance.jpg",
+					"size": 93272
+				}
+			],
+			"_id": "cehArrpTn2u5Jt3tQ"
+		},
+		{
+			"name": "pantry",
+			"phrase": {
+				"en": "pantry",
+				"fr": "un garde-manger",
+				"ru": "кладовая"
+			},
+			"tags": [
+				"pantry",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/pantry.jpg",
+					"size": 168663
+				}
+			],
+			"_id": "GcwZgxQGZaSioa6hL"
+		},
+		{
+			"name": "staircase",
+			"phrase": {
+				"en": "staircase",
+				"fr": "un escalier",
+				"ru": "лестница"
+			},
+			"tags": [
+				"staircase",
+				"rooms"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/rooms/image/staircase.jpg",
+					"size": 97281
+				}
+			],
+			"_id": "5asCwKYa6DkHXhvrp"
+		}
+	]
+}

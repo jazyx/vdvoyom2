@@ -1,0 +1,53 @@
+
+{ "collection": "Teacher"
+
+, "as_is": {
+    "folder": "img/teachers/"
+  , "version": 4
+  }
+
+, "script": [
+    { "lang": "ru"
+    , "script": "cyrl"
+    }
+  , { "lang": "en"
+    , "script": "latn"
+    }
+  , { "lang": "fr"
+    , "script": "latn"
+    }
+  ]
+
+, "profile": [
+    { "file": "aa.jpg"
+    , "id": "aa"
+    , "name": {
+         "cyrl": "Анастасия"
+       , "latn": "Anastacia"
+       }
+    , "with": "Учить русский с Анастасией"
+    , "language": "ru"
+    , "script": "cyrl"
+    }
+  , { "file": "jn.jpg"
+    , "id": "jn"
+    , "name": {
+         "latn": "James"
+       , "cyrl": "Джеймс"
+       }
+    , "with": "Learn English with James"
+    , "language": "en-GB"
+    , "script": "latn"
+    }
+  , { "file": "ml.jpg"
+    , "id": "ml"
+    , "name": {
+         "latn": "Michaël"
+       , "cyrl": "Михаэль"
+       }
+    , "with": "Apprendre le français avec Michaël"
+    , "language": "fr"
+    , "script": "latn"
+    }
+  ]
+}

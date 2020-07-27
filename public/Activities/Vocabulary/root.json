@@ -1,0 +1,18 @@
+{
+	"name": {
+		"en": "Vocabulary",
+		"fr": "Vocabulaire",
+		"ru": "Словарь"
+	},
+	"description": {
+		"en": "A variety of activities to discover and acquire new words and phrases",
+		"fr": "Une gamme d'activités pour découvrir et acquerir de nouveaux mots et phrase",
+		"ru": "Разнообразные виды деятельности, чтобы открыть и приобрести новые слова и фразы"
+	},
+	"path": "/Vocabulary",
+	"modal": false,
+	"icon": {
+		"src": "/Activities/Vocabulary/icon.jpg"
+	},
+	"_id": "NAxwwTGYpfkpzRGxL"
+}

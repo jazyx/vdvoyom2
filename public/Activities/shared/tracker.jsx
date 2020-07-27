@@ -1,0 +1,177 @@
+/**
+ * /public/activities/shared/tracker.jsx
+ */
+
+
+
+import { Session } from 'meteor/session'
+
+import { getLocalized } from '/imports/tools/generic/utilities'
+
+import collections from '/imports/api/collections/publisher'
+const { Group, UIText } = collections
+
+
+
+export default class Tracker{
+  constructor(uiTextSelector = { _id: { $exists: false } }) {
+    this.uiTextSelector = uiTextSelector
+    this.getLocalizedItem = this.getLocalizedItem.bind(this)
+  }
+
+
+  getProps(collection) {
+    let items
+
+    const code = this.code = Session.get("language")
+    const d_code = Session.get("d_code")
+    const user_id = Session.get("user_id")
+    const group_id = Session.get("group_id")
+
+    const uiText = this.getUIText()
+    const { page, logged_in } = this.getGroupData(group_id)
+    const { path, data, tag } = page
+
+    const isMaster = Array.isArray(logged_in) && logged_in.length
+                   ? logged_in[0] === d_code
+                   : false
+
+    if (isMaster) {
+      items = this.getItems(collection, tag)
+    }
+
+    const props = {
+      code
+    , d_code
+    , user_id
+    , group_id
+    , logged_in // used by Drag to tell if pilot is still online
+    , uiText
+    , path
+    , tag
+    , data
+    , isMaster
+    // items will be undefined if isMaster is false
+    , items
+    }
+
+    this.addCustomProps(props) // may be overwritten in child instance
+
+    return props
+  }
+
+
+  getUIText() {
+    const uiText = UIText.find(this.uiTextSelector).fetch()
+                         .reduce(( map, data ) => {
+                           const cue = data.cue
+                           const phrase = getLocalized(data,this.code)
+                           map[cue] = phrase
+
+                           return map
+                         }, {})
+    /* {
+     *   "_id" : "j5K9JpMQRwnzfNRCA",
+     *   "cue" : "congratulations",
+     *   "ru" : "Отлично!",
+     *   "en" : "Congratulations!",
+     *   "fr" : "Félicitations!",
+     *   "type" : "phrase",
+     *   "version" : 10
+     * }
+     * {
+     *   "_id" : "hGMwPzYBsTe8mvtiW",
+     *   "cue" : "play_again",
+     *   "ru" : "Ещё раз играть",
+     *   "en" : "Play Again",
+     *   "fr" : "Rejouer",
+     *   "type" : "phrase",
+     *   "version" : 10
+     * }
+     * =>
+     * { "congratulations": "Отлично!"
+     * , "play_again":      "Ещё раз играть"
+     * }
+     */
+
+    return uiText
+  }
+
+
+  getGroupData(_id) {
+    const groupSelect = { _id }
+    let options = {
+      fields: {
+        page: 1
+      , logged_in: 1
+      }
+    }
+    const groupData = Group.findOne(groupSelect, options)
+    return groupData
+  }
+
+
+  getItems(collection, tags) {
+    let select
+    if (typeof tags === "string") {
+      select = { tags }
+    } else {
+      tags = tags.map( tag => ({ tags: tag } ) )
+      // [ "tag", ...] => [ { tags: "tag" }, ...]
+      select  = { $or: tags }
+    }
+
+    // TODO: Allow tags to be an object selecter
+
+    let items = collection.find(select).fetch()
+
+    // console.log( "items:", items
+    //            , "db." + collection._name + ".find("
+    //            + JSON.stringify(select)
+    //            + ")"
+    //            )
+
+    items = items.map(this.getLocalizedItem)
+
+    return items
+  }
+
+
+  getLocalizedItem(document) {
+    const item = { _id: document._id }
+
+    let image
+      , audio
+
+    let phrase = document.phrase
+    if (typeof phrase === "object") {
+      phrase = getLocalized(phrase, this.code)
+    }
+    if (typeof phrase === "string") {
+      item.phrase = phrase
+    }
+
+     // TODO: allow various images
+    if (Array.isArray(document.image)) {
+      image = document.image[0]
+      if (typeof image === "object") {
+        image = image.src
+      }
+    } else {
+      image = document.image
+    }
+
+    if (typeof image === "string") {
+      item.image = image
+    }
+
+    // TODO: Find localized audio
+
+    return item
+  }
+
+
+  addCustomProps(props) {
+    // Overwrite this method in child instance
+  }
+}

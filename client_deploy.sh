@@ -1,0 +1,1 @@
+/home/blackslate/Repos/jazyx/Activities/tests/deploy/Client/Place in root directory on client/client_deploy.sh

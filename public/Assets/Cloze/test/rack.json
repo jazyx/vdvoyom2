@@ -1,0 +1,110 @@
+{
+	"set": {
+		"name": {
+			"en": "Test",
+			"ru": "Тест",
+			"fr": "Test"
+		},
+		"tag": "Cloze",
+		"icon": {
+			"icons": [
+				"en.jpg",
+				"fr.jpg",
+				"ru.jpg"
+			],
+			"src": "/Assets/Cloze/test/icon/^0"
+		},
+		"path": "/Cloze/test",
+		"parent": "/Cloze",
+		"_id": "fe94TYNmQy3NB3Y9L"
+	},
+	"phrases": [
+		{
+			"name": "wakeup",
+			"phrase": {
+				"en": "Good morning, did you sleep _well?",
+				"ru": "Доброе утро, ты _хорошо спала?",
+				"fr": "Bonjour! As-tu _bien dormi ?"
+			},
+			"image": [
+				{
+					"src": "/Assets/Cloze/test/image/wakeup.jpg",
+					"size": 131822
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "xtbjKwBSoQnrMNZXW"
+		},
+		{
+			"name": "bacon&eggs",
+			"phrase": {
+				"en": "Bacon and eggs for _breakfast",
+				"ru": "Бекон и яйца на _завтрак",
+				"fr": "Des oeufs aux bacon pour le _petit-déjeuner"
+			},
+			"image": [
+				{
+					"src": "/Assets/Cloze/test/image/bacon&eggs.jpg",
+					"size": 191506
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "WqKJhoQdNpzzpqra7"
+		},
+		{
+			"name": "clock",
+			"phrase": {
+				"en": "It's three o'_clock",
+				"ru": "Сейчас три _часа",
+				"fr": "Il est trois _heures"
+			},
+			"image": [
+				{
+					"src": "/activities/shared/clock.jpg"
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "r3NnA8jSkQ3QhCRhT"
+		},
+		{
+			"name": "soup",
+			"phrase": {
+				"en": "a bowl of _soup",
+				"ru": "тарелка _супа",
+				"fr": "un bol de _soupe"
+			},
+			"image": [
+				{
+					"src": "/activities/shared/soup.jpg"
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "s6zHW2iddLk4PGXGv"
+		},
+		{
+			"name": "bread",
+			"phrase": {
+				"en": "bread",
+				"ru": "хлеб",
+				"fr": "du _pain"
+			},
+			"image": [
+				{
+					"src": "/activities/shared/bread.jpg"
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "6e2Z2ChC3Tq6Kfs2k"
+		}
+	]
+}

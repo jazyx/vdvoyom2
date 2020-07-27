@@ -1,0 +1,29 @@
+{
+  "name": "Drag",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "bcrypt": "^4.0.1",
+    "meteor-node-stubs": "^1.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "simpl-schema": "^1.8.0",
+    "styled-components": "^5.1.1"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.jsx",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
+}

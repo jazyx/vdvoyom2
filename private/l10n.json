@@ -1,0 +1,267 @@
+{ "collection": "UIText"
+
+, "as_is": {
+    "version": 11
+  , "folder": "img/flags/"
+  }
+
+, "phrase": [
+    { "cue": "native_language"
+    , "ru": "Выберите_свой родной_язык"
+    , "en": "Select_your native_language"
+    , "fr": "Choisissez_votre langue_maternelle"
+    }
+  , { "cue": "choose_language"
+    , "ru": "Выбрать руский_язык"
+    , "en-GB": "Select British English"
+    , "en-US": "Select American English"
+    , "fr": "Choisir le français"
+    }
+  , { "cue": "enter_name"
+    , "ru": "Введите ваше имя"
+    , "en": "Enter your name"
+    , "fr": "Saisissez votre nom"
+    }
+  , { "cue": "username"
+    , "ru": "Имя пользователя"
+    , "en": "Username"
+    , "fr": "Nom d'utilisateur"
+    }
+  , { "cue": "next"
+    , "ru": "ок"
+    , "en": "Next"
+    , "fr": "Suivant"
+    }
+  , { "cue": "ok"
+    , "ru": "ок"
+    , "en": "ok"
+    , "fr": "Confirmer"
+    }
+  , { "cue": "time_out << COPY_TO_TimeOut.jsx >>"
+    , "ru": "Нет соединения"
+    , "en": "No connection"
+    , "fr": "Pas de connexion"
+    }
+  , { "cue": "which_language"
+    , "ru": "На_каком_языке Вы_учитеся?"
+    , "en": "What_language are_you_learning?"
+    , "fr": "Quelle_langue apprenez‑vous ?"
+    }
+  , { "cue": "choose_teacher"
+    , "ru": "Выберите своего_учителя"
+    , "en": "Choose your_teacher"
+    , "fr": "Choisissez votre_professeur"
+    }
+  , { "cue": "solo"
+    , "ru": "Учись самостоятельно"
+    , "en": "Learn_on your_own"
+    , "fr": "Apprendre seul(e)"
+    }
+  , { "cue": "saving"
+    , "ru": "Сохранение..."
+    , "en": "Saving..."
+    , "fr": "Sauvegarde en_cours..."
+    }
+  , { "cue": "save_successful"
+    , "ru": "Успех! Ваши_данные были_сохранены."
+    , "en": "Success! Your_data have_been_saved."
+    , "fr": "Succès! Vos_données ont_été_sauvegardées."
+    }
+  , { "cue": "save_not_stored"
+    , "ru": "Ваши_данные были_сохранены на сервере"
+    , "en": "Data_not_saved to_localStorage"
+    , "fr": "Une sauvegarde locale a échoué"
+    }
+  , { "cue": "stored_only"
+    , "ru": "Ваши_данные были_сохранены на вашем устройстве"
+    , "en": "Data saved to_localStorage only"
+    , "fr": "Une sauvegarde sur le serveur a échoué"
+    }
+  , { "cue": "save_failed"
+    , "ru": "Ваши_данные не_были_сохранены"
+    , "en": "Data_not_saved"
+    , "fr": "La sauvegarde a échoué"
+    }
+
+  , { "cue": "remember_pin"
+    , "ru": "Запомните этот PIN-код:"
+    , "en": "Remember this PIN Code:"
+    , "fr": "Garder ce code PIN en mémoire:"
+    }
+  , { "cue": "pin_reason"
+    , "ru": "Вас могут попросить об этом при входе в систему."
+    , "en": "You might be asked for it when you log in."
+    , "fr": "Il peut vous être demandé lors de votre connexion."
+    }
+  , { "cue": "pin_memorized"
+    , "ru": "ПИН-код запомнен"
+    , "en": "PIN_memorized"
+    , "fr": "Code PIN_mémorisé"
+    }
+  , { "cue": "confirm_pin"
+    , "ru": "Введите свой PIN-код, чтобы показать, что вы его помните:"
+    , "en": "Enter your PIN code, to show that you remember it:"
+    , "fr": "Saisissez votre code PIN pour montrer que vous vous en souvenez:"
+    }
+  , { "cue": "review_pin"
+    , "ru": "(Нажмите стрелку назад, чтобы снова увидеть ваш PIN-код)"
+    , "en": "(Press the back arrow to see your PIN code again)"
+    , "fr": "(Appuyer sur la flèche de retour pour revoir votre code PIN)"
+    }
+  , { "cue": "save_details"
+    , "ru": "Сохранить данные своей учетной записи на этом устройстве?"
+    , "en": "Remember your account details on this device?"
+    , "fr": "Enregistrer les détails de votre compte sur cet appareil?"
+    }
+  , { "cue": "enter_pin"
+    , "ru": "Если у вас есть PIN-код, введите его здесь:"
+    , "en": "If you have a PIN Code, enter it here:"
+    , "fr": "Si vous avez un code PIN, saissisez-le:"
+    }
+  , { "cue": "wrong_pin"
+    , "ru": "Неверный PIN-код."
+    , "en": "Invalid PIN."
+    , "fr": "PIN_code non valable."
+    }
+  , { "cue": "no_pin"
+    , "ru": "Если нет, пожалуйста, нажмите Создать_новый_аккаунт."
+    , "en": "If not, please press Create_New_Account."
+    , "fr": "Sinon, appuyer sur Créer_un_nouveau_compte."
+    }
+  , { "cue": "create_account"
+    , "ru": "Создать новый аккаунт"
+    , "en": "Create New Account"
+    , "fr": "Créez un nouveau compte"
+    }
+  , { "cue": "log_in"
+    , "ru": {
+        "simple": "Войти"
+      , "replace": "Войти как ^0"
+      }
+    , "en": {
+        "simple": "Log In"
+      , "replace": "Log in as ^0"
+      }
+    , "fr": {
+        "simple": "Connexion"
+      , "replace": "Connectez-vous en tant que ^0"
+      }
+    }
+  , { "cue": "preferences"
+    , "ru": "Предпочтения"
+    , "en": "Preferences"
+    , "fr": "Préférences"
+    }
+  , { "cue": "auto_login"
+    , "ru": "Входить автоматически в будущем?"
+    , "en": "Log in automatically in the future?"
+    , "fr": "Se connecter automatiquement à l'avenir?"
+    }
+  , { "cue": "resume"
+    , "ru": "Продолжайте с того места, где вы остановились"
+    , "en": "Continue from where you left off"
+    , "fr": "Continuer la session précédente"
+    }
+  , { "cue": "dashboard"
+    , "ru": "Запускай каждый раз с своей панели"
+    , "en": "Start each time from your dashboard"
+    , "fr": "Commencez à chaque fois depuis votre tableau de bord"
+    }
+
+  , { "cue": "activity"
+    , "ru": "Деятельности"
+    , "en": "Activities"
+    , "fr": "Les activités"
+    }
+  , { "cue": "start"
+    , "ru": "Начать"
+    , "en": "Start"
+    , "fr": "Démarrer"
+    }
+  , { "cue": "select_students"
+    , "ru": "Выбор студентов"
+    , "en": "Select students"
+    , "fr": "Choix des élèves"
+    }
+  , { "cue": "share"
+    , "ru":  "Поделиться"
+    , "en": {
+        "simple": "Share"
+      , "replace": "Share with ^0"
+      }
+    , "fr": {
+        "simple": "Partager"
+      , "replace": "Partager avec ^0"
+      }
+    }
+  , { "cue": "congratulations"
+    , "ru":  "Отлично!"
+    , "en": "Congratulations!"
+    , "fr": "Félicitations!"
+    }
+  , { "cue": "play_again"
+    , "ru":  "Ещё раз играть"
+    , "en": "Play Again"
+    , "fr": "Rejouer"
+    }
+
+  , { "cue": "ru"
+    , "ru": "Русский"
+    , "en-GB": "Russian"
+    , "en-US": "Russian"
+    , "fr": "Russe"
+    , "file": "ru.png"
+    }
+  , { "cue": "fr"
+    , "ru": "Французский"
+    , "en-GB": "French"
+    , "en-US": "French"
+    , "fr": "Français"
+    , "file": "fr.png"
+    }
+  , { "cue": "en-GB"
+    , "ru": "Английский"
+    , "en-GB": "English"
+    , "en-US": "English"
+    , "fr": "Anglais"
+    , "file": "en-GB.png"
+    }
+  , { "cue": "en-US"
+    , "ru": "Американский"
+    , "en": "American English"
+    , "fr": "Anglais des EU"
+    , "file": "en-US.png"
+    }
+
+  , { "cue": "log_out"
+    , "ru": "Выйти"
+    , "en": "Log out"
+    , "fr": "Déconnexion"
+    , "icon": "/img/icons/logout.svg"
+    }
+  , { "cue": "change_course"
+    , "ru": "Выбрать курс"
+    , "en": "Choose course"
+    , "fr": "Choisir un cours"
+    , "icon": "/img/icons/course.png"
+    }
+  , { "cue": "change_interface_language"
+    , "ru": "Выбрать язык_интерфейса"
+    , "en": "Set interface language"
+    , "fr": "Choisir la langue de_l'interface"
+    , "icon": "/img/icons/globe.svg"
+    }
+  , { "cue": "view_pincode"
+    , "ru": "Видеть PIN-код"
+    , "en": "Show PIN code"
+    , "fr": "Afficher le code_PIN"
+    , "icon": "/img/icons/pincode.png"
+    }
+  , { "cue": "all_activities"
+    , "ru": "Всё деятельности"
+    , "en": "All activities"
+    , "fr": "Toutes les activités"
+    , "icon": "/img/icons/pincode.png"
+    }
+  ]
+}

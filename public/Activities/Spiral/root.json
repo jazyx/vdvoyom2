@@ -1,0 +1,18 @@
+{
+	"name": {
+		"en": "Spiral",
+		"fr": "Spirale",
+		"ru": "Спираль"
+	},
+	"description": {
+		"en": "Pictures to stimulate a conversation",
+		"fr": "Des images pour stimuler une discussion",
+		"ru": "Изображения для стимулирования разговора"
+	},
+	"path": "/Spiral",
+	"modal": false,
+	"icon": {
+		"src": "/Activities/Spiral/icon.jpg"
+	},
+	"_id": "e3kE8K7SsLCwQpYpp"
+}
