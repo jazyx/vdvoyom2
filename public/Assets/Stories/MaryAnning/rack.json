@@ -7,10 +7,10 @@
 			"ru": "Мэри Эннинг"
 		},
 		"icon": {
-			"src": "/Assets/Spiral/MaryAnning/icon.jpg"
+			"src": "/Assets/Stories/MaryAnning/icon.jpg"
 		},
-		"parent": "/Spiral",
-		"path": "/Spiral/MaryAnning",
+		"parent": "/Stories",
+		"path": "/Stories/MaryAnning",
 		"_id": "6t2GALbA9Lzg69reu"
 	},
 	"phrases": [
@@ -18,7 +18,7 @@
 			"name": "00_Mary",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/00_Mary.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/00_Mary.jpg",
 					"size": 99795
 				}
 			],
@@ -31,7 +31,7 @@
 			"name": "01_furniture",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/01_furniture.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/01_furniture.jpg",
 					"size": 99107
 				}
 			],
@@ -44,7 +44,7 @@
 			"name": "02_Europe",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/02_Europe.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/02_Europe.jpg",
 					"size": 96830
 				}
 			],
@@ -57,7 +57,7 @@
 			"name": "03_UK",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/03_UK.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/03_UK.jpg",
 					"size": 198397
 				}
 			],
@@ -70,7 +70,7 @@
 			"name": "04_beach",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/04_beach.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/04_beach.jpg",
 					"size": 98940
 				}
 			],
@@ -83,7 +83,7 @@
 			"name": "05_LymeRegis",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/05_LymeRegis.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/05_LymeRegis.jpg",
 					"size": 148405
 				}
 			],
@@ -96,7 +96,7 @@
 			"name": "06_snakeStones",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/06_snakeStones.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/06_snakeStones.jpg",
 					"size": 148703
 				}
 			],
@@ -109,7 +109,7 @@
 			"name": "07_ichthyosaurvertebrae",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/07_ichthyosaurvertebrae.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/07_ichthyosaurvertebrae.jpg",
 					"size": 47391
 				}
 			],
@@ -122,7 +122,7 @@
 			"name": "07_ladyFingers",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/07_ladyFingers.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/07_ladyFingers.jpg",
 					"size": 149137
 				}
 			],
@@ -135,7 +135,7 @@
 			"name": "08_devilsToenails",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/08_devilsToenails.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/08_devilsToenails.jpg",
 					"size": 99782
 				}
 			],
@@ -148,7 +148,7 @@
 			"name": "09_house",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/09_house.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/09_house.jpg",
 					"size": 99362
 				}
 			],
@@ -161,7 +161,7 @@
 			"name": "10_table",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/10_table.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/10_table.jpg",
 					"size": 78274
 				}
 			],
@@ -174,7 +174,7 @@
 			"name": "11_icthyosaurJ",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/11_icthyosaurJ.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/11_icthyosaurJ.jpg",
 					"size": 47195
 				}
 			],
@@ -187,7 +187,7 @@
 			"name": "12_tray",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/12_tray.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/12_tray.jpg",
 					"size": 100007
 				}
 			],
@@ -200,7 +200,7 @@
 			"name": "13_icthyosaurA",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/13_icthyosaurA.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/13_icthyosaurA.jpg",
 					"size": 96876
 				}
 			],
@@ -213,7 +213,7 @@
 			"name": "14_stamp",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/14_stamp.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/14_stamp.jpg",
 					"size": 98976
 				}
 			],
@@ -226,7 +226,7 @@
 			"name": "15_drawing",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/15_drawing.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/15_drawing.jpg",
 					"size": 96396
 				}
 			],
@@ -239,7 +239,7 @@
 			"name": "16_plipli",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/16_plipli.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/16_plipli.jpg",
 					"size": 73863
 				}
 			],
@@ -252,7 +252,7 @@
 			"name": "17_belemnite",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/17_belemnite.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/17_belemnite.jpg",
 					"size": 98624
 				}
 			],
@@ -265,7 +265,7 @@
 			"name": "18_Dapedium",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/18_Dapedium.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/18_Dapedium.jpg",
 					"size": 60382
 				}
 			],
@@ -278,7 +278,7 @@
 			"name": "19_dimorphodon",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/19_dimorphodon.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/19_dimorphodon.jpg",
 					"size": 34616
 				}
 			],
@@ -291,7 +291,7 @@
 			"name": "20_Pterosaur",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/20_Pterosaur.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/20_Pterosaur.jpg",
 					"size": 98162
 				}
 			],
@@ -304,7 +304,7 @@
 			"name": "21_Squaloraja",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/21_Squaloraja.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/21_Squaloraja.jpg",
 					"size": 94659
 				}
 			],
@@ -317,7 +317,7 @@
 			"name": "22_fossilShop",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/22_fossilShop.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/22_fossilShop.jpg",
 					"size": 188877
 				}
 			],
@@ -330,7 +330,7 @@
 			"name": "23_MaryAnning",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/23_MaryAnning.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/23_MaryAnning.jpg",
 					"size": 97759
 				}
 			],
@@ -343,7 +343,7 @@
 			"name": "24_AmelieRosser",
 			"image": [
 				{
-					"src": "/Assets/Spiral/MaryAnning/image/24_AmelieRosser.jpg",
+					"src": "/Assets/Stories/MaryAnning/image/24_AmelieRosser.jpg",
 					"size": 99548
 				}
 			],

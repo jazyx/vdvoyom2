@@ -25,6 +25,7 @@ import { collections as adminCollections
 const Cloze = new Mongo.Collection('cloze')
 const Nim = new Mongo.Collection('nim')
 const Spiral = new Mongo.Collection('spiral')
+const Stories = new Mongo.Collection('stories')
 const Vocabulary = new Mongo.Collection('vocabulary')
 
 
@@ -33,6 +34,7 @@ export const collections = {
 , Cloze
 , Nim
 , Spiral
+, Stories
 , Vocabulary
 }
 
@@ -42,5 +44,6 @@ export const publishQueries = {
 , "Cloze": {}
 , "Nim": {}
 , "Spiral": {}
+, "Stories": {}
 , "Vocabulary": {}
 }

@@ -28,15 +28,19 @@ export const StyledFrame = styled.div`
     }
     switch (props.position) {
       case "top":
-        return "border-bottom: 1px solid #fff"
+        return "border-bottom: 1px solid #fff;"
       case "left":
-        return "border-right: 1px solid #fff"
+        return "border-right: 1px solid #fff;"
       case "right":
-        return "border-left: 1px solid #fff"
+        return "border-left: 1px solid #fff;"
       case "bottom":
-        return "border-top: 1px solid #fff"
+        return "border-top: 1px solid #fff;"
     }
   }}
+
+  &.no-border {
+    border: none;
+  }
 `
 
 

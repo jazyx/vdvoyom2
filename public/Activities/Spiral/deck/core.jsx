@@ -43,8 +43,8 @@ export default class Spiral extends Component {
   }
 
 
-  setStart(event) {
-    const index = this.props.start
+  setStart(event, direction=1) {
+    const index = Math.max(0, this.props.start)
     const total = this.props.total
     let start   = 0
 
@@ -55,11 +55,15 @@ export default class Spiral extends Component {
         if (element.tagName === "MAIN") {
           break
         }
-        start += 1
+        start += direction
       }
 
       if (!start) { // going backwards, possibly through item 0
-        start += (index + total - 1) % total
+        if (direction > 0) {
+          start = (index + total - 1) % total
+        } else {
+          start = (index + 1) % total
+        }
       } else {
         start += index % total
       }
@@ -84,7 +88,7 @@ export default class Spiral extends Component {
 
     for ( ii ; ii-- ; ) {
       const index = (start + ii) % total
-      images.push(this.props.items[index])
+      images.push(source[index])
     }
 
     return images
@@ -137,12 +141,12 @@ export default class Spiral extends Component {
 
 
   getFrames() {
-    const folder = this.props.folder
     const images = this.getImages()
     const last   = images.length - 1
     let aspects
       , positions
       , places
+
     if ( this.landscapeMode) {
       aspects   = ["portrait", "landscape"]
       if (this.state.righthanded) {
@@ -167,10 +171,13 @@ export default class Spiral extends Component {
     let frame = ""
 
     images.forEach((src, index) => {
-       const aspect   = this.cycle(aspects)
-       const position = this.cycle(positions)
-       const place    = this.cycle(places)
-       const lead = (index ===  last)
+       const aspect    = this.cycle(aspects)
+       const position  = this.cycle(positions)
+       const place     = this.cycle(places)
+       const lead      = (index === last)
+       const className = src.startsWith("data:image/gif;")
+                       ? "no-border"
+                       : ""
 
        const { top, left } = this.getLoc(aspect, position, lead)
        const width  = (aspect === "landscape")
@@ -192,7 +199,8 @@ export default class Spiral extends Component {
          height={height}
          aspect={aspect}
          position={position}
-         place={place}
+         place={place}     
+         className={className}
        >
          {frame}
        </Frame>

@@ -18,9 +18,11 @@
  */
 
 import Spiral from '../../public/Activities/Spiral/Spiral.jsx'
+import Stories from '../../public/Activities/Stories/Stories.jsx'
 import Vocabulary from '../../public/Activities/Vocabulary/Vocabulary.jsx'
 
 export {
   Spiral
+, Stories
 , Vocabulary
 }

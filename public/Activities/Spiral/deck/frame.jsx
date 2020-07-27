@@ -16,9 +16,10 @@ import { StyledFrame
 export const Frame = (props) => (
   <StyledFrame
     className={
-      "aspect-"+props.aspect
-     + " " + "position-"+props.position
-     + " " + "place-"+props.place
+      props.className
+      + " aspect-"+props.aspect
+      + " " + "position-"+props.position
+      + " " + "place-"+props.place
     }
     top={props.top}
     lead={props.lead}
@@ -28,7 +29,6 @@ export const Frame = (props) => (
     height={props.height}
     aspect={props.aspect}
     position={props.position}
-    deleteME={props.src}
   >
     <StyledImage
       src={props.src}

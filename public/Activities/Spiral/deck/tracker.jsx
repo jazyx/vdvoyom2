@@ -12,8 +12,8 @@ const { Spiral  } = collections
 
 
 export default class SpiralTracker extends Tracker{
-  getProps() {
-    const props = super.getProps(Spiral)
+  getProps(collection = Spiral) {
+    const props = super.getProps(collection)
 
     return props
 
