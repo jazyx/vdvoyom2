@@ -91,11 +91,14 @@ export default class SetUp{
     const assetNames = fs.readdirSync(assetsPath)
 
     assetNames.forEach(name => {
-      const directory = path.join(assetsPath, name)
-      const stats = fs.statSync(directory)
+      // Ignore any folders (such as `shared`) with lowercase names
+      if (name.toLowerCase() !== name) {
+        const directory = path.join(assetsPath, name)
+        const stats = fs.statSync(directory)
 
-      if (stats.isDirectory()){
-        collections.push(name)
+        if (stats.isDirectory()){
+          collections.push(name)
+        }
       }
     })
 

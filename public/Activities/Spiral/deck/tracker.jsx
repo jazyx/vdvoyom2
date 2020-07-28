@@ -24,7 +24,7 @@ export default class SpiralTracker extends Tracker{
     // , uiText    // empty
     // , path      // unused
     // , data      // includes start and total
-    // , items     // CURRENTLY KNOWN AS images
+    // , items     //
     // , isMaster
     //
     // , start

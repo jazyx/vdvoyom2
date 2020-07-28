@@ -17,12 +17,14 @@
  * '/imports/ui/App.jsx'
  */
 
+import Cloze from '../../public/Activities/Cloze/Cloze.jsx'
 import Spiral from '../../public/Activities/Spiral/Spiral.jsx'
 import Stories from '../../public/Activities/Stories/Stories.jsx'
 import Vocabulary from '../../public/Activities/Vocabulary/Vocabulary.jsx'
 
 export {
-  Spiral
+  Cloze
+, Spiral
 , Stories
 , Vocabulary
 }

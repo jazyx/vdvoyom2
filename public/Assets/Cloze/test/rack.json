@@ -22,9 +22,9 @@
 		{
 			"name": "wakeup",
 			"phrase": {
-				"en": "Good morning, did you sleep _well?",
-				"ru": "Доброе утро, ты _хорошо спала?",
-				"fr": "Bonjour! As-tu _bien dormi ?"
+				"en": "Good morning, did you sleep %well?",
+				"ru": "Доброе утро, ты %хорошо спала?",
+				"fr": "Bonjour! As-tu %bien dormi ?"
 			},
 			"image": [
 				{
@@ -40,9 +40,9 @@
 		{
 			"name": "bacon&eggs",
 			"phrase": {
-				"en": "Bacon and eggs for _breakfast",
-				"ru": "Бекон и яйца на _завтрак",
-				"fr": "Des oeufs aux bacon pour le _petit-déjeuner"
+				"en": "Bacon and eggs for #breakfast",
+				"ru": "Бекон и яйца на #завтрак",
+				"fr": "Des oeufs aux bacon pour le #petit-déjeuner"
 			},
 			"image": [
 				{
@@ -58,13 +58,13 @@
 		{
 			"name": "clock",
 			"phrase": {
-				"en": "It's three o'_clock",
-				"ru": "Сейчас три _часа",
-				"fr": "Il est trois _heures"
+				"en": "It's three o'%clock",
+				"ru": "Сейчас три %часа",
+				"fr": "Il est trois %heures"
 			},
 			"image": [
 				{
-					"src": "/activities/shared/clock.jpg"
+					"src": "/Assets/shared/images/clock.jpg"
 				}
 			],
 			"tags": [
@@ -75,13 +75,13 @@
 		{
 			"name": "soup",
 			"phrase": {
-				"en": "a bowl of _soup",
-				"ru": "тарелка _супа",
-				"fr": "un bol de _soupe"
+				"en": "a bowl of %soup",
+				"ru": "тарелка %супа",
+				"fr": "un bol de %soupe"
 			},
 			"image": [
 				{
-					"src": "/activities/shared/soup.jpg"
+					"src": "/Assets/shared/images/soup.jpg"
 				}
 			],
 			"tags": [
@@ -94,11 +94,11 @@
 			"phrase": {
 				"en": "bread",
 				"ru": "хлеб",
-				"fr": "du _pain"
+				"fr": "du #pain"
 			},
 			"image": [
 				{
-					"src": "/activities/shared/bread.jpg"
+					"src": "/Assets/shared/images/bread.jpg"
 				}
 			],
 			"tags": [
