@@ -13,6 +13,7 @@ const { Spiral  } = collections
 
 export default class SpiralTracker extends Tracker{
   getProps(collection = Spiral) {
+    this.collecton = collection
     const props = super.getProps(collection)
 
     return props
@@ -37,7 +38,7 @@ export default class SpiralTracker extends Tracker{
       // Both master and slaves need the items. For the master, they
       // have already been added to props.
 
-      props.items = this.getItems(Spiral, props.tag)
+      props.items = this.getItems(this.collecton, props.tag)
     }
 
     props.items = props.items.map( item => item.image)

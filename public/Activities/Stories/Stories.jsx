@@ -83,7 +83,6 @@ const tracker = new CustomTracker()
 
 
 
-
 export default withTracker(() => {
   return tracker.getProps()
 })(CustomCore)
