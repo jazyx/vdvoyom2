@@ -28,7 +28,7 @@ export default class SpiralTracker extends Tracker{
      * , data
      * , isMaster
      * , items // [{ phrase, image, audio, native }]
-     * 
+     *
      * , start
      * , total
      * }

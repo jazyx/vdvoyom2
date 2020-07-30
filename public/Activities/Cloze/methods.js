@@ -78,8 +78,8 @@ export const updateInput = {
 , run(inputData) {
     const { group_id: _id, input, selection } = inputData
     const select = { _id }
-    const set = { 
-      $set: { 
+    const set = {
+      $set: {
         "page.data.input": input
       , "page.data.selection": selection
       }

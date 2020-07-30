@@ -199,7 +199,7 @@ export default class Spiral extends Component {
          height={height}
          aspect={aspect}
          position={position}
-         place={place}     
+         place={place}
          className={className}
        >
          {frame}

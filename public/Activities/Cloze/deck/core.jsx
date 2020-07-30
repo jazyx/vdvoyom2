@@ -57,7 +57,7 @@ export default class Cloze extends FluencyCore {
 
     // regex will match the first group of words that are linked
     // together with%percentage#or#hash symbols. Leading and trailing
-    // symbols will be included in the match. Both # and % are 
+    // symbols will be included in the match. Both # and % are
     // included because at least one is likely to be available on the
     // keyboard, even for Cyrillic, Thai and Arabic.
     //   TODO: Add other characters to the [%#] set for any keyboards
@@ -68,7 +68,7 @@ export default class Cloze extends FluencyCore {
     // or replaced by spaces. If no such symbols are present, the
     // final .* will ensure there is a match for the full string.
 
-    this.regex  = 
+    this.regex  =
       /(.*?)((?:\w+(?=[%#]))?(?:[%#](?:[^\s,;:.?!]*))+)(.*)|.*/
 
     this.zeroWidthSpace = "​" // "&#x200b;"
@@ -107,7 +107,7 @@ export default class Cloze extends FluencyCore {
     const group_id = this.props.group_id
     const { phrase, native, image, audio } = data
     data = { phrase, native, image, audio }
-  
+
     console.log(data)
     /* { collection: "Vocabulary"
      * , flops: <0-31>
@@ -119,7 +119,7 @@ export default class Cloze extends FluencyCore {
      * , times_seen: 0
      * , _id: "hrSjLZcs8Q6hDWSYB
      * }
-     * 
+     *
      * { phrase: <string>, native: <string>, image: <url> }
      */
 
@@ -202,29 +202,29 @@ export default class Cloze extends FluencyCore {
      * full string that is expected and been input. We place each of
      * these arrays inside an enclosing array, to indicate that they
      * are to be treated.
-     * 
+     *
      * The treatment consists of taking the first item from each
      * toTreat array, and looking for the longest sub-string (lss).
-     * If there is no lss, then all the letters in the chunks are 
+     * If there is no lss, then all the letters in the chunks are
      * different. If there is an lss, then the chunk can be divided
      * three parts: before, lss and after. (Either before or after or
      * both may be an "" empty string). The arrays containing the
      * Before and After chunks are returned to the toTreat arrays for
      * further treatment.
-     * 
+     *
      * However, the initial ~Output arrays will have been removed
      * from the toTreat arrays. The divided arrays will be placed in
      * these ~Output arrays in the original order. When a divided
      * is treated, its components will be placed inside itself in the
-     * same way. The order of the characters is thus maintained in 
+     * same way. The order of the characters is thus maintained in
      * deeper and deeper nested sub-arrays, until there are no more
      * chunks to treat.
-     * 
+     *
      * At this point, the ~Output arrays are flattened into a non-
      * nested array of chunks which are either identical in both
      * expected and received, or different. They can be different in
      * three ways:
-     * 
+     *
      * * One is empty while the other contains text (Add | Cut)
      * * Both contain text which share no common characters (Fix)
      * * Both contain two characters in two different orders (Flip)
@@ -314,7 +314,7 @@ export default class Cloze extends FluencyCore {
 
       // "" is falsy, but we need to treat empty string items, so we
       // need a tricky `while` expression which will return true for
-      // any array or string, even if it's empty, while at the same 
+      // any array or string, even if it's empty, while at the same
       // time setting `item` to the value shifted from the array.
       // When the array is empty, item will take the value `undefined`
       // and the while expression will return false.
@@ -394,14 +394,14 @@ export default class Cloze extends FluencyCore {
               onlyEndIsMissing = true
             }
 
-            // 
+            //
               cloze.push(<Add
                 key={key}
                 has_space={hasSpace}
               />)
           } // else both input and expected are "", for the last item
 
-          // TODO: Set a timeout so that index !== lastIndex is 
+          // TODO: Set a timeout so that index !== lastIndex is
           // ignored if you stop typing before you reach the end.
 
         } else if (!expected) {
@@ -454,7 +454,7 @@ export default class Cloze extends FluencyCore {
     // The contents of ~Arrays extracted from the toTreat variable
     // are broken into sub-arrays as they are treated. The sub-arrays
     // are maintained in the original order of the text. Any sub-array
-    // that needs further treatment is returned toTreat; those that 
+    // that needs further treatment is returned toTreat; those that
     // have been completely treated are not returned. As a result, the
     // original expectedOutput and receivedOutput arrays retain the
     // orginal text, just broken into (deeply nested) arrays.
@@ -649,7 +649,7 @@ export default class Cloze extends FluencyCore {
     //   }
     //   , ...
     //  ]
-    //  
+    //
     //  "data": {
     //    "_id": "s6zHW2iddLk4PGXGv",
     //    "phrase": "тарелка  супа",
@@ -708,7 +708,7 @@ export default class Cloze extends FluencyCore {
         this.treatInput(input)
         this.inputRef.current.setSelectionRange(selection, selection)
       }
-    } else {     
+    } else {
       this.newPhrase() // checkForNewItems will have been called
     }
   }

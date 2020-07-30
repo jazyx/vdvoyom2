@@ -26,7 +26,7 @@
 
 // , validate(fluencyItemArray) {
 //     fluencyItemArray.forEach( item => {
-//       new SimpleSchema({    
+//       new SimpleSchema({
 //           phrase_id:  { type: String }
 //         , user_id:    { type: String }
 //         , group_id:   { type: String }

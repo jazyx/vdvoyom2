@@ -40,7 +40,7 @@ export class DragTracker extends Tracker {
      *
      * // master only //
      * , items // [{ phrase, image, audio, native }]
-     * 
+     *
      * , completed // custom
      * }
      */

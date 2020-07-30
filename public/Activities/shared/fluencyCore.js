@@ -2,8 +2,8 @@
  * /public/activities/shared/fluencyCore.js
  *
  * Extend this class in order to add a queue of the 12 Fluency items
- * that are most in need of review to this.props. 
- * 
+ * that are most in need of review to this.props.
+ *
  */
 
 
