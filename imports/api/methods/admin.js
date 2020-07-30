@@ -469,6 +469,7 @@ export const addToFluency = {
         , user_id:    { type: String }
         , group_id:   { type: String }
         , next_seen:  { type: Number }
+        , collection: { type: String }
       }).validate(item)
     })
   }
@@ -483,7 +484,6 @@ export const addToFluency = {
     , spacing:    5 // show 5 others before a repeat | ≈ 1 minute
     // , right:      5
     // , wrong:      1/2
-    , collection: "Vocabulary"
     , level:      "TODO"
     }
 

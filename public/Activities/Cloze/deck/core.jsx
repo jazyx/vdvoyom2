@@ -18,7 +18,7 @@ import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react';
 
 
-import Sampler from '/imports/tools/generic/sampler'
+import FluencyCore from '../../shared/fluencyCore'
 
 import { setPageData
        , updateInput
@@ -33,7 +33,7 @@ import LSS from './lss'
 
 
 
-export default class Cloze extends Component {
+export default class Cloze extends FluencyCore {
   constructor(props) {
     super(props)
 
@@ -41,16 +41,16 @@ export default class Cloze extends Component {
     this.maxExtraChars = 2
     /// HARD-CODED >>>
 
-    this.sampler = new Sampler({
-      array: props.items
-    , sampleSize: 1
-    })
+    // this.sampler = new Sampler({
+    //   array: props.items
+    // , sampleSize: 1
+    // })
 
     this.newPhrase    = this.newPhrase.bind(this)
     this.checkSize    = this.checkSize.bind(this)
     this.updateInput  = this.updateInput.bind(this)
     this.refreshInput = this.refreshInput.bind(this)
-    // this.setMode      = this.setMode.bind(this)
+    this.setMode      = this.setMode.bind(this)
     this.submit       = this.submit.bind(this)
 
     this.inputRef = React.createRef()
@@ -60,9 +60,14 @@ export default class Cloze extends Component {
     // symbols will be included in the match. Both # and % are 
     // included because at least one is likely to be available on the
     // keyboard, even for Cyrillic, Thai and Arabic.
+    //   TODO: Add other characters to the [%#] set for any keyboards
+    //   that do not have them. Choose characters that are not
+    //   used in any standard writing. Make the change also to
+    //   [%#\s] in treatPhrase.
     // Subsequent such symbols will be silently ignored and removed
     // or replaced by spaces. If no such symbols are present, the
-    // final .* will ensure there is a match.
+    // final .* will ensure there is a match for the full string.
+
     this.regex  = 
       /(.*?)((?:\w+(?=[%#]))?(?:[%#](?:[^\s,;:.?!]*))+)(.*)|.*/
 
@@ -85,7 +90,7 @@ export default class Cloze extends Component {
     , fix:       false
     }
 
-    this.newPhrase()
+    // this.newPhrase()
   }
 
 
@@ -94,10 +99,29 @@ export default class Cloze extends Component {
       return
     }
 
-    const group_id = this.props.group_id
+    let data = this.props.queue[0]
+    if (!data) {
+      return
+    }
 
-    const data = this.sampler.getSample()[0]
-    // { phrase: <string>, src: <url> }
+    const group_id = this.props.group_id
+    const { phrase, native, image, audio } = data
+    data = { phrase, native, image, audio }
+  
+    console.log(data)
+    /* { collection: "Vocabulary"
+     * , flops: <0-31>
+     * , image: "/Assets/Vocabulary/basic/image/66.jpg"
+     * , native: "autumn"
+     * , next_seen: 1595966414566
+     * , phrase: "осень"
+     * , phrase_id: "hrSjLZcs8Q6hDWSYB"
+     * , times_seen: 0
+     * , _id: "hrSjLZcs8Q6hDWSYB
+     * }
+     * 
+     * { phrase: <string>, native: <string>, image: <url> }
+     */
 
     // React Hack: we must momentarily show (any) text, to make the
     // input respond to onChange. We will remove the text in the
@@ -123,7 +147,7 @@ export default class Cloze extends Component {
     if (cloze) {
       cloze = cloze.replace(/[%#\s]+/g, " ") // << nbsp
                    .trim() || " "
-    } else { // There are no underscores. Use the entire string.
+    } else { // There are no #% symbols. Use the entire string.
       cloze = match[0].trim()
     }
 
@@ -136,7 +160,7 @@ export default class Cloze extends Component {
     , end
     , fromNewPhrase: true
     , width: 0
-    , requireSubmit: false
+    , requireSubmit: true // false
     }
 
     this.setState(data)
@@ -147,44 +171,69 @@ export default class Cloze extends Component {
 
 
   updateInput(event) {
-    const input = event.target.value.replace(this.zeroWidthSpace, "")
+    const field = event.target
+    const input = field.value.replace(this.zeroWidthSpace, "")
 
+    const selection = field.selectionStart
     const group_id = this.props.group_id
-    const update = { group_id, input }
+    const update = { group_id, input, selection }
     updateInput.call(update)
-
-    // this.setState({ input })
-    // console.log("t่his.state:", this.state)
-
-    // if (this.state.requireSubmit) {
-    //   this.prepareToSubmit(input)
-
-    // } else {
-    //   clearTimeout(this.timeout)
-    //   this.timeout = setTimeout(this.refreshInput, this.lastIndexDelay)
-
-    //   this.treatInput(input, true)
-    // }
   }
 
 
   refreshInput() {
-    this.treatInput(this.state.input, false)
+    this.treatInput(this.state.input)
   }
 
 
-  treatInput(input, ignoreLastIndex) {
+  treatInput(input) {
     // console.log("treat input:", input)
     // console.log("t่his.state:", this.state)
-    // this.setState({ input })
 
     let error = false
     let correct = false
-    let onlyLastCharIsMissing = false
+    let onlyEndIsMissing = false
     let expectedOutput = [this.state.expected.toLowerCase()
                                              .replace(/ /g, " ")
                          ]
     let receivedOutput = [input.toLowerCase()]
+
+    /* expectedOutput and receivedOutput are arrays containing the
+     * full string that is expected and been input. We place each of
+     * these arrays inside an enclosing array, to indicate that they
+     * are to be treated.
+     * 
+     * The treatment consists of taking the first item from each
+     * toTreat array, and looking for the longest sub-string (lss).
+     * If there is no lss, then all the letters in the chunks are 
+     * different. If there is an lss, then the chunk can be divided
+     * three parts: before, lss and after. (Either before or after or
+     * both may be an "" empty string). The arrays containing the
+     * Before and After chunks are returned to the toTreat arrays for
+     * further treatment.
+     * 
+     * However, the initial ~Output arrays will have been removed
+     * from the toTreat arrays. The divided arrays will be placed in
+     * these ~Output arrays in the original order. When a divided
+     * is treated, its components will be placed inside itself in the
+     * same way. The order of the characters is thus maintained in 
+     * deeper and deeper nested sub-arrays, until there are no more
+     * chunks to treat.
+     * 
+     * At this point, the ~Output arrays are flattened into a non-
+     * nested array of chunks which are either identical in both
+     * expected and received, or different. They can be different in
+     * three ways:
+     * 
+     * * One is empty while the other contains text (Add | Cut)
+     * * Both contain text which share no common characters (Fix)
+     * * Both contain two characters in two different orders (Flip)
+     *   These last two cases are treated by treatFix()
+     *
+     * Finally, getClozeFromReceivedOutput() creates a sequence of
+     * spans where the text and background have the appropriate
+     * colours.
+     */
 
     const toTreat = {
       expected: [expectedOutput]
@@ -203,13 +252,16 @@ export default class Cloze extends Component {
         for ( let ii = 0; ii < eLength; ii += 1 ) {
           const ch1 = expectedString[ii]
           const offset1 = receivedString.indexOf(ch1)
+
           if (offset1 < 0) {
             // No match, so no flipped pair, so move on
           } else {
             const ch2 = expectedString[ii + 1]
             const offset2 = receivedString.indexOf(ch2)
+
             if (offset2 < 0) {
               // The second element of the pair is missing. No match.
+
             } else if (Math.abs(offset1 - offset2) === 1) {
               // We've found a swap. Split the strings into three
               splitStringAt(ch1+ch2, expectedArray, toTreat.expected)
@@ -259,13 +311,13 @@ export default class Cloze extends Component {
 
     const flatten = (array, flattened=[]) => {
       let item
+
       // "" is falsy, but we need to treat empty string items, so we
       // need a tricky `while` expression which will return true for
-      // any array or string, even it's empty, while at the same time
-      // setting `item` to the value shifted from the array. When the
-      // array is empty, item will take the value `undefined` and the
-      // while expression will return false.
-
+      // any array or string, even if it's empty, while at the same 
+      // time setting `item` to the value shifted from the array.
+      // When the array is empty, item will take the value `undefined`
+      // and the while expression will return false.
 
       while ((item = array.shift(), !!item || item === "")) {
 
@@ -334,24 +386,23 @@ export default class Cloze extends Component {
             >{received}</span>)
           }
 
-        // } else if (received.flip) {
-        //   cloze.push(<Flip
-        //     key={key}
-        //     has_space={hasSpace}
-        //   >{received}</Flip>)
-
         } else if (!received) {
           if (expected && index !== lastIndex) {
+            // Text is missing in the input...
             if (cloze.length === 1 && index === typeIndex) {
-              onlyLastCharIsMissing = true
+              // ... but everything up to this point is correct
+              onlyEndIsMissing = true
             }
-            cloze.push(<Add
-              key={key}
-              has_space={hasSpace}
-            />)
+
+            // 
+              cloze.push(<Add
+                key={key}
+                has_space={hasSpace}
+              />)
           } // else both input and expected are "", for the last item
-          // TODO: Set a timeout so that index !== lastIndex is ignored
-          // if you stop typing before you reach the end.
+
+          // TODO: Set a timeout so that index !== lastIndex is 
+          // ignored if you stop typing before you reach the end.
 
         } else if (!expected) {
           cloze.push(<Cut
@@ -400,14 +451,22 @@ export default class Cloze extends Component {
     }
 
 
+    // The contents of ~Arrays extracted from the toTreat variable
+    // are broken into sub-arrays as they are treated. The sub-arrays
+    // are maintained in the original order of the text. Any sub-array
+    // that needs further treatment is returned toTreat; those that 
+    // have been completely treated are not returned. As a result, the
+    // original expectedOutput and receivedOutput arrays retain the
+    // orginal text, just broken into (deeply nested) arrays.
+
     while (toTreat.expected.length) {
-      const expectedArray = toTreat.expected.pop()
+      const expectedArray = toTreat.expected.pop() // arrays
       const receivedArray = toTreat.received.pop()
-      const expected = expectedArray[0]
+      const expected = expectedArray[0]            // strings
       const received = receivedArray[0]
 
       if (!expected || !received) {
-        // Add or cut, or both may be empty
+        // Add or cut: one or both may be empty
 
       } else {
         const lss = LSS(expected, received)
@@ -431,20 +490,22 @@ export default class Cloze extends Component {
       }
     }
 
+    // The deeply nested arrays are restored to single-level arrays
+    // of chunks whose positions match. Each pair of chunks is one of
+    // the following:
+    // * identical
+    // * an omission
+    // * an addition
+    // * wrong
+    // * flipped characters
+
     expectedOutput = flatten(expectedOutput)
     receivedOutput = flatten(receivedOutput)
 
-    // console.log("ex",expectedOutput)
-    // console.log("in",receivedOutput)
-
-    // restoreCase(expectedOutput, this.state.expected)
     restoreCase(receivedOutput, input)
 
-    // console.log("expected flattened:", expectedOutput)
-    // console.log("received flattened:", receivedOutput)
-
-    const lastIndex = receivedOutput.length - ignoreLastIndex
-    const typeIndex = receivedOutput.length - 1
+    const lastIndex = receivedOutput.length
+    const typeIndex = lastIndex - 1
 
     let cloze
     if (this.state.requireSubmit) {
@@ -457,15 +518,16 @@ export default class Cloze extends Component {
       if (input.length === this.state.expected.length) {
         correct = true
       }
-    } else if (cloze.length && !onlyLastCharIsMissing) {
+
+    } else if (cloze.length && !onlyEndIsMissing) {
+      // if onlyEndIsMissing, there will be two chunks: what was
+      // typed + what remains to be typed
       error = true
     }
 
     if (!cloze.length) {
       cloze = [this.zeroWidthSpace]
     }
-
-    // console.log(cloze.map(item => JSON.stringify(item.props)))
 
 
     const maxLength = this.state.expected.length + this.maxExtraChars
@@ -475,6 +537,8 @@ export default class Cloze extends Component {
     this.setState({ cloze, error, correct, maxLength, reveal, fix })
 
     this.input = input
+
+    // console.log("input:", input, onlyEndIsMissing)
   }
 
 
@@ -531,6 +595,7 @@ export default class Cloze extends Component {
         this.updateInput({
           target: {
             value: ""
+          , selectionStart: 0
           }
         })
 
@@ -541,18 +606,18 @@ export default class Cloze extends Component {
   }
 
 
-  // setMode() {
-  //   const requireSubmit = !this.state.requireSubmit
-  //   this.setState({ requireSubmit })
+  setMode() {
+    const requireSubmit = !this.state.requireSubmit
+    this.setState({ requireSubmit })
 
-  //   if (requireSubmit) {
-  //     this.setState({ cloze: this.state.input || this.zeroWidthSpace })
-  //   } else {
-  //     setTimeout(this.refreshInput, 0)
-  //   }
+    if (requireSubmit) {
+      this.setState({ cloze: this.state.input || this.zeroWidthSpace })
+    } else {
+      setTimeout(this.refreshInput, 0)
+    }
 
-  //   this.inputRef.current.focus()
-  // }
+    this.inputRef.current.focus()
+  }
 
 
   submit() {
@@ -602,9 +667,19 @@ export default class Cloze extends Component {
       return ""
     }
 
+    const newItems = this.checkForNewItems()
+    //                    ^ in FluencyCore
+    if (newItems) {
+      return "Refreshing"
+    }
+
     const { image, input } = this.props.data
 
-    console.log("image:", image, "input:", input, "this.state:", this.state)
+    // console.log(
+    //   "image:", image
+    // , "input:", input
+    // , "this.state:", this.state
+    // )
 
     return (
       <Clozed
@@ -623,7 +698,7 @@ export default class Cloze extends Component {
     let data
 
     if (data = this.props.data) {
-      const { image, phrase, input } = data
+      const { image, phrase, input, selection } = data
 
       if (!image) {
         // Wait until the image is defined
@@ -631,7 +706,10 @@ export default class Cloze extends Component {
         this.treatPhrase(phrase)
       } else if (this.input !== input) {
         this.treatInput(input)
+        this.inputRef.current.setSelectionRange(selection, selection)
       }
+    } else {     
+      this.newPhrase() // checkForNewItems will have been called
     }
   }
 }

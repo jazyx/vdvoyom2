@@ -4,33 +4,41 @@
 
 
 
-import Tracker from '../../shared/tracker'
+import FluencyTracker from '../../shared/fluencyTracker'
 
 import { collections } from '/imports/api/collections/mint'
 const { Cloze} = collections
 
 
 
-export default class ClozeTracker extends Tracker{
+export default class ClozeTracker extends FluencyTracker{
   constructor() {
     const uiTextSelector = undefined // TODO
     super(uiTextSelector)
   }
 
 
-  getProps() {
-    const props = super.getProps(Cloze)
+  getProps(collectionName = "Cloze") {
+    const props = super.getProps(collectionName)
 
     return props
-
-    // { code      // unused
-    // , group_id
-    // , d_code    // unused
-    // , uiText    // empty?
-    // , path      // unused
-    // , data
-    // , items     // CURRENTLY KNOWN AS tasks
-    // , isMaster
-    // }
+    /* { code
+     * , d_code
+     * , user_id
+     * , group_id
+     * , logged_in // used by Drag to tell if pilot is still online
+     * , uiText
+     * , path
+     * , tag
+     * , data
+     * , isMaster
+     *
+     * // master only // //
+     * , items // [{ phrase, image, audio, native }]
+     * , queue
+     * , cued
+     * , unseen
+     * }
+     */
   }
 }

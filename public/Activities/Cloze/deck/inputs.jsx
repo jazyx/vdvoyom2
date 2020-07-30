@@ -104,7 +104,6 @@ export class Clozed extends Component {
             fix={fix}
             reveal={reveal}
           />
-
         </StyledInputDiv>
 
         <span>{end}</span>

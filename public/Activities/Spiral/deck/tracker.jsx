@@ -12,24 +12,27 @@ const { Spiral  } = collections
 
 
 export default class SpiralTracker extends Tracker{
-  getProps(collection = Spiral) {
-    this.collecton = collection
-    const props = super.getProps(collection)
+  getProps(collectionName = "Spiral") {
+    this.collectionName = collectionName
+    const props = super.getProps(collectionName)
 
     return props
-
-    // { code      // unused
-    // , group_id
-    // , d_code    // unused
-    // , uiText    // empty
-    // , path      // unused
-    // , data      // includes start and total
-    // , items     //
-    // , isMaster
-    //
-    // , start
-    // , total
-    // }
+    /* { code
+     * , d_code
+     * , user_id
+     * , group_id
+     * , logged_in
+     * , uiText
+     * , path
+     * , tag
+     * , data
+     * , isMaster
+     * , items // [{ phrase, image, audio, native }]
+     * 
+     * , start
+     * , total
+     * }
+     */
   }
 
 
@@ -38,7 +41,7 @@ export default class SpiralTracker extends Tracker{
       // Both master and slaves need the items. For the master, they
       // have already been added to props.
 
-      props.items = this.getItems(this.collecton, props.tag)
+      props.items = this.getItems(this.collectionName, props.tag)
     }
 
     props.items = props.items.map( item => item.image)

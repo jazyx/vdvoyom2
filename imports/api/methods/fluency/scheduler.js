@@ -143,17 +143,17 @@ export default class Scheduler {
     const first     = Fluency.find(select, options).fetch()[0]
     let firstTime = this.timeStamp + spaceTime
 
-    console.log( "first:", first
-               , "   <<<   db.fluency.find({},"
-               + JSON.stringify(options.fields)
-               + ").sort("
-               + JSON.stringify(options.sort)
-               + ").skip("
-               + options.skip
-               + ").limit("
-               + options.limit
-               + ")"
-               )
+    // console.log( "first:", first
+    //            , "   <<<   db.fluency.find({},"
+    //            + JSON.stringify(options.fields)
+    //            + ").sort("
+    //            + JSON.stringify(options.sort)
+    //            + ").skip("
+    //            + options.skip
+    //            + ").limit("
+    //            + options.limit
+    //            + ")"
+    //            )
 
     // We want to randomize the spacing a bit, so now we calculate
     // the timing expected for the item twice as far away

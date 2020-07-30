@@ -30,10 +30,11 @@ export const setPageData = {
 
     new SimpleSchema({
       "phrase":        { type: String }
-    , "image":         { type: String }
+    , "native":        { type: String, optional: true }
+    , "image":         { type: String, optional: true }
+    , "audio":         { type: String, optional: true }
     , "input":         { type: String }
     , "requireSubmit": { type: Boolean }
-    , "_id":           { type: String }
     }).validate(pageData.data)
   }
 
@@ -68,15 +69,21 @@ export const updateInput = {
 
 , validate(inputData) {
     new SimpleSchema({
-      group_id: { type: String }
-    , input:    { type: String }
+      group_id:  { type: String }
+    , input:     { type: String }
+    , selection: { type: Number }
     }).validate(inputData)
   }
 
 , run(inputData) {
-    const { group_id: _id, input } = inputData
+    const { group_id: _id, input, selection } = inputData
     const select = { _id }
-    const set = { $set: { "page.data.input": input } }
+    const set = { 
+      $set: { 
+        "page.data.input": input
+      , "page.data.selection": selection
+      }
+    }
     Group.update(select, set)
 
     // console.log(

@@ -13,19 +13,25 @@ const { Flash  } = collections
 
 
 
-export default class NimTracker extends Tracker{
-  getProps() {
-    const props = super.getProps(Flash)
+export default class FlashTracker extends Tracker{
+  getProps(collectionName = "Flash") {
+    const props = super.getProps(collectionName)
 
     return props
-    // { code      // unused
-    //   group_id
-    // , d_code    // unused
-    // , uiText    // empty
-    // , path      // unused
-    // , data      // includes subset of items in current task
-    // , items     // all possible items
-    // , isMaster
-    // }
+    /* { code
+     * , d_code
+     * , user_id
+     * , group_id
+     * , logged_in // used by Drag to tell if pilot is still online
+     * , uiText
+     * , path
+     * , tag
+     * , data
+     * , isMaster
+     *
+     * // master only //
+     * , items // [{ phrase, image, audio, native }]
+     * }
+     */
   }
 }

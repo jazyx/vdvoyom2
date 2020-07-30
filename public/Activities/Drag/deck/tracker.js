@@ -7,9 +7,6 @@
 
 import Tracker from '../../shared/tracker'
 
-import collections from '/imports/api/collections/publisher'
-const { Drag  } = collections
-
 
 
 export class DragTracker extends Tracker {
@@ -26,21 +23,27 @@ export class DragTracker extends Tracker {
 
 
   getProps() {
-    const props     = super.getProps(Drag)
+    const props     = super.getProps("Drag")
     props.completed = this.turnCompleted(props.data)
 
     return this.props
-    // { code      // unused
-    //   group_id
-    // , d_code
-    // , uiText
-    // , path      // unused
-    // , data      // includes subset of items in current task
-    // , items     // all possible items
-    // , isMaster
-    //
-    // , completed // custom
-    // }
+    /* { code
+     * , d_code
+     * , user_id
+     * , group_id
+     * , logged_in // used by Drag to tell if pilot is still online
+     * , uiText
+     * , path
+     * , tag
+     * , data
+     * , isMaster
+     *
+     * // master only //
+     * , items // [{ phrase, image, audio, native }]
+     * 
+     * , completed // custom
+     * }
+     */
   }
 
 

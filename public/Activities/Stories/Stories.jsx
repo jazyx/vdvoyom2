@@ -23,9 +23,6 @@ import { withTracker } from 'meteor/react-meteor-data'
 import Core from '../Spiral/deck/core'
 import Tracker from '../Spiral/deck/tracker'
 
-import collections from '/imports/api/collections/publisher'
-const { Stories } = collections
-
 
 
 // Transparent 1 x 1 pixel placeholder GIF
@@ -72,7 +69,7 @@ class CustomCore extends Core {
 
 class CustomTracker extends Tracker {
   getProps() {
-    const props = super.getProps(Stories)
+    const props = super.getProps("Stories")
     return props
   }
 }

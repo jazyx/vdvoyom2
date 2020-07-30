@@ -20,9 +20,10 @@ export default class Tracker{
   }
 
 
-  getProps(collection) {
+  getProps(collectionName) {
     let items
 
+    this.native = Session.get("native")
     const code = this.code = Session.get("language")
     const d_code = Session.get("d_code")
     const user_id = Session.get("user_id")
@@ -37,7 +38,7 @@ export default class Tracker{
                    : false
 
     if (isMaster) {
-      items = this.getItems(collection, tag)
+      items = this.getItems(collectionName, tag)
     }
 
     const props = {
@@ -52,10 +53,11 @@ export default class Tracker{
     , data
     , isMaster
     // items will be undefined if isMaster is false
-    , items
+    , items // [{ phrase, image, audio, native }]
     }
 
-    this.addCustomProps(props) // may be overwritten in child instance
+    this.addCustomProps(props, collectionName)
+    // may be overwritten in child instance
 
     return props
   }
@@ -111,7 +113,8 @@ export default class Tracker{
   }
 
 
-  getItems(collection, tags) {
+  getItems(collectionName, tags) {
+    const collection = collections[collectionName]
     let select
     if (typeof tags === "string") {
       select = { tags }
@@ -142,13 +145,16 @@ export default class Tracker{
 
     let image
       , audio
+      , native
 
     let phrase = document.phrase
     if (typeof phrase === "object") {
+      native = getLocalized(phrase, this.native)
       phrase = getLocalized(phrase, this.code)
     }
     if (typeof phrase === "string") {
       item.phrase = phrase
+      item.native = native
     }
 
      // TODO: allow various images
@@ -171,7 +177,7 @@ export default class Tracker{
   }
 
 
-  addCustomProps(props) {
+  addCustomProps(props, collectionName) {
     // Overwrite this method in child instance
   }
 }
