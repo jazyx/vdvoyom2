@@ -662,10 +662,9 @@ export default class Cloze extends FluencyCore {
     //  }
     // }
 
-
-
-    const newItems = this.checkForNewItems()
-    //                    ^ in FluencyCore
+    const newItems = this.props.isMaster
+                   ? this.checkForNewItems() // in FluencyCore
+                   : false
     if (newItems) {
       return "Loading new items"
 
@@ -674,6 +673,8 @@ export default class Cloze extends FluencyCore {
       // setPageData to set the Groups page.date. This will be
       // available on the next render, which will occur when the
       // new value of the Groups.page.data is available.
+      
+      this.newPhrase()
       return "Preparing first item"
     }
 
@@ -699,21 +700,18 @@ export default class Cloze extends FluencyCore {
 
 
   componentDidUpdate() {
-    let data
+    const data = this.props.data
 
-    if (data = this.props.data) {
+    if (data) {
       const { image, phrase, input, selection } = data
 
-      if (!image) {
-        // Wait until the image is defined
-      } else if (this.phrase !== phrase) {
+      if (this.phrase !== phrase) {
         this.treatPhrase(phrase)
+
       } else if (this.input !== input) {
         this.treatInput(input)
         this.inputRef.current.setSelectionRange(selection, selection)
       }
-    } else {
-      this.newPhrase() // checkForNewItems will have been called
     }
   }
 }
