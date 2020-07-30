@@ -35,7 +35,10 @@ import LSS from './lss'
 
 export default class Cloze extends FluencyCore {
   constructor(props) {
-    super(props)
+    const options = {
+      collection: "Cloze"
+    }
+    super(props, options)
 
     /// <<< HARD-CODED
     this.maxExtraChars = 2
@@ -659,18 +662,19 @@ export default class Cloze extends FluencyCore {
     //  }
     // }
 
-    if (!this.props.data) {
-      // The first time render is called, the constructor calls
-      // setPageData to set the Groups page.date. This will be
-      // available on the next render, which will occur when the
-      // new value of the Groups.page.data is available.
-      return ""
-    }
+
 
     const newItems = this.checkForNewItems()
     //                    ^ in FluencyCore
     if (newItems) {
-      return "Refreshing"
+      return "Loading new items"
+
+    } else if (!this.props.data) {
+      // The first time render is called, the constructor calls
+      // setPageData to set the Groups page.date. This will be
+      // available on the next render, which will occur when the
+      // new value of the Groups.page.data is available.
+      return "Preparing first item"
     }
 
     const { image, input } = this.props.data
