@@ -1,5 +1,5 @@
 /**
- * /public/activities/Drag/Drag.jsx
+ * /public/activities/Drag/Drag-unused.jsx
  *
  * This script imports the Core and Tracker classes from the deck/
  * folder, extends the classes and overwrites any methods as necessary
@@ -10,8 +10,8 @@
 
 import { withTracker } from 'meteor/react-meteor-data'
 
-import Core from './deck/core'
-import Tracker from './deck/tracker'
+import Core from './deck/DragCore'
+import Tracker from './deck/DragTracker'
 
 
 

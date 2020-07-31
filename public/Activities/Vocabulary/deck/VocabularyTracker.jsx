@@ -1,5 +1,5 @@
 /**
- * /public/activities/Vocabulary/deck/tracker.jsx
+ * /public/activities/Vocabulary/deck/VocabularyTracker.jsx
  */
 
 
@@ -28,7 +28,7 @@ export default class VocabularyTracker extends FluencyTracker {
 
     // FluencyTracker adds queue, cued and unseen to props for master
 
-    // console.log(JSON.stringify(props, null, "  "))
+    console.log(JSON.stringify(props, null, "  "))
 
     return props
     /* { code

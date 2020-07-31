@@ -1,5 +1,5 @@
 /**
- * /public/activities/Flash/deck/core.jsx
+ * /public/activities/Flash/deck/FlashCore.jsx
  */
 
 

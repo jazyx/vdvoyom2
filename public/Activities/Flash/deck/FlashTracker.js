@@ -1,5 +1,5 @@
 /**
- * /public/activities/Flash/deck/tracker.jsx
+ * /public/activities/Flash/deck/FlashTracker.jsx
  */
 
 

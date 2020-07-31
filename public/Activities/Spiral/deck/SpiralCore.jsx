@@ -1,5 +1,5 @@
 /**
- * /public/activities/Spiral/deck/core.jsx
+ * /public/activities/Spiral/deck/SpiralCore.jsx
  */
 
 

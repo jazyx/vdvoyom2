@@ -9,7 +9,7 @@
 
 
 
-import Core from './deck/core'
+import Core from './deck/DragCore'
 
 
 // export default class CustomDrag extends Core {

@@ -1,5 +1,5 @@
 /**
- * /public/activities/Cloze/js/methods.js
+ * /public/activities/Cloze/methods.js
  */
 
 import { Meteor } from 'meteor/meteor'

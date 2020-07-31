@@ -98,7 +98,7 @@ class CheckPIN extends Component {
   }
 
 
-  componentWillUnmount() {  
+  componentWillUnmount() {
     document.removeEventListener("keydown", this.start, false)
   }
 }

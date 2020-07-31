@@ -212,7 +212,11 @@ export default class Scheduler {
         // from now, will create a gap for new items to be served,
         // if that is necessary.
         firstTime = Math.min(now + spaceTime, first.next_seen)
-        lastTime  = Math.min(now + spaceTime * 2, last.next_seen)
+
+        lastTime = now + spaceTime * 2
+        if (last) {
+          lastTime = Math.min(lastTime, last.next_seen)
+        }
       }
 
     } else {

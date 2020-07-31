@@ -10,8 +10,8 @@
 
 import { withTracker } from 'meteor/react-meteor-data'
 
-import Core from './deck/core'
-import Tracker from './deck/tracker'
+import Core from './deck/SpiralCore'
+import Tracker from './deck/SpiralTracker'
 
 // import collections from '/imports/api/collections/publisher'
 // const { Drag } = collections

@@ -20,8 +20,8 @@
 
 import { withTracker } from 'meteor/react-meteor-data'
 
-import Core from '../Spiral/deck/core'
-import Tracker from '../Spiral/deck/tracker'
+import Core from '../Spiral/deck/SpiralCore'
+import Tracker from '../Spiral/deck/SpiralTracker'
 
 
 

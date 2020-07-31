@@ -1,5 +1,5 @@
 /**
- * /public/activities/Drag/deck/tracker.js
+ * /public/activities/Drag/deck/DragTracker.js
  *
  */
 
@@ -23,8 +23,9 @@ export class DragTracker extends Tracker {
 
 
   getProps() {
-    const props     = super.getProps("Drag")
-    props.completed = this.turnCompleted(props.data)
+    const props = super.getProps("Drag")
+
+    // console.log(JSON.stringify(props, null, "  "))
 
     return this.props
     /* { code
@@ -47,8 +48,9 @@ export class DragTracker extends Tracker {
   }
 
 
-  turnCompleted(data) {
+  addCustomProps(props) {
     let completed = 0
+    const data = props.data
 
     if (typeof data === "object") {
       const show = data.show
@@ -61,6 +63,6 @@ export class DragTracker extends Tracker {
       }
     }
 
-    return completed === 6
+    props.completed = (completed === 6)
   }
 }

@@ -154,15 +154,24 @@ export default class FluencyCore extends Component {
   }
 
 
-  treatResult(correct, timeStamp) {
-    const { user_id, group_id } = this.props
-    const result = {
-      user_id
-    , group_id
-    , correct
-    , timeStamp
-    }
+  treatResult(correct, timeStamp, partial) {
+    if (this.props.isMaster) {
+      const { user_id, group_id } = this.props
+      const result = {
+        user_id
+      , group_id
+      , correct
+      , timeStamp
+      }
 
-    setFluency.call(result)
+      setFluency.call(result)
+
+      if (!partial) {
+        this.chooseNextActivity()
+      }
+    }
   }
+
+
+  chooseNextActivity() {}
 }

@@ -10,8 +10,8 @@
 
 import { withTracker } from 'meteor/react-meteor-data'
 
-import Core from './deck/core'
-import Tracker from './deck/tracker'
+import Core from './deck/ClozeCore'
+import Tracker from './deck/ClozeTracker'
 
 
 

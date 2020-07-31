@@ -1,5 +1,5 @@
 /**
- * public/activities/Drag/deck/core.jsx
+ * public/activities/Drag/deck/DragCore.jsx
  *
  * Creates a layout with up to 6 images, each with a space below for
  * the name of the image, and up to six <p> elements, containing the
@@ -51,8 +51,6 @@ import { setViewData
        , toggleShow
        , toggleComplete
        } from '../methods'
-
-import { NO_AUDIO_DELAY } from '/imports/tools/custom/constants'
 
 
 
@@ -333,41 +331,6 @@ const StyledDragged = styled.p`
 `
 
 
-const StyledMask = styled.div`
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-  opacity: ${props => props.opacity};
-  transition: opacity 3s;
-
-  & h1 {
-    font-size: calc(10 * var(--w));
-    text-align: center;
-    color: #fff;
-  }
-
-  & button {
-    cursor: pointer;
-    font-size: calc(5 * var(--w));
-    padding: 0.25em;
-    border: 0.25em outset;
-    border-radius: 0.25em;
-
-    &:active {
-      border-style: inset;
-    }
-  }
-`
-
-
 export default class Drag extends Component {
   constructor(props) {
     super(props)
@@ -381,10 +344,7 @@ export default class Drag extends Component {
     this.dropTarget = React.createRef()
     this.gameFrame  = React.createRef()
 
-    this.state = {
-      count: 0
-    , mask: 0
-    }
+    this.state = { count: 0 }
 
     this.errors      = []
 
@@ -393,7 +353,6 @@ export default class Drag extends Component {
     this.dragStarted = this.dragStarted.bind(this)
     this.dragName    = this.dragName.bind(this)
     this.dropName    = this.dropName.bind(this)
-    this.fadeMask    = this.fadeMask.bind(this)
 
     // this.eventType   "mousedown" | "touchstart" for setTrackedEvent
     // this.touch       prevents mouse events if action is touch
@@ -418,6 +377,10 @@ export default class Drag extends Component {
       if (!this.props.isMaster) {
         // Only allow the master to start the activity.
         return
+
+      } else {
+        // HACK: See notes at componentDidMount
+        this.state = { startUp }
       }
     }
 
@@ -427,6 +390,8 @@ export default class Drag extends Component {
     const data         = this.getLayout(items)
     const group_id     = this.props.group_id
     this.errors.length = 0
+
+    // console.log("Drag newDeal viewData:", data)
 
     setViewData.call({
       group_id
@@ -438,11 +403,6 @@ export default class Drag extends Component {
     if (startUp === true) {
       return
     }
-
-    const complete = 0
-    const mask = 0
-    this.setState({ complete, mask })
-    this.timeOut = 0
   }
 
 
@@ -461,11 +421,6 @@ export default class Drag extends Component {
     }, {})
 
     this.props.treatResult(correct, time)
-
-    setTimeout(
-      () => this.newDeal()
-    , NO_AUDIO_DELAY // TODO: wait for audio to complete
-    )
   }
 
 
@@ -519,8 +474,7 @@ export default class Drag extends Component {
     const target = event.target
     if (target.tagName !== "P") {
       return
-    } else if (this.state.complete) {
-      return
+
     } else if (target.classList.contains("dropped")) {
       return
     }
@@ -810,35 +764,6 @@ export default class Drag extends Component {
   }
 
 
-  fadeMask() {
-    this.setState({ mask: 1 })
-  }
-
-
-  // newGame(aspectRatio) {
-  //   if (this.complete) {
-  //     if (!this.timeOut) {
-  //       this.timeOut = setTimeout(this.fadeMask, 0)
-  //     }
-
-  //     return <StyledMask
-  //       opacity={this.state.mask}
-  //       aspectRatio={aspectRatio}
-  //     >
-  //       <h1>{this.props.uiText.congratulations}</h1>
-  //       <button
-  //         onMouseUp={this.newDeal}
-  //       >
-  //         {this.props.uiText.play_again}
-  //       </button>
-  //     </StyledMask>
-
-  //   } else {
-  //     return ""
-  //   }
-  // }
-
-
   turnComplete(data) {
     let completed = 0
 
@@ -860,17 +785,20 @@ export default class Drag extends Component {
 
 
   render() {
+    // console.log("Rendering Drag")
+
     // console.log("Drag.props:", JSON.stringify(this.props, null, "  "))
     const data = this.props.data
-    // undefined or {
-    //   names
-    // , keys
-    // , images
-    // , hints
-    // , show
-    // , dragIds
-    // , dropIds
-    // }
+    /* undefined or {
+     *   names
+     * , keys
+     * , images
+     * , hints
+     * , show
+     * , dragIds
+     * , dropIds
+     * }
+     */
 
     if ( !this.gameFrame.current
       || !data
@@ -881,11 +809,20 @@ export default class Drag extends Component {
       // data will have a value. In the meantime, force the gameFrame
       // ref to become something
 
+      console.log( "Drag no data ("
+                 + !data
+                 + ") or no gameFrame ("
+                 + !this.gameFrame.current
+                 + ")"
+                 )
+
       return <StyledGame
         id="empty-drag-frame"
         ref={this.gameFrame}
       />
     }
+
+    // console.log("Drag showing game data:", data)
 
     this.complete     = data.complete || this.turnComplete(data)
 
@@ -914,5 +851,26 @@ export default class Drag extends Component {
         </StyledNames>
       </StyledGame>
     )
+  }
+
+
+  componentDidMount() {
+    // HACK
+    // For non-masters, this.gameFrame.current will be undefined on
+    // the first render, but this.props.data will already be
+    // populated.
+    //
+    // For the master on the other hand, this.props.data initially
+    // not exist, then it will be created by the call to newDeal()
+    // from the constructor, On the first render this.props.data will
+    // not exist, but a moment later it will. This change will cause
+    // a re-render.
+    //
+    // For non-masters, therefore, we have to trigger a second render
+    // artificially. We set this.state.startUp to true in newDeal()
+    // instead of creating this.props.data, and then set it to false
+    // immediately after the first render.
+
+    this.setState({ startUp: false })
   }
 }

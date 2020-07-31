@@ -30,7 +30,7 @@ export default class Tracker{
     const group_id = Session.get("group_id")
 
     const uiText = this.getUIText()
-    const { page, logged_in } = this.getGroupData(group_id)
+    const { page, logged_in, activity } = this.getGroupData(group_id)
     const { path, data, tag } = page
 
     const isMaster = Array.isArray(logged_in) && logged_in.length
@@ -50,6 +50,7 @@ export default class Tracker{
     , uiText
     , path
     , tag
+    , activity
     , data
     , isMaster
     // items will be undefined if isMaster is false
@@ -106,6 +107,7 @@ export default class Tracker{
       fields: {
         page: 1
       , logged_in: 1
+      , activity: 1
       }
     }
     const groupData = Group.findOne(groupSelect, options)

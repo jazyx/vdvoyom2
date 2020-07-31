@@ -31,8 +31,6 @@ import { Clozed
        } from './inputs'
 import LSS from './lss'
 
-import { NO_AUDIO_DELAY } from '/imports/tools/custom/constants'
-
 
 
 export default class Cloze extends FluencyCore {
@@ -94,8 +92,6 @@ export default class Cloze extends FluencyCore {
     , reveal:    false
     , fix:       false
     }
-
-    // this.newPhrase()
   }
 
 
@@ -119,9 +115,9 @@ export default class Cloze extends FluencyCore {
     , image
     , audio
     } = data
-    data = { _id, time, phrase, native, image, audio }
+    data = { _id, time, phrase, native, image, audio,  }
 
-    console.log(data)
+    // console.log(data)
     /* { collection: "Vocabulary"
      * , flops: <0-31>
      * , image: "/Assets/Vocabulary/basic/image/66.jpg"
@@ -536,7 +532,7 @@ export default class Cloze extends FluencyCore {
     }
 
     if (cloze.length === 1) {
-      if ( input.length === this.state.expected.length 
+      if ( input.length === this.state.expected.length
         && !this.state.fromNewPhrase
          ) {
         correct = true
@@ -654,21 +650,14 @@ export default class Cloze extends FluencyCore {
     const time = data.time
     const correct = { [data._id]: !this.error }
 
-    this.treatResult(correct, time)
+    const treatResult = this.props.treatResult || this.treatResult
+    treatResult(correct, time)
     this.setState({ correct: false })
-
-    setTimeout(
-      () => {
-        this.phrase = "" // HACK: in case same phrase is shown twice
-        this.newPhrase()
-      }
-    , NO_AUDIO_DELAY // TODO: wait for audio to complete
-    )
   }
 
 
   render() {
-    // console.log(JSON.stringify(this.props, null, " "))
+    // console.log(JSON.stringify(this.props, null, "  "))
     /* {"view": "Cloze",
      *  "aspectRatio": 1.1281512270050629,
      *  "code": "ru",
@@ -701,10 +690,13 @@ export default class Cloze extends FluencyCore {
      * }
      */
 
+    // console.log("Rendering Cloze")
+
     const newItems = this.props.isMaster
                    ? this.checkForNewItems() // in FluencyCore
                    : false
     if (newItems) {
+      // console.log("Cloze no new items")
       return "Loading new items"
 
     } else if (!this.props.data) {
@@ -713,11 +705,13 @@ export default class Cloze extends FluencyCore {
       // available on the next render, which will occur when the
       // new value of the Groups.page.data is available.
 
+      // console.log("Cloze calling newPhrase")
       this.newPhrase()
       return "Preparing first item"
     }
 
     const { image, input } = this.props.data
+    // console.log("Cloze input:", input)
 
     // console.log(
     //   "image:", image
@@ -739,14 +733,19 @@ export default class Cloze extends FluencyCore {
 
 
   componentDidUpdate() {
+    // console.log("Cloze componentDidUpdate")
     if (this.state.correct) {
+      // console.log("Cloze correct:", this.state.correct, " calling setFluency()")
       this.setFluency()
 
     } else {
       const data = this.props.data
+      // console.log("Cloze componentDidUpdate data:", data)
 
       if (data) {
         const { image, phrase, input, selection } = data
+
+        // console.log("Cloze phrase:", phrase, "input:", input)
 
         if (this.phrase !== phrase) {
           this.treatPhrase(phrase)

@@ -23,7 +23,6 @@ import * as cloze from '../../public/Activities/Cloze/methods.js'
 import * as drag from '../../public/Activities/Drag/methods.js'
 import * as flash from '../../public/Activities/Flash/methods.js'
 import * as spiral from '../../public/Activities/Spiral/methods.js'
-import * as vocabulary from '../../public/Activities/Vocabulary/methods.js'
 
 export const methods = {
   ...admin
@@ -32,5 +31,4 @@ export const methods = {
 , ...drag
 , ...flash
 , ...spiral
-, ...vocabulary
 }

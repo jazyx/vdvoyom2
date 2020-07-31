@@ -1,5 +1,5 @@
 /**
- * /public/activities/Drag/js/methods.js
+ * /public/activities/Drag/methods.js
  */
 
 import { Meteor } from 'meteor/meteor'

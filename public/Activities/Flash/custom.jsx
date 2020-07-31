@@ -9,7 +9,7 @@
 
 
 
-import Core from './deck/core'
+import Core from './deck/FlashCore'
 
 
 // export default class CustomFlash extends Core {

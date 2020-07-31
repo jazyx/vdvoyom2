@@ -1,5 +1,5 @@
 /**
- * /public/activities/Cloze/custom.jsx
+ * /public/activities/Cloze/Cloze.jsx
  *
  * This script imports the Core class from the deck/ folder and
  * re-exports it unchanged. If necessary, Core could be used to extend
@@ -9,7 +9,7 @@
 
 
 
-import Core from './deck/core'
+import Core from './deck/ClozeCore'
 
 // console.log("Custom Cloze", Core)
 

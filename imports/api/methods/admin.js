@@ -450,6 +450,37 @@ export const setIndex = {
 }
 
 
+export const switchActivity = {
+  name: "vdvoyom.switchActivity"
+
+, call(groupData, callback) {
+    const options = {
+      returnStubValue: true
+    , throwStubExceptions: true
+    }
+
+    Meteor.apply(this.name, [groupData], options, callback)
+  }
+
+, validate(groupData) {
+    new SimpleSchema({
+      _id:      { type: String }
+    , activity: { type: String }
+    }).validate(groupData)
+  }
+
+, run(groupData) {
+    const { _id, activity } = groupData
+    const select = { _id }
+    const update = {
+      $unset: { "page.data": 0 }
+    , $set:   { activity}
+    }
+    Group.update(select, update)
+  }
+}
+
+
 export const addToFluency = {
   name: 'vocabulary.addToFluency'
 
@@ -534,6 +565,7 @@ const methods = [
   , share
   , setPage
   , setIndex
+  , switchActivity
   , addToFluency
   , setFluency
 ]
