@@ -64,15 +64,6 @@ class Teach extends Component {
     const group = this.props.groups[this.state.selected]
 
     teacher.join(group)
-
-    const { _id, path } = group
-    Session.set("group_id", _id)
-
-    toggleActivation.call({
-      _id
-    , d_code: this.props.d_code
-    , active: true
-    })
   }
 
 

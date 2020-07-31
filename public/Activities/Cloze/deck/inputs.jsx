@@ -70,7 +70,7 @@ export class Clozed extends Component {
           , inputRef
           } = this.props
 
-     window.change = change
+    window.change = change
 
     return (
       <StyledPhrase
@@ -90,6 +90,7 @@ export class Clozed extends Component {
             className="input can-select"
             error={error}
             correct={correct}
+            disabled={correct}
             requireSubmit={requireSubmit}
             maxLength={maxLength}
             value={input}

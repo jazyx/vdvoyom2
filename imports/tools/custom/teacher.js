@@ -37,20 +37,6 @@ const { Group } = collections
 
 
 class Teacher {
-  constructor() {
-    // this.trackGroup = this.trackGroup.bind(this)
-  }
-
-
-  // setAppView() {
-  //   console.log("Teacher.setAppView(){} should be replaced by App")
-  // }
-
-
-  // setViewFunction(setAppView) {
-  //   this.setAppView = setAppView
-  // }
-
 
   initialize() {
     const id     = this.id     = Session.get("teacher_id")
@@ -71,9 +57,6 @@ class Teacher {
 
   join(group) {
     const { _id, path } = group
-    // const view = Array.isArray(path[path.length - 1])
-    //            ? path[0]
-    //            : "Activity"
 
     Session.set("group_id", _id)
 
@@ -82,26 +65,7 @@ class Teacher {
     , d_code: this.d_code
     , active: true
     })
-
-    // Tracker.autorun(this.trackGroup)
-
-    // this.setAppView(view)
   }
-
-
-  // REACTIVE SUBSCRIPTION to this Group .active field
-
-  // trackGroup(tracker) {
-  //   const select  = { _id: Session.get("group_id") }
-  //   const options = { fields: { active: 1 } }
-  //   const { active } = Group.findOne(select, options)
-  //                   || { active: false }
-  //   if (!active) {
-  //     tracker.stop()
-  //     this.leaveGroup()
-  //     this.setAppView("Teach")
-  //   }
-  // }
 
 
   // CALL FROM App.jsx COMPONENT when props.emptyGroup is set to true

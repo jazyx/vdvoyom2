@@ -107,7 +107,7 @@ export default class Cloze extends FluencyCore {
       return
     }
 
-    console.log("newPhrase data:", data)
+    // console.log("newPhrase data:", data)
 
     this.error = false
     const group_id = this.props.group_id
@@ -651,7 +651,7 @@ export default class Cloze extends FluencyCore {
 
 
   setFluency() {
-    console.log("setFluency", this.state.submitted)
+    // console.log("setFluency", this.state.submitted)
 
     const data = this.props.data
     const time = data.time
@@ -664,10 +664,9 @@ export default class Cloze extends FluencyCore {
 
 
   chooseNextActivity() {
-    console.log("chooseNextActivity")
     setTimeout(() => {
-      console.log("chooseNextActivity - call newPhrase")
       this.setState({ correct: false })
+      this.phrase = ""
       this.newPhrase()
     }, NO_AUDIO_DELAY)
   }
@@ -678,7 +677,6 @@ export default class Cloze extends FluencyCore {
                    ? this.checkForNewItems() // in FluencyCore
                    : false
     if (newItems) {
-      // console.log("Cloze no new items")
       return "Loading new items"
 
     } else if (!this.props.data) {
@@ -687,19 +685,11 @@ export default class Cloze extends FluencyCore {
       // available on the next render, which will occur when the
       // new value of the Groups.page.data is available.
 
-      console.log("Cloze render calling newPhrase")
       this.newPhrase()
       return "Preparing first item"
     }
 
     const { image, input } = this.props.data
-    // console.log("Cloze input:", input)
-
-    // console.log(
-    //   "image:", image
-    // , "input:", input
-    // , "this.state:", this.state
-    // )
 
     return (
       <Clozed
@@ -716,8 +706,6 @@ export default class Cloze extends FluencyCore {
 
   componentDidUpdate() {
     if (this.state.correct && !this.state.submitted) {
-      console.log("componentDidUpdate - call setFluency", this.state.submitted)
-
       this.setFluency()
 
     } else {
@@ -733,7 +721,6 @@ export default class Cloze extends FluencyCore {
           this.treatInput(input)
           this.inputRef.current.setSelectionRange(selection, selection)
           this.inputRef.current.focus()
-          // console.log("Input changed:",input,document.activeElement)
         }
       }
     }
