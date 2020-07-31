@@ -155,6 +155,8 @@ export default class FluencyCore extends Component {
 
 
   treatResult(correct, timeStamp, partial) {
+    // console.log("treatResult")
+
     if (this.props.isMaster) {
       const { user_id, group_id } = this.props
       const result = {
@@ -167,6 +169,8 @@ export default class FluencyCore extends Component {
       setFluency.call(result)
 
       if (!partial) {
+        // console.log("treatResult - calling chooseNextActivity")
+
         this.chooseNextActivity()
       }
     }

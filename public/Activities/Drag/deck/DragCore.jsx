@@ -809,12 +809,12 @@ export default class Drag extends Component {
       // data will have a value. In the meantime, force the gameFrame
       // ref to become something
 
-      console.log( "Drag no data ("
-                 + !data
-                 + ") or no gameFrame ("
-                 + !this.gameFrame.current
-                 + ")"
-                 )
+      // console.log( "Drag no data ("
+      //            + !data
+      //            + ") or no gameFrame ("
+      //            + !this.gameFrame.current
+      //            + ")"
+      //            )
 
       return <StyledGame
         id="empty-drag-frame"

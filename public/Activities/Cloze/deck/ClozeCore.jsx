@@ -31,6 +31,8 @@ import { Clozed
        } from './inputs'
 import LSS from './lss'
 
+import { NO_AUDIO_DELAY } from '/imports/tools/custom/constants'
+
 
 
 export default class Cloze extends FluencyCore {
@@ -105,6 +107,8 @@ export default class Cloze extends FluencyCore {
       return
     }
 
+    console.log("newPhrase data:", data)
+
     this.error = false
     const group_id = this.props.group_id
     const {
@@ -170,6 +174,7 @@ export default class Cloze extends FluencyCore {
     , fromNewPhrase: true
     , width: 0
     , requireSubmit: false // false
+    , submitted: false
     }
 
     this.setState(data)
@@ -646,52 +651,29 @@ export default class Cloze extends FluencyCore {
 
 
   setFluency() {
+    console.log("setFluency", this.state.submitted)
+
     const data = this.props.data
     const time = data.time
     const correct = { [data._id]: !this.error }
 
     const treatResult = this.props.treatResult || this.treatResult
     treatResult(correct, time)
-    this.setState({ correct: false })
+    this.setState({ submitted: true })
+  }
+
+
+  chooseNextActivity() {
+    console.log("chooseNextActivity")
+    setTimeout(() => {
+      console.log("chooseNextActivity - call newPhrase")
+      this.setState({ correct: false })
+      this.newPhrase()
+    }, NO_AUDIO_DELAY)
   }
 
 
   render() {
-    // console.log(JSON.stringify(this.props, null, "  "))
-    /* {"view": "Cloze",
-     *  "aspectRatio": 1.1281512270050629,
-     *  "code": "ru",
-     *  "d_code": "Rl#O7VQ",
-     *  "user_id": "FkeiaDasELF5ZJERH",
-     *  "group_id": "3QkdFQwvtQKQ9EYaX",
-     *  "logged_in": [
-     *   "Rl#O7VQ"
-     *  ],
-     *  "uiText": {},
-     *  "path": "/Cloze/test",
-     *  "tag": "Cloze",
-     *  "isMaster": true,
-     *  "items": [
-     *   {
-     *    "_id": "xtbjKwBSoQnrMNZXW",
-     *    "phrase": "Доброе утро, ты  хорошо спала?",
-     *    "image": "/Assets/Cloze/test/image/wakeup.jpg"
-     *   }
-     *   , ...
-     *  ]
-     *
-     *  "data": {
-     *    "_id": "s6zHW2iddLk4PGXGv",
-     *    "phrase": "тарелка  супа",
-     *    "image": "/activities/shared/soup.jpg",
-     *    "input": "тарелка  супа",
-     *    "requireSubmit": false
-     *  }
-     * }
-     */
-
-    // console.log("Rendering Cloze")
-
     const newItems = this.props.isMaster
                    ? this.checkForNewItems() // in FluencyCore
                    : false
@@ -705,7 +687,7 @@ export default class Cloze extends FluencyCore {
       // available on the next render, which will occur when the
       // new value of the Groups.page.data is available.
 
-      // console.log("Cloze calling newPhrase")
+      console.log("Cloze render calling newPhrase")
       this.newPhrase()
       return "Preparing first item"
     }
@@ -733,19 +715,16 @@ export default class Cloze extends FluencyCore {
 
 
   componentDidUpdate() {
-    // console.log("Cloze componentDidUpdate")
-    if (this.state.correct) {
-      // console.log("Cloze correct:", this.state.correct, " calling setFluency()")
+    if (this.state.correct && !this.state.submitted) {
+      console.log("componentDidUpdate - call setFluency", this.state.submitted)
+
       this.setFluency()
 
     } else {
       const data = this.props.data
-      // console.log("Cloze componentDidUpdate data:", data)
 
       if (data) {
         const { image, phrase, input, selection } = data
-
-        // console.log("Cloze phrase:", phrase, "input:", input)
 
         if (this.phrase !== phrase) {
           this.treatPhrase(phrase)
