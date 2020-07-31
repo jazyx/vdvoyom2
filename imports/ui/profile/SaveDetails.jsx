@@ -155,6 +155,11 @@ class SaveDetails extends Component {
       {buttonBar}
     </StyledProfile>
   }
+
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.start, false)
+  }
 }
 
 

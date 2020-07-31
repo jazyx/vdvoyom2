@@ -23,7 +23,7 @@
 			"name": "wakeup",
 			"phrase": {
 				"en": "Good morning, did you sleep %well?",
-				"ru": "Доброе утро, ты %хорошо спала?",
+				"ru": "Доброе утро, ты #хорошо спала?",
 				"fr": "Bonjour! As-tu %bien dormi ?"
 			},
 			"image": [

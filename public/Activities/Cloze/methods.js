@@ -29,7 +29,9 @@ export const setPageData = {
     }).validate(pageData)
 
     new SimpleSchema({
-      "phrase":        { type: String }
+      "_id":           { type: String }
+    , "time":          { type: Number }
+    , "phrase":        { type: String }
     , "native":        { type: String, optional: true }
     , "image":         { type: String, optional: true }
     , "audio":         { type: String, optional: true }

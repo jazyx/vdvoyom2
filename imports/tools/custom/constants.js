@@ -35,6 +35,8 @@ const IMAGE_REGEX = new RegExp("([^/.]+)" + lookAhead)
 const JSON_REGEX = /^((?:root)|(?:rank)|(?:rack)|(?:l10n))\.json$/
 // Splits PATH_REGEX into chunks like "/Activity" and "/exercise"
 const SET_REGEX = /(?=\/)/
+
+const NO_AUDIO_DELAY = 1500
 /// HARD-CODED >>>
 
 
@@ -49,4 +51,6 @@ export {
 , JSON_REGEX
 , SET_REGEX
 , EN_REGEX
+
+, NO_AUDIO_DELAY
 }

@@ -96,6 +96,11 @@ class CheckPIN extends Component {
       {buttonBar}
     </StyledProfile>
   }
+
+
+  componentWillUnmount() {  
+    document.removeEventListener("keydown", this.start, false)
+  }
 }
 
 

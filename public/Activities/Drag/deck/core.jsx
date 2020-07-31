@@ -52,10 +52,9 @@ import { setViewData
        , toggleComplete
        } from '../methods'
 
+import { NO_AUDIO_DELAY } from '/imports/tools/custom/constants'
 
-/// <<< HARD-CODED
-const delay = 1500
-/// HARD-CODED >>>
+
 
 /**
  * Generate Portrait, Landscape, Ratio, PortraitRatio, LandscapeRatio
@@ -465,7 +464,7 @@ export default class Drag extends Component {
 
     setTimeout(
       () => this.newDeal()
-    , delay // TODO: wait for audio to complete
+    , NO_AUDIO_DELAY // TODO: wait for audio to complete
     )
   }
 

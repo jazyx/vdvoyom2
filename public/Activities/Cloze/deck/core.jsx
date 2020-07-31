@@ -31,6 +31,8 @@ import { Clozed
        } from './inputs'
 import LSS from './lss'
 
+import { NO_AUDIO_DELAY } from '/imports/tools/custom/constants'
+
 
 
 export default class Cloze extends FluencyCore {
@@ -107,9 +109,17 @@ export default class Cloze extends FluencyCore {
       return
     }
 
+    this.error = false
     const group_id = this.props.group_id
-    const { phrase, native, image, audio } = data
-    data = { phrase, native, image, audio }
+    const {
+      _id
+    , next_seen: time
+    , phrase
+    , native
+    , image
+    , audio
+    } = data
+    data = { _id, time, phrase, native, image, audio }
 
     console.log(data)
     /* { collection: "Vocabulary"
@@ -163,7 +173,7 @@ export default class Cloze extends FluencyCore {
     , end
     , fromNewPhrase: true
     , width: 0
-    , requireSubmit: true // false
+    , requireSubmit: false // false
     }
 
     this.setState(data)
@@ -439,6 +449,14 @@ export default class Cloze extends FluencyCore {
 
         } else if (expected) {
           if (!received) {
+            if (index !== lastIndex) {
+              // Text is missing in the input...
+              if (cloze.length === 1 && index === typeIndex) {
+                // ... but everything up to this point is correct
+                onlyEndIsMissing = true
+              }
+            }
+
             cloze.push(<Cut
               key={key}
               has_space={hasSpace}
@@ -518,7 +536,9 @@ export default class Cloze extends FluencyCore {
     }
 
     if (cloze.length === 1) {
-      if (input.length === this.state.expected.length) {
+      if ( input.length === this.state.expected.length 
+        && !this.state.fromNewPhrase
+         ) {
         correct = true
       }
 
@@ -540,7 +560,7 @@ export default class Cloze extends FluencyCore {
     this.setState({ cloze, error, correct, maxLength, reveal, fix })
 
     this.input = input
-
+    this.error = this.error || error
     // console.log("input:", input, onlyEndIsMissing)
   }
 
@@ -629,38 +649,57 @@ export default class Cloze extends FluencyCore {
   }
 
 
+  setFluency() {
+    const data = this.props.data
+    const time = data.time
+    const correct = { [data._id]: !this.error }
+
+    this.treatResult(correct, time)
+    this.setState({ correct: false })
+
+    setTimeout(
+      () => {
+        this.phrase = "" // HACK: in case same phrase is shown twice
+        this.newPhrase()
+      }
+    , NO_AUDIO_DELAY // TODO: wait for audio to complete
+    )
+  }
+
+
   render() {
     // console.log(JSON.stringify(this.props, null, " "))
-    // {"view": "Cloze",
-    //  "aspectRatio": 1.1281512270050629,
-    //  "code": "ru",
-    //  "d_code": "Rl#O7VQ",
-    //  "user_id": "FkeiaDasELF5ZJERH",
-    //  "group_id": "3QkdFQwvtQKQ9EYaX",
-    //  "logged_in": [
-    //   "Rl#O7VQ"
-    //  ],
-    //  "uiText": {},
-    //  "path": "/Cloze/test",
-    //  "tag": "Cloze",
-    //  "isMaster": true,
-    //  "items": [
-    //   {
-    //    "_id": "xtbjKwBSoQnrMNZXW",
-    //    "phrase": "Доброе утро, ты  хорошо спала?",
-    //    "image": "/Assets/Cloze/test/image/wakeup.jpg"
-    //   }
-    //   , ...
-    //  ]
-    //
-    //  "data": {
-    //    "_id": "s6zHW2iddLk4PGXGv",
-    //    "phrase": "тарелка  супа",
-    //    "image": "/activities/shared/soup.jpg",
-    //    "input": "тарелка  супа",
-    //    "requireSubmit": false
-    //  }
-    // }
+    /* {"view": "Cloze",
+     *  "aspectRatio": 1.1281512270050629,
+     *  "code": "ru",
+     *  "d_code": "Rl#O7VQ",
+     *  "user_id": "FkeiaDasELF5ZJERH",
+     *  "group_id": "3QkdFQwvtQKQ9EYaX",
+     *  "logged_in": [
+     *   "Rl#O7VQ"
+     *  ],
+     *  "uiText": {},
+     *  "path": "/Cloze/test",
+     *  "tag": "Cloze",
+     *  "isMaster": true,
+     *  "items": [
+     *   {
+     *    "_id": "xtbjKwBSoQnrMNZXW",
+     *    "phrase": "Доброе утро, ты  хорошо спала?",
+     *    "image": "/Assets/Cloze/test/image/wakeup.jpg"
+     *   }
+     *   , ...
+     *  ]
+     *
+     *  "data": {
+     *    "_id": "s6zHW2iddLk4PGXGv",
+     *    "phrase": "тарелка  супа",
+     *    "image": "/activities/shared/soup.jpg",
+     *    "input": "тарелка  супа",
+     *    "requireSubmit": false
+     *  }
+     * }
+     */
 
     const newItems = this.props.isMaster
                    ? this.checkForNewItems() // in FluencyCore
@@ -673,7 +712,7 @@ export default class Cloze extends FluencyCore {
       // setPageData to set the Groups page.date. This will be
       // available on the next render, which will occur when the
       // new value of the Groups.page.data is available.
-      
+
       this.newPhrase()
       return "Preparing first item"
     }
@@ -700,17 +739,24 @@ export default class Cloze extends FluencyCore {
 
 
   componentDidUpdate() {
-    const data = this.props.data
+    if (this.state.correct) {
+      this.setFluency()
 
-    if (data) {
-      const { image, phrase, input, selection } = data
+    } else {
+      const data = this.props.data
 
-      if (this.phrase !== phrase) {
-        this.treatPhrase(phrase)
+      if (data) {
+        const { image, phrase, input, selection } = data
 
-      } else if (this.input !== input) {
-        this.treatInput(input)
-        this.inputRef.current.setSelectionRange(selection, selection)
+        if (this.phrase !== phrase) {
+          this.treatPhrase(phrase)
+
+        } else if (this.input !== input) {
+          this.treatInput(input)
+          this.inputRef.current.setSelectionRange(selection, selection)
+          this.inputRef.current.focus()
+          // console.log("Input changed:",input,document.activeElement)
+        }
       }
     }
   }

@@ -24,6 +24,8 @@ export default class Vocabulary extends FluencyCore {
       collection: "Vocabulary"
     }
     super(props, options)
+
+    this.viewsToChoose = ["Cloze", "Drag"]
   }
 
 
@@ -58,7 +60,8 @@ export default class Vocabulary extends FluencyCore {
 
     }
 
-    const view = "Drag" // TODO: Choose view intelligently
+    const view = this.viewsToChoose.shift()
+    this.viewsToChoose.push(view)
 
     const View = this.getView(view)
 
