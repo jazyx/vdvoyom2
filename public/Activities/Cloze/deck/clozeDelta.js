@@ -8,91 +8,87 @@ import LSS from './lss'
 
 
 
-/* expectedOutput and receivedOutput are arrays containing the
- * full string that is expected and been input. We place each of
- * these arrays inside an enclosing array, to indicate that they
- * are to be treated.
+/* rightArray and wroteArray are arrays containing the full string
+ * that is expected and has been input. We place each of these arrays
+ * inside an enclosing ~Queue array, to indicate that they are to be
+ * treated.
  *
- * The treatment consists of taking the first item from each
- * toTreat array, and looking for the longest sub-string (lss).
- * If there is no lss, then all the letters in the chunks are
+ * The treatment consists of taking the first item from each ~Queue
+ * array, and looking for the longest sub-string (lss) that they
+ * share. If there is no lss, then all the letters in the chunks are
  * different. If there is an lss, then the chunk can be divided
  * three parts: before, lss and after. (Either before or after or
  * both may be an "" empty string). The arrays containing the
  * Before and After chunks are returned to the toTreat arrays for
  * further treatment.
  *
- * However, the initial ~Output arrays will have been removed
- * from the toTreat arrays. The divided arrays will be placed in
- * these ~Output arrays in the original order. When a divided
- * is treated, its components will be placed inside itself in the
- * same way. The order of the characters is thus maintained in
- * deeper and deeper nested sub-arrays, until there are no more
- * chunks to treat.
+ * However, the initial ~Array's will have been removed from their
+ * ~Queue arrays. The divided arrays will be placed in the ~Arrays in
+ * the original order. When a divided array is treated, its components
+ * will be placed inside itself in the same way. The order of the
+ * characters is thus maintained in deeper and deeper nested
+ * sub-arrays, until there are no more chunks queued for treatment.
  *
- * At this point, the ~Output arrays are flattened into a non-
- * nested array of chunks which are either identical in both
- * expected and received, or different. They can be different in
- * three ways:
+ * At this point, the ~Arrays are flattened into a non-nested array
+ * of chunks which are either identical in both right~ and wrote~,
+ * or different. They can be different in three ways:
  *
- * * One is empty while the other contains text (Add | Cut)
- * * Both contain text which share no common characters (Fix)
- * * Both contain two characters in two different orders (Flip)
+ * • One is empty while the other contains text (Add | Cut)
+ * • Both contain text which share no common characters (Fix)
+ * • Both contain exactly two characters in inverted orders (Flip)
  *   These last two cases are treated by treatFix()
  *
- * Finally, getClozeFromReceivedOutput() creates a sequence of
- * spans where the text and background have the appropriate
- * colours.
  */
-export class ClozeDelta {
-  constructor (due, got) {
-    this.due = due
-    this.got = got
-
-    this.error = false
-    this.dueOutput = [this.normalizeText(this.due)]
-    this.gotOutput = [this.normalizeText(this.got)]
-    this.dueQueue  = [this.dueOutput]
-    this.gotQueue  = [this.gotOutput]
+export const clozeDelta = (right, wrote) => {
+  const normalizeText = (string) => {
+    string = string.toLowerCase()
+                   .replace(/ /g, " ")
+                   // .replace(/ё/g, "е")
+    return string
   }
 
 
-  /* The contents of ~Arrays extracted from the toTreat variable
-   * are broken into sub-arrays as they are treated. The sub-arrays
-   * are maintained in the original order of the text. Any sub-array
-   * that needs further treatment is returned toTreat; those that
-   * have been completely treated are not returned. As a result, the
-   * original this.dueOutput and this.gotOutput arrays retain the
-   * orginal text, just broken into (deeply nested) arrays.
-   */   
-  getDelta() {
-    while (this.dueQueue.length) {
-      const dueArray = this.dueQueue.pop() // arrays
-      const gotArray = this.gotQueue.pop()
-      const due      = dueArray[0]         // strings
-      const got      = gotArray[0]
+  let error        = false
+  let rightArray   = [normalizeText(right)]
+  let wroteArray   = [normalizeText(wrote)]
+  const rightQueue = [rightArray]
+  const wroteQueue = [wroteArray]
 
-      if (!due || !got) {
+
+ /* The contents of ~Queues are broken into sub-arrays as they are
+   * treated. The sub-arrays are maintained in the original order of 
+   * the text. Any sub-array that needs further treatment is returned
+   * its ~Queue; those thathave been completely treated are not
+   * returned. As a result, the original rightArray and wroteArray
+   * arrays retain the orginal text, just broken into (deeply nested)
+   * arrays.
+   */   
+  const getDelta = () => {
+    while (rightQueue.length) {
+      const rightList = rightQueue.pop() // arrays
+      const wroteList = wroteQueue.pop()
+      const right      = rightList[0]         // strings
+      const wrote      = wroteList[0]
+
+      if (!right || !wrote) {
         // Add or cut: one or both may be empty
 
       } else {
-        const lss = LSS(due, got)
-
-        // console.log(dueArray, gotArray, lss)
+        const lss = LSS(right, wrote)
 
         switch (lss.length) {
           case 0:
             // There is nothing in common in these strings.
-            this.error = true
+            error = true
           break
 
           case 1:
             // There may be more matching letters, but flipped
-            this.error = this.lookForSwaps(dueArray, gotArray, lss)
+            error = lookForSwaps(rightList, wroteList, lss)
           break
 
           default:
-            this.splitStrings(dueArray, gotArray, lss)
+            splitStrings(rightList, wroteList, lss)
         }
       }
     }
@@ -107,68 +103,51 @@ export class ClozeDelta {
      * * flipped characters
      */
 
-    this.dueOutput = this.flatten(this.dueOutput)
-    this.gotOutput = this.flatten(this.gotOutput)
+    rightArray = flatten(rightArray)
+    wroteArray = flatten(wroteArray)
 
-    this.restoreCase(this.gotOutput, this.got)
+    restoreCase(wroteArray, wrote)
 
     return {
-      due: this.dueOutput
-    , got: this.gotOutput
-    , error: this.error
+      rightArray
+    , wroteArray
+    , error
     }
   }
 
-  // const maxLength = this.state.due.length + this.maxExtraChars
-  // const reveal = this.requireSubmit && !this.got
-  // const fix = (this.requireSubmit && error) || reveal
 
-  // this.setState({ cloze, error, correct, maxLength, reveal, fix })
-
-  // this.input = this.got
-  // this.error = this.error || error
-
-
-  normalizeText(string) {
-    string = string.toLowerCase()
-                   .replace(/ /g, " ")
-                   // .replace(/ё/g, "е")
-    return string
-  }
-
-
-  lookForSwaps(dueArray, gotArray, lss) {
-    const dueString = dueArray[0]
-    const gotString = gotArray[0]
-    const eLength = dueString.length - 1 // -1 so we don't
-    const rLength = gotString.length - 1 // overrun with ii + 1
+  const lookForSwaps = (rightList, wroteList, lss) => {
+    const rightString = rightList[0]
+    const wroteString = wroteList[0]
+    const rightLength = rightString.length - 1 // -1 so we don't
+    const wroteLength = wroteString.length - 1 // overrun with ii + 1
     let dontSplit = false
 
-    if (eLength && rLength) {
-      for ( let ii = 0; ii < eLength; ii += 1 ) {
-        const ch1 = dueString[ii]
-        const offset1 = gotString.indexOf(ch1)
+    if (rightLength && wroteLength) {
+      for ( let ii = 0; ii < rightLength; ii += 1 ) {
+        const ch1 = rightString[ii]
+        const offset1 = wroteString.indexOf(ch1)
 
         if (offset1 < 0) {
           // No match, so no flipped pair, so move on
 
         } else {
-          const ch2 = dueString[ii + 1]
-          const offset2 = gotString.indexOf(ch2)
+          const ch2 = rightString[ii + 1]
+          const offset2 = wroteString.indexOf(ch2)
 
           if (offset2 < 0) {
             // The second element of the pair is missing. No match.
 
           } else if (Math.abs(offset1 - offset2) === 1) {
             // We've found a swap. Split the strings into three
-            this.splitStringAt(ch1+ch2, dueArray, this.dueQueue)
-            this.splitStringAt(ch2+ch1, gotArray, this.gotQueue)
+            splitStringAt(ch1+ch2, rightList, rightQueue)
+            splitStringAt(ch2+ch1, wroteList, wroteQueue)
 
             // There may be more swaps further along, but they will
             // be treated in a subsequent iteration of the while
             // loop below
             dontSplit = true
-            this.error = true
+            error = true
             break
           }
         }
@@ -176,12 +155,12 @@ export class ClozeDelta {
     }
 
     if (!dontSplit) {
-      this.splitStrings(dueArray, gotArray, lss)
+      splitStrings(rightList, wroteList, lss)
     }
   }
 
 
-  splitStringAt(chunk, array, queue) {
+  const splitStringAt = (chunk, array, queue) => {
     const string = array.pop()
     const offset = string.indexOf(chunk)
     const offend = offset + chunk.length
@@ -198,13 +177,13 @@ export class ClozeDelta {
   }
 
 
-  splitStrings(dueArray, gotArray, lss) {
-    this.splitStringAt(lss, dueArray, this.dueQueue)
-    this.splitStringAt(lss, gotArray, this.gotQueue)
+  const splitStrings = (rightList, wroteList, lss) => {
+    splitStringAt(lss, rightList, rightQueue)
+    splitStringAt(lss, wroteList, wroteQueue)
   }
 
 
-  flatten(array, flattened=[]) {
+  const flatten = (array, flattened=[]) => {
     let item
 
     // "" is falsy, but we need to treat empty string items, so we
@@ -217,7 +196,7 @@ export class ClozeDelta {
     while ((item = array.shift(), !!item || item === "")) {
 
       if (Array.isArray(item)) {
-        item = this.flatten(item)
+        item = flatten(item)
         item.forEach(entry => {
           flattened.push(entry)
         })
@@ -231,7 +210,7 @@ export class ClozeDelta {
   }
 
 
-  restoreCase(array, original) {
+  const restoreCase = (array, original) => {
     let start = 0
     let end = 0
 
@@ -241,7 +220,10 @@ export class ClozeDelta {
       start = end
     })
   }
+
+
+  return getDelta()
 }
 
 
-window.ClozeDelta = ClozeDelta
+window.clozeDelta = clozeDelta

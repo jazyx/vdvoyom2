@@ -93,6 +93,10 @@ export const StyledInput = styled.input.attrs(props => {
                                  : colors.normalHighlight
                        };
   }
+
+  &:disabled{
+    outline: #9c9 auto 1px;
+  }
 `
 
 // The feedback span will show the same text as the input element,

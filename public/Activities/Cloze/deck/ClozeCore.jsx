@@ -19,8 +19,8 @@ import React, { Component } from 'react';
 
 
 import FluencyCore from '../../shared/fluencyCore'
-import { ClozeDelta } from './clozeDelta'
-import { ClozeComponent } from './clozeComponent'
+import { clozeDelta } from './clozeDelta'
+import { clozeComponent } from './clozeComponent'
 
 import { setPageData
        , updateInput
@@ -199,24 +199,33 @@ export default class Cloze extends FluencyCore {
   }
 
 
-  treatInput(input) {
-    const clozeDelta = new ClozeDelta(this.state.expected, input)
-    const delta = clozeDelta.getDelta()
-    const clozeComponent = new ClozeComponent()
-    const output = clozeComponent.getComponent(
-      delta
+  treatInput(wrote) {
+    const right = this.state.expected
+    const delta = clozeDelta(right, wrote)
+    const { rightArray, wroteArray, error } = delta
+    const output = clozeComponent(
+      right
+    , wrote
+    , rightArray
+    , wroteArray
+    , error
     , this.state.requireSubmit
     , this.state.fromNewPhrase
     )
+    /* { cloze:   [ array of components ]
+     * , correct: <true if complete text correctly entered>
+     * , error:   <false if everything typed so far is correct>
+     * }
+     */
 
-    output.maxLength = this.state.expected.length + this.maxExtraChars
-    output.reveal = this.state.requireSubmit && !input
-    output.fix = (this.state.requireSubmit && output.error)
-               || output.reveal
+    output.maxLength = right.length + this.maxExtraChars
+    output.reveal    = this.state.requireSubmit && !input
+    output.fix       = (this.state.requireSubmit && output.error)
+                     || output.reveal
 
     this.setState(output)
 
-    this.input = input
+    this.input = wrote
     this.error = this.error || output.error
   }
 
