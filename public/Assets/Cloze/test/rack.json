@@ -105,6 +105,23 @@
 				"Cloze"
 			],
 			"_id": "6e2Z2ChC3Tq6Kfs2k"
+		},
+		{
+			"name": "dog",
+			"phrase": {
+				"en": "dog",
+				"ru": "пёс",
+				"fr": "klebs"
+			},
+			"image": [
+				{
+					"src": "/Assets/shared/images/dog.jpg"
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "5SWrstHd7H82Ry3S3"
 		}
 	]
 }

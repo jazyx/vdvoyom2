@@ -19,6 +19,8 @@ import React, { Component } from 'react';
 
 
 import FluencyCore from '../../shared/fluencyCore'
+import { ClozeDelta } from './clozeDelta'
+import { ClozeComponent } from './clozeComponent'
 
 import { setPageData
        , updateInput
@@ -107,8 +109,6 @@ export default class Cloze extends FluencyCore {
       return
     }
 
-    // console.log("newPhrase data:", data)
-
     this.error = false
     const group_id = this.props.group_id
     const {
@@ -121,7 +121,6 @@ export default class Cloze extends FluencyCore {
     } = data
     data = { _id, time, phrase, native, image, audio,  }
 
-    // console.log(data)
     /* { collection: "Vocabulary"
      * , flops: <0-31>
      * , image: "/Assets/Vocabulary/basic/image/66.jpg"
@@ -132,8 +131,8 @@ export default class Cloze extends FluencyCore {
      * , times_seen: 0
      * , _id: "hrSjLZcs8Q6hDWSYB
      * }
-     *
-     * { phrase: <string>, native: <string>, image: <url> }
+     * =>
+     * { phrase: <string>, native: <string>, image: <url>, ... }
      */
 
     // React Hack: we must momentarily show (any) text, to make the
@@ -201,368 +200,24 @@ export default class Cloze extends FluencyCore {
 
 
   treatInput(input) {
-    // console.log("treat input:", input)
-    // console.log("t่his.state:", this.state)
-
-    let error = false
-    let correct = false
-    let onlyEndIsMissing = false
-    let expectedOutput = [this.state.expected.toLowerCase()
-                                             .replace(/ /g, " ")
-                         ]
-    let receivedOutput = [input.toLowerCase()]
-
-    /* expectedOutput and receivedOutput are arrays containing the
-     * full string that is expected and been input. We place each of
-     * these arrays inside an enclosing array, to indicate that they
-     * are to be treated.
-     *
-     * The treatment consists of taking the first item from each
-     * toTreat array, and looking for the longest sub-string (lss).
-     * If there is no lss, then all the letters in the chunks are
-     * different. If there is an lss, then the chunk can be divided
-     * three parts: before, lss and after. (Either before or after or
-     * both may be an "" empty string). The arrays containing the
-     * Before and After chunks are returned to the toTreat arrays for
-     * further treatment.
-     *
-     * However, the initial ~Output arrays will have been removed
-     * from the toTreat arrays. The divided arrays will be placed in
-     * these ~Output arrays in the original order. When a divided
-     * is treated, its components will be placed inside itself in the
-     * same way. The order of the characters is thus maintained in
-     * deeper and deeper nested sub-arrays, until there are no more
-     * chunks to treat.
-     *
-     * At this point, the ~Output arrays are flattened into a non-
-     * nested array of chunks which are either identical in both
-     * expected and received, or different. They can be different in
-     * three ways:
-     *
-     * * One is empty while the other contains text (Add | Cut)
-     * * Both contain text which share no common characters (Fix)
-     * * Both contain two characters in two different orders (Flip)
-     *   These last two cases are treated by treatFix()
-     *
-     * Finally, getClozeFromReceivedOutput() creates a sequence of
-     * spans where the text and background have the appropriate
-     * colours.
-     */
-
-    const toTreat = {
-      expected: [expectedOutput]
-    , received: [receivedOutput]
-    }
-
-
-    const lookForSwaps = (expectedArray, receivedArray, lss, error) => {
-      const expectedString = expectedArray[0]
-      const receivedString = receivedArray[0]
-      const eLength = expectedString.length - 1 // -1 so we don't
-      const rLength = receivedString.length - 1 // overrun with ii + 1
-      let dontSplit = false
-
-      if (eLength && rLength) {
-        for ( let ii = 0; ii < eLength; ii += 1 ) {
-          const ch1 = expectedString[ii]
-          const offset1 = receivedString.indexOf(ch1)
-
-          if (offset1 < 0) {
-            // No match, so no flipped pair, so move on
-          } else {
-            const ch2 = expectedString[ii + 1]
-            const offset2 = receivedString.indexOf(ch2)
-
-            if (offset2 < 0) {
-              // The second element of the pair is missing. No match.
-
-            } else if (Math.abs(offset1 - offset2) === 1) {
-              // We've found a swap. Split the strings into three
-              splitStringAt(ch1+ch2, expectedArray, toTreat.expected)
-              splitStringAt(ch2+ch1, receivedArray, toTreat.received)
-
-              // There may be more swaps further along, but they will
-              // be treated in a subsequent iteration of the while
-              // loop below
-              dontSplit = true
-              error = true
-              break
-            }
-          }
-        }
-      }
-
-      if (!dontSplit) {
-        splitStrings(expectedArray, receivedArray, lss)
-      }
-
-      return error
-    }
-
-
-    const splitStringAt = (chunk, array, toTreat) => {
-      const string = array.pop()
-      const offset = string.indexOf(chunk)
-      const offend = offset + chunk.length
-
-      const before = [string.substring(0, offset)]
-      array.push(before)
-      toTreat.push(before)
-
-      array.push(chunk)
-
-      const after  = [string.substring(offend)]
-      array.push(after)
-      toTreat.push(after)
-    }
-
-
-    const splitStrings = (expectedArray, receivedArray, lss) => {
-      splitStringAt(lss, expectedArray, toTreat.expected)
-      splitStringAt(lss, receivedArray, toTreat.received)
-    }
-
-
-    const flatten = (array, flattened=[]) => {
-      let item
-
-      // "" is falsy, but we need to treat empty string items, so we
-      // need a tricky `while` expression which will return true for
-      // any array or string, even if it's empty, while at the same
-      // time setting `item` to the value shifted from the array.
-      // When the array is empty, item will take the value `undefined`
-      // and the while expression will return false.
-
-      while ((item = array.shift(), !!item || item === "")) {
-
-        if (Array.isArray(item)) {
-          const flip = item.flip || false
-          item = flatten(item)
-          item.forEach(entry => {
-            if (flip) {
-              entry.flip = true
-            }
-
-            flattened.push(entry)
-          })
-
-        } else {
-          flattened.push(item)
-        }
-      }
-
-      return flattened
-    }
-
-
-    const restoreCase = (array, original) => {
-      let start = 0
-      let end = 0
-      array.forEach((chunk, index) => {
-        end += chunk.length
-        array[index] = original.substring(start, end)
-        start = end
-      })
-    }
-
-
-    const treatFix = (display, compare, key, cloze, hasSpace) => {
-      if ( compare[0] === display[1]
-        && compare[1] === display[0]
-         ) {
-        cloze.push(<Flip
-          key={key}
-          has_space={hasSpace}
-        >{display}</Flip>)
-
-        return
-      }
-
-      cloze.push(<Fix
-        key={key}
-        has_space={hasSpace}
-      >{display}</Fix>)
-    }
-
-
-    const getClozeFromReceivedOutput = () => {
-      const cloze = []
-
-      receivedOutput.forEach((received, index) => {
-        const key = index + received
-        const expected = expectedOutput[index]
-        const hasSpace = (received !== received.replace(/ /g, "")) + 0
-
-        if (received.toLowerCase() === expected) {
-          if (received) { // ignore empty items
-            cloze.push(<span
-              key={key}
-            >{received}</span>)
-          }
-
-        } else if (!received) {
-          if (expected && index !== lastIndex) {
-            // Text is missing in the input...
-            if (cloze.length === 1 && index === typeIndex) {
-              // ... but everything up to this point is correct
-              onlyEndIsMissing = true
-            }
-
-            //
-              cloze.push(<Add
-                key={key}
-                has_space={hasSpace}
-              />)
-          } // else both input and expected are "", for the last item
-
-          // TODO: Set a timeout so that index !== lastIndex is
-          // ignored if you stop typing before you reach the end.
-
-        } else if (!expected) {
-          cloze.push(<Cut
-            key={key}
-            has_space={hasSpace}
-          >{received}</Cut>)
-
-        } else {
-          treatFix(received, expected, key, cloze, hasSpace)
-        }
-      })
-
-      return cloze
-    }
-
-
-    const getClozeFromExpectedOutput = () => {
-      const cloze = []
-
-      expectedOutput.forEach((expected, index) => {
-        const key = index + expected
-        const received = receivedOutput[index]
-        const hasSpace = (expected !== expected.replace(/ /g, "")) + 0
-
-        if (expected.toLowerCase() === received) {
-          if (expected) { // ignore empty items
-            cloze.push(<span
-              key={key}
-            >{expected}</span>)
-          }
-
-        } else if (expected) {
-          if (!received) {
-            if (index !== lastIndex) {
-              // Text is missing in the input...
-              if (cloze.length === 1 && index === typeIndex) {
-                // ... but everything up to this point is correct
-                onlyEndIsMissing = true
-              }
-            }
-
-            cloze.push(<Cut
-              key={key}
-              has_space={hasSpace}
-            >{expected}</Cut>)
-
-          } else {
-            treatFix(expected, received, key, cloze, hasSpace)
-          }
-        }
-      })
-
-      return cloze
-    }
-
-
-    // The contents of ~Arrays extracted from the toTreat variable
-    // are broken into sub-arrays as they are treated. The sub-arrays
-    // are maintained in the original order of the text. Any sub-array
-    // that needs further treatment is returned toTreat; those that
-    // have been completely treated are not returned. As a result, the
-    // original expectedOutput and receivedOutput arrays retain the
-    // orginal text, just broken into (deeply nested) arrays.
-
-    while (toTreat.expected.length) {
-      const expectedArray = toTreat.expected.pop() // arrays
-      const receivedArray = toTreat.received.pop()
-      const expected = expectedArray[0]            // strings
-      const received = receivedArray[0]
-
-      if (!expected || !received) {
-        // Add or cut: one or both may be empty
-
-      } else {
-        const lss = LSS(expected, received)
-
-        // console.log(expectedArray, receivedArray, lss)
-
-        switch (lss.length) {
-          case 0:
-            // There is nothing in common in these strings.
-            error = true
-          break
-
-          case 1:
-            // There may be more matching letters, but flipped
-            error=lookForSwaps(expectedArray,receivedArray,lss,error)
-          break
-
-          default:
-            splitStrings(expectedArray, receivedArray, lss)
-        }
-      }
-    }
-
-    // The deeply nested arrays are restored to single-level arrays
-    // of chunks whose positions match. Each pair of chunks is one of
-    // the following:
-    // * identical
-    // * an omission
-    // * an addition
-    // * wrong
-    // * flipped characters
-
-    expectedOutput = flatten(expectedOutput)
-    receivedOutput = flatten(receivedOutput)
-
-    restoreCase(receivedOutput, input)
-
-    const lastIndex = receivedOutput.length
-    const typeIndex = lastIndex - 1
-
-    let cloze
-    if (this.state.requireSubmit) {
-      cloze = getClozeFromExpectedOutput()
-    } else {
-      cloze = getClozeFromReceivedOutput()
-    }
-
-    if (cloze.length === 1) {
-      if ( input.length === this.state.expected.length
-        && !this.state.fromNewPhrase
-         ) {
-        correct = true
-      }
-
-    } else if (cloze.length && !onlyEndIsMissing) {
-      // if onlyEndIsMissing, there will be two chunks: what was
-      // typed + what remains to be typed
-      error = true
-    }
-
-    if (!cloze.length) {
-      cloze = [this.zeroWidthSpace]
-    }
-
-
-    const maxLength = this.state.expected.length + this.maxExtraChars
-    const reveal = this.state.requireSubmit && !input
-    const fix = (this.state.requireSubmit && error) || reveal
-
-    this.setState({ cloze, error, correct, maxLength, reveal, fix })
+    const clozeDelta = new ClozeDelta(this.state.expected, input)
+    const delta = clozeDelta.getDelta()
+    const clozeComponent = new ClozeComponent()
+    const output = clozeComponent.getComponent(
+      delta
+    , this.state.requireSubmit
+    , this.state.fromNewPhrase
+    )
+
+    output.maxLength = this.state.expected.length + this.maxExtraChars
+    output.reveal = this.state.requireSubmit && !input
+    output.fix = (this.state.requireSubmit && output.error)
+               || output.reveal
+
+    this.setState(output)
 
     this.input = input
-    this.error = this.error || error
-    // console.log("input:", input, onlyEndIsMissing)
+    this.error = this.error || output.error
   }
 
 

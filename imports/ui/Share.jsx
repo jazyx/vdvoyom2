@@ -171,9 +171,6 @@ class Share extends Component {
 
 
   render() {
-    const { isMaster, canMaster } = this.props
-    console.log("Share isMaster:", isMaster, "canMaster:", canMaster)
-
     const style = Object.assign({
       position: "relative"
     , display: "flex"

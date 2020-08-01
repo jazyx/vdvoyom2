@@ -33,7 +33,6 @@ const { UIText, User, Group } = collections
 
 
 
-
 class Teach extends Component {
   constructor(props) {
     super(props)
