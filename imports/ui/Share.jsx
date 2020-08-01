@@ -90,6 +90,7 @@ class Share extends Component {
   setViewSize(newMaster) {
     const { isMaster, canMaster } = this.props
     this.isMaster = isMaster
+    this.canMaster = canMaster
 
     // We need to compare master_size and (local) view_size, to
     // calculate view ratios.
@@ -170,7 +171,8 @@ class Share extends Component {
 
 
   render() {
-    // console.log(this.props.children)
+    const { isMaster, canMaster } = this.props
+    console.log("Share isMaster:", isMaster, "canMaster:", canMaster)
 
     const style = Object.assign({
       position: "relative"
@@ -194,10 +196,11 @@ class Share extends Component {
 
   componentDidUpdate() {
     const newMaster = !this.isMaster && this.props.isMaster
-    // true if this.props isMaster is true and this.isMaster is false
-    // false if this.isMaster is true or if this.props.isMaster is
+                   || !this.canMaster && this.props.canMaster
+    // true if this.props ~Master is true and this.~Master is false
+    // false if this.~Master is true or if this.props.~Master is
     // false
-    // => is only true when this.props.isMaster first becomes true
+    // => is only true when this.props.~Master first becomes true
 
     const aspectRatio    = this.props.view_size
                         && this.props.view_size.aspectRatio

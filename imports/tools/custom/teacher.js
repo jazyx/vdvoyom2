@@ -72,17 +72,25 @@ class Teacher {
 
   leaveGroup() {
     // Remove this teacher's d_code from the Group logged_in array
-    toggleActivation.call({
-      _id:    Session.get("group_id")
-    , d_code: this.d_code
-    , active: false         // It's already false. Leave it that way.
-    })
+    const _id    = Session.get("group_id")
 
-    // We can unset the group_id Session variable already, because
-    // the PointsClass tracker no longer needs it to remove the Points
-    // record for this teacher.
-    Session.set("group_id", undefined)
-    delete Session.keys.group_id
+    if (_id) {
+      const d_code = this.d_code
+      const active = false
+      const options = {
+        _id
+      , d_code
+      , active
+      }
+
+      toggleActivation.call(options)
+
+      // We can unset the group_id Session variable already, because
+      // the PointsClass tracker no longer needs it to remove the Points
+      // record for this teacher.
+      Session.set("group_id", undefined)
+      delete Session.keys.group_id
+    }
   }
 }
 
