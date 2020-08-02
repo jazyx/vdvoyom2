@@ -43,11 +43,6 @@ export default class Cloze extends FluencyCore {
     this.maxExtraChars = 2
     /// HARD-CODED >>>
 
-    // this.sampler = new Sampler({
-    //   array: props.items
-    // , sampleSize: 1
-    // })
-
     this.newPhrase    = this.newPhrase.bind(this)
     this.checkSize    = this.checkSize.bind(this)
     this.updateInput  = this.updateInput.bind(this)
@@ -116,20 +111,6 @@ export default class Cloze extends FluencyCore {
     } = data
     data = { _id, time, phrase, native, image, audio,  }
 
-    /* { collection: "Vocabulary"
-     * , flops: <0-31>
-     * , image: "/Assets/Vocabulary/basic/image/66.jpg"
-     * , native: "autumn"
-     * , next_seen: 1595966414566
-     * , phrase: "осень"
-     * , phrase_id: "hrSjLZcs8Q6hDWSYB"
-     * , times_seen: 0
-     * , _id: "hrSjLZcs8Q6hDWSYB
-     * }
-     * =>
-     * { phrase: <string>, native: <string>, image: <url>, ... }
-     */
-
     // React Hack: we must momentarily show (any) text, to make the
     // input respond to onChange. We will remove the text in the
     // setSize ref callback.
@@ -167,7 +148,7 @@ export default class Cloze extends FluencyCore {
     , end
     , fromNewPhrase: true
     , width: 0
-    // , requireSubmit: true // false // true // 
+    // , requireSubmit: true // false // true //
     , submitted: false
     }
 
@@ -179,7 +160,11 @@ export default class Cloze extends FluencyCore {
 
 
   updateInput(event) {
-    if (this.state.correct) {
+    if (this.state.correct && event.preventDefault) {
+      // Don't allow input after the correct answer has been entered.
+      // Do let setSize set the input value to "" after fixing the
+      // width of the input field.
+
       event.preventDefault()
       return false
     }
@@ -209,6 +194,11 @@ export default class Cloze extends FluencyCore {
      * , error:      <false if everything typed so far is correct>
      * }
      */
+    
+    if (this.state.fromNewPhrase) {
+      // We don't want a single word exercise to trigger setFluency
+      delta.correct = false
+    }
 
     const cloze = clozeComponent(delta) // chunkArray and transform
 
@@ -261,8 +251,6 @@ export default class Cloze extends FluencyCore {
   setSize() {
     const width = this.span.getBoundingClientRect().width + 1
 
-    // console.log("setWidth:", width)
-
     if (this.state.width !== width){
       if (this.state.fromNewPhrase) {
         this.setState({
@@ -309,8 +297,6 @@ export default class Cloze extends FluencyCore {
 
 
   setFluency() {
-    // console.log("setFluency", this.state.submitted)
-
     const data = this.props.data
     const time = data.time
     const correct = { [data._id]: !this.error }

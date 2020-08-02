@@ -36,20 +36,6 @@ const square = 1
 const wide   = 17/10
 
 
-// export const StyledDiv = styled.div`
-//   position: relative;
-//   background-color: #fee;
-//   text-align: left;
-// `
-
-
-// export const StyledTextArea = styled.textarea`
-//   font-size: ${fontSize};
-//   width: 100vw;
-//   box-sizing: border-box;
-// `
-
-
 export const StyledContainer = styled.div`
   width: calc(100 * var(--w));
   height: calc(100 * var(--h));
@@ -88,7 +74,7 @@ export const StyledContainer = styled.div`
 
 
 export const StyledImage = styled.img`
-  background-color: #300;   
+  background-color: #300;
   grid-column: 1/11;
   grid-row: 1/11;
   object-fit: contain;
@@ -159,14 +145,13 @@ export const StyledEntry = styled.div`
    }
 `
 
-//  font-size: ${fontSize};
 
 export const StyledPhrase = styled.p`
   font-family: ${fontFamily};
   text-align: center;
 
   box-sizing: border-box;
-  padding: 0 0.5em; 
+  padding: 0 0.5em;
   width: calc(100 * var(--w) - 20 * var(--min));
   margin: 0;
 `
@@ -180,7 +165,6 @@ export const StyledInputSpan = styled.span`
   width: ${props => props.width}px;
 `
 
-//   font-size: ${fontSize};
 
 // The text input element will expand to fill its parent div, which
 // will in turn expand to fit the width of the expected span (at a
@@ -345,7 +329,7 @@ export const StyledSubmit = styled.button`
             }
   background-color: ${props => colors.buttonOff};
   background-image: url(${props => props.img});
-   
+
   position: absolute;
   right: 0;
   bottom: 0;
@@ -429,11 +413,6 @@ export const StyledButtonSet = styled.div`
     : ""
    }
 `
-
-
-// export const StyledToggle = styled.label`
-//   line-height: 2em;
-// `
 
 
 export const StyledButton = styled.button`

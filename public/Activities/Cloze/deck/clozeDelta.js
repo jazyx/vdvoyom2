@@ -56,13 +56,13 @@ export const clozeDelta = (right, wrote, submission) => {
 
 
   /* The contents of ~Queues are broken into sub-arrays as they are
-   * treated. The sub-arrays are maintained in the original order of 
+   * treated. The sub-arrays are maintained in the original order of
    * the text. Any sub-array that needs further treatment is returned
    * its ~Queue; those thathave been completely treated are not
    * returned. As a result, the original rightArray and wroteArray
    * arrays retain the orginal text, just broken into (deeply nested)
    * arrays.
-   */   
+   */
   const getDelta = () => {
     while (rightQueue.length) {
       const rightList = rightQueue.pop() // arrays
@@ -236,7 +236,7 @@ export const clozeDelta = (right, wrote, submission) => {
       } else if (!wrote) {
         if (right && index !== lastIndex) {
           // Text is missing in the input...
-          
+
           if (errorFree(transform) && index === typeIndex) {
             // ... but everything up to this point is correct
             incomplete = true
@@ -314,7 +314,7 @@ export const clozeDelta = (right, wrote, submission) => {
     let correct = false
     let chunkArray
       , transform
-      
+
     if (submission) { // initial parameter
       transform = getTransformForSubmission(lastIndex, typeIndex)
       chunkArray = rightArray
@@ -340,7 +340,7 @@ export const clozeDelta = (right, wrote, submission) => {
   }
 
 
-  const quantifyError = (transform, chunkArray) => {    
+  const quantifyError = (transform, chunkArray) => {
     error = transform.reduce((cumulator, action, index) => (
       cumulator + !!action * (chunkArray[index].length + 1)
       // cut/add may be length 0

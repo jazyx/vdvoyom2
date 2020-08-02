@@ -104,7 +104,7 @@ const { P, L, R, PR, LR } = (function portraitAndLandscapeSizes() {
 
 
 
-const StyledGame = styled.div`
+const StyledContainer = styled.div`
   width: calc(100 * var(--w));
   height: calc(100 * var(--h));
   display: flex;
@@ -814,7 +814,7 @@ export default class Drag extends Component {
       //            + ")"
       //            )
 
-      return <StyledGame
+      return <StyledContainer
         id="empty-drag-frame"
         ref={this.gameFrame}
       />
@@ -834,7 +834,7 @@ export default class Drag extends Component {
     }
 
     return (
-      <StyledGame
+      <StyledContainer
         id="game-layout"
         aspectRatio={aspectRatio}
         ref={this.gameFrame}
@@ -847,7 +847,7 @@ export default class Drag extends Component {
         >
           {names}
         </StyledNames>
-      </StyledGame>
+      </StyledContainer>
     )
   }
 
