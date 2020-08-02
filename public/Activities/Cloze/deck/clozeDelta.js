@@ -39,23 +39,23 @@ import LSS from './lss'
  *   These last two cases are treated by treatFix()
  *
  */
-export const clozeDelta = (right, wrote) => {
+export const clozeDelta = (right, wrote, submission) => {
   const normalizeText = (string) => {
     string = string.toLowerCase()
                    .replace(/ /g, " ")
-                   // .replace(/ё/g, "е")
     return string
   }
 
 
   let error        = false
+  let incomplete   = false
   let rightArray   = [normalizeText(right)]
   let wroteArray   = [normalizeText(wrote)]
   const rightQueue = [rightArray]
   const wroteQueue = [wroteArray]
 
 
- /* The contents of ~Queues are broken into sub-arrays as they are
+  /* The contents of ~Queues are broken into sub-arrays as they are
    * treated. The sub-arrays are maintained in the original order of 
    * the text. Any sub-array that needs further treatment is returned
    * its ~Queue; those thathave been completely treated are not
@@ -105,13 +105,15 @@ export const clozeDelta = (right, wrote) => {
 
     rightArray = flatten(rightArray)
     wroteArray = flatten(wroteArray)
+    const { chunkArray, transform, correct } = getTransform()
 
     restoreCase(wroteArray, wrote)
 
     return {
-      rightArray
-    , wroteArray
+      chunkArray
+    , transform
     , error
+    , correct
     }
   }
 
@@ -219,6 +221,130 @@ export const clozeDelta = (right, wrote) => {
       array[index] = original.substring(start, end)
       start = end
     })
+  }
+
+
+  const getTransformForAutoCorrect = (lastIndex, typeIndex) => {
+    const transform = []
+
+    wroteArray.forEach((wrote, index) => {
+      const right    = rightArray[index]
+
+      if (wrote.toLowerCase() === right) {
+        transform.push(0)
+
+      } else if (!wrote) {
+        if (right && index !== lastIndex) {
+          // Text is missing in the input...
+          
+          if (errorFree(transform) && index === typeIndex) {
+            // ... but everything up to this point is correct
+            incomplete = true
+          }
+
+          transform.push("add")
+        } // else: both wrote and right are "", for the last ite
+
+      } else if (!right) {
+        transform.push("cut")
+
+      } else {
+        treatFix(wrote, right, transform)
+      }
+    })
+
+    return transform
+  }
+
+
+  const getTransformForSubmission = (lastIndex, typeIndex) => {
+    const transform = []
+
+    rightArray.forEach((right, index) => {
+      const wrote    = wroteArray[index]
+
+      if (right.toLowerCase() === wrote) {
+        transform.push(0)
+
+      } else if (right) {
+        if (!wrote) {
+          if (index !== lastIndex) {
+            // Text is missing in the input...
+            if (errorFree(transform) && index === typeIndex) {
+              // ... but everything up to this point is correct
+              incomplete = true
+            }
+          }
+
+          transform.push("cut")
+
+        } else {
+          treatFix(right, wrote, transform)
+        }
+      } else if (wrote) {
+        // Don't show the unnecessary text, but do count it as wrong
+        transform.push(-1)
+      }
+    })
+
+    return transform
+  }
+
+
+  const errorFree = (transform) => (
+    !transform.reduce((error, action) =>  (
+      error + !!action
+    ), 0)
+  )
+
+
+  const treatFix = (display, compare, transform) => {
+    if ( compare[0] === display[1] && compare[1] === display[0] ) {
+      transform.push("flip")
+
+    } else {
+      transform.push("fix")
+    }
+  }
+
+
+  const getTransform = () => {
+    const lastIndex = wroteArray.length
+    const typeIndex = lastIndex - 1
+    let correct = false
+    let chunkArray
+      , transform
+      
+    if (submission) { // initial parameter
+      transform = getTransformForSubmission(lastIndex, typeIndex)
+      chunkArray = rightArray
+    } else {
+      transform = getTransformForAutoCorrect(lastIndex, typeIndex)
+      chunkArray = wroteArray
+    }
+
+    quantifyError(transform, chunkArray)
+
+    if (!error) {
+      correct = true
+
+    } else if (incomplete) {
+      error = false
+    }
+
+    return {
+      chunkArray
+    , transform
+    , correct
+    }
+  }
+
+
+  const quantifyError = (transform, chunkArray) => {    
+    error = transform.reduce((cumulator, action, index) => (
+      cumulator + !!action * (chunkArray[index].length + 1)
+      // cut/add may be length 0
+    ), 0)
   }
 
 

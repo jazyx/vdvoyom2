@@ -144,6 +144,8 @@ export default class Tracker{
 
   getLocalizedItem(document) {
     const item = { _id: document._id }
+    const code = this.code
+    const generic = code.replace(/-\w+$/, "")
 
     let image
       , audio
@@ -174,6 +176,25 @@ export default class Tracker{
     }
 
     // TODO: Find localized audio
+    if (typeof document.audio === "object") {
+
+      audio = document.audio[code]
+      if (!audio) {
+        audio = document.audio[generic]
+      }
+
+      if (Array.isArray(audio)) {
+        audio = audio[0]
+        if (typeof audio === "object") {
+          audio = audio.src
+        }
+      }
+
+      if (typeof audio === "string") {
+        item.audio = audio
+      }
+    }
+
 
     return item
   }

@@ -115,7 +115,7 @@ const StyledGame = styled.div`
   color: #000;
 
   ${props => (props.aspectRatio > PR)
-   ? `calc(4 * ${R} * var(--h));
+   ? `font-size: calc(4 * ${R} * var(--h));
      `
    : ""
   }
@@ -785,9 +785,7 @@ export default class Drag extends Component {
 
 
   render() {
-    // console.log("Rendering Drag")
-
-    // console.log("Drag.props:", JSON.stringify(this.props, null, "  "))
+    //console.log("Drag.props:",JSON.stringify(this.props,null, "  "))
     const data = this.props.data
     /* undefined or {
      *   names

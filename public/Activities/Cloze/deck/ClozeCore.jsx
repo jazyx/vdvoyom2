@@ -25,12 +25,7 @@ import { clozeComponent } from './clozeComponent'
 import { setPageData
        , updateInput
        } from '../methods'
-import { Clozed
-       , Add
-       , Cut
-       , Fix
-       , Flip
-       } from './inputs'
+import { Clozed } from './inputs'
 import LSS from './lss'
 
 import { NO_AUDIO_DELAY } from '/imports/tools/custom/constants'
@@ -139,7 +134,7 @@ export default class Cloze extends FluencyCore {
     // input respond to onChange. We will remove the text in the
     // setSize ref callback.
     data.input = data.phrase
-    data.requireSubmit = false /// TODO: Allow options
+    data.requireSubmit = true // false /// TODO: Allow options
 
     setPageData.call({ group_id, data })
   }
@@ -172,7 +167,7 @@ export default class Cloze extends FluencyCore {
     , end
     , fromNewPhrase: true
     , width: 0
-    , requireSubmit: false // false
+    // , requireSubmit: true // false // true // 
     , submitted: false
     }
 
@@ -184,6 +179,11 @@ export default class Cloze extends FluencyCore {
 
 
   updateInput(event) {
+    if (this.state.correct) {
+      event.preventDefault()
+      return false
+    }
+
     const field = event.target
     const input = field.value.replace(this.zeroWidthSpace, "")
 
@@ -201,32 +201,26 @@ export default class Cloze extends FluencyCore {
 
   treatInput(wrote) {
     const right = this.state.expected
-    const delta = clozeDelta(right, wrote)
-    const { rightArray, wroteArray, error } = delta
-    const output = clozeComponent(
-      right
-    , wrote
-    , rightArray
-    , wroteArray
-    , error
-    , this.state.requireSubmit
-    , this.state.fromNewPhrase
-    )
-    /* { cloze:   [ array of components ]
-     * , correct: <true if complete text correctly entered>
-     * , error:   <false if everything typed so far is correct>
+    const submission = this.props.data.requireSubmit
+    const delta = clozeDelta( right, wrote, submission )
+    /* { chunkArray: [ array of strings, some empty ]
+     * , transform:  [ array of 0s and string actions ]
+     * , correct:    <true if complete text correctly entered>
+     * , error:      <false if everything typed so far is correct>
      * }
      */
 
-    output.maxLength = right.length + this.maxExtraChars
-    output.reveal    = this.state.requireSubmit && !input
-    output.fix       = (this.state.requireSubmit && output.error)
-                     || output.reveal
+    const cloze = clozeComponent(delta) // chunkArray and transform
 
-    this.setState(output)
+    delta.cloze     = cloze
+    delta.maxLength = right.length + this.maxExtraChars
+    delta.reveal    = submission  && !wrote
+    delta.fix       = (submission &&delta.error) || delta.reveal
+
+    this.setState(delta)
 
     this.input = wrote
-    this.error = this.error || output.error
+    this.error = this.error || delta.error
   }
 
 
@@ -295,16 +289,16 @@ export default class Cloze extends FluencyCore {
 
 
   setMode() {
-    const requireSubmit = !this.state.requireSubmit
-    this.setState({ requireSubmit })
+    // const requireSubmit = !this.state.requireSubmit
+    // this.setState({ requireSubmit })
 
-    if (requireSubmit) {
-      this.setState({ cloze: this.state.input || this.zeroWidthSpace })
-    } else {
-      setTimeout(this.refreshInput, 0)
-    }
+    // if (requireSubmit) {
+    //   this.setState({ cloze: this.state.input || this.zeroWidthSpace })
+    // } else {
+    //   setTimeout(this.refreshInput, 0)
+    // }
 
-    this.inputRef.current.focus()
+    // this.inputRef.current.focus()
   }
 
 
@@ -363,6 +357,7 @@ export default class Cloze extends FluencyCore {
         size={this.checkSize}
         change={this.updateInput}
         inputRef={this.inputRef}
+        aspectRatio={this.props.aspectRatio}
       />
     )
   }

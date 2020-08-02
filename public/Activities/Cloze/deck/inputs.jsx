@@ -5,41 +5,28 @@
 
 
 import React, { Component } from 'react';
-import { StyledDiv
-       , StyledTextArea
+import { StyledContainer
+       , StyledImage
+
+       , StyledEntry
        , StyledPhrase
-       , StyledInputDiv
+       , StyledInputSpan
        , StyledInput
        , StyledFeedback
+       , StyledSubmit
+
        , StyledAdd
        , StyledCut
        , StyledFix
        , StyledFlip
-       , StyledToggle
-       , StyledSubmit
-       , StyledImage
+
+       , StyledButtonSet
+       , StyledToggleButton
+       , StyledButton
+       //, StyledDiv
+       //, StyledTextArea
+       , 
        } from './styles'
-
-
-
-// export const TargetPhrase = (props) => (
-//   <StyledDiv>
-//     <h2>Target Phrase:</h2>
-//     <StyledTextArea
-//       placeholder="Enter a target phrase to test"
-//       onChange={props.newPhrase}
-//       value={props.phrase}
-//     />
-//     <Toggle
-//       setMode={props.setMode}
-//       checked={props.checked}
-//     />
-//     <Submit
-//       submit={props.submit}
-//       checked={props.checked}
-//     />
-//   </StyledDiv>
-// )
 
 
 
@@ -68,47 +55,79 @@ export class Clozed extends Component {
           , size
           , change
           , inputRef
+          , aspectRatio
           } = this.props
 
     window.change = change
 
     return (
-      <StyledPhrase
+      <StyledContainer
         id="answer"
+        aspectRatio={aspectRatio}
       >
         <StyledImage
           src={src}
+          aspectRatio={aspectRatio}
         />
-        <span>{start}</span>
 
-        <StyledInputDiv
-          id="input"
-          minWidth={minWidth}
-          width={width}
+        <StyledEntry
+          aspectRatio={aspectRatio}
         >
-          <StyledInput
-            className="input can-select"
-            error={error}
-            correct={correct}
-            disabled={correct}
-            requireSubmit={requireSubmit}
-            maxLength={maxLength}
-            value={input}
-            onChange={change}
-            spellCheck={false}
-            ref={inputRef}
-          />
+          <StyledPhrase>
+            <span>{start}</span>
 
-          <Feedback
-            size={size}
-            cloze={cloze}
-            fix={fix}
-            reveal={reveal}
-          />
-        </StyledInputDiv>
+            <StyledInputSpan
+              id="input"
+              minWidth={minWidth}
+              width={width}
+            >
+              <StyledInput
+                className="input can-select"
+                error={error}
+                correct={correct}
+                requireSubmit={requireSubmit}
+                maxLength={maxLength}
+                value={input}
+                onChange={change}
+                spellCheck={false}
+                ref={inputRef}
+                aspectRatio={aspectRatio}
+              />
 
-        <span>{end}</span>
-      </StyledPhrase>
+              <Feedback
+                size={size}
+                cloze={cloze}
+                fix={fix}
+                reveal={reveal}
+              />
+            </StyledInputSpan>
+
+            <span>{end}</span>
+          </StyledPhrase>
+
+          <Reveal
+            visible={true}
+            aspectRatio={aspectRatio}
+          />
+        </StyledEntry>
+
+        <StyledButtonSet
+          id="button-set"
+          aspectRatio={aspectRatio}
+        >
+          <Back
+            className="soloist"
+            visible={true}
+          />
+          <Audio
+            visible={true}
+            playing="true"
+          />
+          <TurnCard
+            visible={true}
+          />
+        </StyledButtonSet>
+      </StyledContainer>
     )
   }
 }
@@ -116,7 +135,7 @@ export class Clozed extends Component {
 
 class Feedback extends Component{
   render() {
-    const { size, cloze, fix, reveal } = this.props
+    const { size, cloze, fix, reveal, aspectRatio } = this.props
 
     return (
       <StyledFeedback
@@ -124,6 +143,7 @@ class Feedback extends Component{
         ref={size}
         fix={fix}
         reveal={reveal}
+        aspectRatio={aspectRatio}
       >
         {cloze}
       </StyledFeedback>
@@ -173,22 +193,51 @@ export const Flip = (props) =>  (
 )
 
 
-export const Toggle = props => (
-  <StyledToggle>
-    Require Submit
-    <input type="checkbox"
-      onChange={props.setMode}
-      checked={props.checked}
-    />
-  </StyledToggle>
+const Back = props => (
+  <StyledButton
+    onMouseDown={props.goBack}
+    visible={props.visible}
+    className="solo"
+    img="/img/icons/back.svg"
+  />
 )
 
 
-export const Submit = props => (
+const Audio = props => (
+  <StyledToggleButton
+    onMouseDown={props.playAudio}
+    visible={props.visible}
+    on={props.playing}
+    img={ props.playing
+        ? "/img/icons/audioOn.svg"
+        : "/img/icons/audio.svg"
+        }
+  />
+)
+
+
+const TurnCard = props => (
+  <StyledButton
+    onMouseDown={props.turnCard}
+    visible={props.visible}
+    img="/img/icons/turn.svg"
+  />
+)
+
+
+const Reveal = props => (
+  <StyledSubmit
+    onMouseDown={props.reveal}
+    visible={props.visible}
+    img="/img/icons/eye.svg"
+  />
+)
+
+
+const Submit = props => (
   <StyledSubmit
     onMouseDown={props.submit}
-    visible={props.checked}
-  >
-    Submit
-  </StyledSubmit>
+    visible={props.visible}
+    img="/img/icons/done.svg"
+  />
 )

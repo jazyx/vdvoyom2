@@ -35,7 +35,15 @@
 			"tags": [
 				"Cloze"
 			],
-			"_id": "xtbjKwBSoQnrMNZXW"
+			"_id": "xtbjKwBSoQnrMNZXW",
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/Cloze/test/audio/ru/wakeup.mp3",
+						"size": 62202
+					}
+				]
+			}
 		},
 		{
 			"name": "bacon&eggs",
@@ -53,7 +61,15 @@
 			"tags": [
 				"Cloze"
 			],
-			"_id": "WqKJhoQdNpzzpqra7"
+			"_id": "WqKJhoQdNpzzpqra7",
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/Cloze/test/audio/ru/bacon&eggs.mp3",
+						"size": 44773
+					}
+				]
+			}
 		},
 		{
 			"name": "clock",
@@ -67,6 +83,14 @@
 					"src": "/Assets/shared/images/clock.jpg"
 				}
 			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/clock.mp3",
+						"size": 62202
+					}
+				]
+			},
 			"tags": [
 				"Cloze"
 			],
@@ -84,6 +108,14 @@
 					"src": "/Assets/shared/images/soup.jpg"
 				}
 			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/soup.mp3",
+						"size": 62202
+					}
+				]
+			},
 			"tags": [
 				"Cloze"
 			],
@@ -101,6 +133,14 @@
 					"src": "/Assets/shared/images/bread.jpg"
 				}
 			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/bread.mp3",
+						"size": 62202
+					}
+				]
+			},
 			"tags": [
 				"Cloze"
 			],
@@ -118,6 +158,14 @@
 					"src": "/Assets/shared/images/dog.jpg"
 				}
 			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/dog.mp3",
+						"size": 62202
+					}
+				]
+			},
 			"tags": [
 				"Cloze"
 			],
