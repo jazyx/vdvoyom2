@@ -323,10 +323,6 @@ export const StyledFlip = styled.span`
 
 
 export const StyledSubmit = styled.button`
-  display: ${props => props.visible
-                    ? "inline-block;"
-                    : "none;"
-            }
   background-color: ${props => colors.buttonOff};
   background-image: url(${props => props.img});
 

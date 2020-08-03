@@ -39,7 +39,7 @@ import LSS from './lss'
  *   These last two cases are treated by treatFix()
  *
  */
-export const clozeDelta = (right, wrote, submission) => {
+export const clozeDelta = (right, wrote, requireSubmit) => {
   const normalizeText = (string) => {
     string = string.toLowerCase()
                    .replace(/ /g, " ")
@@ -315,7 +315,7 @@ export const clozeDelta = (right, wrote, submission) => {
     let chunkArray
       , transform
 
-    if (submission) { // initial parameter
+    if (requireSubmit) { // initial parameter
       transform = getTransformForSubmission(lastIndex, typeIndex)
       chunkArray = rightArray
     } else {

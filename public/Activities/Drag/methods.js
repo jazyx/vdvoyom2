@@ -10,34 +10,6 @@ const { Group } = collections
 
 
 
-export const setViewData = {
-  name: "drag.setViewData"
-
-, call(setViewData, callback) {
-    const options = {
-      returnStubValue: true
-    , throwStubExceptions: true
-    }
-
-    Meteor.apply(this.name, [setViewData], options, callback)
-  }
-
-, validate(setViewData) {
-    new SimpleSchema({
-      group_id: { type: String }
-    , data: { type: Object, blackbox: true }
-    }).validate(setViewData)
-  }
-
-, run(setViewData) {
-    const { group_id: _id, data } = setViewData
-    const select = { _id }
-    const set = { $set: { "page.data": data } }
-    Group.update(select, set)
-  }
-}
-
-
 export const toggleComplete = {
   name: "drag.toggleComplete"
 
@@ -236,8 +208,7 @@ export const dropDragTarget = {
 
 
 const methods = [
-  setViewData
-, toggleShow
+  toggleShow
 , toggleComplete
 , setDragTarget
 , updateDragTarget

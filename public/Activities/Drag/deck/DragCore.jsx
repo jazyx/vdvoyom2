@@ -44,8 +44,8 @@ import { shuffle
        } from '/imports/tools/generic/utilities'
 // import Sampler from '/imports/tools/generic/sampler'
 
-import { setViewData
-       , setDragTarget
+import { setPageData } from '/imports/api/methods/admin'
+import { setDragTarget
        , updateDragTarget
        , dropDragTarget
        , toggleShow
@@ -393,7 +393,7 @@ export default class Drag extends Component {
 
     // console.log("Drag newDeal viewData:", data)
 
-    setViewData.call({
+    setPageData.call({
       group_id
     , data
     })
@@ -803,7 +803,7 @@ export default class Drag extends Component {
       ) {
 
       // The Drag class has only just been instanciated, and
-      // setViewData has only just been called. On the next refresh,
+      // setPageData has only just been called. On the next refresh,
       // data will have a value. In the meantime, force the gameFrame
       // ref to become something
 

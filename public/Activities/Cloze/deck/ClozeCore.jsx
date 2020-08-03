@@ -22,9 +22,9 @@ import FluencyCore from '../../shared/fluencyCore'
 import { clozeDelta } from './clozeDelta'
 import { clozeComponent } from './clozeComponent'
 
-import { setPageData
-       , updateInput
-       } from '../methods'
+import { setPageData } from '/imports/api/methods/admin'
+import { updateInput } from '../methods'
+
 import { Clozed } from './inputs'
 import LSS from './lss'
 
@@ -46,8 +46,8 @@ export default class Cloze extends FluencyCore {
     this.newPhrase    = this.newPhrase.bind(this)
     this.checkSize    = this.checkSize.bind(this)
     this.updateInput  = this.updateInput.bind(this)
-    this.refreshInput = this.refreshInput.bind(this)
-    this.setMode      = this.setMode.bind(this)
+    this.refreshInput = this.refreshInput.bind(this) // ???
+    this.setMode      = this.setMode.bind(this)      // ???
     this.submit       = this.submit.bind(this)
 
     this.inputRef = React.createRef()
@@ -150,6 +150,7 @@ export default class Cloze extends FluencyCore {
     , width: 0
     // , requireSubmit: true // false // true //
     , submitted: false
+    , cue: "none" // "placeholder" // "backdrop"
     }
 
     this.setState(data)
@@ -179,15 +180,15 @@ export default class Cloze extends FluencyCore {
   }
 
 
-  refreshInput() {
+  refreshInput() { // ???
     this.treatInput(this.state.input)
   }
 
 
   treatInput(wrote) {
     const right = this.state.expected
-    const submission = this.props.data.requireSubmit
-    const delta = clozeDelta( right, wrote, submission )
+    const requireSubmit = this.props.data.requireSubmit
+    const delta = clozeDelta( right, wrote, requireSubmit )
     /* { chunkArray: [ array of strings, some empty ]
      * , transform:  [ array of 0s and string actions ]
      * , correct:    <true if complete text correctly entered>
@@ -202,10 +203,11 @@ export default class Cloze extends FluencyCore {
 
     const cloze = clozeComponent(delta) // chunkArray and transform
 
-    delta.cloze     = cloze
-    delta.maxLength = right.length + this.maxExtraChars
-    delta.reveal    = submission  && !wrote
-    delta.fix       = (submission &&delta.error) || delta.reveal
+    delta.cloze         = cloze
+    delta.requireSubmit = requireSubmit
+    delta.maxLength     = right.length + this.maxExtraChars
+    delta.reveal        = requireSubmit && !wrote
+    delta.fix           = (requireSubmit&&delta.error) || delta.reveal
 
     this.setState(delta)
 
@@ -214,7 +216,7 @@ export default class Cloze extends FluencyCore {
   }
 
 
-  prepareToSubmit(input) {
+  prepareToSubmit(input) { // ???
     this.setState({
       cloze: input || this.zeroWidthSpace
     , error: false
@@ -276,7 +278,7 @@ export default class Cloze extends FluencyCore {
   }
 
 
-  setMode() {
+  setMode() { // ???
     // const requireSubmit = !this.state.requireSubmit
     // this.setState({ requireSubmit })
 
@@ -290,7 +292,15 @@ export default class Cloze extends FluencyCore {
   }
 
 
-  submit() {
+  revealAnswer(noAudio) {
+    if (!!noAudio) {
+      // TODO: Play audio for missing word
+    }
+    setOptions.call({ reveal: true })
+  }
+
+
+  submit() { // ???
     this.refreshInput()
     this.setState({ input: "" })
   }

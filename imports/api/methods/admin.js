@@ -450,6 +450,50 @@ export const setIndex = {
 }
 
 
+export const setPageData = {
+  name: "vdvoyom.setPageData"
+
+, call(setPageData, callback) {
+    const options = {
+      returnStubValue: true
+    , throwStubExceptions: true
+    }
+
+    Meteor.apply(this.name, [setPageData], options, callback)
+  }
+
+, validate(setPageData) {
+    new SimpleSchema({
+      group_id: { type: String }
+    , data:  { type: Object, blackbox: true }
+    }).validate(setPageData)
+  }
+
+, run(setPageData) {
+    const { group_id: _id, data } = setPageData
+    const select = { _id }
+    const keys = Object.keys(data)
+    const path = "page.data."
+    let set = keys.reduce(( map, key ) => {
+      map[path + key] = data[key]
+      return map
+    }, {})
+    set = {
+      $set: set
+    }
+    Group.update(select, set)
+
+    console.log(
+      "db.group.update("
+    + JSON.stringify(select)
+    + ","
+    + JSON.stringify(set)
+    + ")"
+    )
+  }
+}
+
+
 export const switchActivity = {
   name: "vdvoyom.switchActivity"
 
@@ -563,8 +607,10 @@ const methods = [
   , logInTeacher
   , toggleActivation
   , share
+
   , setPage
   , setIndex
+  , setPageData
   , switchActivity
   , addToFluency
   , setFluency
@@ -580,3 +626,9 @@ methods.forEach(method => {
     }
   })
 })
+
+
+
+if (Meteor.isClient) {
+  window.setPageData = setPageData
+}

@@ -37,28 +37,55 @@ export class Clozed extends Component {
       return ""
     }
 
-    const { start
-          , cloze
-          , end
-          , minWidth
-          , width
-          , error
-          , correct
-          , maxLength
-          , requireSubmit // missing?
-          , reveal
-          , fix
-          // , expected
-          } = this.props.phrase
-    const { src
-          , input
-          , size
-          , change
-          , inputRef
-          , aspectRatio
-          } = this.props
+    const { start         // string before input word
+          , cloze         // array of span components for feedback
+          , end           // string after input word
 
-    window.change = change
+          , minWidth      // minimum pixels for complete input
+          , width         // actual width of input (may be longer)
+          , maxLength     // max number of input characters
+
+          , error         // false or truthy
+       // , correct       // not used?
+          , requireSubmit // missing?
+          , reveal        // true if correct spelling to be shown
+          , cue           // TODO: "placeholder" | "backdrop" | "none"
+          , fix           // true if feedback should be shown
+
+       // USED IN ClozeCore, UNUSED HERE //
+       // , chunkArray    // raw array for cloze
+       // , transform     // array of transform to apply to chunkArray
+       // , expected      // expected input string
+       // , fromNewPhrase // true if we're setting width of input
+       // , phrase        // complete phrase with #% symbols
+       // , submitted     // true if requireSubmit and submit pressed
+          } = this.props.phrase
+
+    const { src           // image url
+          , input         // string
+          , size          // function ClozeCore.checkSize
+          , change        // function ClozeCore.updateInput
+          , inputRef      // React.createRef() for StyledInput
+          , aspectRatio   // number from master's display
+       // , phrase        // see above
+          } = this.props 
+
+    const options = { aspectRatio }
+    let ActionButton
+
+    if (requireSubmit) {
+      if (cue === "none" && input === "") {
+        ActionButton = <Reveal { ...options } />
+      } else {
+        options.disabled = input === ""
+        ActionButton = <Submit { ...options } />
+      }
+    } else if ( cue === "placeholder" && reveal ) {
+      options.disabled = input === ""
+      ActionButton = <Reveal { ...options } />
+    } else {
+      ActionButton = ""
+    }
 
     return (
       <StyledContainer
@@ -81,10 +108,11 @@ export class Clozed extends Component {
               minWidth={minWidth}
               width={width}
             >
+
+              {/* correct={correct} */}
               <StyledInput
                 className="input can-select"
                 error={error}
-                correct={correct}
                 requireSubmit={requireSubmit}
                 maxLength={maxLength}
                 value={input}
@@ -105,10 +133,7 @@ export class Clozed extends Component {
             <span>{end}</span>
           </StyledPhrase>
 
-          <Reveal
-            visible={true}
-            aspectRatio={aspectRatio}
-          />
+          {ActionButton}
         </StyledEntry>
 
         <StyledButtonSet
@@ -228,7 +253,6 @@ const TurnCard = props => (
 const Reveal = props => (
   <StyledSubmit
     onMouseDown={props.reveal}
-    visible={props.visible}
     img="/img/icons/eye.svg"
   />
 )
@@ -237,7 +261,6 @@ const Reveal = props => (
 const Submit = props => (
   <StyledSubmit
     onMouseDown={props.submit}
-    visible={props.visible}
     img="/img/icons/done.svg"
   />
 )
