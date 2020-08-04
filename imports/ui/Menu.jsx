@@ -43,45 +43,13 @@ import collections from '../api/collections/publisher'
 const { UIText, Group, Activity } = collections
 
 
-const colors = {
+const COLORS = {
   fillColor: "#fff"
 , strokeColor: "#000"
 , menu: "rgba(17,17,17,0.9)"
 }
+const CLOSE_MENU_DELAY = 1000
 
-
-/**
- * HACK to convert the css variables --h, --w, --min and --max that
- * are applied to the <div id="share"> parent div into "px" values
- *
- * @param      {number}  number  0.0 - 1003.0
- * @param      {<type>}  unit    <"vh" | "vw" | "vmin" | "vmax">
- * @return     {number}  "XXpx", where XX is a number
-  */
-const getViewportValue = (number, unit) => {
-  const share = document.getElementById("share")
-  const style = window.getComputedStyle(share)
-  let value
-
-  switch (unit) {
-    case "vh":
-      value = style.getPropertyValue("--h")
-    break
-    case "vw":
-      value = style.getPropertyValue("--w")
-    break
-
-    case "vmin":
-      value = style.getPropertyValue("--min")
-    break
-
-    case "vmax":
-      value = style.getPropertyValue("--max")
-    break
-  }
-
-  return number * parseFloat(value) + "px"
-}
 
 
 const StyledControls = styled.div`
@@ -98,14 +66,14 @@ const StyledSVG = styled.svg`
   position: fixed;
   width: calc(15 * var(--min));
   height: calc(15 * var(--min));
-  fill: ${colors.fillColor};
-  stroke: ${colors.strokeColor};
+  fill: ${COLORS.fillColor};
+  stroke: ${COLORS.strokeColor};
   opacity: ${props => (
     props.open ? 1 : (props.over ? 0.75 : 0.25)
   )};
   top: 0;
   left: ${props => props.open
-                 ? getViewportValue(45, "vmin")
+                 ? "calc(45 * var(--min));"
                  : 0};
   transition: left .3s linear, opacity .1s;
   transition-property: left, opacity;
@@ -123,7 +91,7 @@ const StyledMenu = styled.div`
   top: 0;
   left: ${props => props.open
                  ? 0
-                 : getViewportValue(-60, "vmin")
+                 : "calc(-60 * var(--min));"
          };
   ${props => props.open
            ? `box-shadow: 0 0 calc(3 * var(--min)) 0
@@ -136,7 +104,7 @@ const StyledMenu = styled.div`
   padding: calc(2 * var(--min));
   padding-top: calc(15 * var(--min));
   padding-bottom: 0;
-  background-color: ${colors.menu};
+  background-color: ${COLORS.menu};
 
   transition: left .40s linear;
 `
@@ -413,6 +381,7 @@ class MenuClass extends Component {
     window.addEventListener("beforeunload", this.logOut, false)
 
     this.openMenu()
+    setTimeout(this.closeMenu, CLOSE_MENU_DELAY)
   }
 
 

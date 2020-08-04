@@ -14,10 +14,11 @@ import Storage from '../../tools/generic/storage'
 // Subscriptions
 import collections from '../../api/collections/publisher'
 
-//
+// Methods
 import { methods } from '../../api/methods/mint'
 const { logIn } = methods
 
+// Constant
 import { STARTUP_TIMEOUT } from '/imports/tools/custom/constants'
 
 
@@ -34,7 +35,7 @@ export default class StartUp {
     this.ready = this.ready.bind(this)
     this.hideSplash = this.hideSplash.bind(this)
     this.callback = this.callback.bind(this)
-    // this.connectionTimedOut = this.connectionTimedOut.bind(this)
+    this.connectionTimedOut = this.connectionTimedOut.bind(this)
 
     // Loading takes about 250ms when running locally
     this.timeOut = setTimeout(this.connectionTimedOut,STARTUP_TIMEOUT)

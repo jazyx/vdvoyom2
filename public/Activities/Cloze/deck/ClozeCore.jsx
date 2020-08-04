@@ -17,7 +17,6 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react';
 
-
 import FluencyCore from '../../shared/fluencyCore'
 import { clozeDelta } from './clozeDelta'
 import { clozeComponent } from './clozeComponent'
