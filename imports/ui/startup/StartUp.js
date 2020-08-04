@@ -18,9 +18,8 @@ import collections from '../../api/collections/publisher'
 import { methods } from '../../api/methods/mint'
 const { logIn } = methods
 
+import { STARTUP_TIMEOUT } from '/imports/tools/custom/constants'
 
-
-// window.collections = collections
 
 
 export default class StartUp {
@@ -28,20 +27,17 @@ export default class StartUp {
     this.preloadComplete = preloadComplete
 
     /// <<< HARD-CODED
-    const timeOutDelay = 10 * 1000 // 500 ms is enough in development
     const splashDelay = 1 // 000 // min time (ms) to show Splash screen
-
     this.hack = window.location.pathname.startsWith("/*")
     /// HARD-CODED >>>
 
     this.ready = this.ready.bind(this)
     this.hideSplash = this.hideSplash.bind(this)
     this.callback = this.callback.bind(this)
-    // this.groupsCallback = this.groupsCallback.bind(this)
-    this.connectionTimedOut = this.connectionTimedOut.bind(this)
+    // this.connectionTimedOut = this.connectionTimedOut.bind(this)
 
     // Loading takes about 250ms when running locally
-    this.timeOut = setTimeout(this.connectionTimedOut, timeOutDelay)
+    this.timeOut = setTimeout(this.connectionTimedOut,STARTUP_TIMEOUT)
 
     this.prepareSplash(splashDelay)
     // Will trigger setViewSize when all is ready
@@ -51,7 +47,6 @@ export default class StartUp {
   prepareSplash(splashDelay) {
     this.showSplash  = + new Date() + splashDelay
     this.unReady = []
-    this.subscriptions = {}
 
     this.connectToMongoDB() // calls ready => setViewSize when ready
   }
@@ -64,15 +59,18 @@ export default class StartUp {
       const collection = collections[collectionName]
       // We can send (multiple) argument(s) to the server publisher
       // for debugging purposes
+      // console.log("Subscribing to", collection._name)
+
       const callback = () => this.ready(collectionName, "Share")
       const handle   = Meteor.subscribe(collection._name, callback)
-      this.subscriptions[collectionName] = handle
     }
   }
 
 
-  ready(collectionName) {
+  ready(collectionName) {
     removeFrom(this.unReady, collectionName)
+
+    // console.log("Collection is ready:", collectionName)
 
     if (!this.unReady.length) {
       if (this.timeOut) {
@@ -86,6 +84,7 @@ export default class StartUp {
 
   connectionTimedOut() {
     this.timeOut = 0 // this.prepareConnection will not run now
+
     this.preloadComplete("TimeOut")
   }
 
@@ -126,7 +125,6 @@ export default class StartUp {
       break
 
       case "user":
-        // console.log("prepareApp => reJoinGroups")
         this.reJoinGroups()
       break
 

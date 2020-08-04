@@ -8,7 +8,7 @@ import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 
 import { withTracker } from 'meteor/react-meteor-data'
-import activityTracker from './tracker'
+import activityTracker from './ActivityTracker'
 
 import { getElementIndex } from '../../tools/generic/utilities'
 import { SET_REGEX } from '../../tools/custom/constants'
@@ -191,6 +191,13 @@ class ActivityClass extends Component {
 
 
   getChoices() {
+    if (!this.props.items) {
+      // items may be undefined when hot reloading during development
+      // after a code change
+
+      return ""
+    }
+
     const choices = this.props.items.map((choice, index) => {
       const path     = choice.path
       const src      = choice.icon

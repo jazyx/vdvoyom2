@@ -139,6 +139,17 @@ class App extends Component {
     // since setting it will alter this.props. But it's just neater
     // to have ready set to true, regardless of the circumstances.
     this.setState({ ready: true })
+
+    let view
+    if (view = page.view) {
+      // During a hot reload, Session.get("group_id") will get reset
+      // to undefined, so this.props not include a `page` property.
+      // Saving the view in this.state so that it can be used if
+      // this.props.page is missing means that the StartUp sequence
+      // will not be run a second time.
+      this.setState({ view })
+    }
+
     this.setPage(page)
   }
 

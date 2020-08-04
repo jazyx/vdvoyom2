@@ -19,6 +19,7 @@ const formats = "jpe?g|png|svg|gif|webm)"  // trailing ) deliberate
 const lookAhead = "\\.(?:" + formats + "$" // leading ( only
 
 /// <<< HARD-CODED
+const STARTUP_TIMEOUT  = 10 * 1000
 const PUBLIC_DIRECTORY = Meteor.isDevelopment
                        ? PWD + "/public"
                        : PWD + "/programs/web.browser/app"
@@ -42,7 +43,9 @@ const NO_AUDIO_DELAY = 1500
 
 
 export {
-  PUBLIC_DIRECTORY
+  STARTUP_TIMEOUT
+
+, PUBLIC_DIRECTORY
 , ACTIVITY_FOLDER
 , ASSETS_FOLDER
 

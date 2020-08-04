@@ -27,16 +27,18 @@ export const updateInput = {
       group_id:  { type: String }
     , input:     { type: String }
     , selection: { type: Number }
+    , reveal:    { type: Boolean }
     }).validate(inputData)
   }
 
 , run(inputData) {
-    const { group_id: _id, input, selection } = inputData
+    const { group_id: _id, input, selection, reveal } = inputData
     const select = { _id }
     const set = {
       $set: {
         "page.data.input": input
       , "page.data.selection": selection
+      , "page.data.reveal": reveal
       }
     }
     Group.update(select, set)

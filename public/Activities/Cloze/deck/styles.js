@@ -24,7 +24,7 @@ const colors = {
 , buttonOff:        "#777"
 , buttonOn:         "#555"
 , add:              "#f00"
-, cut:              "#f00"
+, cut:              "#f09"
 , fix:              "#90f"
 , flip:             "#f60"
 }
@@ -163,12 +163,21 @@ export const StyledInputSpan = styled.span`
   vertical-align: top;
   min-width: ${props => props.minWidth}px;
   width: ${props => props.width}px;
+  text-align: left;
 `
 
 
-// The text input element will expand to fill its parent div, which
-// will in turn expand to fit the width of the expected span (at a
-// minimum), or the Feedback span (whichever is greater).
+/* The text input element will expand to fill its parent div, which
+ * will in turn expand to fit the width of the expected span (at a
+ * minimum), or the Feedback span (whichever is greater).
+ *
+ * The display depends on the input:
+ * - Background normalBG  (blue)  if incomplete and no error
+ *              errorBD   (red)   if there is an error
+ *              correctBG (green) if complete and correct
+ * - Outline focus colour to match background
+ * - Selection background ditto
+ */
 export const StyledInput = styled.input.attrs(props => {
   return {
     type: "text"
@@ -238,7 +247,23 @@ export const StyledInput = styled.input.attrs(props => {
 // The feedback span will show the same text as the input element,
 // but divided into different spans according to the error type
 // of a particular group of letters.
+//
+// position: absolute;
+// top: 0;
+// left: 0;
+// display: inline-block;
+// white-space: pre;
+// color: #000;
+//   opacity if fix i.e. (requireSubmit && error) || reveal
+//   but error  = false
+//       reveal = false
+// background: transparent;
+// pointer-events: none;
 export const StyledFeedback = styled.span`
+  ${props => props.show
+           ? ""
+           : "display:none"
+   }
   position: absolute;
   top: 0;
   left: 0;

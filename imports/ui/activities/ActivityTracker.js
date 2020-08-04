@@ -38,8 +38,12 @@ class ActivityTracker{
 
     } else {
       const activityData = this.getActivityData(path)
-      this.useActivityName(activityData.name, uiText)
-      items = this.getActivitySelection(activityData, path, index)
+      if (activityData) {
+        // When hot reloading, the Activity collection may not be
+        // available yet, so activityData may be undefined
+        this.useActivityName(activityData.name, uiText)
+        items = this.getActivitySelection(activityData, path, index)
+      }
     }
 
     return {
@@ -109,6 +113,7 @@ class ActivityTracker{
     }
 
     const data = Activity.findOne(select, options)
+    // May be undefined when hot reloading
 
     return data
   }

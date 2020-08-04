@@ -41,6 +41,7 @@ export default class Cloze extends FluencyCore {
 
     /// <<< HARD-CODED
     this.maxExtraChars = 2
+    this.revealDelay   = 2000 // milliseconds
     /// HARD-CODED >>>
 
     this.newPhrase    = this.newPhrase.bind(this)
@@ -49,6 +50,7 @@ export default class Cloze extends FluencyCore {
     this.refreshInput = this.refreshInput.bind(this) // ???
     this.setMode      = this.setMode.bind(this)      // ???
     this.submit       = this.submit.bind(this)
+    this.revealAnswer = this.revealAnswer.bind(this)
 
     this.inputRef = React.createRef()
 
@@ -69,7 +71,7 @@ export default class Cloze extends FluencyCore {
       /(.*?)((?:\w+(?=[%#]))?(?:[%#](?:[^\s,;:.?!]*))+)(.*)|.*/
 
     this.zeroWidthSpace = "​" // "&#x200b;"
-    this.timeout        = 0
+    this.revealTimeout  = 0
     this.lastIndexDelay = 1000
 
     this.input          = ""
@@ -89,12 +91,29 @@ export default class Cloze extends FluencyCore {
   }
 
 
+  /** Called by render and chooseNextActivity (componentDidMount)
+   *
+   * @return     {<type>}  { description_of_the_return_value }
+   */
   newPhrase() {
     if (!this.props.isMaster) {
       return
     }
 
     let data = this.props.queue[0]
+    // console.log(JSON.stringify(data, null, "  "))
+    // { "collection": "Cloze",
+    //   "flops": 4,
+    //   "next_seen": 1596423707537,                  <<<
+    //   "phrase_id": "r3NnA8jSkQ3QhCRhT",
+    //   "times_seen": 0,
+    //   "_id": "r3NnA8jSkQ3QhCRhT",                  <<<
+    //   "phrase": "Сейчас три %часа",                <<<
+    //   "native": "It's three o'%clock",             <<<
+    //   "image": "/Assets/shared/images/clock.jpg",  <<<
+    //   "audio": "/Assets/shared/audio/ru/clock.mp3" <<<
+    // }
+
     if (!data) {
       return
     }
@@ -109,13 +128,16 @@ export default class Cloze extends FluencyCore {
     , image
     , audio
     } = data
-    data = { _id, time, phrase, native, image, audio,  }
+    data = { _id, time, phrase, native, image, audio  }
 
     // React Hack: we must momentarily show (any) text, to make the
     // input respond to onChange. We will remove the text in the
     // setSize ref callback.
     data.input = data.phrase
-    data.requireSubmit = true // false /// TODO: Allow options
+
+    data.requireSubmit = true // false // / TODO: Allow options
+    data.reveal        = false
+    data.revealed      = false
 
     setPageData.call({ group_id, data })
   }
@@ -170,13 +192,39 @@ export default class Cloze extends FluencyCore {
       return false
     }
 
-    const field = event.target
-    const input = field.value.replace(this.zeroWidthSpace, "")
-
+    const field     = event.target
+    const input     = field.value.replace(this.zeroWidthSpace, "")
     const selection = field.selectionStart
-    const group_id = this.props.group_id
-    const update = { group_id, input, selection }
+
+    const reveal    = false // hide feedback cue when user types
+    const group_id  = this.props.group_id
+
+    const update    = { group_id, input, selection, reveal }
     updateInput.call(update)
+
+    if (this.props.data.revealed) {
+      // Prepare to show feedback cue again after a pause in typing
+      this.rescheduleReveal()
+    }
+  }
+
+
+  rescheduleReveal() {
+    clearTimeout(this.revealTimeout)
+
+    this.revealTimeout = setTimeout(
+      () => this.revealAnswer("noAudio"), this.revealDelay
+    )
+  }
+
+
+  revealAnswer(noAudio) {
+    if (!!noAudio) {
+      // TODO: Play audio for missing word
+    }
+
+    setPageData.call({ reveal: true, revealed: true })
+    clearTimeout(this.revealTimeout)
   }
 
 
@@ -195,20 +243,41 @@ export default class Cloze extends FluencyCore {
      * , error:      <false if everything typed so far is correct>
      * }
      */
-    
-    if (this.state.fromNewPhrase) {
-      // We don't want a single word exercise to trigger setFluency
-      delta.correct = false
-    }
+    console.log("treatInput     ", wrote, "(", right, ")")
+    console.log("chunkArray:    ", delta.chunkArray)
+    console.log("transform:     ", delta.transform)
+    console.log("error:         ", delta.error, "correct:", delta.correct)
+    console.log()
 
     const cloze = clozeComponent(delta) // chunkArray and transform
 
     delta.cloze         = cloze
     delta.requireSubmit = requireSubmit
     delta.maxLength     = right.length + this.maxExtraChars
-    delta.reveal        = requireSubmit && !wrote
+
+    // reveal is true if the RevealAnswer button was pressed
+    // * Before any further input
+    // * After a pause
+    delta.reveal        = this.props.data.reveal
+
+    //
     delta.fix           = (requireSubmit&&delta.error) || delta.reveal
 
+    // this.state.submitted is set to true by
+    // * setFluency, which is called if !requireSubmit when the
+    //   input is correct
+    // * A click on the Submit button
+    delta.show          = ( !requireSubmit
+                          || this.state.submitted
+                          )
+                        ? "show"
+                        : ""
+
+
+    console.log("requireSubmit: ", delta.requireSubmit)
+    console.log("reveal:        ", delta.reveal)
+    console.log("fix:           ", delta.fix)
+    console.log("")
     this.setState(delta)
 
     this.input = wrote
@@ -292,14 +361,6 @@ export default class Cloze extends FluencyCore {
   }
 
 
-  revealAnswer(noAudio) {
-    if (!!noAudio) {
-      // TODO: Play audio for missing word
-    }
-    setOptions.call({ reveal: true })
-  }
-
-
   submit() { // ???
     this.refreshInput()
     this.setState({ input: "" })
@@ -317,6 +378,9 @@ export default class Cloze extends FluencyCore {
   }
 
 
+  /** Called by FluencyCore.treatResult, itself called by setFluency
+   *  during a componentDidUpdate event
+   */
   chooseNextActivity() {
     setTimeout(() => {
       this.setState({ correct: false })
@@ -352,6 +416,8 @@ export default class Cloze extends FluencyCore {
         phrase={this.state}
         size={this.checkSize}
         change={this.updateInput}
+        submit={this.submit}
+        revealAnswer={this.revealAnswer}
         inputRef={this.inputRef}
         aspectRatio={this.props.aspectRatio}
       />
@@ -372,9 +438,9 @@ export default class Cloze extends FluencyCore {
         if (this.phrase !== phrase) {
           this.treatPhrase(phrase)
 
-        } else if (this.input !== input) {
+        } else if (this.input!==input && !this.state.fromNewPhrase) {
           this.treatInput(input)
-          this.inputRef.current.setSelectionRange(selection, selection)
+          this.inputRef.current.setSelectionRange(selection,selection)
           this.inputRef.current.focus()
         }
       }

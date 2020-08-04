@@ -30,7 +30,11 @@ export default class Tracker{
     const group_id = Session.get("group_id")
 
     const uiText = this.getUIText()
-    const { page, logged_in, activity } = this.getGroupData(group_id)
+    const groupData = this.getGroupData(group_id) || { page: {} }
+    // groupData may be undefined when hot reloading, because the
+    // Group collection may not yet be available
+
+    const { page, logged_in, activity } = groupData
     const { path, data, tag } = page
 
     const isMaster = Array.isArray(logged_in) && logged_in.length

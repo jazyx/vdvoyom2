@@ -491,9 +491,11 @@ class MenuClass extends Component {
   render() {
     if (!this.props.uiText.length) {
       // The chances are that the connection timed out before loading
-      // the UIText collection, so there's nothing for the menu to
-      // show.
-      console.log("No phrases for UI")
+      // the UIText collection, or that the app was hot reloaded so
+      // the collection had not yet had time to load. As a result
+      // there's nothing for the menu to
+      // console.log("No phrases for UI")
+
       return ""
     }
 
@@ -632,22 +634,32 @@ class MenuTracker{
       // "/Game", "/Game/set", "/Game/set/match", ...
       const select = { path }
       const options = {
-        icon: 1
-      , name: 1
+        fields: {
+          icon: 1
+        , name: 1
+        }
       }
       const source = index
                    ? collections[collectionName]
                    : Activity
-      const setData = source.findOne(select, {fields: options})
+      const setData = source.findOne(select, options)
 
-      // console.log( "setData:", setData
-      //            , ` <<<< db.${source._name}.findOne(`
-      //            + JSON.stringify(select)
-      //            + ","
-      //            + JSON.stringify(options.fields)
-      //            + ")"
-      //            )
+      if (!setData) {
+        // This occurs when the app does a hot reload after changing
+        // code during development. The Menu component is already
+        // loaded, but the app has not yet connected to the Activity
+        // collection. We'll simply skip the items for this render.
 
+        return 0
+
+        // console.log( "setData:", setData)
+        // console.log( ` <<<< db.${source._name}.findOne(`
+        //            + JSON.stringify(select)
+        //            + ","
+        //            + JSON.stringify(options.fields)
+        //            + ")"
+        //            )
+      }
       const icon = getIconSrc(setData.icon, lang)
       const name = getLocalized(setData.name, lang)
 
@@ -659,6 +671,7 @@ class MenuTracker{
     }
 
     const items = sets.map(getItemArray)
+                      .filter(item => !!item)
 
     const name = localize("all_activities", lang, uiText)
     items.unshift({

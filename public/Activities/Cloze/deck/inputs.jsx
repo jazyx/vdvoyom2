@@ -46,17 +46,19 @@ export class Clozed extends Component {
           , maxLength     // max number of input characters
 
           , error         // false or truthy
-       // , correct       // not used?
-          , requireSubmit // missing?
+          , correct       // used to set bg color of input
+          , requireSubmit //
+          , submitted     // true if requireSubmit and submit pressed
           , reveal        // true if correct spelling to be shown
           , cue           // TODO: "placeholder" | "backdrop" | "none"
-          , fix           // true if feedback should be shown
+          , fix           // ???
+          , show          //
 
        // USED IN ClozeCore, UNUSED HERE //
        // , chunkArray    // raw array for cloze
        // , transform     // array of transform to apply to chunkArray
        // , expected      // expected input string
-       // , fromNewPhrase // true if we're setting width of input
+       // , fromNewPhrase // false when we're setting width of input
        // , phrase        // complete phrase with #% symbols
        // , submitted     // true if requireSubmit and submit pressed
           } = this.props.phrase
@@ -65,12 +67,14 @@ export class Clozed extends Component {
           , input         // string
           , size          // function ClozeCore.checkSize
           , change        // function ClozeCore.updateInput
+          , revealAnswer  // function ClozeCore.revealAnswer
+          , submit        // function ClozeCore.submit
           , inputRef      // React.createRef() for StyledInput
           , aspectRatio   // number from master's display
        // , phrase        // see above
-          } = this.props 
+          } = this.props
 
-    const options = { aspectRatio }
+    const options = { aspectRatio, revealAnswer, submit }
     let ActionButton
 
     if (requireSubmit) {
@@ -109,10 +113,10 @@ export class Clozed extends Component {
               width={width}
             >
 
-              {/* correct={correct} */}
               <StyledInput
                 className="input can-select"
                 error={error}
+                correct={correct}
                 requireSubmit={requireSubmit}
                 maxLength={maxLength}
                 value={input}
@@ -125,6 +129,7 @@ export class Clozed extends Component {
               <Feedback
                 size={size}
                 cloze={cloze}
+                show={show}
                 fix={fix}
                 reveal={reveal}
               />
@@ -252,7 +257,7 @@ const TurnCard = props => (
 
 const Reveal = props => (
   <StyledSubmit
-    onMouseDown={props.reveal}
+    onMouseDown={props.revealAnswer}
     img="/img/icons/eye.svg"
   />
 )
