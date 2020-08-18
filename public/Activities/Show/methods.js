@@ -1,5 +1,5 @@
 /**
- * /public/activities/Spiral/methods.js
+ * /public/activities/Show/methods.js
  */
 
 
@@ -12,7 +12,7 @@ const { Group } = collections
 
 
 export const setStart = {
-  name: 'spiral.setStart'
+  name: 'show.setStart'
 
 , call(setStartData, callback) {
     const options = {

@@ -1,0 +1,17 @@
+{
+	"set": {
+		"tag": "oatsAndBeans",
+		"name": {
+			"en": "Oats and Beans",
+			"fr": "Les plantes",
+			"ru": "Растении"
+		},
+		"icon": {
+			"src": "/Assets/Show/OatsAndBeans/icon.jpg"
+		},
+		"path": "/Show/OatsAndBeans",
+		"parent": "/Show",
+		"_id": "yfT8fZPHwRRbrQ3ws"
+	},
+	"phrases": []
+}
