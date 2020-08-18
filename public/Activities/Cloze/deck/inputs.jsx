@@ -49,7 +49,6 @@ export class Clozed extends Component {
           , correct       // used to set bg color of input
           , requireSubmit //
           , submitted     // true if requireSubmit and submit pressed
-          , reveal        // true if correct spelling to be shown
           , cue           // TODO: "placeholder" | "backdrop" | "none"
           , fix           // ???
           , show          //
@@ -66,6 +65,7 @@ export class Clozed extends Component {
     const { src           // image url
           , input         // string
           , size          // function ClozeCore.checkSize
+          , reveal        // Boolean
           , change        // function ClozeCore.updateInput
           , revealAnswer  // function ClozeCore.revealAnswer
           , submit        // function ClozeCore.submit
@@ -189,13 +189,16 @@ class Feedback extends Component{
 
 
 export const Add = () => (
-  <StyledAdd />
+  <StyledAdd 
+    className="add"
+  />
 )
 
 
 
 export const Cut = (props) => (
   <StyledCut
+    className="cut"
     has_space={props.has_space}
   >
     {props.children}
@@ -206,6 +209,7 @@ export const Cut = (props) => (
 
 export const Fix = (props) => (
   <StyledFix
+    className="fix"
     has_space={props.has_space}
   >
     {props.children}
@@ -216,6 +220,7 @@ export const Fix = (props) => (
 
 export const Flip = (props) =>  (
   <StyledFlip
+    className="flip"
     has_space={props.has_space}
   >
     {props.children}

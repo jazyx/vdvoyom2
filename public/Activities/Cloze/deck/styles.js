@@ -260,14 +260,13 @@ export const StyledInput = styled.input.attrs(props => {
 // background: transparent;
 // pointer-events: none;
 export const StyledFeedback = styled.span`
-  ${props => props.show
-           ? ""
-           : "display:none"
-   }
+  /* display: ${props => props.show
+           ? "inline-block"
+           : "none"
+   }; */
   position: absolute;
   top: 0;
   left: 0;
-  display: inline-block;
   white-space: pre;
   color: ${colors.normal};
 

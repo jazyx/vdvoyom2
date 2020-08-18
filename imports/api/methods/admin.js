@@ -388,15 +388,15 @@ export const setPage = {
     )
 
     new SimpleSchema({
-      group_id:     { type: String }
-    , page:         { type: Object }
-    , "page.view":  { type: String,  optional: true }
-    , "page.path":  { type: String,  optional: true }
-    , "page.index": { type: Number,  optional: true }
+      group_id:        { type: String }
+    , page:            { type: Object }
+    , "page.view":     { type: String,  optional: true }
+    , "page.path":     { type: String,  optional: true }
+    , "page.index":    { type: Number,  optional: true }
     // , "page.activity": { type: String,  optional: true }
-    , "page.tag":   { type: tagSchema, optional: true }
-    , "page.tag.$": { type: String }
-    , "page.data":  {
+    , "page.tag":      { type: tagSchema, optional: true }
+    , "page.tag.$":    { type: String }
+    , "page.data":     {
         type: Object
       , optional: true
       , blackbox: true

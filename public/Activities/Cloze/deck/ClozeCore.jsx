@@ -217,12 +217,37 @@ export default class Cloze extends FluencyCore {
   }
 
 
+  /*  Prepares to display the `right` answer on the next render in
+   *  front of the input field. Any further input will make it fade.
+   *  
+   *  May be called:
+   *  • When a phrase is first displayed
+   *  • When the user presses the Reveal button
+   *    > In Submit mode:
+   *      - While input field is empty, in Submit mode:
+   *      - After an error in submission
+   *      - After a pause in input after an error in submission
+   *    
+   *    > In autoComplete mode
+   *      - At any time
+   *
+   *  @param  {Boolean  noAudio  Will be true if:
+   *                             * shown when image is displayed (the
+   *                               entire phrase will be played)
+   *                             * called after a pause in input
+   */
   revealAnswer(noAudio) {
     if (!!noAudio) {
       // TODO: Play audio for missing word
     }
 
-    setPageData.call({ reveal: true, revealed: true })
+    setPageData.call({
+      group_id: this.props.group_id
+    , data: {
+        reveal: true
+      , revealed: true
+      }
+    })
     clearTimeout(this.revealTimeout)
   }
 
@@ -242,11 +267,11 @@ export default class Cloze extends FluencyCore {
      * , error:      <false if everything typed so far is correct>
      * }
      */
-    console.log("treatInput     ", wrote, "(", right, ")")
-    console.log("chunkArray:    ", delta.chunkArray)
-    console.log("transform:     ", delta.transform)
-    console.log("error:         ", delta.error, "correct:", delta.correct)
-    console.log()
+    // console.log("treatInput     ", wrote, "(", right, ")")
+    // console.log("chunkArray:    ", delta.chunkArray)
+    // console.log("transform:     ", delta.transform)
+    // console.log("error:         ", delta.error, "correct:", delta.correct)
+    // console.log()
 
     const cloze = clozeComponent(delta) // chunkArray and transform
 
@@ -272,11 +297,10 @@ export default class Cloze extends FluencyCore {
                         ? "show"
                         : ""
 
-
-    console.log("requireSubmit: ", delta.requireSubmit)
-    console.log("reveal:        ", delta.reveal)
-    console.log("fix:           ", delta.fix)
-    console.log("")
+    // console.log("requireSubmit: ", delta.requireSubmit)
+    // console.log("reveal:        ", delta.reveal)
+    // console.log("fix:           ", delta.fix)
+    // console.log("")
     this.setState(delta)
 
     this.input = wrote
@@ -390,6 +414,8 @@ export default class Cloze extends FluencyCore {
 
 
   render() {
+    // console.log(JSON.stringify(this.props, null, "  "))
+    console.log(JSON.stringify(this.state, null, "  "))
     const newItems = this.props.isMaster
                    ? this.checkForNewItems() // in FluencyCore
                    : false
@@ -406,17 +432,20 @@ export default class Cloze extends FluencyCore {
       return "Preparing first item"
     }
 
-    const { image, input } = this.props.data
+    const { image, input, reveal } = this.props.data
 
     return (
       <Clozed
         src={image}
         input={input}
         phrase={this.state}
+        reveal={reveal}
+
         size={this.checkSize}
         change={this.updateInput}
         submit={this.submit}
         revealAnswer={this.revealAnswer}
+
         inputRef={this.inputRef}
         aspectRatio={this.props.aspectRatio}
       />

@@ -22,6 +22,7 @@ import * as assets from './assets'
 import * as cloze from '../../public/Activities/Cloze/methods.js'
 import * as drag from '../../public/Activities/Drag/methods.js'
 import * as flash from '../../public/Activities/Flash/methods.js'
+import * as show from '../../public/Activities/Show/methods.js'
 import * as spiral from '../../public/Activities/Spiral/methods.js'
 
 export const methods = {
@@ -30,5 +31,6 @@ export const methods = {
 , ...cloze
 , ...drag
 , ...flash
+, ...show
 , ...spiral
 }

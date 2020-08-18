@@ -92,10 +92,17 @@ export default class JoinGroup {
 
 
   getPage(accountData, d_codes) {
+    // Go to the Activity choice page by default
     let page = { view: "Activity" }
 
+    // Check if this group already has another member, who will be
+    // master, in which case we'll go to the view that is already
+    // active
     let readFromGroup = d_codes.length > 1
+
     if (!readFromGroup) {
+      // If this user is master, and they have asked to return to the
+      // last used activity, open that last view. 
       readFromGroup = accountData.restore_all
     }
 
