@@ -1,5 +1,5 @@
 /**
- * /imports/api/methods/assets/constants.js
+ * /imports/tools/custom/constants.js
  *
  * The constants below are used by other scripts in the
  * /imports/api/methods/assets/ folder
@@ -32,6 +32,8 @@ const ICON_REGEX = new RegExp("^(icon" + lookAhead + ")|(icon)$")
 const EN_REGEX = new RegExp("en\.(" + formats)
 // Used to identify image files in image/ folder
 const IMAGE_REGEX = new RegExp("([^/.]+)" + lookAhead)
+// Breaks "before [link](url) after" into four chunks
+const LINK_REGEX = /(.*)(?:\[([^\]]+)]\(([^)]+)\))(.*)|(.*)/
 // four-letter + .json
 const JSON_REGEX = /^((?:root)|(?:rank)|(?:rack)|(?:l10n))\.json$/
 // Splits PATH_REGEX into chunks like "/Activity" and "/exercise"
@@ -51,6 +53,7 @@ export {
 
 , ICON_REGEX
 , IMAGE_REGEX
+, LINK_REGEX
 , JSON_REGEX
 , SET_REGEX
 , EN_REGEX

@@ -22,31 +22,16 @@ import { collections as adminCollections
        } from './admin'
 
 
-const Cloze = new Mongo.Collection('cloze')
-const Nim = new Mongo.Collection('nim')
 const Show = new Mongo.Collection('show')
-const Spiral = new Mongo.Collection('spiral')
-const Stories = new Mongo.Collection('stories')
-const Vocabulary = new Mongo.Collection('vocabulary')
 
 
 export const collections = {
   ...adminCollections
-, Cloze
-, Nim
 , Show
-, Spiral
-, Stories
-, Vocabulary
 }
 
 
 export const publishQueries = {
   ...adminQueries
-, "Cloze": {}
-, "Nim": {}
 , "Show": {}
-, "Spiral": {}
-, "Stories": {}
-, "Vocabulary": {}
 }

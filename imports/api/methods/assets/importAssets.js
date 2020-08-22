@@ -418,6 +418,9 @@ export default class ImportAssets extends IOHelper{
     // Creates a record in collection and retrieves its _id if
     // no record exists yet: set._id will now exist
 
+    // console.log("treatJSON addPhrases:", addPhrases)
+    // console.log(json.phrases)
+
     if (addPhrases && (phrases = json.phrases)) {
       // Update json with details of available assets
       this.addAssetsToPhrases(
@@ -467,6 +470,8 @@ export default class ImportAssets extends IOHelper{
   addAssetsToPhrases(phrases,assets,tagArray,ignore_missing_files) {
     const audio = assets.audio
     const image = assets.image
+
+    console.log("addAssetsToPhrases image:", image)
 
     phrases.forEach( phraseData => {
       let name = phraseData.name

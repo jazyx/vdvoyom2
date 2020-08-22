@@ -17,16 +17,8 @@
  * '/imports/ui/App.jsx'
  */
 
-import Cloze from '../../public/Activities/Cloze/Cloze.jsx'
 import Show from '../../public/Activities/Show/Show.jsx'
-import Spiral from '../../public/Activities/Spiral/Spiral.jsx'
-import Stories from '../../public/Activities/Stories/Stories.jsx'
-import Vocabulary from '../../public/Activities/Vocabulary/Vocabulary.jsx'
 
 export {
-  Cloze
-, Show
-, Spiral
-, Stories
-, Vocabulary
+  Show
 }

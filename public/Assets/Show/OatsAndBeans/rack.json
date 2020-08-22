@@ -13,5 +13,76 @@
 		"parent": "/Show",
 		"_id": "yfT8fZPHwRRbrQ3ws"
 	},
-	"phrases": []
+	"phrases": [
+		{
+			"name": "splash",
+			"menu": "exclude-from-menu",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/splash.jpg",
+					"size": 98398
+				}
+			],
+			"layout": "splash",
+			"text": "25 September 2020\nJames Newton at\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)",
+			"tags": [
+				"oatsAndBeans"
+			],
+			"tweak": {
+				"background-color": "#fff",
+				"color": "#000"
+			},
+			"_id": "4pT9midTF7Dvjo5rY"
+		},
+		{
+			"name": "earth",
+			"menu": {
+				"en": "The Age of the Earth",
+				"fr": "L'âge de la terre",
+				"ru": "Возраст земли"
+			},
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/earth.svg",
+					"size": 57631
+				}
+			],
+			"layout": "solo",
+			"tweak": {
+				"background-color": "#fff",
+				"color": "#000"
+			},
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "iGsYEexQuLXPuEKEE"
+		},
+		{
+			"name": "first_plants",
+			"menu": {
+				"en": "The First Plants on Dry Land",
+				"fr": "Les premières plantes sur la terre",
+				"ru": "Первые растения на суше"
+			},
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/first_plants.jpg",
+					"size": 196747
+				}
+			],
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "first_plants",
+					"en": "Liverwort (A, B, C), moss (D) and hornwort (E)",
+					"fr": "Hépatiques (A, B, C), mousse (D) et anthocérote (E)",
+					"ru": "Печёночные мхи (A, B, C), мох (D) и антоцеротовидные (E)"
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "dGRe2HrQ5TbYfasDe"
+		}
+	]
 }
