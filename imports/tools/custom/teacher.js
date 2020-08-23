@@ -40,6 +40,12 @@ class Teacher {
 
   initialize() {
     const id     = this.id     = Session.get("teacher_id")
+
+    if (!id) {
+      // This user is not a teacher
+      return
+    }
+
     const d_code = this.d_code = Session.get("d_code")
 
     logInTeacher.call({ id, d_code })

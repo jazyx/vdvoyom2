@@ -90,5 +90,8 @@ export default class ShowTracker extends Tracker{
 
 
   addCustomProps(props) {
+    if (!props.isMaster) {
+      props.items = this.getItems(this.collectionName, props.tag)
+    }
   }
 }

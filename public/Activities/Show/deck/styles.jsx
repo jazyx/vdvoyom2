@@ -28,11 +28,11 @@ export const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: calc(4 * var(--w));
+  font-size: calc(3.5 * var(--w));
 
   ${props => {
     let rules = ""
-    
+
     const tweak = props.tweak
     if (typeof tweak === "object") {
       const keys = Object.keys(tweak)
@@ -46,8 +46,17 @@ export const StyledContainer = styled.div`
 `
 
 
+export const StyledMenuContainer = styled.div` 
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100 * var(--h));
+  z-index: 1;
+`
+
+
 export const StyledSVG = styled.svg`
-  position: fixed;
+  position: absolute;
   width: calc(15 * var(--min));
   height: calc(15 * var(--min));
   fill: ${SETTINGS.fillColor};
@@ -59,6 +68,7 @@ export const StyledSVG = styled.svg`
   left: ${props => props.open
                  ? "calc(45 * var(--min));"
                  : 0};
+  z-index: 2;
   transition: left .3s linear, opacity .1s;
   transition-property: left, opacity;
   transition-delay: ${props => props.open ? ".1s, 0s;" :"0s, .3s;"}
@@ -66,7 +76,7 @@ export const StyledSVG = styled.svg`
 
 
 export const StyledShowMenu = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -130,6 +140,14 @@ export const StyledShowItem = styled.li`
             : ""
   }
 
+  & span:first-child {
+    display: inline-block;
+    font-size: 0.5em;
+    width: 2em;
+    text-align: right;
+    padding: 0 0.25em 0 0;
+    vertical-align: middle;
+  }
 `
 
 
@@ -172,7 +190,7 @@ export const StyledSolo = styled.div`
   & img {
     width: 100%;
     object-fit: contain;
-    max-height: calc(100 * var(--h) - 1.25em)
+    max-height: calc(100 * var(--h) - 1.5em)
 
     ${props => props.legend
              ? ""
@@ -183,6 +201,8 @@ export const StyledSolo = styled.div`
   & p {
     text-align: center;
     height: 1.5em;
-    margin: 0.25em 0;
+    margin: 0;
+    padding: 0.25em 0;
+    box-sizing: border-box;
   }
 `

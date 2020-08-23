@@ -8,11 +8,14 @@
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 
-import { StyledShowMenu
+import { StyledMenuContainer
+       , StyledShowMenu
        , StyledShowList
        , StyledShowItem
        , StyledSVG
        } from './styles'
+
+import { setPageData } from '/imports/api/methods/admin.js'
 
 
 
@@ -38,7 +41,7 @@ const Items = (props) => {
   // setPage: undefined
   // uiText: undefined
 
-
+  let skip = -1
   const items = props.items.map(( item, index ) => {
     if (item.menu) {
       return <StyledShowItem
@@ -46,10 +49,12 @@ const Items = (props) => {
         onMouseUp={() => props.chooseSlide( index )}
         active={index === props.index}
       >
-        {item.menu}
+        <span className="index">{index - skip}.</span>
+        <span className="section">{item.menu}</span>
       </StyledShowItem>
 
     } else {
+      skip += 1
       return 0
     }
   }).filter( item => !!item )
@@ -111,7 +116,8 @@ export class Menu extends Component {
     this.chooseSlide = this.chooseSlide.bind(this)
     this.toggleOver = this.toggleOver.bind(this)
 
-    this.state = { open: false }
+    this.state = { over: false }
+    this.toggleMenu(false)
 
     // this.openMenu()
     // setTimeout(this.closeMenu, CLOSE_MENU_DELAY)
@@ -124,11 +130,7 @@ export class Menu extends Component {
     }
 
     if (event) {
-      this.setState({ open: true })
-
-    } else {
-      // The call came from the constructor
-      this.state = { open: true }
+      this.toggleMenu(true)
     }
 
     const listener = this.closeMenu
@@ -150,7 +152,7 @@ export class Menu extends Component {
 
     const pane = this.pane.current
     if (!event || (pane && !pane.contains(event.target))) {
-      this.setState({ open: false })
+      this.toggleMenu(false)
 
       // Prevent the menu from reopening immediately if the click to
       // close was on the Icon
@@ -162,6 +164,22 @@ export class Menu extends Component {
       document.body.removeEventListener("touchstart", listener,true)
       document.body.removeEventListener("mousedown", listener, true)
     }
+  }
+
+
+  toggleMenu(menu_open) {   
+    const group_id = this.props.group_id
+
+    if (!group_id) {
+      return
+    }
+
+    const data = { menu_open }
+
+    setPageData.call({
+      group_id
+    , data
+    })
   }
 
 
@@ -178,81 +196,38 @@ export class Menu extends Component {
 
 
   render() {
-    // console.log("Menu", this.props)
+    const { open, aspectRatio, index, items } = this.props
 
-    // "items": [
-    //   {
-    //     "_id": "4pT9midTF7Dvjo5rY",
-    //     "name": "splash",
-    //     "image": {
-    //       "splash": "/Assets/Show/OatsAndBeans/image/splash.jpg"
-    //     },
-    //     "layout": "splash",
-    //     "text": "25 September 2020\nJames Newton at\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
-    //   },
-    //   {
-    //     "_id": "iGsYEexQuLXPuEKEE",
-    //     "name": "earth",
-    //     "menu": "The Age of the Earth",
-    //     "image": {
-    //       "earth": "/Assets/Show/OatsAndBeans/image/earth.svg"
-    //     },
-    //     "layout": "solo",
-    //     "tweak": {
-    //       "background-color": "#fff",
-    //       "color": "#000"
-    //     }
-    //   },
-    //   {
-    //     "_id": "dGRe2HrQ5TbYfasDe",
-    //     "name": "first_plants",
-    //     "menu": "The First Plants on Dry Land",
-    //     "image": {
-    //       "first_plants": "/Assets/Show/OatsAndBeans/image/first_plants.jpg"
-    //     },
-    //     "layout": "solo",
-    //     "legend": [
-    //       {
-    //         "id": "first_plants",
-    //         "legend": "Liverwort (A, B, C), moss (D) and hornwort (E)"
-    //       }
-    //     ],
-    //     "tweak": {
-    //       "background-color": "#fff",
-    //       "color": "#000"
-    //     }
-    //   }
-    // ]
-
-    // return <StyledShowMenu>
-    //   Show menu goes here
-    // </StyledShowMenu>
-
-    return <StyledShowMenu
-        id="menu-items"
-        open={this.state.open}
+    return <StyledMenuContainer
+      className="show-menu-container"
+    >
+      <StyledShowMenu
+        className="show-menu"
+        open={open}
+        aspectRatio={aspectRatio}
       >
         <Items
-          index={this.props.index}
-          items={this.props.items}
+          index={index}
+          items={items}
           pane={this.pane}
 
           chooseSlide={this.chooseSlide}
         />
-        <StyledSVG
-          id="openShowMenu"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid meet"
+      </StyledShowMenu>  
+      <StyledSVG
+        className="openShowMenu"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid meet"
 
-          open={this.state.open}
-          over={this.state.over}
+        open={open}
+        over={this.state.over}
 
-          onClick={this.openMenu}
-          onMouseEnter={this.toggleOver}
-          onMouseLeave={this.toggleOver}
-        >
-          <Icon />
-        </StyledSVG>
-      </StyledShowMenu>
+        onClick={this.openMenu}
+        onMouseEnter={this.toggleOver}
+        onMouseLeave={this.toggleOver}
+      >
+        <Icon />
+      </StyledSVG>
+    </StyledMenuContainer>
   }
 }

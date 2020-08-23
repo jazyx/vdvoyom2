@@ -27,19 +27,20 @@ export default class Tracker{
     const code = this.code = Session.get("language")
     const d_code = Session.get("d_code")
     const user_id = Session.get("user_id")
-    const group_id = Session.get("group_id")
+    const group_id = Session.get("group_id")    
+    const isTeacher = Session.get("role") === "teacher"
 
     const uiText = this.getUIText()
     const groupData = this.getGroupData(group_id) || { page: {} }
     // groupData may be undefined when hot reloading, because the
     // Group collection may not yet be available
 
-    const { page, logged_in, activity } = groupData
+    const { page, logged_in, activity, active, soloPilot } = groupData
     const { path, data, tag } = page
 
-    const isMaster = Array.isArray(logged_in) && logged_in.length
-                   ? logged_in[0] === d_code
-                   : false
+    const isMaster  = Array.isArray(logged_in) && logged_in.length
+                    ? logged_in[0] === d_code
+                    : false
 
     if (isMaster) {
       items = this.getItems(collectionName, tag)
@@ -56,7 +57,10 @@ export default class Tracker{
     , tag
     , activity
     , data
+    , active
     , isMaster
+    , isTeacher
+    , soloPilot   // undefined for most activities
     // items will be undefined if isMaster is false
     , items // [{ phrase, image, audio, native }]
     }
@@ -109,9 +113,11 @@ export default class Tracker{
     const groupSelect = { _id }
     let options = {
       fields: {
-        page: 1
+        page:      1
       , logged_in: 1
-      , activity: 1
+      , activity:  1
+      , active:    1
+      , soloPilot: 1
       }
     }
     const groupData = Group.findOne(groupSelect, options)

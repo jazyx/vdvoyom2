@@ -57,6 +57,7 @@ class PointsClass extends Component {
     , width: "100vw"
     , height: "100vh"
     , pointerEvents: "none"
+    , zIndex: 1
     // , backgroundColor: "rgba(0,0,255, 0.15)"
     }
 

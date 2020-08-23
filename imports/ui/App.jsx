@@ -340,9 +340,9 @@ export default withTracker(() => {
       }
     }
     const groupData = Group.findOne(groupSelect, groupProject) || {}
-    const logged_in = groupData.logged_in
+    const logged_in = groupData.logged_in || []
 
-    if (isTeacher &&logged_in.length === 1) {
+    if (isTeacher && logged_in.length === 1) {
       // In a teacher-only group for navigating teacher pages, there
       // logged_in.length will be 0. So this case is only triggered
       // when all the Users have left the teacher alone in a Users

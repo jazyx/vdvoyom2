@@ -10,7 +10,9 @@ import styled, { css } from 'styled-components'
 
 import { LINK_REGEX } from '/imports/tools/custom/constants'
 
-import { setPageData } from '/imports/api/methods/admin.js'
+import { setPageData
+       , setSoloPilot
+       } from '/imports/api/methods/admin.js'
 import { setStart } from '../methods'
 
 
@@ -31,16 +33,38 @@ export default class Show extends Component {
 
     const listener = this.treatArrowKeys
     document.body.addEventListener("keydown", listener, true)
+    
+    this.togglePilot()
 
     if (props.isMaster) {
-      this.setIndex(0)
+      this.setIndex(0, false)
+    }
+  }
+
+
+  togglePilot(off) {
+    if (off || this.props.isTeacher || !this.props.active) {
+      const _id = this.props.group_id
+      const soloPilot = off
+                      ? undefined
+                      : this.props.d_code
+
+      setSoloPilot.call({
+        _id
+      , soloPilot
+      })
     }
   }
 
  
   treatArrowKeys(event) {
+    const items = this.props.items
+    if (!items) {
+      return
+    }
+ 
+    const max = items.length - 1
     let index = this.index
-    const max = this.props.items.length - 1
 
     switch (event.keyCode) {
       default:
@@ -142,10 +166,15 @@ export default class Show extends Component {
   }
 
 
-  setIndex(index) {
-
+  setIndex(index, menu_open) {
     const group_id  = this.props.group_id
-    const data = { index }
+    const data = {
+      index
+    }
+
+    if (menu_open !== undefined) {
+      data.menu_open = menu_open
+    }
 
     setPageData.call({
       group_id
@@ -164,7 +193,30 @@ export default class Show extends Component {
   }
 
 
+  getMenu(items) {
+    // const { soloPilot, d_code } = this.props
+
+    // if (soloPilot && soloPilot !== d_code) {
+    //   return ""
+    // }
+    const open = this.props.data
+               ? this.props.data.menu_open
+               : false
+
+    return <Menu
+      key="menu"
+      open={open}
+      items={items}
+      index={this.index}
+      setIndex={this.setIndex}
+      group_id={this.props.group_id}
+      aspectRatio={this.props.aspectRatio}
+    />
+  }
+
+
   render() {
+    console.log("Show", JSON.stringify(this.props, null, "  "))
     const items = this.props.items
 
     if (!items) {
@@ -175,21 +227,17 @@ export default class Show extends Component {
                 ? this.props.data.index || 0
                 : 0
     const item = items[this.index]
-    const tweak = item.tweak
+    const tweak = item ? item.tweak : undefined
 
     const slide = this.getSlide(item)
+    const menu = this.getMenu(items)
 
     return <StyledContainer
       className="show"
       tweak={tweak}
     >
       {slide}
-      <Menu
-        key="menu"
-        items={items}
-        index={this.index}
-        setIndex={this.setIndex}
-      />
+      {menu}
     </StyledContainer>
   }
 
@@ -197,5 +245,9 @@ export default class Show extends Component {
   componentWillUnmount() {
     const listener = this.treatArrowKeys
     document.body.removeEventListener("keydown", listener, true)
+
+    if (this.props.soloPilot === this.props.d_code) {
+      this.togglePilot("off")
+    }
   }
 }

@@ -597,6 +597,71 @@ export const setFluency = {
 }
 
 
+export const toggleMenu = {
+  name: "vdvoyom.toggleMenu"
+
+, call(toggleMenuData, callback) {
+    const options = {
+      returnStubValue: true
+    , throwStubExceptions: true
+    }
+
+    Meteor.apply(this.name, [toggleMenuData], options, callback)
+  }
+
+, validate(toggleMenuData) {
+    new SimpleSchema({
+      _id:       { type: String }
+    , menu_open: { type: Boolean }
+    }).validate(toggleMenuData)
+  }
+
+, run(toggleMenuData) {
+    const { _id, menu_open } = toggleMenuData
+    const select = { _id }
+    const set = {
+      $set: { menu_open }
+    }
+    Group.update(select, set)
+  }
+}
+
+
+export const setSoloPilot = {
+  name: "vdvoyom.setSoloPilot"
+
+, call(pilotData, callback) {
+    const options = {
+      returnStubValue: true
+    , throwStubExceptions: true
+    }
+
+    Meteor.apply(this.name, [pilotData], options, callback)
+  }
+
+, validate(pilotData) {
+    new SimpleSchema({
+      _id:       { type: String }
+    , soloPilot: { type: String, optional: true }
+    }).validate(pilotData)
+  }
+
+, run(pilotData) {
+    const { _id, soloPilot } = pilotData
+    const select = { _id }
+
+    const update = soloPilot
+                 ? {
+                     $set: { soloPilot }
+                   }
+                 : {
+                     $unset: { soloPilot: 0 }
+                   }
+    Group.update(select, update)
+  }
+}
+
+
 
 // To register a new method with Meteor's DDP system, add it here
 const methods = [
@@ -614,6 +679,9 @@ const methods = [
   , switchActivity
   , addToFluency
   , setFluency
+
+  , toggleMenu
+  , setSoloPilot
 ]
 
 

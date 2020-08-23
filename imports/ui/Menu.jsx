@@ -37,7 +37,7 @@ import { SET_REGEX } from '../tools/custom/constants'
 
 
 import { methods } from '../api/methods/mint'
-const { logOut, setIndex , setPath } = methods
+const { logOut, setIndex , setPath, toggleMenu } = methods
 
 import collections from '../api/collections/publisher'
 const { UIText, Group, Activity } = collections
@@ -53,7 +53,7 @@ const CLOSE_MENU_DELAY = 1000
 
 
 const StyledControls = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: calc(100 * var(--h));
@@ -63,7 +63,7 @@ const StyledControls = styled.div`
 
 
 const StyledSVG = styled.svg`
-  position: fixed;
+  position: absolute;
   width: calc(15 * var(--min));
   height: calc(15 * var(--min));
   fill: ${COLORS.fillColor};
@@ -82,7 +82,7 @@ const StyledSVG = styled.svg`
 
 
 const StyledMenu = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -364,7 +364,7 @@ const Icon = () => (
 
 
 
-class MenuClass extends Component {
+class Menu extends Component {
   constructor(props) {
     super(props)
 
@@ -389,8 +389,9 @@ class MenuClass extends Component {
     if (this.ignoreOpen) {
       return
     }
+
     if (event) {
-      this.setState({ open: true })
+      this.toggleMenu(true)
     }
 
     const listener = this.closeMenu
@@ -412,8 +413,7 @@ class MenuClass extends Component {
 
     const pane = this.pane.current
     if (!event || (pane && !pane.contains(event.target))) {
-      this.setState({ open: false })
-
+      this.toggleMenu(false)
       // Prevent the menu from reopening immediately if the click to
       // close was on the Icon
 
@@ -424,6 +424,19 @@ class MenuClass extends Component {
       document.body.removeEventListener("touchstart", listener,true)
       document.body.removeEventListener("mousedown", listener, true)
     }
+  }
+
+
+  toggleMenu(menu_open) {   
+    const _id = this.props.group_id
+    if (!_id) {
+      return
+    }
+
+    toggleMenu.call({
+      _id
+    , menu_open
+    })
   }
 
 
@@ -466,6 +479,9 @@ class MenuClass extends Component {
       // console.log("No phrases for UI")
 
       return ""
+
+    } else if (this.props.isPilot === false) {
+      return ""
     }
 
     // console.log(JSON.stringify(this.props, null, "  "))
@@ -478,7 +494,7 @@ class MenuClass extends Component {
       >
         <Items
           pane={this.pane}
-          open={this.state.open}
+          open={this.props.menu_open}
 
           index={this.props.index}
           items={this.props.items}
@@ -492,7 +508,7 @@ class MenuClass extends Component {
           viewBox="0 0 100 100"
           preserveAspectRatio="xMidYMid meet"
 
-          open={this.state.open}
+          open={this.props.menu_open}
           over={this.state.over}
 
           onClick={this.openMenu}
@@ -509,8 +525,9 @@ class MenuClass extends Component {
 
 class MenuTracker{
   getProps() {
+    const group_id = Session.get("group_id")
     const uiText  = this.getUIText()
-    const page    = this.getPage()
+    const { page, menu_open, isPilot } = this.getGroupData()
     const { path, index } = page
     const items   = this.getItems(path, uiText)
 
@@ -519,6 +536,9 @@ class MenuTracker{
     , path
     , index
     , items
+    , group_id
+    , menu_open
+    , isPilot
     }
 
     return props
@@ -547,16 +567,25 @@ class MenuTracker{
   }
 
 
-  getPage() {
+  getGroupData() {
     const group_id = Session.get("group_id")
+    const d_code = Session.get("d_code")
 
     if (group_id) {
       const groupSelect = { _id: group_id }
       const groupProject = {
-        fields: { page: 1 }
+        fields: {
+          page: 1
+        , menu_open: 1
+        , soloPilot: 1
+        }
       }
 
-      var { page } = Group.findOne(groupSelect, groupProject)
+      var {
+        page
+      , menu_open
+      , soloPilot
+      } = Group.findOne(groupSelect, groupProject)
     }
 
     if (!page) {
@@ -574,7 +603,13 @@ class MenuTracker{
       }
     }
 
-    return page
+    // isPilot should be undefined if soloPilot is not defined,
+    // true if this user/teacher is the soloPilot, false if not
+    const isPilot = soloPilot
+                  ? soloPilot === d_code
+                  : undefined
+
+    return { page, menu_open, isPilot }
   }
 
 
@@ -659,4 +694,4 @@ const menuTracker = new MenuTracker()
 
 export default withTracker(() => {
   return menuTracker.getProps()
-})(MenuClass)
+})(Menu)
