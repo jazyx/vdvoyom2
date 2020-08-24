@@ -28,7 +28,7 @@ export class Video extends Component {
     this.playerReady = this.playerReady.bind(this)
     this.playerStateChange = this.playerStateChange.bind(this)
 
-    this.paused = false
+    this.paused = !!this.props.paused
   }
 
 
