@@ -14,8 +14,9 @@ import { setPageData
        , setSoloPilot
        } from '/imports/api/methods/admin.js'
 
-import { Menu } from './menu'
-import { Video } from './video'
+import { Menu } from './components/menu'
+import { Video } from './components/video'
+import { Quote } from './components/quote'
 import { StyledContainer
        , StyledVideo
        , StyledSplash
@@ -175,37 +176,14 @@ export default class Show extends Component {
       group_id={this.props.group_id}
       aspectRatio={this.props.aspectRatio}
     />
-    // let { id, width, height } = item
-    // const videoRatio = width / height
-    // const aspectRatio = this.props.aspectRatio
-    // const src = "https://www.youtube.com/embed/" + id
-    // const allow = `
-    //   accelerometer;
-    //   autoplay;
-    //   encrypted-media;
-    //   gyroscope;
-    //   picture-in-picture
-    // `
-    // // allow={allow}
+  }
 
 
-    // if (videoRatio > aspectRatio) {
-    //   height = (aspectRatio * 100/ videoRatio) + "%"
-    //   width = "100%"
-    // } else {
-    //   width = (videoRatio * 100/ aspectRatio) + "%"
-    //   height = "100%"
-    // }
-
-    // return <iframe
-    //   width={width}
-    //   height={height}
-    //   src={src}
-    //   allowfullscreen="true"
-    //   border="none  "
-    // ></iframe>
-
-
+  getQuote(item) {
+    return <Quote
+      {...item}
+      aspectRatio={this.props.aspectRatio}
+    />
   }
 
 
@@ -234,6 +212,8 @@ export default class Show extends Component {
         return this.getSolo(item)
       case "video":
         return this.getVideo(item)
+      case "quote":
+        return this.getQuote(item)
     }
   }
 

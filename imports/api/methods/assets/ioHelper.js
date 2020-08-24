@@ -113,19 +113,20 @@ export default class IOHelper {
     const jsonPath = path.join(parentFolder, jsonFiles[0])
 
     let json
-    // try {
+    try {
       json = fs.readFileSync(jsonPath)
       json = JSON.parse(json)
 
-    // } catch(error) {
-    //   const message =
-    //   `Error reading JSON file ${jsonPath}:
-    //   ${error}  `
+    } catch(error) {
+      const message =
+      `Error reading JSON file ${jsonPath}:
+      ${error}  `
 
-    //   this.log(message)
+      this.log(message)
+      console.log(message)
 
-    //   return {} // doc will not be updated
-    // }
+      return {} // doc will not be updated
+    }
 
     // console.log("jsonPath:", jsonPath)
     // console.log("json:", json)

@@ -1,5 +1,5 @@
 /**
- * /public/Activities/Show/deck/menu.jsx
+ * /public/Activities/Show/deck/components/menu.jsx
  *
  * 
  */
@@ -13,7 +13,7 @@ import { StyledMenuContainer
        , StyledShowList
        , StyledShowItem
        , StyledSVG
-       } from './styles'
+       } from '../styles'
 
 import { setPageData } from '/imports/api/methods/admin.js'
 

@@ -74,6 +74,60 @@
 			"_id": "iGsYEexQuLXPuEKEE"
 		},
 		{
+			"name": "Ordovician_Landscape",
+			"menu": {
+				"en": "The First Plants on Dry Land",
+				"fr": "Les premières plantes sur la terre",
+				"ru": "Первые растения на суше"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Ordovician_Landscape",
+					"en": "An Ordovician landscape, 450 million years ago",
+					"fr": "Un paysage Ordovicien, il y a 450 million d'années",
+					"ru": "Ордовикский пейзаж, 450 миллионов лет назад"
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "jGvFtABmRzLGKWfke",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/Ordovician_Landscape.jpg",
+					"size": 452711
+				}
+			]
+		},
+		{
+			"name": "ordovician",
+			"menu": {
+				"en": "Life in the oceans",
+				"fr": "La vie dans les océans",
+				"ru": "Жизнь в океанах"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "ordovician",
+					"en": "Life in the oceans",
+					"fr": "La vie dans les océans",
+					"ru": "Жизнь в океанах"
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "4azXMnnRvh9JC5L2r",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/ordovician.jpg",
+					"size": 374394
+				}
+			]
+		},
+		{
 			"name": "first_plants",
 			"menu": {
 				"en": "The First Plants on Dry Land",
@@ -99,6 +153,325 @@
 				"oatsAndBeans"
 			],
 			"_id": "dGRe2HrQ5TbYfasDe"
+		},
+		{
+			"name": "moss_lifecycle",
+			"menu": {
+				"en": "The Life Cycle of Moss",
+				"fr": "Le cycle de vie de la mousse",
+				"ru": "Жизненный цикл мха"
+			},
+			"layout": "solo",
+			"tweak": {
+				"background-color": "#fff",
+				"color": "#000"
+			},
+			"legend": [
+				{
+					"id": "moss_lifecycle",
+					"en": "The Life Cycle of Moss",
+					"fr": "Le cycle de vie de la mousse",
+					"ru": "Жизненный цикл мха"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/moss_lifecycle.png",
+					"size": 240883
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "nMWbyRsJSSXSKWWcu"
+		},
+		{
+			"name": "spores",
+			"menu": {
+				"en": "Moss Spores",
+				"fr": "Spores de mousse",
+				"ru": "Споры мха"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "spores",
+					"en": "Moss Spores",
+					"fr": "Spores de mousse",
+					"ru": "Споры мха"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/spores.jpg",
+					"size": 78233
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "zndAcdgRQrmetzR6p"
+		},
+		{
+			"name": "Trilobite",
+			"menu": {
+				"en": "Trilobite Fossil",
+				"fr": "Fossile de trilobite",
+				"ru": "Ископаемые трилобиты"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Trilobite",
+					"en": "Trilobite Fossil",
+					"fr": "Fossile de trilobite",
+					"ru": "Ископаемые трилобиты"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/Trilobite.jpg",
+					"size": 199020
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "5AS7f3zdzf2ceei7a"
+		},
+		{
+			"name": "TimothyLenton",
+			"menu": {
+				"en": "Timothy Lenton",
+				"fr": "Timothy Lenton",
+				"ru": "Тимоти Лентон"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "TimothyLenton",
+					"en": "Timothy Lenton, Exeter University",
+					"fr": "Timothy Lenton, l'université d'Exeter",
+					"ru": "Тимоти Лентон, из Эксетерского университета"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/TimothyLenton.jpg",
+					"size": 87424
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "d76TwdjojvXoKPFon"
+		},
+		{
+			"name": "strata",
+			"menu": {
+				"en": "Sequence Stratigraphy",
+				"fr": "Stratigrapie des séquences",
+				"ru": "Секвенс стратиграфия"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "strata",
+					"en": "Anticosti Island, Québec",
+					"fr": "L'île d'Anticosti, Québec",
+					"ru": "Остров Антикости, Квебек"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/strata.jpg",
+					"size": 196835
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "iwoLScj48koGXREpT"
+		},
+		{
+			"name": "moss",
+			"menu": {
+				"en": "Moss",
+				"fr": "mousse",
+				"ru": "Мох"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/moss.jpg",
+					"size": 298968
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "tT4WmhpzNJAnp5PHr"
+		},
+		{
+			"name": "Keeling",
+			"menu": {
+				"en": "Charles Keeling",
+				"fr": "Charles Keeling",
+				"ru": "Чарльз Килинг"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Keeling",
+					"en": "Charles Keeling and his son Ralph",
+					"fr": "Charles Keeling et son fils Ralph",
+					"ru": "Чарльз Килинг и его сын Ральф"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/Keeling.jpg",
+					"size": 170208
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "JQNGiWbnyeA8nHgS7"
+		},
+		{
+			"name": "CO2",
+			"menu": {
+				"en": "Measuring CO₂",
+				"fr": "Mésurer la concentration du CO₂",
+				"ru": "Измерьте концентрации углекислого газа"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "CO2",
+					"en": "Measuring CO₂",
+					"fr": "Mésurer la concentration du CO₂",
+					"ru": "Измерьте концентрации углекислого газа"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/CO2.jpg",
+					"size": 98990
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "7LSyax7LBJmpCTC74"
+		},
+		{
+			"name": "MaunaLau",
+			"menu": {
+				"en": "Maunu Lau Observatory",
+				"fr": "L'observatoire à Maunu Lau",
+				"ru": "Обсерватория Мауну-Лау"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "MaunaLau",
+					"en": "Maunu Lau Observatory",
+					"fr": "L'observatoire à Maunu Lau",
+					"ru": "Обсерватория Мауну-Лау"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/MaunaLau.jpg",
+					"size": 149726
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "szKNuXgxdbj6rQsnQ"
+		},
+		{
+			"name": "KeelingCurve",
+			"menu": {
+				"en": "The Keeling Curve",
+				"fr": "La courbe de Keeling",
+				"ru": "График Килинга"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "KeelingCurve",
+					"en": "The Keeling Curve",
+					"fr": "La courbe de Keeling",
+					"ru": "График Килинга"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/KeelingCurve.png",
+					"size": 215023
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "uriDnYbCPjL4tWHaa"
+		},
+		{
+			"name": "HopeJahren",
+			"menu": {
+				"en": "Soil",
+				"fr": "Le sol",
+				"ru": "Почва"
+			},
+			"layout": "quote",
+			"limit": 0.7,
+			"legend": [
+				{
+					"id": "HopeJahren",
+					"en": "Soil is a funny thing, in that it isn’t really anything in and of itself but is instead the product of two different worlds coming together. Soil is the naturally produced graffiti that results from tensions between the biological and geological realms...\nAll around us we can point concretely to what’s alive — a green leaf, a moving worm, a sucking root. At depth lies cold, hard rock, old as the hills..., and equally devoid of breath and movement — not alive. Everything that is physically located between the two extremes — alive and not alive — we call “soil.”",
+					"fr": "Le sol est une chose étrange. Ce n'est pas vraiment une chose en soi. C'est plutôt le produit de deux mondes qui se rencontrent. Le sol est le graffiti qui est le résultat naturel des tensions entre les royaumes biologique et géologique...\nTout autour de nous, nous pouvons indiquer concrètement ce qui est vivant : une feuille verte, un vers qui bouge, une racine qui explore. Dans les profondeurs gît la roche, dure et froide, aussi vieille que la terre ... et complètement dépourvue de souffle et de mouvement — non vivante. Tout ce qui se trouve physiquement entre ces deux extrêmes – vivant et non vivant – nous l'appelons “le sol”.",
+					"ru": "Почва - забавная штука, поскольку на самом деле это не что-то само по себе, а продукт объединения двух разных миров. Почва - это естественное граффити, возникающее в результате напряженности между биологической и геологической сферами ... \nВсе вокруг нас мы можем конкретно указать на то, что живо - зеленый лист, движущийся червяк, сосущий корень. В глубине лежит холодный, твердый камень, старый, как холмы ... и столь же лишенный дыхания и движения - не живой. Все, что физически находится между двумя крайностями - живым и неживым, - мы называем «почвой»."
+				}
+			],
+			"image": {
+				"h": "/Assets/Show/OatsAndBeans/image/HopeJahren/h.jpg",
+				"v": "/Assets/Show/OatsAndBeans/image/HopeJahren/v.jpg"
+			},
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "TvfpevCvE5TdxJ5qa"
+		},
+		{
+			"name": "pedosphere",
+			"menu": {
+				"en": "The Pedosphere",
+				"fr": "Le pédosphère",
+				"ru": "Педосфера"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "soil",
+					"en": "The Pedosphere",
+					"fr": "Le pédosphère",
+					"ru": "Педосфера"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/soil.jpg",
+					"size": 238302
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "rxxrWedMEj6yHJEzX"
 		}
 	]
 }

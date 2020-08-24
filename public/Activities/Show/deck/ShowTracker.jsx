@@ -19,36 +19,6 @@ export default class ShowTracker extends Tracker{
     this.collectionName = collectionName
     const props = super.getProps(collectionName)
 
-    // console.log("ShowTracker", JSON.stringify(props, null, "  "))
-
-    /* { activity:  undefined
-     * , data:      undefined
-     * , items:     [
-     *   { name:    <string>
-     *   , menu:    <string>
-     *   , text:    <string>
-     *   , legend:  { <image_name>: <string>, ...}
-     *   , image:   { <image_name>: <src>, ... }
-     *   , layout:  <"splash" |"solo" | ... >
-     *   , tweak: {
-     *       background-color: "#fff"
-     *     , color: "#000"
-     *     }
-     *   }, ...]
-     * 
-     * , uiText:    {}
-     * 
-     * , code:      "co-DE"
-     * , d_code:    <7-char string>
-     * , user_id:   <17-char string>
-     * , group_id:  <17-char string>
-     * , logged_in: [<d_code>, ...]
-     * , isMaster:  <boolean>
-     * , path:      "/Show/OatsAndBeans"
-     * , tag:       "oatsAndBeans"
-     * }
-     */
-
     return props
   }
 

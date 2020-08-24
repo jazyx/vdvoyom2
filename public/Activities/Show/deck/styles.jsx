@@ -28,7 +28,7 @@ export const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: calc(3.5 * var(--w));
+  font-size: calc(3.5 * var(--min));
 
   ${props => {
     let rules = ""
@@ -224,10 +224,7 @@ export const StyledMask = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  opacity: 0.1;
-  
-  background-color: red;
-
+  opacity: 0;
 `
 
 

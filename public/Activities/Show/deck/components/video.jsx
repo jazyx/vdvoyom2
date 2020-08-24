@@ -1,5 +1,5 @@
 /**
- * /public/Activities/Show/deck/menu.jsx
+ * /public/Activities/Show/deck/components/video.jsx
  *
  * 
  */
@@ -12,7 +12,7 @@ import { StyledMask
        , StyledButtons
        , StyledRewind
        , StyledPause
-       } from './styles'
+       } from '../styles'
 
 import { setPageData } from '/imports/api/methods/admin.js'
 
