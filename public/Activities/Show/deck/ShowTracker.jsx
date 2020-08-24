@@ -93,5 +93,6 @@ export default class ShowTracker extends Tracker{
     if (!props.isMaster) {
       props.items = this.getItems(this.collectionName, props.tag)
     }
+    props.isPilot = !props.active || props.soloPilot === props.d_code
   }
 }

@@ -181,6 +181,16 @@ export const StyledSplash = styled.div`
 `
 
 
+export const StyledVideo = styled.iframe`
+  min-width: 100%; 
+  min-height: 100%;
+  width: auto; 
+  height: auto;
+  ${props => {
+    const { videoRatio, aspectRatio } = props
+  }}
+`
+
 
 export const StyledSolo = styled.div`
   display: flex;
@@ -205,4 +215,58 @@ export const StyledSolo = styled.div`
     padding: 0.25em 0;
     box-sizing: border-box;
   }
+`
+
+
+export const StyledMask = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.1;
+  
+  background-color: red;
+
+`
+
+
+export const StyledButtons = styled.div`
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 24vw;
+  height: 8vw;
+
+  & button {
+    position: absolute;
+
+    top: 0;
+    height: 8vw;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: transparent;
+  }
+`
+
+
+export const StyledRewind = styled.button`
+  left: 0;
+  width: 8vw;
+  background-image: url("img/icons/rewind.png");
+
+  &:active {
+      background-image: url("img/icons/rewind_down.png");
+  }
+`
+
+export const StyledPause = styled.button`
+  right: 0;
+  width: 16vw;
+  background-image: url("img/icons/${props => props.paused
+                                            ? "pause"
+                                            : "play"
+                                    }.png");
 `

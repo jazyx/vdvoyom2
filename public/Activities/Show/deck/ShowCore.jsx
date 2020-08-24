@@ -13,11 +13,11 @@ import { LINK_REGEX } from '/imports/tools/custom/constants'
 import { setPageData
        , setSoloPilot
        } from '/imports/api/methods/admin.js'
-import { setStart } from '../methods'
-
 
 import { Menu } from './menu'
+import { Video } from './video'
 import { StyledContainer
+       , StyledVideo
        , StyledSplash
        , StyledSolo
        } from './styles'
@@ -166,6 +166,49 @@ export default class Show extends Component {
   }
 
 
+  getVideo(item) {
+    return <Video
+      {...item}
+      rect={this.props.rect}
+      paused={this.props.data.paused}
+      isPilot={this.props.isPilot}
+      group_id={this.props.group_id}
+      aspectRatio={this.props.aspectRatio}
+    />
+    // let { id, width, height } = item
+    // const videoRatio = width / height
+    // const aspectRatio = this.props.aspectRatio
+    // const src = "https://www.youtube.com/embed/" + id
+    // const allow = `
+    //   accelerometer;
+    //   autoplay;
+    //   encrypted-media;
+    //   gyroscope;
+    //   picture-in-picture
+    // `
+    // // allow={allow}
+
+
+    // if (videoRatio > aspectRatio) {
+    //   height = (aspectRatio * 100/ videoRatio) + "%"
+    //   width = "100%"
+    // } else {
+    //   width = (videoRatio * 100/ aspectRatio) + "%"
+    //   height = "100%"
+    // }
+
+    // return <iframe
+    //   width={width}
+    //   height={height}
+    //   src={src}
+    //   allowfullscreen="true"
+    //   border="none  "
+    // ></iframe>
+
+
+  }
+
+
   setIndex(index, menu_open) {
     const group_id  = this.props.group_id
     const data = {
@@ -189,6 +232,8 @@ export default class Show extends Component {
         return this.getSplash(item)
       case "solo":
         return this.getSolo(item)
+      case "video":
+        return this.getVideo(item)
     }
   }
 
@@ -216,7 +261,7 @@ export default class Show extends Component {
 
 
   render() {
-    console.log("Show", JSON.stringify(this.props, null, "  "))
+    // console.log("Show", JSON.stringify(this.props, null, "  "))
     const items = this.props.items
 
     if (!items) {

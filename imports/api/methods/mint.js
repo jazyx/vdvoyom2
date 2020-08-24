@@ -19,10 +19,8 @@
 
 import * as admin from './admin'
 import * as assets from './assets'
-import * as show from '../../public/Activities/Show/methods.js'
 
 export const methods = {
   ...admin
 , ...assets
-, ...show
 }

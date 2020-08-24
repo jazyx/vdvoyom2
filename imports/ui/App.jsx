@@ -306,6 +306,7 @@ class App extends Component {
         setPage={this.setPage}
         aspectRatio={aspectRatio}
         points={this.pointMethod}
+        rect={this.state.view_size}
       />
       <Menu
         hide={this.state.view === "Profile"}

@@ -187,7 +187,7 @@ class PointsClass extends Component {
 
 
   getStatus(scale) {
-    if (!this.props.points.length){
+    if (this.props.soloPilot || !this.props.points.length){
       // Hide the TurnCircle
       return ""
     }
@@ -328,7 +328,7 @@ export default withTracker(() => {
   // * If this is a Community group
   // * If the Teacher is logged in to a Teacher-managed group
 
-  let active   = groupIsActive(group_id)
+  const { active, soloPilot }  = groupIsActive(group_id)
   const points = group_id && active
                ? Points.find({ group_id }).fetch()
                : []
@@ -349,14 +349,20 @@ export default withTracker(() => {
   return {
     group_id: active && group_id
   , points
+  , soloPilot
   }
 })(PointsClass)
 
 
 function groupIsActive(_id) {
   const select  = { _id }
-  const options = { fields: { active: 1 } }
-  const { active  } = (Group.findOne(select, options) || {})
+  const options = { 
+    fields: {
+      active: 1
+    , soloPilot: 1
+    }
+  }
+  const { active, soloPilot } = (Group.findOne(select, options) || {})
 
   // console.log( "Pointer active for", _id, ":", active
   //            , "<<< db.group.findOne("
@@ -366,5 +372,8 @@ function groupIsActive(_id) {
   //            , ")"
   //            )
 
-  return active || false
+  return {
+    active: !!active
+  , soloPilot: !!soloPilot
+  }
 }
