@@ -483,13 +483,13 @@ export const setPageData = {
     }
     Group.update(select, set)
 
-    // console.log(
-    //   "db.group.update("
-    // + JSON.stringify(select)
-    // + ","
-    // + JSON.stringify(set)
-    // + ")"
-    // )
+    console.log(
+      "db.group.update("
+    + JSON.stringify(select)
+    + ","
+    + JSON.stringify(set)
+    + ")"
+    )
   }
 }
 

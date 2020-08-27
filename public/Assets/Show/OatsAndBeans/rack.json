@@ -48,7 +48,13 @@
 			"tags": [
 				"oatsAndBeans"
 			],
-			"_id": "9kL6jhd4w54SfoR2H"
+			"_id": "9kL6jhd4w54SfoR2H",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/grass.jpg",
+					"size": 147734
+				}
+			]
 		},
 		{
 			"name": "earth",
@@ -63,6 +69,7 @@
 					"size": 57631
 				}
 			],
+			"notes": [],
 			"layout": "solo",
 			"tweak": {
 				"background-color": "#fff",
@@ -88,6 +95,10 @@
 					"fr": "Un paysage Ordovicien, il y a 450 million d'années",
 					"ru": "Ордовикский пейзаж, 450 миллионов лет назад"
 				}
+			],
+			"notes": [
+				"90 minutes = 1 million years per second",
+				"miss out a lot"
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -125,6 +136,10 @@
 					"src": "/Assets/Show/OatsAndBeans/image/ordovician.jpg",
 					"size": 374394
 				}
+			],
+			"notes": [
+				"22 times as much CO₂ (greenhouse gas)",
+				"Earth is 7 °C hotter than today"
 			]
 		},
 		{
@@ -139,6 +154,11 @@
 					"src": "/Assets/Show/OatsAndBeans/image/first_plants.jpg",
 					"size": 196747
 				}
+			],
+			"notes": [
+				"you're one of the first plants",
+				"you have chemistry to convert CO₂ and H₂O into carbohydrates",
+				"no wood, no tubes..."
 			],
 			"layout": "solo",
 			"legend": [
@@ -179,6 +199,12 @@
 					"src": "/Assets/Show/OatsAndBeans/image/moss_lifecycle.png",
 					"size": 240883
 				}
+			],
+			"notes": [
+				"...no seeds",
+				"no flowers, bees, pollen",
+				"sperm carried by rain water",
+				"spores"
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -234,6 +260,12 @@
 					"size": 199020
 				}
 			],
+			"notes": [
+				"3/4 of CO₂",
+				"ice age",
+				"second biggest mass extinction",
+				"over half the genera disappear, ≈ 80% of species"
+			],
 			"tags": [
 				"oatsAndBeans"
 			],
@@ -260,6 +292,11 @@
 					"src": "/Assets/Show/OatsAndBeans/image/TimothyLenton.jpg",
 					"size": 87424
 				}
+			],
+			"notes": [
+				"climate professor",
+				"computer model",
+				"CO₂, falling sea level, excess phosphorus, lack of oxygen"
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -288,6 +325,12 @@
 					"size": 196835
 				}
 			],
+			"notes": [
+				"other hypotheses: volcanoes, meteorite, global warming",
+				"fossils found in layers, sediment at bottom of sea",
+				"study of sequence stratigraphy",
+				"=> gradual process over severel hundred thousand years"
+			],
 			"tags": [
 				"oatsAndBeans"
 			],
@@ -310,7 +353,64 @@
 			"tags": [
 				"oatsAndBeans"
 			],
+			"tweak": {
+				"& img": "{ object-fit: cover!important }"
+			},
 			"_id": "tT4WmhpzNJAnp5PHr"
+		},
+		{
+			"name": "biomass",
+			"menu": {
+				"en": "Biomass",
+				"fr": "Biomasse",
+				"ru": "Масса вида"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/biomass.jpg",
+					"size": 175099
+				}
+			],
+			"notes": [
+				"originally all life in water",
+				"today: 600 x more life on land"
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "AjhJKAcHE3hSCB2dj"
+		},
+		{
+			"name": "tree_biomass",
+			"menu": {
+				"en": "Tree biomass",
+				"fr": "La biomasse des arbres",
+				"ru": "Биомасса деревьев"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "tree_biomass",
+					"en": "Tree biomass",
+					"fr": "La biomasse des arbres",
+					"ru": "Биомасса деревьев"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/tree_biomass.png",
+					"size": 67068
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"notes": [
+				"first plants did not know what they were doing",
+				"no recording devices, educational instutions, political organizations"
+			],
+			"_id": "R2zBbnnBo8Y9pKxJr"
 		},
 		{
 			"name": "Keeling",
@@ -333,6 +433,9 @@
 					"src": "/Assets/Show/OatsAndBeans/image/Keeling.jpg",
 					"size": 170208
 				}
+			],
+			"notes": [
+				"1953, as Ph.D. geochemistry student"
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -361,10 +464,31 @@
 					"size": 98990
 				}
 			],
+			"notes": [
+				"Ralph Keeling",
+				"vacuum, infra-red absorption, exit light intensity",
+				"checks and calibrations"
+			],
 			"tags": [
 				"oatsAndBeans"
 			],
 			"_id": "7LSyax7LBJmpCTC74"
+		},
+		{
+			"name": "molecule",
+			"menu": {
+				"en": "How CO₂ Stores Heat",
+				"fr": "Comment le CO₂ stocke de l'energie",
+				"ru": "Как углекислый газ сохраняет тепло"
+			},
+			"layout": "video",
+			"videoId": "H-aUVqKrybw",
+			"width": 560,
+			"height": 315,
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "jBRpQqz2YsRdkXksk"
 		},
 		{
 			"name": "MaunaLau",
@@ -387,6 +511,10 @@
 					"src": "/Assets/Show/OatsAndBeans/image/MaunaLau.jpg",
 					"size": 149726
 				}
+			],
+			"notes": [
+				"pristine sample",
+				"rocky place, far from civilisation and forests"
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -414,6 +542,12 @@
 					"src": "/Assets/Show/OatsAndBeans/image/KeelingCurve.png",
 					"size": 215023
 				}
+			],
+			"notes": [
+				"daily and yearly cycles",
+				"60 years: 315 -> over 400 parts per million",
+				"Ordovician life existed with 8000 parts per million",
+				"Plants change chemical composition of atmosphere and..."
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -454,24 +588,538 @@
 				"ru": "Педосфера"
 			},
 			"layout": "solo",
-			"legend": [
-				{
-					"id": "soil",
-					"en": "The Pedosphere",
-					"fr": "Le pédosphère",
-					"ru": "Педосфера"
-				}
-			],
 			"image": [
 				{
 					"src": "/Assets/Show/OatsAndBeans/image/soil.jpg",
 					"size": 238302
 				}
 			],
+			"notes": [
+				"living things die",
+				"their bodies pile up",
+				"Q: Where do the bodies of plants come from?",
+				"> 400 years ago, A: 'the soil'"
+			],
 			"tags": [
 				"oatsAndBeans"
 			],
 			"_id": "rxxrWedMEj6yHJEzX"
+		},
+		{
+			"name": "VanHelmont",
+			"menu": {
+				"en": "Jan Van Helmont",
+				"fr": "Jan Van Helmont",
+				"ru": "Ян Ван Гельмонт"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "VanHelmont",
+					"en": "Jan Baptista Van Helmont (c. 1579 - 1644)",
+					"fr": "Jan Baptista Van Helmont (c. 1579 - 1644)",
+					"ru": "Ян Баптиста Ван Гельмонт (с. 1579 г. - 1644 г.)"
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "ZTWsDnWcJoWLHWC76",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/VanHelmont.jpg",
+					"size": 90920
+				}
+			],
+			"notes": [
+				"Kepler, Galileo, Descartes",
+				"born in Brussels",
+				"died in Vilvoorde, Spanish Netherlands"
+			]
+		},
+		{
+			"name": "gas",
+			"menu": {
+				"en": "Gas",
+				"fr": "Gaz",
+				"ru": "Газ"
+			},
+			"layout": "html",
+			"html": "<h1>gas (n)</h1><p>1650s, from Dutch <i>gas,</i> probably from Greek <i>khaos</i> \"empty space\" (see <a href=\"\">chaos</a>). The sound of Dutch \"g\" is roughly equivalent to that of Greek \"kh.\" First used by Flemish chemist <span class='white'>J.B. van Helmont</span> (1577-1644), probably influenced by Paracelsus, who used <i>khaos</i> in an occult sense of \"proper elements of spirits\" or \"ultra-rarified water,\" which was van Helmont's definition of <i>gas</i>.</p><blockquote>  <i>Hunc spiritum, incognitum hactenus, novo nomine <span class='white'>gas</span> voco</i> (\"This vapor, hitherto unknown, I call by a new name, 'gas.'\") [Helmont, <i>Ortus Medicinae</i>]</blockquote><p>Modern scientific sense began 1779...</p><b><p>Source: <a href=\"https://www.etymonline.com/word/gas\">Online Etymology Dictionary</a></b></p>",
+			"tags": [
+				"oatsAndBeans"
+			],
+			"notes": [
+				"distinguish CO₂: gas/spiritus sylvester",
+				"origin of word? ghost? Gäscht (froth of fermentation)",
+				"rich father, fifth child, advantageous marriage 1609",
+				"God has given me a pious and noble wife. I retired with her to Vilvorde and there for seven years I dedicated myself to pyrotechny and to the relief of the poor."
+			],
+			"tweak": {
+				"padding": "calc(20 * var(--min))",
+				"color": "#ccc",
+				"& h1": "{ color: #fff }",
+				"& span": "{ color: #AF3632 }",
+				"& a, & a:visited": "{ color: #aaf }"
+			},
+			"_id": "osLuQsCiZdJ6K9XWz"
+		},
+		{
+			"name": "alchemist",
+			"menu": {
+				"en": "An Alchemist's Laboratory",
+				"fr": "Le laboratoire d'un alchémiste",
+				"ru": "Лаборатория алхимика"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "alchemist",
+					"en": "An Alchemist's Laboratory by Mattheus van Helmont, c. 1644",
+					"fr": "Le laboratoire d'un alchémiste de Mattheus van Helmont, c. 1644",
+					"ru": "Лаборатория алхимика, Маттеус ван Гельмонт, c. 1644 г."
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/alchemist.jpg",
+					"size": 335822
+				}
+			],
+			"notes": [
+				"chemistry, metallurgy, philosophy, astrology, astronomy, mysticism and medicine",
+				"guardian angel — the archangel Raphaël, the healer",
+				"earth, wind, fire and water"
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "dihyurGwk6LkFMz8u"
+		},
+		{
+			"name": "europe1618",
+			"menu": {
+				"en": "The Spanish Netherlands",
+				"fr": "Les Pays-Bas espagnols",
+				"ru": "Испанские Нидерланды"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "europe1618",
+					"en": "The Spanish Netherlands",
+					"fr": "Les Pays-Bas espagnols",
+					"ru": "Испанские Нидерланды"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/europe1618.jpg",
+					"size": 99501
+				}
+			],
+			"notes": [
+				"earth is water, fire not an element",
+				"devout Catholic, who asks questions",
+				"magnetism can explain some miracles w/ saints' relics",
+				"1634 > prison, house arrest"
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "73AfSHgq3kXkFGwEx"
+		},
+		{
+			"name": "oven",
+			"menu": {
+				"en": "Reducing Wood to Ashes",
+				"fr": "Réduire du bois en cendres",
+				"ru": "Превращение дерева в пепел"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "oven",
+					"en": "Reducing Wood to Ashes",
+					"fr": "Réduire du bois en cendres",
+					"ru": "Превращение дерева в пепел"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/oven.png",
+					"size": 42423
+				}
+			],
+			"notes": [
+				"rich, curious, intelligent",
+				"read all he can, disagrees",
+				"weights and measures things",
+				"conservation of matter: nitric acid + silver / copper / iron",
+				"62 lbs dry wood => 1 lb ash + 'wood gas'"
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "ujP9whvTH8PYJNTke"
+		},
+		{
+			"name": "gas_sylvester",
+			"menu": {
+				"en": "Cellars and Mines",
+				"fr": "Caves et mines",
+				"ru": "Погреба и шахты"
+			},
+			"layout": "duo",
+			"legend": [
+				{
+					"id": "gas_sylvester",
+					"en": "Cellars and Mines",
+					"fr": "Caves et mines",
+					"ru": "Погреба и шахты"
+				}
+			],
+			"images": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/mine.jpg"
+				},
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/wine.jpg"
+				}
+			],
+			"notes": [
+				"different from 'air' because poisonous",
+				"cannot breath it, puts out candles"
+			],
+			"limit": 1,
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "mQS9EPzjsKLujnfA9"
+		},
+		{
+			"name": "willow",
+			"menu": {
+				"en": "Willow Tree Experiment",
+				"fr": "L'Expérience du saule",
+				"ru": "Эксперимент с ивовым деревом"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "willow",
+					"en": "Willow Tree Experiment",
+					"fr": "L'Expérience du saule",
+					"ru": "Эксперимент с ивовым деревом"
+				}
+			],
+			"notes": [
+				"200 lbs dry earth, pot, cover + 5lb willow tree",
+				"distilled rainwater (no dust)",
+				"flaw: did not measure water",
+				"word 'scientist' won't exist for 200 years",
+				"Conclusion after 5 years: tree is made entirely of water"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/willow.jpg",
+					"size": 25541
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "yS2MwQxcfSzWLdaZp"
+		},
+		{
+			"name": "elements",
+			"menu": {
+				"en": "Organic Elements",
+				"fr": "Les éléments organiques",
+				"ru": "Органические элементы"
+			},
+			"layout": "solo",
+			"notes": [
+				"Live mass:",
+				"65% water, 33% CO₂, 2% nitrogen, magnesium, phosphorus"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/elements.jpg",
+					"size": 57927
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "fkYYWztkNprz7MQhW"
+		},
+		{
+			"name": "irony",
+			"menu": {
+				"en": "Failing to Connect",
+				"fr": "Rater l'occasion",
+				"ru": "Превращение дерева в пепел"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/irony.png",
+					"size": 42423
+				}
+			],
+			"notes": [
+				"irony",
+				"62 lb wood => 61 lb 'wood gas'",
+				"He made the notes, he didn't connect the dots"
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "SGL5hbE4etMYZttoG"
+		},
+		{
+			"name": "Priestley",
+			"menu": {
+				"en": "Joseph Priestley",
+				"fr": "Joseph Priestley",
+				"ru": "Джозеф Пристли"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Priestley",
+					"en": "Joseph Priestley, 1733 – 1804",
+					"fr": "Joseph Priestley, 1733 – 1804",
+					"ru": "Джозеф Пристли, 1733 – 1804"
+				}
+			],
+			"notes": [
+				"discovered oxygen (dephlogisticated air)",
+				"invented carbonated water",
+				"added bubbles of 'fixed air' from fermenting beer to water"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/Priestley.jpg",
+					"size": 139321
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "nGJj55xbTZLnBa86G"
+		},
+		{
+			"name": "Schweppe",
+			"menu": {
+				"en": "Johann Jacob Schweppe",
+				"fr": "Johann Jacob Schweppe",
+				"ru": "Иоганн Якоб Швеппе"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Schweppe",
+					"en": "Johann Jacob Schweppe, watchmaker, 1740 – 1821",
+					"fr": "Johann Jacob Schweppe, horlogier, 1740 – 1821",
+					"ru": "Иоганн Якоб Швеппе, часовщик, 1740 – 1821"
+				}
+			],
+			"notes": [
+				"medicinal properties < scurvy цинга, скорбу́т",
+				"business failed",
+				"Erasmus Darwin (Charles's grandfather) made it popular among society friends"
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "NjhTzmXhG4kXnNdCG",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/Schweppe.jpg",
+					"size": 72930
+				}
+			]
+		},
+		{
+			"name": "fixed_air",
+			"menu": {
+				"en": "Fixed Air",
+				"fr": "L'air fixe",
+				"ru": "Фиксированный воздух"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "fixed_air",
+					"en": "Fixed and Dephlogisticated Air",
+					"fr": "L'air fixe et déphlogistiqué",
+					"ru": "Фиксированный и бесфлогистонный воздух"
+				}
+			],
+			"notes": [
+				"Experiments with candles and mice",
+				"'injured' the air",
+				"Add mint plant: mouse revives, candle continues to burn",
+				"March 1775, he gave a lecture on dephlogisticated air",
+				"five or six times better than common air for the purpose of respiration, inflammation, and, I believe, every other use of common atmospherical air."
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/fixed_air.png",
+					"size": 91589
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "JuhECp8WbFoMFNdnW"
+		},
+		{
+			"name": "Ingenhousz",
+			"menu": {
+				"en": "Jan Ingenhousz",
+				"fr": "Jan Ingenhousz",
+				"ru": "Ян Ингенхауз"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Ingenhousz",
+					"en": "Jan Ingenhousz, 1730 – 1799",
+					"fr": "Jan Ingenhousz, 1730 – 1799",
+					"ru": "Ян Ингенхауз, 1730 – 1799"
+				}
+			],
+			"notes": [
+				"visited Priestley in 1799",
+				""
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "9rPncDfcvPGHtKvLb",
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/Ingenhousz.jpg",
+					"size": 506595
+				}
+			]
+		},
+		{
+			"name": "experiment",
+			"menu": {
+				"en": "Photosynthesis",
+				"fr": "Photosynthèse",
+				"ru": "Фотосинтез"
+			},
+			"layout": "solo",
+			"notes": [
+				"in the presence of light, plants give off bubbles from their green part",
+				"in the shade, the bubbles eventually stop",
+				"identified the gas as oxygen",
+				"noted that mass of the plant increased because of its absorption of carbon dioxide",
+				"Two uncomfortable truths:",
+				"Stuff that is not alive can become alive",
+				"The bulk of the mass of plants comes from air"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/experiment.jpg",
+					"size": 80418
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "B5une7qTgySFDCaSq"
+		},
+		{
+			"name": "photosynthesis",
+			"menu": {
+				"en": "Sunlight Becomes Matter",
+				"fr": "La lumière du soleil devient matière",
+				"ru": "Солнечный свет становится твердым"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "photosynthesis",
+					"en": "[Feynman on Fire](https://www.youtube.com/watch?time_continue=282&v=ITpDrdtGAmo)",
+					"fr": "[Feynman on Fire](https://www.youtube.com/watch?time_continue=282&v=ITpDrdtGAmo)",
+					"ru": "[Feynman on Fire](https://www.youtube.com/watch?time_continue=282&v=ITpDrdtGAmo)"
+				}
+			],
+			"notes": [
+				"Carbon and oxygen want to be together",
+				"Photosynthesis uses energy of sun to split them apart",
+				"and make carbohydrates: sugars, cellulose, wood",
+				"release oxygen",
+				"When you burn wood \"the light and heat that's coming out, that's the light and heat of the sun that went in. So it's sort of 'stored sun' that's coming out.\"",
+				"And that's where the soil comes from.",
+				"",
+				"Learing nothing new",
+				"You know about climate change, how trees store carbon",
+				"Burning fossil fuels releases it",
+				"If that's the only magic, we can go home now."
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/OatsAndBeans/image/photosynthesis.jpg",
+					"size": 99942
+				}
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "NnTeR4tm2MPq2p7fn"
+		},
+		{
+			"name": "end",
+			"menu": {
+				"en": "The End...",
+				"fr": "Fin...",
+				"ru": "Конец..."
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "id",
+					"en": "The End...",
+					"fr": "Fin...",
+					"ru": "Конец..."
+				}
+			],
+			"tweak": {
+				"font-size": "calc(16 * var(--min))",
+				"font-family": "'Permanent Marker', cursive"
+			},
+			"notes": [
+				"Started with time lapse of grass growing..."
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "gHXQgpfzyXRSM8cFe"
+		},
+		{
+			"name": "bean",
+			"menu": {
+				"en": "Magic Beans",
+				"fr": "Les haricot magique",
+				"ru": "Волшебные бобы "
+			},
+			"layout": "video",
+			"videoId": "MPql1VHbYl4",
+			"start": 58.5,
+			"end": 166,
+			"width": 560,
+			"height": 315,
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "PLBfXNsDYQ23ifkRw"
 		}
 	]
 }

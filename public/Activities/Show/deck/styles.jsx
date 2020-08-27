@@ -1,23 +1,12 @@
 /**
  * /public/activities/Show/deck/styles.jsx
+ * 
+ * See /client/main.css for :root definition of colors and padding
  */
 
 
 
 import styled from 'styled-components'
-
-
-const SETTINGS = {
-  fillColor:       "#fff"
-, strokeColor:     "#000"
-, menuBackground:  "rgba(255,255,255,0.9)"
-, menuFontSize:    "4vmin"
-, menuColor:       "#AF3632"
-, menuActiveColor: "#fff"
-, menuActiveBg:    "#AF3632"
-, menuHover:       "rgba(175, 54, 50, 0.5)"
-, menuItemPadding: "0.25em"
-}
 
 
 
@@ -37,7 +26,16 @@ export const StyledContainer = styled.div`
     if (typeof tweak === "object") {
       const keys = Object.keys(tweak)
       keys.forEach( key => {
-        rules += key + ": " + tweak[key] + ";\n"
+        let value = tweak[key]
+        if (value.substr(-1) !== ";") {
+          value += ";"
+        }
+
+        if (key.startsWith("&")) {
+          rules += key.replace("•", ".") + " " + value
+        } else {
+          rules += key + ": " + value
+        }
       })
     }
 
@@ -59,8 +57,8 @@ export const StyledSVG = styled.svg`
   position: absolute;
   width: calc(15 * var(--min));
   height: calc(15 * var(--min));
-  fill: ${SETTINGS.fillColor};
-  stroke: ${SETTINGS.strokeColor};
+  fill: var(--fillColor);
+  stroke: var(--strokeColor);
   opacity: ${props => (
     props.open ? 1 : (props.over ? 0.75 : 0.25)
   )};
@@ -98,7 +96,7 @@ export const StyledShowMenu = styled.div`
   /* padding: calc(2 * var(--min)); */
   padding-top: calc(15 * var(--min));
   padding-bottom: 0;
-  background-color: ${SETTINGS.menuBackground};
+  background-color: var(--menuBackground);
 
   transition: left .40s linear;
 `
@@ -124,18 +122,18 @@ export const StyledShowList = styled.ul`
 
 
 export const StyledShowItem = styled.li`
-  padding: ${SETTINGS.menuItemPadding};
+  padding: var(--menuItemPadding);
   box-sizing: border-box;
-  color: ${SETTINGS.menuColor};
+  color: var(--menuColor);
 
   &:hover {
-    background-color: ${SETTINGS.menuHover};
+    background-color: var(--menuHover);
   }
 
   ${ props => props.active 
             ? `font-weight: bold;
-               color: ${SETTINGS.menuActiveColor};
-               background-color: ${SETTINGS.menuActiveBg};
+               color: var(--menuActiveColor);
+               background-color: var(--menuActiveBg);
               `
             : ""
   }
@@ -148,6 +146,15 @@ export const StyledShowItem = styled.li`
     padding: 0 0.25em 0 0;
     vertical-align: middle;
   }
+`
+
+
+export const StyledNotes = styled.ul`
+  position: fixed;
+  top: 0;
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 5vmin;
 `
 
 
@@ -174,10 +181,6 @@ export const StyledSplash = styled.div`
     margin: 0;
     font-size: calc(2.25 * var(--min));
   }
-
-  & a {
-    color: #000;
-  }
 `
 
 
@@ -189,32 +192,6 @@ export const StyledVideo = styled.iframe`
   ${props => {
     const { videoRatio, aspectRatio } = props
   }}
-`
-
-
-export const StyledSolo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  & img {
-    width: 100%;
-    object-fit: contain;
-    max-height: calc(100 * var(--h) - 1.5em)
-
-    ${props => props.legend
-             ? ""
-             : `max-height: calc(100 * var(--h));`
-     }
-  }
-
-  & p {
-    text-align: center;
-    height: 1.5em;
-    margin: 0;
-    padding: 0.25em 0;
-    box-sizing: border-box;
-  }
 `
 
 
@@ -266,4 +243,51 @@ export const StyledPause = styled.button`
                                             ? "pause"
                                             : "play"
                                     }.png");
+`
+
+
+export const StyledSolo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  & img {
+    width: 100%;
+    object-fit: contain;
+    max-height: calc(100 * var(--h) - 1.5em);
+
+    ${props => props.legend
+             ? ""
+             : `max-height: calc(100 * var(--h));`
+     }
+  }
+
+  & p {
+    text-align: center;
+    height: 1.5em;
+    margin: 0;
+    padding: 0.25em 0;
+    box-sizing: border-box;
+  }
+`
+
+
+export const StyledDuo = styled.div`
+  display: flex;
+  flex-direction: ${ props => props.aspectRatio > props.limit
+                            ? "row"
+                            : "column"
+                   };
+  & img {
+    ${ props => props.aspectRatio > props.limit
+                            ? `height: 100%;
+                               width: auto;
+                              `
+                            : `height: auto;
+                               width: 100%;
+                              `
+                   };
+  }
+
 `

@@ -8,7 +8,9 @@ import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components'
 
-import { LINK_REGEX } from '/imports/tools/custom/constants'
+import { IMAGE_REGEX
+       , LINK_REGEX
+       } from '/imports/tools/custom/constants'
 
 import { setPageData
        , setSoloPilot
@@ -18,9 +20,12 @@ import { Menu } from './components/menu'
 import { Video } from './components/video'
 import { Quote } from './components/quote'
 import { StyledContainer
+       , StyledNotes
        , StyledVideo
        , StyledSplash
        , StyledSolo
+       , StyledDuo
+       , StyledHTML
        } from './styles'
 
 
@@ -31,6 +36,7 @@ export default class Show extends Component {
 
     this.setIndex = this.setIndex.bind(this)
     this.treatArrowKeys = this.treatArrowKeys.bind(this)
+    this.getTextOrLink = this.getTextOrLink.bind(this)
 
     const listener = this.treatArrowKeys
     document.body.addEventListener("keydown", listener, true)
@@ -83,6 +89,27 @@ export default class Show extends Component {
   }
 
 
+  getTextOrLink(string, key) {
+    const match = LINK_REGEX.exec(string)
+    if (match[2]) {
+      return <p
+        key={key}
+      >
+        {match[1]}
+        <a href={match[3]} target="newtab">{match[2]}</a>
+        {match[4]}
+      </p>
+
+    }  else {
+      return <p
+        key={key}
+      >
+        {string}
+      </p>
+    }
+  }
+
+
   getSplash(item) {
     // image: {splash: "/Assets/Show/OatsAndBeans/image/splash.jpg"}
     // layout: "splash"
@@ -90,24 +117,8 @@ export default class Show extends Component {
     // text: "25 September 2020↵James Newton at↵[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
     // _id: "4pT9midTF7Dvjo5rY"
 
-    const text = item.text.split("\n").map(( line ,index ) => {
-      const match = LINK_REGEX.exec(line)
-      if (match[2]) {
-        return <p
-          key={index}
-        >
-          {match[1]}
-          <a href={match[3]}>{match[2]}</a>
-          {match[4]}
-        </p>
-
-      }  else {
-        return <p
-          key={index}
-        >
-          {line}
-        </p>
-      }
+    const text = item.text.split("\n").map(( line, index ) => {
+      return this.getTextOrLink(line, index)
     })
     
     return <StyledSplash
@@ -147,15 +158,23 @@ export default class Show extends Component {
     // the space required for the legend, if there is one. There will
     // only be one image (and legend).
 
-    const id = Object.keys(item.image)[0]
-    const src = item.image[id]
-    const image = <img
-      src={src}
-    />
 
     const legend = item.legend
-                 ? <p>{item.legend[0].legend}</p>
+                 ? this.getTextOrLink(item.legend[0].legend)
                  : ""
+
+    let image = item.image
+    if (typeof image !== "object") {
+      image = ""
+
+    } else {
+      const id = Object.keys(image)[0]
+      const src = image[id]
+      image = <img
+        src={src}
+        alt={legend || item.menu}
+      />
+    }
 
     return <StyledSolo
       className="solo"
@@ -167,11 +186,32 @@ export default class Show extends Component {
   }
 
 
+  getDuo(item) {
+    const images = item.images.map( imageData => {
+      const src = imageData.src
+      const alt = IMAGE_REGEX.exec(src)[1]
+      return <img
+        key={alt}
+        alt={alt}
+        src={src}
+      />
+    })
+
+    return <StyledDuo
+      limit={item.limit || 1}
+      aspectRatio={this.props.aspectRatio}
+    >
+      {images}
+    </StyledDuo>
+  }
+
+
   getVideo(item) {
     return <Video
       {...item}
       rect={this.props.rect}
       paused={this.props.data.paused}
+      rewound={this.props.data.rewound}
       isPilot={this.props.isPilot}
       group_id={this.props.group_id}
       aspectRatio={this.props.aspectRatio}
@@ -183,6 +223,14 @@ export default class Show extends Component {
     return <Quote
       {...item}
       aspectRatio={this.props.aspectRatio}
+    />
+  }
+
+
+  getHTML(item) {
+    // console.log("getHTML", console.log(JSON.stringify(item, null, "  ")))
+    return <div
+      dangerouslySetInnerHTML={{__html: item.html}}
     />
   }
 
@@ -210,11 +258,33 @@ export default class Show extends Component {
         return this.getSplash(item)
       case "solo":
         return this.getSolo(item)
+      case "duo":
+        return this.getDuo(item)
       case "video":
         return this.getVideo(item)
       case "quote":
         return this.getQuote(item)
+      case "html":
+        return this.getHTML(item)
     }
+  }
+
+
+  getNotes(noteArray) {
+    if (!Array.isArray(noteArray) || !this.props.isPilot) {
+      return ""
+    }
+    noteArray = noteArray.map(( note, index ) => (
+      <li
+        key={index}
+      >
+        {note}
+      </li>
+    ))
+
+    return <StyledNotes>
+      {noteArray}
+    </StyledNotes>
   }
 
 
@@ -255,6 +325,7 @@ export default class Show extends Component {
     const tweak = item ? item.tweak : undefined
 
     const slide = this.getSlide(item)
+    const notes = this.getNotes(item.notes)
     const menu = this.getMenu(items)
 
     return <StyledContainer
@@ -262,6 +333,7 @@ export default class Show extends Component {
       tweak={tweak}
     >
       {slide}
+      {notes}
       {menu}
     </StyledContainer>
   }

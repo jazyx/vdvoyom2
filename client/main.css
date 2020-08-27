@@ -6,6 +6,23 @@ div#wrapper {
   /*overflow: hidden;*/ /* Does this affect full-screen on Android? */
 }
 
+:root {
+  --fillColor:       #fff;
+  --strokeColor:     #000;
+  --menuBackground:  rgba(255,255,255,0.9);
+  --menuFontSize:    4vmin;
+  --menuColor:       #AF3632;
+  --menuActiveColor: #fff;
+  --menuActiveBg:    #AF3632;
+  --menuHover:       rgba(175, 54, 50, 0.5);
+  --menuItemPadding: 0.25em;
+
+  --linkColor:       #AF3632;
+  --linkHover:       #C33C38;
+  --linkActive:      #D2160F;
+  --linkVisited:     #9B302C;
+}
+
 div#react-target{
   overflow: hidden; /* Needed to place drag game images correctly */
 
@@ -19,6 +36,22 @@ body {
   font-family: sans-serif;
   background-color: #000;
   color: #fff;
+}
+
+a {
+  color: var(--linkColor);
+}
+
+a:visited {
+  color: var(--linkVisited);
+}
+
+a:hover {
+  color: var(--linkHover);
+}
+
+a:active {
+  color: var(--linkActive);
 }
 
 * {

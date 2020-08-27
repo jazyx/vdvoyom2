@@ -17,22 +17,44 @@ import { StyledMask
 import { setPageData } from '/imports/api/methods/admin.js'
 
 
+let instance = 0
+
 
 export class Video extends Component {
   constructor(props) {
     super(props)
 
-    this.rewind = this.rewind.bind(this)
-    this.togglePlay = this.togglePlay.bind(this)
-    this.togglePause = this.togglePause.bind(this)
     this.playerReady = this.playerReady.bind(this)
-    this.playerStateChange = this.playerStateChange.bind(this)
+    this.togglePlay = this.togglePlay.bind(this)
+    this.pilotHitsRewind = this.pilotHitsRewind.bind(this)
+    this.pilotTogglesPause = this.pilotTogglesPause.bind(this)
 
     this.paused = !!this.props.paused
+
+    console.log("instance:", ++instance)
   }
 
 
-  rewind() {
+  /** Can be called only by the user who isPilot, button unavailable
+   *  to others.
+   * 
+   *  rewound will be set to false in all cases
+   */
+  pilotTogglesPause() {
+    const group_id = this.props.group_id
+    const data = {
+      paused: !this.props.paused
+    , rewound: false
+    }
+
+    setPageData.call({
+      group_id
+    , data
+    })
+  }
+
+
+  pilotHitsRewind() {
     const group_id = this.props.group_id
     const data = {
       rewound: true
@@ -47,9 +69,14 @@ export class Video extends Component {
   }
 
 
+  /** Called from playerReady and componentDidUpdate
+   *
+   * @param      {<type>}  paused  The paused
+   */
   togglePlay(paused) {   
     if (paused) {
       this.player.pauseVideo()
+
     } else {
       this.player.playVideo()
       this.rewound = false
@@ -59,27 +86,14 @@ export class Video extends Component {
   }
 
 
-  togglePause(paused) {
-    const group_id = this.props.group_id
-    const data = { paused: !this.props.paused}
-
-    setPageData.call({
-      group_id
-    , data
-    })
-  }
-
-
   playerReady() {
     this.isReady = true
+
+    this.player.loadVideoById(this.options)
+
     if (!this.props.paused) {
       this.togglePlay()
     }
-  }
-
-
-  playerStateChange(event) {
-    // console.log("playerStateChange", event)
   }
 
 
@@ -88,11 +102,11 @@ export class Video extends Component {
     if (this.props.isPilot) {
       buttons = <StyledButtons>
         <StyledRewind
-          onMouseUp={this.rewind}
+          onMouseUp={this.pilotHitsRewind}
         />
         <StyledPause
           paused={this.props.paused}
-          onMouseUp={this.togglePause}
+          onMouseUp={this.pilotTogglesPause}
         />
       </StyledButtons>
     }
@@ -128,9 +142,23 @@ export class Video extends Component {
     // },
     // "isPilot": true
 
-    let { videoId, width, height, rect } = this.props
+    let { videoId, width, height, rect, start, end } = this.props
     const videoRatio = width / height
     const aspectRatio = this.props.aspectRatio
+    this.options = {videoId }
+    if (isNaN(start) || start < 0) {
+      start = 0
+    }
+
+    this.options.startSeconds = start
+
+    if ( !isNaN(end)
+       && ( (start && end > start)
+         || (!start && end > 0)
+          )
+       ) {
+      this.options.endSeconds = end
+    }
 
     if (videoRatio > aspectRatio) {
       height = "" + rect.width / videoRatio
@@ -146,7 +174,6 @@ export class Video extends Component {
     , videoId
     , events: {
         'onReady': this.playerReady
-      , 'onStateChange': this.playerStateChange
       }
     })
   }
@@ -158,10 +185,12 @@ export class Video extends Component {
     }
 
     const { paused, rewound } = this.props
-    if (this.rewound !== rewound) {
-      this.player.seekTo(0, true)
-      this.rewound = rewound
+
+    if (rewound && !this.rewound) {
+      this.player.seekTo(this.options.startSeconds, true)
+      this.rewound = true
     }
+
     if (this.paused !== paused) {
       this.togglePlay(paused)
     }
