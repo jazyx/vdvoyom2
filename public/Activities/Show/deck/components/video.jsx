@@ -1,7 +1,7 @@
 /**
  * /public/Activities/Show/deck/components/video.jsx
  *
- * 
+ *
  */
 
 
@@ -11,13 +11,12 @@ import React, { Component } from 'react'
 import { StyledMask
        , StyledButtons
        , StyledRewind
+       , StyledCue
        , StyledPause
        } from '../styles'
 
 import { setPageData } from '/imports/api/methods/admin.js'
 
-
-let instance = 0
 
 
 export class Video extends Component {
@@ -27,24 +26,43 @@ export class Video extends Component {
     this.playerReady = this.playerReady.bind(this)
     this.togglePlay = this.togglePlay.bind(this)
     this.pilotHitsRewind = this.pilotHitsRewind.bind(this)
+    this.pilotJumpsTo = this.pilotJumpsTo.bind(this)
     this.pilotTogglesPause = this.pilotTogglesPause.bind(this)
 
     this.paused = !!this.props.paused
-
-    console.log("instance:", ++instance)
   }
 
 
   /** Can be called only by the user who isPilot, button unavailable
    *  to others.
-   * 
+   *
    *  rewound will be set to false in all cases
    */
-  pilotTogglesPause() {
+  pilotTogglesPause(reset) {
+    if (reset === "reset" && !this.props.paused) {
+      return
+    }
+
     const group_id = this.props.group_id
     const data = {
       paused: !this.props.paused
     , rewound: false
+    }
+
+    setPageData.call({
+      group_id
+    , data
+    })
+  }
+
+
+  pilotJumpsTo(seconds) {
+    if (seconds === this.seconds) {
+      seconds += 0.001
+    }
+    const group_id = this.props.group_id
+    const data = {
+      seconds
     }
 
     setPageData.call({
@@ -65,7 +83,6 @@ export class Video extends Component {
       group_id
     , data
     })
-
   }
 
 
@@ -73,7 +90,7 @@ export class Video extends Component {
    *
    * @param      {<type>}  paused  The paused
    */
-  togglePlay(paused) {   
+  togglePlay(paused) {
     if (paused) {
       this.player.pauseVideo()
 
@@ -97,19 +114,49 @@ export class Video extends Component {
   }
 
 
-  render() {
-    let buttons = ""
-    if (this.props.isPilot) {
-      buttons = <StyledButtons>
-        <StyledRewind
-          onMouseUp={this.pilotHitsRewind}
-        />
-        <StyledPause
-          paused={this.props.paused}
-          onMouseUp={this.pilotTogglesPause}
-        />
-      </StyledButtons>
+  getButtons(cue) {
+    if (!this.props.isPilot) {
+      return ""
     }
+
+    if (Array.isArray(cue)) {
+      cue = cue.filter(( cuePoint, index, array ) => (
+                  array.indexOf(cuePoint) === index
+                ))
+               .map( cuePoint => {
+                  if (isNaN(cuePoint)) {
+                    return 0
+                  }
+
+                  return <StyledCue
+                    key={cuePoint}
+                    onMouseUp={() => this.pilotJumpsTo(cuePoint)}
+                  >
+                    {cuePoint}
+                  </StyledCue>
+                })
+               .filter( button => !!button )
+    }
+
+    const buttons = <StyledButtons>
+      <StyledRewind
+        onMouseUp={this.pilotHitsRewind}
+      />
+      {cue}
+      <StyledPause
+        paused={this.props.paused}
+        onMouseUp={this.pilotTogglesPause}
+      />
+    </StyledButtons>
+
+    console.log("buttons:", buttons)
+
+    return buttons
+  }
+
+
+  render() {
+    const buttons = this.getButtons(this.props.cue)
 
     return <div>
       <div
@@ -130,7 +177,7 @@ export class Video extends Component {
     // "name": "grass",
     // "menu": "Cмотреть, как растет трава",
     // "layout": "video",
-    // 
+    //
     // "videoId": "rtFs6weCsHI",
     // "width": 1472,
     // "height": 974,
@@ -184,7 +231,12 @@ export class Video extends Component {
       return
     }
 
-    const { paused, rewound } = this.props
+    const { paused, rewound, seconds } = this.props
+
+    if (this.seconds !== seconds) {
+      this.player.seekTo(seconds, true)
+      this.seconds = seconds
+    }
 
     if (rewound && !this.rewound) {
       this.player.seekTo(this.options.startSeconds, true)
@@ -193,6 +245,13 @@ export class Video extends Component {
 
     if (this.paused !== paused) {
       this.togglePlay(paused)
+    }
+  }
+
+
+  componentWillUnmount() {
+    if (this.props.isPilot) {
+      this.pilotTogglesPause("reset")
     }
   }
 }

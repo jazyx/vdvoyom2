@@ -1,7 +1,7 @@
 /**
  * /public/Activities/Show/deck/components/menu.jsx
  *
- * 
+ *
  */
 
 
@@ -23,13 +23,13 @@ const Items = (props) => {
   // console.log("ShowItems", props)
 
   // closeMenu: <function>
-  // index: undefined
+  // slideIndex: undefined
   // items: [
   //   { _id:    <string>
   //   , name:   <string>
   //   , image:  { <name>: <url> }
-  //   , layout: < "splash" | "solo" | ... > 
-  //   
+  //   , layout: < "splash" | "solo" | ... >
+  //
   //   , text:   <string>
   //   , menu:   <string>
   //   , legend: { <name>: <string>, ... }
@@ -47,7 +47,7 @@ const Items = (props) => {
       return <StyledShowItem
         key={item._id}
         onMouseUp={() => props.chooseSlide( index )}
-        active={index === props.index}
+        active={index === props.slideIndex}
       >
         <span className="index">{index - skip}.</span>
         <span className="section">{item.menu}</span>
@@ -58,8 +58,8 @@ const Items = (props) => {
       return 0
     }
   }).filter( item => !!item )
-                           
-// 
+
+//
   return <StyledShowList
     ref={props.pane}
     open={props.open}
@@ -167,7 +167,7 @@ export class Menu extends Component {
   }
 
 
-  toggleMenu(menu_open) {   
+  toggleMenu(menu_open) {
     const group_id = this.props.group_id
 
     if (!group_id) {
@@ -189,14 +189,14 @@ export class Menu extends Component {
   }
 
 
-  chooseSlide(index) {
-    this.props.setIndex(index)
+  chooseSlide(slideIndex) {
+    this.props.setSlideIndex(slideIndex)
     this.closeMenu()
   }
 
 
   render() {
-    const { open, aspectRatio, index, items } = this.props
+    const { open, aspectRatio, slideIndex, items } = this.props
 
     return <StyledMenuContainer
       className="show-menu-container"
@@ -207,13 +207,13 @@ export class Menu extends Component {
         aspectRatio={aspectRatio}
       >
         <Items
-          index={index}
           items={items}
           pane={this.pane}
+          slideIndex={slideIndex}
 
           chooseSlide={this.chooseSlide}
         />
-      </StyledShowMenu>  
+      </StyledShowMenu>
       <StyledSVG
         className="openShowMenu"
         viewBox="0 0 100 100"

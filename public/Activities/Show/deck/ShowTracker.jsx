@@ -19,6 +19,8 @@ export default class ShowTracker extends Tracker{
     this.collectionName = collectionName
     const props = super.getProps(collectionName)
 
+    // console.log("ShowTracker", JSON.stringify(props, null, "  "))
+
     return props
   }
 
@@ -28,7 +30,7 @@ export default class ShowTracker extends Tracker{
       document.menu = getLocalized(document.menu, this.code)
 
     } else {
-      delete document.menu 
+      delete document.menu
     }
 
     if (Array.isArray(document.legend)) {
@@ -39,7 +41,7 @@ export default class ShowTracker extends Tracker{
       ))
 
     } else {
-      delete document.legend 
+      delete document.legend
     }
 
     if (Array.isArray(document.image)) {
@@ -53,7 +55,7 @@ export default class ShowTracker extends Tracker{
       }, {})
     }
 
-    delete document.tags 
+    delete document.tags
 
     return document
   }

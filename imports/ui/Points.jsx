@@ -356,7 +356,7 @@ export default withTracker(() => {
 
 function groupIsActive(_id) {
   const select  = { _id }
-  const options = { 
+  const options = {
     fields: {
       active: 1
     , soloPilot: 1

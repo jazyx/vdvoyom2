@@ -19,13 +19,13 @@
     // be available and a top-level call to onYouTubeIframeAPIReady()
     // will be made. To obtain a pointer to the YT global as soon as
     // it is becomes available, call:
-    // 
+    //
     //   YouTubeAPI.then((result) => doSomethingWith(result))
-    //   
+    //
     // or, more simply:
-    //  
+    //
     //   YouTubeAPI.then(doSomethingWith(YT))
-    
+
     YouTubeAPI = new Promise((resolve, reject) => {
       onYouTubeIframeAPIReady = () => {
         resolve(YT)

@@ -134,7 +134,7 @@ class App extends Component {
   }
 
 
-  hideSplash(page) {
+  hideSplash(page, group_id) {
     // Setting this.state.ready is redundant if page can be set,
     // since setting it will alter this.props. But it's just neater
     // to have ready set to true, regardless of the circumstances.
@@ -150,11 +150,13 @@ class App extends Component {
       this.setState({ view })
     }
 
-    this.setPage(page)
+    this.setPage(page, group_id)
   }
 
 
-  /**
+  /** Called by hideSplash, from Menu component and profile Views
+   *  such as Name, Language, Native, CheckPIN, EnterPIN and Submit.
+   *
    * Calls the setPage Meteor method to update the page object of the
    * current group. The page object will be available via
    * this.props.page to all members of the group.
@@ -184,16 +186,16 @@ class App extends Component {
    *                               index will default to 0 if missing
    *                               lastItemIsTag will default to false
    */
-  setPage(page) {
+  setPage(page, group_id = this.props.group_id) {
     // console.log("App setPage:", page)
 
-    if (page && this.props.group_id) {
+    if (page && group_id) {
       if (typeof page === "string") {
         page = { view: page }
       }
 
       const options = {
-        group_id: this.props.group_id
+        group_id
       , page
       }
       setPage.call(options)

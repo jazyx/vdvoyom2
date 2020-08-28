@@ -44,7 +44,7 @@ class Submit extends Component {
     // d_code:   "xTG3"              // or created here on Client
     //
     // user_id:  "g5Q3geSR2KuigZybJ" // created on Server
-    // q_code:   "0294"              //        —"—
+    // q_code:   "0294"              // —"—
     // view:     "Activity"          // —"— but updated on Client
     // view_data: {...}               // created on Client
 

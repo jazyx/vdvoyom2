@@ -27,7 +27,7 @@ export default class Tracker{
     const code = this.code = Session.get("language")
     const d_code = Session.get("d_code")
     const user_id = Session.get("user_id")
-    const group_id = Session.get("group_id")    
+    const group_id = Session.get("group_id")
     const isTeacher = Session.get("role") === "teacher"
 
     const uiText = this.getUIText()
@@ -36,7 +36,8 @@ export default class Tracker{
     // Group collection may not yet be available
 
     const { page, logged_in, activity, active, soloPilot } = groupData
-    const { path, data, tag } = page
+    // page may be undefined on hot reload
+    const { path, data, tag } = page || {}
 
     const isMaster  = Array.isArray(logged_in) && logged_in.length
                     ? logged_in[0] === d_code
@@ -128,9 +129,11 @@ export default class Tracker{
   getItems(collectionName, tags) {
     const collection = collections[collectionName]
     let select
+
     if (typeof tags === "string") {
       select = { tags }
-    } else {
+
+    } else if (Array.isArray(tags)) {
       tags = tags.map( tag => ({ tags: tag } ) )
       // [ "tag", ...] => [ { tags: "tag" }, ...]
       select  = { $or: tags }

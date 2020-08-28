@@ -7,6 +7,7 @@ import { Session } from 'meteor/session'
 
 // Helpers
 import { removeFrom
+       , getRandom
        , getRandomFromArray
        } from '../../tools/generic/utilities'
 import Storage from '../../tools/generic/storage'
@@ -33,6 +34,7 @@ export default class StartUp {
     /// HARD-CODED >>>
 
     this.ready = this.ready.bind(this)
+    this.goSolo = this.goSolo.bind(this)
     this.hideSplash = this.hideSplash.bind(this)
     this.callback = this.callback.bind(this)
     this.connectionTimedOut = this.connectionTimedOut.bind(this)
@@ -111,7 +113,11 @@ export default class StartUp {
    *  Admin: TBD
    */
   prepareApp() {
-    this.setSessionData()
+    const goingSolo = this.setSessionData()
+    if (goingSolo) {
+      return
+    }
+
     // First time user: no Session data
     // Returning user:  user_id is set
     // Teacher:         teacher_id is set
@@ -138,6 +144,10 @@ export default class StartUp {
 
   setSessionData() {
     // console.log("setSessionData")
+    const goSolo = this.getURLQueryData()
+    if (goSolo) {
+      return true
+    }
 
     const storedData = Storage.get()
     // console.log("storedData:", storedData)
@@ -174,6 +184,123 @@ export default class StartUp {
     } else {
       // First time user on this device. No storedData to treat
     }
+
+    return false
+  }
+
+
+  getURLQueryData() {
+    const searchParams = new URLSearchParams(window.location.search)
+
+    // Check if the URL includes a "solo" parameter, regardless of its
+    // value. If so, we will create a temporary user with a user_id
+    // like "deleteTempUser_EsWSkLZh9bGMbLpZf", which will be deleted
+    // when the user logs out.
+    const goSolo = (searchParams.has("solo"))
+    if (!goSolo) {
+      return false
+    }
+
+    const username = "deleteTempUser_" + this.getRandomString(9)
+    const d_code = this.getRandomString(7)
+
+    const accountData = {
+      d_code
+    , username
+    , restore_all: true
+    , language:   searchParams.get("language") || "en-GB"
+    , native:     searchParams.get(".native") || "en-GB"
+    , teacher:    "none"
+    }
+
+    logIn.call(accountData, this.goSolo)
+
+    return true
+  }
+
+
+  goSolo(error, result) {
+    // console.log("goSolo (error:", error, ") data:", result)
+    // username: "deleteTempUser_8fbkqvueP"
+    // user_id: "qbK7SjzunhotN6nK3"
+    // d_code: "fenalUI"
+    // group_id: "8B8B6eLFoPEF2vT8q"
+    //
+    // q_code: "5278"
+    // q_color: "#33b2cc"
+    // teacher: "none"
+    //   page: {view: "Activity"}
+    // restore_all: true
+    //
+    //   accountCreated: true
+    //   groupCreated: true
+    //   loggedIn: true
+    //   status: "JoinGroup_success"
+
+    delete result.accountCreated
+    delete result.groupCreated
+    delete result.loggedIn
+    delete result.status
+    delete result.page
+
+    // native:      "en-GB"
+    //   username:    "James"
+    // language:    "ru"
+    //   teacher:     "aa"
+    //   q_code:      "3819"
+    //   q_color:     "#33cc60"
+    //   user_id:     "6oRFpNLZEfkN4HfMj"
+    //   group_id:    "4Bd5yhRfstZ77zxAZ"
+    // view:        "Drag"
+    // auto_login:  false
+    // restore_all: false
+
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.delete("solo")
+
+    const data = {}
+    searchParams.forEach(function(value, key) {
+      data[key] = value
+    })
+
+    // console.log("params:", JSON.stringify(data, null, "  "))
+    // {
+    // "path": "Show/OatsAndBeans",
+    // "tag": "oatsAndBeans",
+    // "index": "2",
+    //
+    // "slideIndex": "5",
+    // "menu_open": "false",
+    //
+    // "native": "en",
+    // "language": "en",
+    // }
+
+    result.native = data.native
+    result.language = data.language
+    result.auto_login = true // <<< HARD-CODED
+
+    delete data.native
+    delete data.language
+
+    this.setSessionDataFrom(result)
+
+    for (const key in data) {
+      let value = data[key]
+      if (!isNaN(value)) {
+        data[key] = parseInt(value, 10)
+      }
+    }
+
+    const { path, index, tag } = data
+    delete data.path
+    delete data.index
+    delete data.tag
+
+    const page = { path, tag, index, data }
+
+    this.go = page
+    this.hideSplash()
   }
 
 
@@ -206,7 +333,7 @@ export default class StartUp {
   }
 
 
-  setSessionDataFrom(storedData, keys) {
+  setSessionDataFrom(storedData) { //, keys) {
     // native:      "en-GB"
     // username:    "James"
     // language:    "ru"
@@ -237,16 +364,22 @@ export default class StartUp {
   }
 
 
-  sessionSetD_code() {
-    let d_code    = ""
+  getRandomString(length) {
+    let randomString = ""
     const source = "0123456789&#"
                  + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                  + "abcdefghijklmnopqrstuvwxyz"
-    const length = source.length
-    const total  = 7 // Creates 4 398 046 511 104 possible strings
-    for ( let ii = 0; ii < total; ii += 1 ) {
-      d_code += getRandomFromArray(source)
+    for ( let ii = 0; ii < length; ii += 1 ) {
+      randomString += getRandomFromArray(source)
     }
+
+    return randomString
+  }
+
+
+  sessionSetD_code() {
+    const length = 7 // Creates 4 398 046 511 104 possible strings
+    const d_code = this.getRandomString(length)
 
     Session.set("d_code", d_code)
   }
@@ -318,6 +451,8 @@ export default class StartUp {
     // interactive view (Profile, Activity or an activity-in-progress)
 
     // console.log("StartUp preloadComplete(\"" + this.go + "\")")
-    this.preloadComplete(this.go)
+
+    //////////////////// ADD group_id???///////////////////////
+    this.preloadComplete(this.go, Session.get("group_id"))
   }
 }

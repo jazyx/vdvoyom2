@@ -102,7 +102,7 @@ export default class JoinGroup {
 
     if (!readFromGroup) {
       // If this user is master, and they have asked to return to the
-      // last used activity, open that last view. 
+      // last used activity, open that last view.
       readFromGroup = accountData.restore_all
     }
 

@@ -57,6 +57,7 @@ import CreateGroup from './admin/group'
 import LogInTeacher from './admin/loginTeacher'
 import CreateAccount from './admin/account'
 import ToggleActivation from './admin/activate'
+import RemoveUserAndGroup from './admin/remove'
 
 import Scheduler from './fluency/scheduler'
 
@@ -315,12 +316,18 @@ export const logOut = {
     , d_code:   { type: String }
       // A Teacher might log out without being part of a group
     // , group_id: { type: String, optional: true }
+    , remove:  { type: Boolean }
     }).validate(logOutData)
   }
 
 , run(logOutData) {
-    new LeaveGroup(logOutData) // adds .leftGroup = [<id>, ...]
-    new LogOut(logOutData)
+    if (logOutData.remove) {
+      new RemoveUserAndGroup(logOutData)
+
+    } else {
+      new LeaveGroup(logOutData) // adds .leftGroup = [<id>, ...]
+      new LogOut(logOutData)
+    }
 
     return logOutData
   }
@@ -483,13 +490,13 @@ export const setPageData = {
     }
     Group.update(select, set)
 
-    console.log(
-      "db.group.update("
-    + JSON.stringify(select)
-    + ","
-    + JSON.stringify(set)
-    + ")"
-    )
+    // console.log(
+    //   "db.group.update("
+    // + JSON.stringify(select)
+    // + ","
+    // + JSON.stringify(set)
+    // + ")"
+    // )
   }
 }
 

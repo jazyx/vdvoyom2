@@ -1,7 +1,7 @@
 /**
  * /public/Activities/Show/deck/components/quote.jsx
  *
- * 
+ *
  */
 
 
@@ -120,11 +120,11 @@ export class Quote extends Component {
     const { menu, aspectRatio, limit, legend, image } = this.props
     let direction
       , src
-        
+
     if (aspectRatio < limit) {
       direction = "column"
       src = image.h
-    } else {  
+    } else {
       direction = "row"
       src = image.v
     }

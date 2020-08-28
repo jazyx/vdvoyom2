@@ -1,6 +1,6 @@
 /**
  * /public/activities/Show/deck/styles.jsx
- * 
+ *
  * See /client/main.css for :root definition of colors and padding
  */
 
@@ -44,7 +44,7 @@ export const StyledContainer = styled.div`
 `
 
 
-export const StyledMenuContainer = styled.div` 
+export const StyledMenuContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -130,7 +130,7 @@ export const StyledShowItem = styled.li`
     background-color: var(--menuHover);
   }
 
-  ${ props => props.active 
+  ${ props => props.active
             ? `font-weight: bold;
                color: var(--menuActiveColor);
                background-color: var(--menuActiveBg);
@@ -162,7 +162,7 @@ export const StyledSplash = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;    
+  align-items: center;
   width: calc(100 * var(--min));
   height: calc(100 * var(--min));
 
@@ -185,9 +185,9 @@ export const StyledSplash = styled.div`
 
 
 export const StyledVideo = styled.iframe`
-  min-width: 100%; 
+  min-width: 100%;
   min-height: 100%;
-  width: auto; 
+  width: auto;
   height: auto;
   ${props => {
     const { videoRatio, aspectRatio } = props
@@ -207,15 +207,13 @@ export const StyledMask = styled.div`
 
 export const StyledButtons = styled.div`
   position: fixed;
+  display: flex;
+  justify-content: right;
   bottom: 0;
   right: 0;
-  width: 24vw;
   height: 8vw;
 
   & button {
-    position: absolute;
-
-    top: 0;
     height: 8vw;
 
     background-size: contain;
@@ -226,23 +224,36 @@ export const StyledButtons = styled.div`
 `
 
 
+export const StyledPause = styled.button`
+  width: 16vw;
+  background-image: url("img/icons/${props => props.paused
+                                            ? "pause"
+                                            : "play"
+                                    }.png");
+`
+
+
+export const StyledCue = styled.button`
+  width: 8vw;
+  background-image: url("img/icons/cue.png");
+  text-align: center;
+  font-size: 3.6vw;
+  color: #999;
+
+  &:active {
+    background-image: url("img/icons/cue_down.png");
+    color: #000;
+  }
+`
+
+
 export const StyledRewind = styled.button`
-  left: 0;
   width: 8vw;
   background-image: url("img/icons/rewind.png");
 
   &:active {
       background-image: url("img/icons/rewind_down.png");
   }
-`
-
-export const StyledPause = styled.button`
-  right: 0;
-  width: 16vw;
-  background-image: url("img/icons/${props => props.paused
-                                            ? "pause"
-                                            : "play"
-                                    }.png");
 `
 
 

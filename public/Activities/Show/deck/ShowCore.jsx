@@ -34,17 +34,17 @@ export default class Show extends Component {
   constructor(props) {
     super(props)
 
-    this.setIndex = this.setIndex.bind(this)
+    this.setSlideIndex = this.setSlideIndex.bind(this)
     this.treatArrowKeys = this.treatArrowKeys.bind(this)
     this.getTextOrLink = this.getTextOrLink.bind(this)
 
     const listener = this.treatArrowKeys
     document.body.addEventListener("keydown", listener, true)
-    
+
     this.togglePilot()
 
-    if (props.isMaster) {
-      this.setIndex(0, false)
+    if (props.isMaster && props.slideIndex === "undefined") {
+      this.setSlideIndex(0, false)
     }
   }
 
@@ -63,29 +63,29 @@ export default class Show extends Component {
     }
   }
 
- 
+
   treatArrowKeys(event) {
     const items = this.props.items
     if (!items) {
       return
     }
- 
+
     const max = items.length - 1
-    let index = this.index
+    let slideIndex = this.slideIndex
 
     switch (event.keyCode) {
       default:
         return
       case 37:
       case 38:
-        index = Math.max( 0, index - 1 )
+        slideIndex = Math.max( 0, slideIndex - 1 )
       break
       case 39:
       case 40:
-        index = Math.min( index + 1, max)
+        slideIndex = Math.min( slideIndex + 1, max)
     }
 
-    this.setIndex(index)
+    this.setSlideIndex(slideIndex)
   }
 
 
@@ -120,7 +120,7 @@ export default class Show extends Component {
     const text = item.text.split("\n").map(( line, index ) => {
       return this.getTextOrLink(line, index)
     })
-    
+
     return <StyledSplash
       className="splash"
       key="splash"
@@ -153,7 +153,7 @@ export default class Show extends Component {
     // , color: "#000"
     // }
     // _id: "dGRe2HrQ5TbYfasDe"
-    // 
+    //
     // The image should be placed to fit the available space, minus
     // the space required for the legend, if there is one. There will
     // only be one image (and legend).
@@ -207,15 +207,33 @@ export default class Show extends Component {
 
 
   getVideo(item) {
+    const {
+      rect
+    , data // { rewound: <>, paused: <> }
+    , isPilot
+    , group_id
+    , aspectRatio
+    } = this.props
+    const props = {
+      rect
+    , isPilot
+    , group_id
+    , aspectRatio
+    , ...data
+    }
+
     return <Video
       {...item}
-      rect={this.props.rect}
-      paused={this.props.data.paused}
-      rewound={this.props.data.rewound}
-      isPilot={this.props.isPilot}
-      group_id={this.props.group_id}
-      aspectRatio={this.props.aspectRatio}
+      {...props}
     />
+
+    // cue={cue}
+    // rect={rect}
+    // paused={data.paused}
+    // rewound={data.rewound}
+    // isPilot={isPilot}
+    // group_id={group_id}
+    // aspectRatio={aspectRatio}
   }
 
 
@@ -235,10 +253,10 @@ export default class Show extends Component {
   }
 
 
-  setIndex(index, menu_open) {
+  setSlideIndex(slideIndex, menu_open) {
     const group_id  = this.props.group_id
     const data = {
-      index
+      slideIndex
     }
 
     if (menu_open !== undefined) {
@@ -271,9 +289,19 @@ export default class Show extends Component {
 
 
   getNotes(noteArray) {
-    if (!Array.isArray(noteArray) || !this.props.isPilot) {
+    const props = {...this.props}
+    // delete props.items
+    console.log("getNotes", JSON.stringify(props, null, "  "))
+
+    const { isPilot, isTeacher } = this.props
+
+    if ( !Array.isArray(noteArray)
+      || !isPilot
+      || !isTeacher
+       ) {
       return ""
     }
+
     noteArray = noteArray.map(( note, index ) => (
       <li
         key={index}
@@ -302,9 +330,9 @@ export default class Show extends Component {
       key="menu"
       open={open}
       items={items}
-      index={this.index}
-      setIndex={this.setIndex}
       group_id={this.props.group_id}
+      slideIndex={this.slideIndex}
+      setSlideIndex={this.setSlideIndex}
       aspectRatio={this.props.aspectRatio}
     />
   }
@@ -318,10 +346,14 @@ export default class Show extends Component {
       return "Slide Show goes here"
     }
 
-    this.index = this.props.data
-                ? this.props.data.index || 0
-                : 0
-    const item = items[this.index]
+    this.slideIndex = this.props.data
+                    ? this.props.data.slideIndex || 0
+                    : 0
+    const item = items[this.slideIndex]
+    if (!item) {
+      return "Hot reload"
+    }
+
     const tweak = item ? item.tweak : undefined
 
     const slide = this.getSlide(item)

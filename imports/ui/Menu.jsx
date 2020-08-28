@@ -427,7 +427,7 @@ class Menu extends Component {
   }
 
 
-  toggleMenu(menu_open) {   
+  toggleMenu(menu_open) {
     const _id = this.props.group_id
     if (!_id) {
       return
@@ -447,6 +447,12 @@ class Menu extends Component {
 
 
   logOut() {
+    // Prepare to delete both the user and the group if the user is
+    // temporary. See getURLQueryData() for the creation of the temp
+    // username
+    const regex = /deleteTempUser_[A-Za-z0-9&#]{9}/
+    const remove = regex.test(Session.get("username"))
+
     // The user may be both a teacher and a learner. The user_id
     // for a learner may have been read in from localStorage, but
     // the teacher_id is not stored, so if it is present, this
@@ -464,7 +470,7 @@ class Menu extends Component {
     }
 
     // const group_id = Session.get("group_id")
-    const userAndDevice = { id, d_code } //, group_id }
+    const userAndDevice = { id, d_code, remove } //, group_id }
 
     logOut.call(userAndDevice) // no callback = synchronous
   }
