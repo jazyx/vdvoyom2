@@ -450,8 +450,13 @@ class Menu extends Component {
     // Prepare to delete both the user and the group if the user is
     // temporary. See getURLQueryData() for the creation of the temp
     // username
-    const regex = /deleteTempUser_[A-Za-z0-9&#]{9}/
+    const regex = /deleteTempUser_[A-Za-z0-9&#]+/
     const remove = regex.test(Session.get("username"))
+
+    // console.log(
+    //   "Logging out user", Session.get("username")
+    // , "remove:", remove
+    // )
 
     // The user may be both a teacher and a learner. The user_id
     // for a learner may have been read in from localStorage, but
@@ -586,12 +591,18 @@ class MenuTracker{
         , soloPilot: 1
         }
       }
+      const groupData = Group.findOne(groupSelect, groupProject)
+
+      console.log(
+        "Menu group_id:", group_id, ", groupData"
+      , JSON.stringify(groupData, null, "  ")
+      )
 
       var {
         page
       , menu_open
       , soloPilot
-      } = Group.findOne(groupSelect, groupProject)
+      } = groupData || {}
     }
 
     if (!page) {

@@ -34,7 +34,7 @@ export default class StartUp {
     /// HARD-CODED >>>
 
     this.ready = this.ready.bind(this)
-    this.goSolo = this.goSolo.bind(this)
+    this.oneOff = this.oneOff.bind(this)
     this.hideSplash = this.hideSplash.bind(this)
     this.callback = this.callback.bind(this)
     this.connectionTimedOut = this.connectionTimedOut.bind(this)
@@ -113,10 +113,12 @@ export default class StartUp {
    *  Admin: TBD
    */
   prepareApp() {
-    const goingSolo = this.setSessionData()
-    if (goingSolo) {
-      return
+    const oneOff = this.useURLQueryData()
+    if (oneOff) {
+      return true
     }
+
+    this.setSessionData()
 
     // First time user: no Session data
     // Returning user:  user_id is set
@@ -143,12 +145,6 @@ export default class StartUp {
 
 
   setSessionData() {
-    // console.log("setSessionData")
-    const goSolo = this.getURLQueryData()
-    if (goSolo) {
-      return true
-    }
-
     const storedData = Storage.get()
     // console.log("storedData:", storedData)
     // auto_login:  false
@@ -189,38 +185,46 @@ export default class StartUp {
   }
 
 
-  getURLQueryData() {
-    const searchParams = new URLSearchParams(window.location.search)
+  useURLQueryData() {
+    const query = new URLSearchParams(window.location.search)
 
-    // Check if the URL includes a "solo" parameter, regardless of its
+    // Check if the URL includes a "once" parameter, regardless of its
     // value. If so, we will create a temporary user with a user_id
     // like "deleteTempUser_EsWSkLZh9bGMbLpZf", which will be deleted
     // when the user logs out.
-    const goSolo = (searchParams.has("solo"))
-    if (!goSolo) {
-      return false
+    const oneOff = (query.has("once"))
+    if (oneOff) {
+      this.createTempUser(query)
+      return true
     }
 
-    const username = "deleteTempUser_" + this.getRandomString(9)
+    return false
+  }
+
+
+  createTempUser(query) {
+    const username = "deleteTempUser_"
+                   + (query.get("user") || this.getRandomString(9))
+    const teacher  = query.get("own") || "none"
     const d_code = this.getRandomString(7)
+    const language = query.get("lang") || "en-GB"
+    const native = query.get("vo") || "en-GB"
 
     const accountData = {
       d_code
     , username
+    , teacher
     , restore_all: true
-    , language:   searchParams.get("language") || "en-GB"
-    , native:     searchParams.get(".native") || "en-GB"
-    , teacher:    "none"
+    , language
+    , native
     }
 
-    logIn.call(accountData, this.goSolo)
-
-    return true
+    logIn.call(accountData, this.oneOff)
   }
 
 
-  goSolo(error, result) {
-    // console.log("goSolo (error:", error, ") data:", result)
+  oneOff(error, result) {
+    // console.log("oneOff (error:", error, ") data:", result)
     // username: "deleteTempUser_8fbkqvueP"
     // user_id: "qbK7SjzunhotN6nK3"
     // d_code: "fenalUI"
@@ -243,27 +247,15 @@ export default class StartUp {
     delete result.status
     delete result.page
 
-    // native:      "en-GB"
-    //   username:    "James"
-    // language:    "ru"
-    //   teacher:     "aa"
-    //   q_code:      "3819"
-    //   q_color:     "#33cc60"
-    //   user_id:     "6oRFpNLZEfkN4HfMj"
-    //   group_id:    "4Bd5yhRfstZ77zxAZ"
-    // view:        "Drag"
-    // auto_login:  false
-    // restore_all: false
-
-    const searchParams = new URLSearchParams(window.location.search)
-    searchParams.delete("solo")
+    const params = new URLSearchParams(window.location.search)
+    params.delete("once")
 
     const data = {}
-    searchParams.forEach(function(value, key) {
+    params.forEach(function(value, key) {
       data[key] = value
     })
 
-    // console.log("params:", JSON.stringify(data, null, "  "))
+    // console.log("data:", JSON.stringify(data, null, "  "))
     // {
     // "path": "Show/OatsAndBeans",
     // "tag": "oatsAndBeans",
@@ -275,13 +267,22 @@ export default class StartUp {
     // "native": "en",
     // "language": "en",
     // }
+    // console.log(
+    //   "result"
+    // , JSON.stringify(result, null, "  ")
+    // )
 
-    result.native = data.native
-    result.language = data.language
+    result.native = data.vo
+    result.language = data.lang
     result.auto_login = true // <<< HARD-CODED
 
-    delete data.native
-    delete data.language
+    delete data.vo
+    delete data.own
+    delete data.lang
+    // console.log(
+    //   "result"
+    // , JSON.stringify(result, null, "  ")
+    // )
 
     this.setSessionDataFrom(result)
 

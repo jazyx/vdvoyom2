@@ -289,9 +289,9 @@ export default class Show extends Component {
 
 
   getNotes(noteArray) {
-    const props = {...this.props}
+    // const props = {...this.props}
     // delete props.items
-    console.log("getNotes", JSON.stringify(props, null, "  "))
+    // console.log("getNotes", JSON.stringify(props, null, "  "))
 
     const { isPilot, isTeacher } = this.props
 

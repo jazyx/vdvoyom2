@@ -17,8 +17,18 @@ export default class RemoveUserAndGroup {
       group_id = this.getGroup_id(d_code)
     }
 
+    // console.log("Removing user", id, "from group", group_id)
+
     User.remove({ _id: id })
     Group.remove( { _id: group_id } )
+
+    Session.set("user_id", undefined)
+    Session.set("username", undefined)
+    Session.set("group_id", undefined)
+
+    delete Session.keys['user_id']
+    delete Session.keys['user_name']
+    delete Session.keys['group_id']
   }
 
 

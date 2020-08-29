@@ -321,6 +321,11 @@ export const logOut = {
   }
 
 , run(logOutData) {
+    console.log(
+      "logOutData"
+    , JSON.stringify(logOutData, null, "  ")
+    )
+
     if (logOutData.remove) {
       new RemoveUserAndGroup(logOutData)
 
