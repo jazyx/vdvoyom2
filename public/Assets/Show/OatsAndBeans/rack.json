@@ -389,14 +389,6 @@
 				"ru": "Биомасса деревьев"
 			},
 			"layout": "solo",
-			"legend": [
-				{
-					"id": "tree_biomass",
-					"en": "Tree biomass",
-					"fr": "La biomasse des arbres",
-					"ru": "Биомасса деревьев"
-				}
-			],
 			"image": [
 				{
 					"src": "/Assets/Show/OatsAndBeans/image/tree_biomass.png",
@@ -423,9 +415,9 @@
 			"legend": [
 				{
 					"id": "Keeling",
-					"en": "Charles Keeling and his son Ralph",
-					"fr": "Charles Keeling et son fils Ralph",
-					"ru": "Чарльз Килинг и его сын Ральф"
+					"en": "Charles Keeling",
+					"fr": "Charles Keeling",
+					"ru": "Чарльз Килинг"
 				}
 			],
 			"image": [
@@ -453,7 +445,7 @@
 			"legend": [
 				{
 					"id": "CO2",
-					"en": "Measuring CO₂",
+					"en": "Ralph Keeling measuring CO₂",
 					"fr": "Mésurer la concentration du CO₂",
 					"ru": "Измерьте концентрации углекислого газа"
 				}
@@ -1115,7 +1107,7 @@
 			"start": 58.5,
 			"end": 166,
 			"cue": [
-				117,
+				117.25,
 				132
 			],
 			"width": 560,

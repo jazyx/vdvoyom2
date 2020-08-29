@@ -297,9 +297,13 @@ export default class StartUp {
     delete data.index
     delete data.tag
 
-    const page = { path, tag, index, data }
+    if(!path) {
+      this.go = { view: "Activity" }
+    } else {
+      const page = { path, tag, index, data }
+      this.go = page
+    }
 
-    this.go = page
     this.hideSplash()
   }
 
