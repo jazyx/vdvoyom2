@@ -20,7 +20,9 @@ import { methods } from '../../api/methods/mint'
 const { logIn } = methods
 
 // Constant
-import { STARTUP_TIMEOUT } from '/imports/tools/custom/constants'
+import { STARTUP_TIMEOUT
+       , SET_REGEX
+       } from '/imports/tools/custom/constants'
 
 
 
@@ -113,13 +115,29 @@ export default class StartUp {
    *  Admin: TBD
    */
   prepareApp() {
-    const oneOff = this.useURLQueryData()
-    if (oneOff) {
-      return true
+    const query = new URLSearchParams(window.location.search)
+
+    // Check if the URL includes a "once" parameter, regardless of its
+    // value. If so, we will create a temporary user with a user_id
+    // like "deleteTempUser_EsWSkLZh9bGMbLpZf", which will be deleted
+    // when the user logs out.
+    if (query.has("once")) {
+      this.createUser(query, "singleUse", this.oneOff)
+
+    } else if (query.has("join")) {
+      this.treatUserInvitation(query, false, this.welcomeNewUser)
+
+    } else {
+      const teacher = this.getTeacherFromURL(query) //may be undefined
+
+      this.setSessionData(teacher)
+      // TODO: Add test for admin
+      this.prepareUIForRole()
     }
+  }
 
-    this.setSessionData()
 
+  prepareUIForRole() {
     // First time user: no Session data
     // Returning user:  user_id is set
     // Teacher:         teacher_id is set
@@ -144,7 +162,7 @@ export default class StartUp {
   }
 
 
-  setSessionData() {
+  setSessionData(teacher) {
     const storedData = Storage.get()
     // console.log("storedData:", storedData)
     // auto_login:  false
@@ -160,8 +178,6 @@ export default class StartUp {
     // view:        "Activity"
 
     const keys = Object.keys(storedData)
-    const teacher = this.checkURLForTeacherName()
-    // TODO: Add test for admin
 
     this.sessionSetD_code()
 
@@ -180,31 +196,33 @@ export default class StartUp {
     } else {
       // First time user on this device. No storedData to treat
     }
-
-    return false
   }
 
 
-  useURLQueryData() {
-    const query = new URLSearchParams(window.location.search)
+  /** Prepares accountData for a call to logIn method, with callback
+   * 
+   * Called by prepareApp() if window.location.search includes "once"
+   * and by treatUserInvitation if ~.search includes "join"
+   *
+   * @param  {URLSearchParams}  query      instance with properties
+   *                                       * user (username)
+   *                                       * own  (teacher id)
+   *                                       * vo   (native)
+   *                                       * lang (language)
+   * @param  {truthy}           singleUse  true if the User and Group
+   *                                       documents are to be deleted
+   *                                       when this session ends.
+   * @param  {Function}         callback   Function to call after the
+   *                                       logIn method has run
+   */
+  createUser(query, singleUse, callback) {
+    let username = query.get("user")
 
-    // Check if the URL includes a "once" parameter, regardless of its
-    // value. If so, we will create a temporary user with a user_id
-    // like "deleteTempUser_EsWSkLZh9bGMbLpZf", which will be deleted
-    // when the user logs out.
-    const oneOff = (query.has("once"))
-    if (oneOff) {
-      this.createTempUser(query)
-      return true
+    if (singleUse) {
+      const nonce = username || this.getRandomString(9)
+      username = "deleteTempUser_" + nonce
     }
 
-    return false
-  }
-
-
-  createTempUser(query) {
-    const username = "deleteTempUser_"
-                   + (query.get("user") || this.getRandomString(9))
     const teacher  = query.get("own") || "none"
     const d_code = this.getRandomString(7)
     const language = query.get("lang") || "en-GB"
@@ -219,7 +237,7 @@ export default class StartUp {
     , native
     }
 
-    logIn.call(accountData, this.oneOff)
+    logIn.call(accountData, callback)
   }
 
 
@@ -293,30 +311,139 @@ export default class StartUp {
       }
     }
 
-    const { path, index, tag } = data
+    let { path, index, tag } = data
     delete data.path
     delete data.index
     delete data.tag
 
+    let page = { view: "Activity" }
+
     if(!path) {
-      this.go = { view: "Activity" }
+      // Leave page unchanged
+
     } else {
-      const page = { path, tag, index, data }
-      this.go = page
+      if (path[0] !== "/") {
+        path = "/" + path
+      }
+
+      let levels = path.split("/")
+      const collectionName = levels[1]
+      if (!collections[collectionName]) {
+      // Leave page unchanged
+
+      } else {
+        let lastIndex = levels.length - 1
+
+        // <<< HACK to ensure that all levels are shown in the menu
+        // ASSUMES:
+        // • path is complete except for the last item
+        // • the tag is the same as the last item should be, except
+        //   that the first char is in lowercase
+        if (tag)
+          if (levels[lastIndex].toLowerCase() !== tag.toLowerCase()) {
+          levels.push(tag[0].toUpperCase() + tag.substring(1))
+          path = levels.join("/")
+          lastIndex += 1
+        }
+        // HACK >>>
+
+        if (isNaN(index) || index > lastIndex || index < 0) {
+          index = lastIndex
+        }
+
+        page = { path, tag, index, data }        
+      }
     }
 
+    this.go = page
     this.hideSplash()
   }
 
 
-  checkURLForTeacherName() {
-    // http://activities.jazyx.com/<teacher_id>
-    // http://activities.jazyx.com/?teacher=<teacher_id>
+  /** Create a new user link+query to define name, teacher and task
+   *
+   * @param  {URLSearchParams}  query   Can define:
+   *                                    user (username)
+   *                                    vo   (native)
+   *                                    own  (teacher + language)
+   *                                   ~pin~~(q_code)~
+   *                                    [page]
+   *                                      view
+   *                                      path
+   *                                      index
+   *                                      [data]
+   * user, vo, own, view, path and index are treated specifically,
+   * with view, path and index being placed inside a `page` object.
+   * All other key/value pairs are treated as belonging to the 
+   * `page.data` object. If no view or path is given, `page` will
+   * be set to { view: "Activity" } and any data pairs will be
+   * ignored.
+   * 
+   * The visitor will be taken through the Profile pages, step by
+   * step, with any submitted details already filled in. If a pin-free
+   * URL is used more than once, the visitor will be asked to provide
+   * the PIN before continuing.
+   */
 
-    let id = window.location.getParameter("teacher")
+  treatUserInvitation(query) {
+
+  }
+
+
+  welcomeNewUser(error, data) {
+
+
+  }
+
+
+  getParamsFromURL(query) {
+    if (!query) {
+      query = window.location.search
+    }
+
+    const searchParams = new URLSearchParams(query)
+
+    const data = {}
+    searchParams.forEach(function(value, key) {
+      data[key] = value
+    })
+
+    return data
+  }
+
+
+  /** Checks for a search parameter or a shortcut teacher id
+   * 
+   *    http://activities.jazyx.com/?teacher=<teacher_id>
+   * OR http://activities.jazyx.com/<teacher_id>
+   * 
+   * If a shortcut is used, no other data will be found in the URL
+   * 
+   * Returns undefined or an object with the format:
+   *  {
+   *    "_id" : "MQoQa3MsixrkjgLWg",
+   *    "file" : "aa.jpg",
+   *    "id" : "aa",
+   *    "name" : {
+   *      "cyrl" : "Анастасия",
+   *      "latn" : "Anastacia"
+   *    },
+   *    "with" : "Учить русский с Анастасией",
+   *    "language" : "ru",
+   *    "script" : "cyrl",
+   *    "type" : "profile",
+   *    "version" : 4,
+   *    "logged_in" : [
+   *      "JSQTk6f"
+   *    ]
+   *  }
+   */
+  getTeacherFromURL(query) {
+    let id = query.get("teacher")
     if (!id) {
       id = window.location.pathname.substring(1) // /id => id
     }
+
     let teacher = this.getTeacher(id)
 
     if (!teacher) {
@@ -333,7 +460,7 @@ export default class StartUp {
 
   getTeacher(id) {
     id = decodeURI(id)
-         .replace(/^аа$/, "aa") // Russian а to Latin a for Настя
+         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
     return collections.Teacher.findOne({ id })
   }
 

@@ -118,7 +118,7 @@ class ActivityClass extends Component {
     , page
     })
 
-    // console.log("startActivity:", page)
+    console.log("startActivity:", page)
   }
 
 

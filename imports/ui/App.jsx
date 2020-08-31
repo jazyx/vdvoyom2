@@ -4,14 +4,9 @@
 
 
 
-
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
-
-// Add window.location.getParameter() method for use anywhere, but
-// specifically in StartUp.js
-import '../tools/generic/shim'
 
 import { teacher } from '../tools/custom/teacher'
 import { SET_REGEX } from '../tools/custom/constants'
