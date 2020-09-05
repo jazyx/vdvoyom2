@@ -317,7 +317,7 @@ export default class StartUp {
    * data   = url params
    * page   = default { view: "Activity" }
    */
-  mergeParamsAndAccountData(result, data, page) {
+  mergeParamsAndAccountData(result, data, page, ignorePath) {
     result.native     = data.vo
     result.language   = data.lang
     result.auto_login = true // <<< HARD-CODED
@@ -343,7 +343,7 @@ export default class StartUp {
     delete data.index
     delete data.tag
 
-    if(!path) {
+    if(!path || ignorePath) {
       // Leave page unchanged
 
     } else {
@@ -463,10 +463,15 @@ export default class StartUp {
      */
 
     let page = result.page // likely to change
+    let ignorePath = false
 
     if (!result.loggedIn) {
       // `pin` was defined and used for d_code, but it was wrong.
-      return this.manualLoginAfterAutoLoginFailed(result)
+      page = this.manualLoginAfterAutoLoginFailed(result)
+      ignorePath = true
+      if (!page) {
+        return console.log("NO PAGE FOUND IN STARTUP")
+      }
     }
 
     const without = [ "join", "user", "own", "pin" ]
@@ -480,14 +485,14 @@ export default class StartUp {
     // , [data]
     // }
 
-    this.mergeParamsAndAccountData(result, data, page)
+    this.mergeParamsAndAccountData(result, data, page, ignorePath)
   }
 
 
   manualLoginAfterAutoLoginFailed(data) {
     switch (data.status) {
       case "RequestPIN":
-
+        return { view: "Submit" }
       break
       default:
         console.log(
