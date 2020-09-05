@@ -61,7 +61,9 @@ export default class Tracker{
     , active
     , isMaster
     , isTeacher
-    , soloPilot   // undefined for most activities
+
+    , soloPilot // undefined for most activities; a d_code for others
+
     // items will be undefined if isMaster is false
     , items // [{ phrase, image, audio, native }]
     }

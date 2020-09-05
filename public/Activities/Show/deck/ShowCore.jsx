@@ -65,8 +65,13 @@ export default class Show extends Component {
 
 
   treatArrowKeys(event) {
-    const items = this.props.items
-    if (!items) {
+    // console.log(
+    //   "treatArrowKeys this.props"
+    // , JSON.stringify(this.props, null, "  ")
+    // )
+
+    const { items, isPilot } = this.props
+    if ( !items || !isPilot ) {
       return
     }
 
@@ -117,7 +122,7 @@ export default class Show extends Component {
     // text: "25 September 2020↵James Newton at↵[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
     // _id: "4pT9midTF7Dvjo5rY"
 
-    const text = item.text.split("\n").map(( line, index ) => {
+    let text = item.text.split("\n").map(( line, index ) => {
       return this.getTextOrLink(line, index)
     })
 
@@ -326,12 +331,18 @@ export default class Show extends Component {
                ? this.props.data.menu_open
                : false
 
+    const { group_id, isPilot } = this.props
+    // this.slideIndex is set in render()
+
     return <Menu
       key="menu"
       open={open}
+      active={isPilot}
       items={items}
-      group_id={this.props.group_id}
+      group_id={group_id}
+
       slideIndex={this.slideIndex}
+
       setSlideIndex={this.setSlideIndex}
       aspectRatio={this.props.aspectRatio}
     />

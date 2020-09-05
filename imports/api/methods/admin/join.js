@@ -31,14 +31,22 @@ export default class JoinGroup {
      * }
      */
 
-    let {user_id, d_code, teacher, language, group_id } = accountData
-    if (teacher && language) {
-      group_id = this.groupWithThisTeacher(user_id, teacher)
+    let {user_id, d_code, teacher, group_id, language } = accountData
+    if (teacher) {
+      const result = this.groupWithThisTeacher(user_id, teacher)
+      if (result.group_id) {
+        group_id = result.group_id
+      }
+      if (result.language) {
+        language = result.language
+      }
     }
 
     if (group_id) {
       // The user might have chosen a different group from last time
       accountData.group_id = group_id
+      accountData.language = language
+
     } else {
       return accountData.status = "CreateGroup"
       // We'll be back
@@ -75,10 +83,18 @@ export default class JoinGroup {
       , $size: 2
       }
     }
+    const project = {
+      fields: {
+        language: 1
+      }
+    }
 
-    const { _id } = (Group.findOne(select) || {})
+    const { _id, language } = (Group.findOne(select, project) || {})
 
-    return _id
+    return {
+      group_id: _id
+    , language
+    }
   }
 
 

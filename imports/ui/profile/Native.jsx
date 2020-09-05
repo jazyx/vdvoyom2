@@ -51,7 +51,7 @@ class Native extends Component {
 
 
   _getDefaultCode() {
-    let code = navigator.language        // "co-DE"
+    let code = navigator.language || navigator.userLanguage // "co-DE"
     let index = this.codes.indexOf(code)
 
     if (index < 0) {

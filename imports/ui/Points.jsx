@@ -76,9 +76,13 @@ class PointsClass extends Component {
 
 
   syncActive() {
-    if (this.props.group_id) {
+    // Don't show mouse|touch points if another user is pilot
+    const { soloPilot, d_code, group_id } = this.props
+    const notPilot = !!soloPilot && soloPilot !== d_code
+
+    if (group_id && !notPilot) {
       if (!this.group_id) {
-        this.group_id = this.props.group_id
+        this.group_id = group_id
         this.createTracker()
 
         return 1
@@ -95,8 +99,7 @@ class PointsClass extends Component {
 
 
   createTracker() {
-    const _id = Session.get("d_code")
-    const color = Session.get("q_color")
+    const { d_code: _id, q_color: color } = this.props
     const group_id = this.group_id
 
     // console.log("createTracker: _id", _id
@@ -217,7 +220,17 @@ class PointsClass extends Component {
     //   ( 0.0 ≤ doc.x, doc.y ≤ 1.0)
     // ... to absolute values.
 
-    const { width: w, height: h} = this.props.rect
+    // console.log(
+    //   "getPoints rect"
+    // , JSON.stringify(this.props.rect, null, "  ")
+    // )
+
+    const {
+      width:  w
+    , height: h
+    , left:   x
+    , top:    y
+    } = this.props.rect
 
     return this.props.points
                      .filter(doc => (
@@ -227,11 +240,12 @@ class PointsClass extends Component {
                         doc._id !== this.pointer_id
                       ))
                      .map(doc => {
-      let top  = Math.max(0, Math.min(doc.y * h, h - 2))
-      let left = Math.max(0, Math.min(doc.x * w, w - 1))
+      let left = Math.max(0, Math.min(doc.x * w, w - 1)) + x
+      let top  = Math.max(0, Math.min(doc.y * h, h - 2)) + y
       let width
         , height
         , shadow
+
       const touch = doc.touch
       if (touch) {
         width = Math.max(15, touch.radiusX)  // actually, use only
@@ -241,6 +255,7 @@ class PointsClass extends Component {
         width  = width * 2 + "px"            // and then
         height = height * 2 + "px"           // double it
         shadow = ""
+
       } else {
         width  = 12 * scale + "px"
         height = 16 * scale + "px"
@@ -323,12 +338,14 @@ export default withTracker(() => {
   // console.log("Pointer track:", track += 1)
 
   const group_id = Session.get("group_id")
+  const d_code   = Session.get("d_code")
+  const q_color  = Session.get("q_color")
 
   // Group .active is true
   // * If this is a Community group
   // * If the Teacher is logged in to a Teacher-managed group
 
-  const { active, soloPilot }  = groupIsActive(group_id)
+  const { active, soloPilot } = groupIsActive(group_id)
   const points = group_id && active
                ? Points.find({ group_id }).fetch()
                : []
@@ -348,6 +365,8 @@ export default withTracker(() => {
 
   return {
     group_id: active && group_id
+  , d_code
+  , q_color
   , points
   , soloPilot
   }
@@ -374,6 +393,6 @@ function groupIsActive(_id) {
 
   return {
     active: !!active
-  , soloPilot: !!soloPilot
+  , soloPilot
   }
 }

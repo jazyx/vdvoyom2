@@ -4,7 +4,7 @@
 
 
 import collections from '../../collections/publisher'
-const { Group } = collections
+const { Group, Teacher } = collections
 
 
 
@@ -13,10 +13,25 @@ export default class CreateGroup {
     // Minimum:
     // { user_id: <>
     // , teacher: <>
-    // , language: <>
     // }
 
     // console.log("accountData before CreateGroup:", accountData)
+
+    // Read language from Teacher document (unless teacher === "none"
+    // in which case, it will have been provided by the URL, or will
+    // have defaulted to "en").
+    const select = {id: accountData.teacher}
+    const project = {
+      fields: {
+        language: 1
+      }
+    }
+    const { language } = Teacher.findOne(select, project) || {}
+
+    if (language) {
+      // A teacher doc was found, so we can overwrite accountData
+      accountData.language = language
+    }
 
     const group = {
       owner:      accountData.teacher
@@ -35,6 +50,10 @@ export default class CreateGroup {
     }
     accountData.group_id = Group.insert(group)
     accountData.groupCreated = true
+
+    if (language) {
+      accountData.language = language
+    }
 
     // console.log("accountData after CreateGroup:", accountData)
   }

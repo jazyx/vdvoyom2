@@ -44,6 +44,10 @@ export default class ShowTracker extends Tracker{
       delete document.legend
     }
 
+    if (typeof document.text === "object") {
+      document.text = getLocalized(document.text, this.code)
+    }
+
     if (Array.isArray(document.image)) {
       document.image = document.image.reduce(( map, imageData ) => {
         const src   = imageData.src
@@ -68,3 +72,21 @@ export default class ShowTracker extends Tracker{
     props.isPilot = !props.active || props.soloPilot === props.d_code
   }
 }
+
+
+
+
+
+// // MENU.jsx
+// const isPilot = soloPilot
+//               ? soloPilot === d_code
+//               : undefined
+
+// No teacher ? isPilot === undefined
+// => Menu is hidden if teacher is piloting
+
+// // ShowTracker.js
+// props.isPilot = !props.active
+//               || props.soloPilot === props.d_code
+
+//No teacher ? isPilot should be true

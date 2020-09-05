@@ -86,7 +86,7 @@ export const createAccount = {
       username: { type: String }
     , native:   { type: String }
     , teacher:  { type: String }
-    , language: { type: String }
+    , language: { type: String, optional: true }
     , d_code:   { type: String }
 
     // action will have been added if the original call was to logIn
@@ -216,6 +216,10 @@ export const logIn = {
         if (logInData.status === "CreateGroup") {
           createGroup.run(logInData)
         }
+
+        // console.log("logIn (loggedIn) status:", logInData)
+
+        return logInData
 
       // Name that matches an existing user, but invalid q_code
       case "RequestPIN":

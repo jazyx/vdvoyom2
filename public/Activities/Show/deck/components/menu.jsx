@@ -43,10 +43,14 @@ const Items = (props) => {
 
   let skip = -1
   const items = props.items.map(( item, index ) => {
+    const chooseSlide = props.chooseSlide
+                      ? () => props.chooseSlide( index )
+                      : null
+
     if (item.menu) {
       return <StyledShowItem
         key={item._id}
-        onMouseUp={() => props.chooseSlide( index )}
+        onMouseUp={chooseSlide}
         active={index === props.slideIndex}
       >
         <span className="index">{index - skip}.</span>
@@ -196,7 +200,16 @@ export class Menu extends Component {
 
 
   render() {
-    const { open, aspectRatio, slideIndex, items } = this.props
+    const {open, active, aspectRatio, slideIndex, items} = this.props
+    let openMenu = null
+      , toggleOver = null
+      , chooseSlide = null
+
+    if (active) {
+      openMenu = this.openMenu
+      toggleOver = this.toggleOver
+      chooseSlide = this.chooseSlide
+    }
 
     return <StyledMenuContainer
       className="show-menu-container"
@@ -211,7 +224,7 @@ export class Menu extends Component {
           pane={this.pane}
           slideIndex={slideIndex}
 
-          chooseSlide={this.chooseSlide}
+          chooseSlide={chooseSlide}
         />
       </StyledShowMenu>
       <StyledSVG
@@ -222,9 +235,9 @@ export class Menu extends Component {
         open={open}
         over={this.state.over}
 
-        onClick={this.openMenu}
-        onMouseEnter={this.toggleOver}
-        onMouseLeave={this.toggleOver}
+        onClick={openMenu}
+        onMouseEnter={toggleOver}
+        onMouseLeave={toggleOver}
       >
         <Icon />
       </StyledSVG>

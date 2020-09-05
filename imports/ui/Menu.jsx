@@ -593,10 +593,10 @@ class MenuTracker{
       }
       const groupData = Group.findOne(groupSelect, groupProject)
 
-      console.log(
-        "Menu group_id:", group_id, ", groupData"
-      , JSON.stringify(groupData, null, "  ")
-      )
+      // console.log(
+      //   "Menu group_id:", group_id, ", groupData"
+      // , JSON.stringify(groupData, null, "  ")
+      // )
 
       var {
         page

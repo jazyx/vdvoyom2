@@ -24,7 +24,11 @@
 				}
 			],
 			"layout": "splash",
-			"text": "25 September 2020\nJames Newton at\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)",
+			"text": {
+				"en": "25 September 2020\nJames Newton at\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)",
+				"fr": "25 septembre 2020\nJames Newton aux\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)",
+				"ru": "25 сентября 2020 г.\nJames Newton в\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
+			},
 			"tags": [
 				"oatsAndBeans"
 			],

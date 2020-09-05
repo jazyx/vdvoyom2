@@ -20,9 +20,7 @@ import { methods } from '../../api/methods/mint'
 const { logIn } = methods
 
 // Constant
-import { STARTUP_TIMEOUT
-       , SET_REGEX
-       } from '/imports/tools/custom/constants'
+import { STARTUP_TIMEOUT } from '/imports/tools/custom/constants'
 
 
 
@@ -38,8 +36,9 @@ export default class StartUp {
     this.ready = this.ready.bind(this)
     this.oneOff = this.oneOff.bind(this)
     this.hideSplash = this.hideSplash.bind(this)
-    this.callback = this.callback.bind(this)
+    this.loggedInToGroups = this.loggedInToGroups.bind(this)
     this.connectionTimedOut = this.connectionTimedOut.bind(this)
+    this.welcomeNewUser = this.welcomeNewUser.bind(this)
 
     // Loading takes about 250ms when running locally
     this.timeOut = setTimeout(this.connectionTimedOut,STARTUP_TIMEOUT)
@@ -122,7 +121,7 @@ export default class StartUp {
     // like "deleteTempUser_EsWSkLZh9bGMbLpZf", which will be deleted
     // when the user logs out.
     if (query.has("once")) {
-      this.createUser(query, "singleUse", this.oneOff)
+      this.autoLogIn(query, "singleUse", this.oneOff)
 
     } else if (query.has("join")) {
       this.treatUserInvitation(query, false, this.welcomeNewUser)
@@ -130,7 +129,7 @@ export default class StartUp {
     } else {
       const teacher = this.getTeacherFromURL(query) //may be undefined
 
-      this.setSessionData(teacher)
+      this.setSessionDataFromStorage(teacher)
       // TODO: Add test for admin
       this.prepareUIForRole()
     }
@@ -162,20 +161,45 @@ export default class StartUp {
   }
 
 
-  setSessionData(teacher) {
+  /** Called by prepareApp()
+   *
+   * @param  {object}  teacher  undefined OR
+   *                            {"_id" :       <string>,
+   *                              "file" :     <image filename>,
+   *                              "id" :       <string>,
+   *                              "name" : {
+   *                                "cyrl" :   <string>,
+   *                                "latn" :   <string>
+   *                              },
+   *                              "with" :     <"learn x with Y">,
+   *                              "language" : <ISO code string,
+   *                              "script" :   <one of name keys>,
+   *                              "type" :     "profile",
+   *                              "version" :  <integer (irrelevant)>,
+   *                              "logged_in" : [ ... ]
+   *                            }
+   */
+  setSessionDataFromStorage(teacher) {
     const storedData = Storage.get()
-    // console.log("storedData:", storedData)
-    // auto_login:  false
-    // group_id:    "naRRNbnrr2syzEhPz"
-    // language:    "ru"
-    // native:      "en-GB"
-    // q_code:      "3819"
-    // q_color:     "#33cc60"
-    // restore_all: false
-    // teacher:     "aa"
-    // user_id:     "H9uMqxwvkySYt7QtP"
-    // username:    "James"
-    // view:        "Activity"
+
+    // console.log(
+    //   "storedData"
+    // , JSON.stringify(storedData, null, "  ")
+    // )
+    /* { username:    "James"
+     * , user_id:     "H9uMqxwvkySYt7QtP"
+     * , native:      "en-GB"
+     * , teacher:     "aa"
+     * , language:    "ru"
+     * , group_id:    "naRRNbnrr2syzEhPz"
+     * , q_code:      "3819"
+     * , q_color:     "#33cc60"
+     * , restore_all: false
+     * , "auto_login":false
+     *
+     * [, view:       "Activity"]
+     * }
+     */
 
     const keys = Object.keys(storedData)
 
@@ -191,7 +215,7 @@ export default class StartUp {
 
     } else if (keys.length) {
       Session.set("role", "user")
-      this.setSessionDataFrom(storedData, keys)
+      this.setSessionDataFrom(storedData)
 
     } else {
       // First time user on this device. No storedData to treat
@@ -200,7 +224,7 @@ export default class StartUp {
 
 
   /** Prepares accountData for a call to logIn method, with callback
-   * 
+   *
    * Called by prepareApp() if window.location.search includes "once"
    * and by treatUserInvitation if ~.search includes "join"
    *
@@ -215,7 +239,7 @@ export default class StartUp {
    * @param  {Function}         callback   Function to call after the
    *                                       logIn method has run
    */
-  createUser(query, singleUse, callback) {
+  autoLogIn(query, singleUse, callback) {
     let username = query.get("user")
 
     if (singleUse) {
@@ -223,13 +247,17 @@ export default class StartUp {
       username = "deleteTempUser_" + nonce
     }
 
+    const d_code   = this.sessionSetD_code()
     const teacher  = query.get("own") || "none"
-    const d_code = this.getRandomString(7)
+    const q_code   = query.get("pin")
     const language = query.get("lang") || "en-GB"
-    const native = query.get("vo") || "en-GB"
+    const native   = query.get("vo")
+                  || navigator.language
+                  || navigator.userLanguage
 
     const accountData = {
       d_code
+    , q_code
     , username
     , teacher
     , restore_all: true
@@ -242,7 +270,11 @@ export default class StartUp {
 
 
   oneOff(error, result) {
-    // console.log("oneOff (error:", error, ") data:", result)
+    console.log(
+      "oneOff (error:", error
+    , ") result:", JSON.stringify(result, null, "  ")
+    )
+    //
     // username: "deleteTempUser_8fbkqvueP"
     // user_id: "qbK7SjzunhotN6nK3"
     // d_code: "fenalUI"
@@ -259,51 +291,44 @@ export default class StartUp {
     //   loggedIn: true
     //   status: "JoinGroup_success"
 
-    delete result.accountCreated
-    delete result.groupCreated
-    delete result.loggedIn
-    delete result.status
-    delete result.page
+    let page = result.page // { view: "Activity" }
 
-    const params = new URLSearchParams(window.location.search)
-    params.delete("once")
-
-    const data = {}
-    params.forEach(function(value, key) {
-      data[key] = value
-    })
+    const data = this.getParamsFromURL({ without: ["once"] })
 
     // console.log("data:", JSON.stringify(data, null, "  "))
     // {
     // "path": "Show/OatsAndBeans",
-    // "tag": "oatsAndBeans",
+    // "tag":   "oatsAndBeans",
     // "index": "2",
     //
-    // "slideIndex": "5",
+    // "slideIndex":  "5",
     // "menu_open": "false",
     //
-    // "native": "en",
+    // "native":   "en",
     // "language": "en",
     // }
-    // console.log(
-    //   "result"
-    // , JSON.stringify(result, null, "  ")
-    // )
 
-    result.native = data.vo
-    result.language = data.lang
+    this.mergeParamsAndAccountData(result, data, page)
+  }
+
+
+  /**
+   * result = account data
+   * data   = url params
+   * page   = default { view: "Activity" }
+   */
+  mergeParamsAndAccountData(result, data, page) {
+    result.native     = data.vo
+    result.language   = data.lang
     result.auto_login = true // <<< HARD-CODED
 
     delete data.vo
     delete data.own
     delete data.lang
-    // console.log(
-    //   "result"
-    // , JSON.stringify(result, null, "  ")
-    // )
 
-    this.setSessionDataFrom(result)
+    this.setSessionDataFrom(result) // unnecessary keys ignored
 
+    // Convert numerical params from strings to numbers
     for (const key in data) {
       let value = data[key]
       if (!isNaN(value)) {
@@ -311,25 +336,27 @@ export default class StartUp {
       }
     }
 
-    let { path, index, tag } = data
+    // Extract expected keys; the rest will be treated as 'data'
+    let { view, path, index, tag } = data
+    delete data.view
     delete data.path
     delete data.index
     delete data.tag
-
-    let page = { view: "Activity" }
 
     if(!path) {
       // Leave page unchanged
 
     } else {
+      // Ensure path begins with a slash
       if (path[0] !== "/") {
         path = "/" + path
       }
 
+      // Ensure that path (if given) starts with a collection name
       let levels = path.split("/")
       const collectionName = levels[1]
       if (!collections[collectionName]) {
-      // Leave page unchanged
+        // Leave page unchanged
 
       } else {
         let lastIndex = levels.length - 1
@@ -351,7 +378,7 @@ export default class StartUp {
           index = lastIndex
         }
 
-        page = { path, tag, index, data }        
+        page = { path, tag, index, data }
       }
     }
 
@@ -374,37 +401,115 @@ export default class StartUp {
    *                                      [data]
    * user, vo, own, view, path and index are treated specifically,
    * with view, path and index being placed inside a `page` object.
-   * All other key/value pairs are treated as belonging to the 
+   * All other key/value pairs are treated as belonging to the
    * `page.data` object. If no view or path is given, `page` will
    * be set to { view: "Activity" } and any data pairs will be
    * ignored.
-   * 
+   *
    * The visitor will be taken through the Profile pages, step by
    * step, with any submitted details already filled in. If a pin-free
    * URL is used more than once, the visitor will be asked to provide
    * the PIN before continuing.
    */
-
   treatUserInvitation(query) {
+    const params = this.getParamsFromURL({ query })
+    const { user, vo, own, pin } = params
 
+    if ( user && vo && own && pin ) {
+      const callback = this.welcomeNewUser
+      const isSingleUse = false
+      const loggedIn  = this.autoLogIn(query, isSingleUse, callback )
+
+    } else {
+      // At least one property is missing for autoLogIn. Step through
+      // Profile screens with given presets
+
+
+    }
   }
 
 
-  welcomeNewUser(error, data) {
-
-
-  }
-
-
-  getParamsFromURL(query) {
-    if (!query) {
-      query = window.location.search
+  welcomeNewUser(error, result) {
+    if (error) {
+      return console.log("welcomeNewUser error:", error)
     }
 
-    const searchParams = new URLSearchParams(query)
+    // console.log(
+    //   "welcomeNewUser error:", error,
+    //   "result:", JSON.stringify(result, null, "  ")
+    // )
+    /* {"d_code": "qvyOJ3g",
+     *  "q_code": "1459",
+     *  "username": "ele",
+     *  "group_id": "6ZTtdSw4kofaDYutN",
+     *  "teacher": "jn",
+     *    "restore_all": true,
+     *    "language": "en-GB",
+     *  "native": "en",
+     *  "user_id": "t5H3s8nvWMhbYTbqG",
+     *  "q_color": "#ccb933",
+
+     *  "page": {
+     *    "path": "/Show/OatsAndBeans",
+     *    "tag": "oatsAndBeans",
+     *    "index": 2,
+     *    "data": {
+     *      "menu_open": false
+     *    }
+     *
+     *  "status": "JoinGroup_success",
+     *  "loggedIn": true,
+     *  }
+     */
+
+    let page = result.page // likely to change
+
+    if (!result.loggedIn) {
+      // `pin` was defined and used for d_code, but it was wrong.
+      return this.manualLoginAfterAutoLoginFailed(result)
+    }
+
+    const without = [ "join", "user", "own", "pin" ]
+    const data = this.getParamsFromURL({ without })
+    // console.log("welcomeNewUser data:", data)
+    // { vo
+    // , lang
+    // , view
+    // , path
+    // , index
+    // , [data]
+    // }
+
+    this.mergeParamsAndAccountData(result, data, page)
+  }
+
+
+  manualLoginAfterAutoLoginFailed(data) {
+    switch (data.status) {
+      case "RequestPIN":
+
+      break
+      default:
+        console.log(
+          "manualLoginAfterAutoLoginFailed status:", data.status
+        , "data" , JSON.stringify(data, null, "  ")
+        )
+
+    }
+  }
+
+
+  getParamsFromURL({
+    query = new URLSearchParams(window.location.search)
+  , without = []
+  }) {
+
+    without.forEach( item => {
+      query.delete(item)
+    })
 
     const data = {}
-    searchParams.forEach(function(value, key) {
+    query.forEach(function(value, key) {
       data[key] = value
     })
 
@@ -413,12 +518,12 @@ export default class StartUp {
 
 
   /** Checks for a search parameter or a shortcut teacher id
-   * 
+   *
    *    http://activities.jazyx.com/?teacher=<teacher_id>
    * OR http://activities.jazyx.com/<teacher_id>
-   * 
+   *
    * If a shortcut is used, no other data will be found in the URL
-   * 
+   *
    * Returns undefined or an object with the format:
    *  {
    *    "_id" : "MQoQa3MsixrkjgLWg",
@@ -439,20 +544,24 @@ export default class StartUp {
    *  }
    */
   getTeacherFromURL(query) {
+    // Look for a "? ... &teacher=XX" search entry first
     let id = query.get("teacher")
+
     if (!id) {
+      // Look for a "/XX" shortcut second
       id = window.location.pathname.substring(1) // /id => id
     }
 
     let teacher = this.getTeacher(id)
 
-    if (!teacher) {
-      const search = window.location.search.toLowerCase()
-      id = new URLSearchParams(search).get("teacher")
-      if (id) {
-        teacher = this.getTeacher(id)
-      }
-    }
+    // // Really desperate: check for "tEAchEr" case-insensitively
+    // if (!teacher) {
+    //   const search = window.location.search.toLowerCase()
+    //   id = new URLSearchParams(search).get("teacher")
+    //   if (id) {
+    //     teacher = this.getTeacher(id)
+    //   }
+    // }
 
     return teacher // may be undefined
   }
@@ -465,7 +574,12 @@ export default class StartUp {
   }
 
 
-  setSessionDataFrom(storedData) { //, keys) {
+  /**
+   * Called by setSessionDataFromStorage(), oneOff()
+   *
+   * @param      {<type>}  error   The error
+   */
+  setSessionDataFrom(data) { //, keys) {
     // native:      "en-GB"
     // username:    "James"
     // language:    "ru"
@@ -478,13 +592,28 @@ export default class StartUp {
     // auto_login:  false
     // restore_all: false
 
-    for (let key in storedData) {
-      Session.set(key, storedData[key])
-    }
+    const keys = [
+      "username"
+    , "user_id"
+    , "native"
+    , "teacher"
+    , "language"
+    , "q_code"
+    , "q_color"
+    , "group_id"
+    , "view"        // WHY NOT JUST PAGE?
+    , "page"
+    , "auto_login"
+    , "restore_all"
+    ]
+
+    keys.forEach( key => {
+      Session.set(key, data[key])
+    })
 
     /// <<< TEMPORARY HACK UNTIL MENU IS WORKING
-    const auto_login  = storedData.auto_login || this.hack
-    const restore_all = storedData.restore_all || this.hack
+    const auto_login  = data.auto_login || this.hack
+    const restore_all = data.restore_all || this.hack
     Session.set("auto_login", auto_login)
     Session.set("restore_all", restore_all)
     /// TEMPORARY HACK >>>
@@ -514,6 +643,8 @@ export default class StartUp {
     const d_code = this.getRandomString(length)
 
     Session.set("d_code", d_code)
+
+    return d_code
   }
 
 
@@ -544,11 +675,11 @@ export default class StartUp {
     , restore_all: Session.get("restore_all")
     }
 
-    logIn.call(accountData, this.callback)
+    logIn.call(accountData, this.loggedInToGroups)
   }
 
 
-  callback(error, data) {
+  loggedInToGroups(error, data) {
     Session.set("isMaster", data.isMaster || false)
     const page = data.page || {}
     this.go = page
