@@ -44,6 +44,7 @@ export default class CreateGroup {
       , accountData.teacher
       ]
     , logged_in: []
+    , page: accountData.page
     // // Will be added by the Client
     // , view_data: {}
     // , view_size: { width, height }

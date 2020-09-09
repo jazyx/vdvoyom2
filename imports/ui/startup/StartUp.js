@@ -7,6 +7,7 @@ import { Session } from 'meteor/session'
 
 // Helpers
 import { removeFrom
+       , deleteFrom
        , getRandom
        , getRandomFromArray
        } from '../../tools/generic/utilities'
@@ -15,124 +16,371 @@ import Storage from '../../tools/generic/storage'
 // Subscriptions
 import collections from '../../api/collections/publisher'
 
+// Connection
+import { preloadCollections } from './PreloadCollections'
+
 // Methods
 import { methods } from '../../api/methods/mint'
 const { logIn } = methods
 
 // Constant
-import { STARTUP_TIMEOUT } from '/imports/tools/custom/constants'
+import { SPLASH_DELAY
+       , STARTUP_TIMEOUT
+       } from '/imports/tools/custom/constants'
 
 
 
 export default class StartUp {
   constructor(preloadComplete) {
-    this.preloadComplete = preloadComplete
-
     /// <<< HARD-CODED
-    const splashDelay = 1 // 000 // min time (ms) to show Splash screen
     this.hack = window.location.pathname.startsWith("/*")
     /// HARD-CODED >>>
+    
+    this.preloadComplete = preloadComplete
+    this.showSplash  = + new Date() + SPLASH_DELAY
 
-    this.ready = this.ready.bind(this)
     this.oneOff = this.oneOff.bind(this)
-    this.hideSplash = this.hideSplash.bind(this)
-    this.loggedInToGroups = this.loggedInToGroups.bind(this)
-    this.connectionTimedOut = this.connectionTimedOut.bind(this)
-    this.welcomeNewUser = this.welcomeNewUser.bind(this)
+    
+    preloadCollections.then(this.prepareLaunch.bind(this))
+                      .catch(preloadComplete) // shows "TimeOut"
+    // preloadCollections is a promise, so it is guaranteed to be
+    // asynchronous. The next command _will_ be executed before 
+    // prepareLaunch or preloadComplete is called.
 
-    // Loading takes about 250ms when running locally
-    this.timeOut = setTimeout(this.connectionTimedOut,STARTUP_TIMEOUT)
-
-    this.prepareSplash(splashDelay)
-    // Will trigger setViewSize when all is ready
+    this.readInPresets()
   }
 
+  ///// DETERMINE this.context, this.accountData AND this.page //////
 
-  prepareSplash(splashDelay) {
-    this.showSplash  = + new Date() + splashDelay
-    this.unReady = []
-
-    this.connectToMongoDB() // calls ready => setViewSize when ready
-  }
-
-
-  connectToMongoDB() {
-    for (let collectionName in collections) {
-      this.unReady.push(collectionName)
-
-      const collection = collections[collectionName]
-      // We can send (multiple) argument(s) to the server publisher
-      // for debugging purposes
-      // console.log("Subscribing to", collection._name)
-
-      const callback = () => this.ready(collectionName, "Share")
-      const handle   = Meteor.subscribe(collection._name, callback)
+  readInPresets() {
+    this.readDataFromURL() // sets this.accountData
+                           //      this.page
+                           //      this.context
+    if (this.context === "check") {
+      // The window.location.path may be a teacher id shortcut,
+      // or their may be no presets in the URL at all.
     }
   }
 
 
-  ready(collectionName) {
-    removeFrom(this.unReady, collectionName)
+  readDataFromURL() {  
+    const search  = window.location.search
+    const query   = new URLSearchParams(search)
+    this.setContext(query)
+                 // once | join | admin | teacher | bare
 
-    // console.log("Collection is ready:", collectionName)
+    const data = {}
+    query.forEach(function(value, key) {
+      data[key] = value
+    })
 
-    if (!this.unReady.length) {
-      if (this.timeOut) {
-        // Leave this.timeOut as a non-zero value
-        clearTimeout(this.timeOut)
-        this.prepareApp()
+    this.setAccountDataAndPage(data)
+  }
+
+
+  setContext(query) {
+    this.context = query.has("once")
+                  ? "once"
+                  : query.has("join")
+                    ? "join"
+                    : query.has("admin")
+                      ? "admin"
+                      : query.has("teacher")
+                        ? "teacher"
+                        : "check" // plain user or shortcut teacher
+  }
+
+
+  setAccountDataAndPage(data) {
+    const {
+      // login
+      user: username 
+    , vo:   native
+    , own:  teacher
+    , pin:  q_code
+      // page
+    , view
+    , path
+    , tag
+    , index
+    } = data
+
+    // Reduce `data` to just those entries that are not spoken for
+    const notPageDataKeys = [
+      "user"
+    , "vo"
+    , "own"
+
+    , "pin"
+    , "view"
+    , "path"
+    , "tag"
+    , "index"
+
+    , "join"
+    , "once"
+    ]
+    deleteFrom(data, notPageDataKeys)
+
+    // Ignore data if it contains none
+    if (!Object.keys(data).length) {
+      data = undefined
+    }
+
+    const trim = (key, value) => value === undefined
+
+    // this.accountData will be an object, but it may be empty
+    const accountData = { username, native, teacher, q_code }
+    deleteFrom(accountData, trim)
+    this.accountData = this.normalizeAccountData(accountData)
+
+    // If neither view or path is given, this.page will be undefined
+    const page ={ view, path, tag, index, data }
+    deleteFrom(page, trim) 
+    this.page = this.normalizePage(page) // may be undefined
+  }
+
+
+  normalizePage(page) {
+    if (!page.view && !page.path) {
+      return
+    }
+  
+    let { path, view, tag, index } = page
+
+    if (typeof path === "string") {
+      // Ensure path begins with a slash
+      if (path[0] !== "/") {
+        path = "/" + path
       }
+
+      // Ensure that path (if given) starts with a collection name
+      let levels = path.split("/")
+      const collectionName = levels[1]
+
+      if (!collections[collectionName]) {
+        // path (and thus tag and index) are invalid
+        if (typeof view !== "string") {
+          return // entire page is invalid if view is not a string
+        }
+
+        // Remove unusable properties
+        deleteFrom(page, ["path", "tag", "index", "data"])
+
+      } else {
+        let lastIndex = levels.length - 1
+
+        // <<< HACK to ensure that all levels are shown in the menu
+        // ASSUMES:
+        // • path is complete except for the last item
+        // • the tag is the same as the last item should be, except
+        //   that the first char is in lowercase
+        if (tag)
+          if (levels[lastIndex].toLowerCase() !== tag.toLowerCase()) {
+          levels.push(tag[0].toUpperCase() + tag.substring(1))
+          path = levels.join("/")
+          lastIndex += 1
+        }
+        // HACK >>>
+
+        if (isNaN(index) || index > lastIndex || index < 0) {
+          page.index = lastIndex
+        }
+      }
+
+      page.path = path
+    }
+
+    return page
+  }
+
+
+  normalizeAccountData(accountData) {
+    console.log(
+      "accountData"
+    , JSON.stringify(accountData, null, "  ")
+    )
+
+    if (this.context === "once") {
+      const nonce = accountData.username || this.getRandomString(9)
+      accountData.username = "deleteTempUser_" + nonce
+      // accountData.restore_all = true
+    }
+
+    const defaultValues = {
+      d_code:      this.sessionSetD_code()
+    , teacher:     "none"
+    , language:    "en-GB"
+    , native:      navigator.language || navigator.userLanguage
+    , restore_all: false
+    }
+
+    accountData = Object.assign(defaultValues, accountData)
+   
+    return accountData 
+  }
+
+  ///// MongoDB COLLECTIONS ARE NOW AVAILABLE. LOGIN CAN HAPPEN /////
+
+  prepareLaunch() {    
+    console.log("prepareLaunch")
+    switch (this.context) {
+      case "once":
+        return this.autoLogIn(this.accountData, "once", this.oneOff)
+      case "join":
+        return this.treatUserInvitation(query, false, this.welcomeNewUser)
+      case "admin":
+        return this.treatAdmin(user)
+      case "teacher":
+        return this.getTeacherFromURL(query) //may be undefined
+      default:
+
+
+      // this.setSessionDataFromStorage(teacher)
+      // // TODO: Add test for admin
+      // this.prepareUIForRole()
     }
   }
 
 
-  connectionTimedOut() {
-    this.timeOut = 0 // this.prepareConnection will not run now
-
-    this.preloadComplete("TimeOut")
-  }
-
-
-  // CONNECTION SUCCESSFUL // CONNECTION // SUCCESSFUL CONNECTION //
-
-
-  /** MongoDB is ready: use it to check which view to show
+  /* Prepares accountData for a call to logIn method, with callback
    *
-   *  Four cases:
-   *  1. New user
-   *  2. Returning user
-   *  3. Teacher
-   *  4. Admin
+   * Called by:
+   * • prepareApp() if window.location.search includes "once"
+   * •treatUserInvitation if         ~.search includes "join"
    *
-   *  A new user needs to go down the native, name, teacher path
-   *  Returning user:
-   *    • (When menu is available or if * is in path), resume
-   *    • Until menu is available, review profile
-   *  A teacher:
-   *    • Rejoin a group that was active and which still has a student
-   *    • Go to Teach if not
-   *  Admin: TBD
+   * @param  {URLSearchParams}  accountData { username
+   *                                        , native
+   *                                        , teacher
+   *                                        , language
+   *                                        , restore_all
+   *                                        }
+   * @param  {truthy}           singleUse  true if the User and Group
+   *                                       documents are to be deleted
+   *                                       when this session ends.
+   * @param  {Function}         callback   Function to call after the
+   *                                       logIn method has run
    */
-  prepareApp() {
-    const query = new URLSearchParams(window.location.search)
+  autoLogIn(accountData, singleUse, callback) {
+    if (typeof singleUse === "function") {
+      // Allow singleUse to be omitted
+      callback = singleUse
+      singleUse = false
 
-    // Check if the URL includes a "once" parameter, regardless of its
-    // value. If so, we will create a temporary user with a user_id
-    // like "deleteTempUser_EsWSkLZh9bGMbLpZf", which will be deleted
-    // when the user logs out.
-    if (query.has("once")) {
-      this.autoLogIn(query, "singleUse", this.oneOff)
-
-    } else if (query.has("join")) {
-      this.treatUserInvitation(query, false, this.welcomeNewUser)
-
-    } else {
-      const teacher = this.getTeacherFromURL(query) //may be undefined
-
-      this.setSessionDataFromStorage(teacher)
-      // TODO: Add test for admin
-      this.prepareUIForRole()
+    } else if (singleUse) {
+      const nonce = accountData.username || this.getRandomString(9)
+      accountData.username = "deleteTempUser_" + nonce
     }
+
+    const defaultValues = {
+      d_code:      this.getRandomString(7)
+    , teacher:     "none"
+    , language:    "en-GB"
+    , native:      navigator.language || navigator.userLanguage
+    , restore_all: false
+    }
+
+    accountData = Object.assign(defaultValues, accountData)
+
+    // this.setSessionDataFrom(accountData)
+
+    logIn.call(accountData, callback)
+  }
+
+
+  oneOff(error, result) {
+    console.log(
+      "oneOff (error:", error
+    , ") result:", JSON.stringify(result, null, "  ")
+    )
+    console.log(
+      "this.page"
+    , JSON.stringify(this.page, null, "  ")
+    )
+    
+
+    // username: "deleteTempUser_8fbkqvueP"
+    // user_id: "qbK7SjzunhotN6nK3"
+    // d_code: "fenalUI"
+    // group_id: "8B8B6eLFoPEF2vT8q"
+    //
+    // q_code: "5278"
+    // q_color: "#33b2cc"
+    // teacher: "none"
+    //   page: {view: "Activity"}
+    // restore_all: true ||| false?
+    //
+    //   accountCreated: true
+    //   groupCreated: true
+    //   loggedIn: true
+    //   status: "JoinGroup_success"
+
+    if (this.page) {
+      result.page = this.page
+    }
+
+    this.setSessionDataFrom(result)
+
+    this.go = result.page || { view: "Activity" }
+    this.hideSplash()
+  }
+
+
+
+  /** Checks for a search parameter or a shortcut teacher id
+   *
+   *    http://activities.jazyx.com/?teacher=<teacher_id>
+   * OR http://activities.jazyx.com/<teacher_id>
+   *
+   * If a shortcut is used, no other data will be found in the URL
+   *
+   * Returns undefined or an object with the format:
+   *  {
+   *    "_id" : "MQoQa3MsixrkjgLWg",
+   *    "file" : "aa.jpg",
+   *    "id" : "aa",
+   *    "name" : {
+   *      "cyrl" : "Анастасия",
+   *      "latn" : "Anastacia"
+   *    },
+   *    "with" : "Учить русский с Анастасией",
+   *    "language" : "ru",
+   *    "script" : "cyrl",
+   *    "type" : "profile",
+   *    "version" : 4,
+   *    "logged_in" : [
+   *      "JSQTk6f"
+   *    ]
+   *  }
+   */
+  getTeacherFromURL(query) {
+    // Look for a "? ... &teacher=XX" search entry first
+    let id = query.get("teacher")
+
+    if (!id) {
+      // Look for a "/XX" shortcut second
+      id = window.location.pathname.substring(1) // /id => id
+    }
+
+    let teacher = this.getTeacher(id)
+
+    // // Really desperate: check for "tEAchEr" case-insensitively
+    // if (!teacher) {
+    //   const search = window.location.search.toLowerCase()
+    //   id = new URLSearchParams(search).get("teacher")
+    //   if (id) {
+    //     teacher = this.getTeacher(id)
+    //   }
+    // }
+
+    return teacher // may be undefined
+  }
+
+
+  getTeacher(id) {
+    id = decodeURI(id)
+         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
+    return collections.Teacher.findOne({ id })
   }
 
 
@@ -203,8 +451,6 @@ export default class StartUp {
 
     const keys = Object.keys(storedData)
 
-    this.sessionSetD_code()
-
     if (teacher) {
       Session.set("teacher_id", teacher.id)
       Session.set("native",     teacher.language)
@@ -221,171 +467,6 @@ export default class StartUp {
       // First time user on this device. No storedData to treat
     }
   }
-
-
-  /** Prepares accountData for a call to logIn method, with callback
-   *
-   * Called by prepareApp() if window.location.search includes "once"
-   * and by treatUserInvitation if ~.search includes "join"
-   *
-   * @param  {URLSearchParams}  query      instance with properties
-   *                                       * user (username)
-   *                                       * own  (teacher id)
-   *                                       * vo   (native)
-   *                                       * lang (language)
-   * @param  {truthy}           singleUse  true if the User and Group
-   *                                       documents are to be deleted
-   *                                       when this session ends.
-   * @param  {Function}         callback   Function to call after the
-   *                                       logIn method has run
-   */
-  autoLogIn(query, singleUse, callback) {
-    let username = query.get("user")
-
-    if (singleUse) {
-      const nonce = username || this.getRandomString(9)
-      username = "deleteTempUser_" + nonce
-    }
-
-    const d_code   = this.sessionSetD_code()
-    const teacher  = query.get("own") || "none"
-    const q_code   = query.get("pin")
-    const language = query.get("lang") || "en-GB"
-    const native   = query.get("vo")
-                  || navigator.language
-                  || navigator.userLanguage
-
-    const accountData = {
-      d_code
-    , q_code
-    , username
-    , teacher
-    , restore_all: true
-    , language
-    , native
-    }
-
-    logIn.call(accountData, callback)
-  }
-
-
-  oneOff(error, result) {
-    console.log(
-      "oneOff (error:", error
-    , ") result:", JSON.stringify(result, null, "  ")
-    )
-    //
-    // username: "deleteTempUser_8fbkqvueP"
-    // user_id: "qbK7SjzunhotN6nK3"
-    // d_code: "fenalUI"
-    // group_id: "8B8B6eLFoPEF2vT8q"
-    //
-    // q_code: "5278"
-    // q_color: "#33b2cc"
-    // teacher: "none"
-    //   page: {view: "Activity"}
-    // restore_all: true
-    //
-    //   accountCreated: true
-    //   groupCreated: true
-    //   loggedIn: true
-    //   status: "JoinGroup_success"
-
-    let page = result.page // { view: "Activity" }
-
-    const data = this.getParamsFromURL({ without: ["once"] })
-
-    // console.log("data:", JSON.stringify(data, null, "  "))
-    // {
-    // "path": "Show/OatsAndBeans",
-    // "tag":   "oatsAndBeans",
-    // "index": "2",
-    //
-    // "slideIndex":  "5",
-    // "menu_open": "false",
-    //
-    // "native":   "en",
-    // "language": "en",
-    // }
-
-    this.mergeParamsAndAccountData(result, data, page)
-  }
-
-
-  /**
-   * result = account data
-   * data   = url params
-   * page   = default { view: "Activity" }
-   */
-  mergeParamsAndAccountData(result, data, page, ignorePath) {
-    result.native     = data.vo
-    result.language   = data.lang
-    result.auto_login = true // <<< HARD-CODED
-
-    delete data.vo
-    delete data.own
-    delete data.lang
-
-    this.setSessionDataFrom(result) // unnecessary keys ignored
-
-    // Convert numerical params from strings to numbers
-    for (const key in data) {
-      let value = data[key]
-      if (!isNaN(value)) {
-        data[key] = parseInt(value, 10)
-      }
-    }
-
-    // Extract expected keys; the rest will be treated as 'data'
-    let { view, path, index, tag } = data
-    delete data.view
-    delete data.path
-    delete data.index
-    delete data.tag
-
-    if(!path || ignorePath) {
-      // Leave page unchanged
-
-    } else {
-      // Ensure path begins with a slash
-      if (path[0] !== "/") {
-        path = "/" + path
-      }
-
-      // Ensure that path (if given) starts with a collection name
-      let levels = path.split("/")
-      const collectionName = levels[1]
-      if (!collections[collectionName]) {
-        // Leave page unchanged
-
-      } else {
-        let lastIndex = levels.length - 1
-
-        // <<< HACK to ensure that all levels are shown in the menu
-        // ASSUMES:
-        // • path is complete except for the last item
-        // • the tag is the same as the last item should be, except
-        //   that the first char is in lowercase
-        if (tag)
-          if (levels[lastIndex].toLowerCase() !== tag.toLowerCase()) {
-          levels.push(tag[0].toUpperCase() + tag.substring(1))
-          path = levels.join("/")
-          lastIndex += 1
-        }
-        // HACK >>>
-
-        if (isNaN(index) || index > lastIndex || index < 0) {
-          index = lastIndex
-        }
-
-        page = { path, tag, index, data }
-      }
-    }
-
-    this.go = page
-    this.hideSplash()
-  }
-
 
   /** Create a new user link+query to define name, teacher and task
    *
@@ -424,7 +505,37 @@ export default class StartUp {
       // At least one property is missing for autoLogIn. Step through
       // Profile screens with given presets
 
+      const without = [ "join" ]
+      const data = this.getParamsFromURL({ without })
+      // console.log("treatUserInvitation data:", data)
+      // { join
+      // 
+      // , user
+      // , own
+      // , pin
+      // , vo
+      // , lang
+      // 
+      // , view
+      // , path
+      // , index
+      // , [data]
+      // }
 
+      const result = {
+        username: data.user
+      , teacher:  data.own
+      , q_code:   data.pin
+      , join:     true
+      }
+      delete data.user
+      delete data.own
+      delete data.pin
+
+      const page = { view: "Profile" }
+      const ignorePath = true
+
+      this.mergeParamsAndAccountData(result, data, page, ignorePath)   
     }
   }
 
@@ -489,6 +600,88 @@ export default class StartUp {
   }
 
 
+  /**
+   * result = account data
+   * data   = url params
+   * page   = default { view: "Activity" }
+   */
+  mergeParamsAndAccountData(result, data, defaultPage, ignorePath) {
+    result.native     = data.vo
+    result.language   = data.lang
+    result.auto_login = true // <<< HARD-CODED
+    result.role       = "user"
+
+    delete data.vo
+    delete data.own
+    delete data.lang
+
+    // Convert numerical params from strings to numbers
+    for (const key in data) {
+      let value = data[key]
+      if (!isNaN(value)) {
+        data[key] = parseInt(value, 10)
+      }
+    }
+
+    // Extract expected keys; the rest will be treated as 'data'
+    let page
+    let { view, path, index, tag } = data
+    delete data.view
+    delete data.path
+    delete data.index
+    delete data.tag
+
+    if(!path) {
+      // Leave page unchanged
+
+    } else {
+      // Ensure path begins with a slash
+      if (path[0] !== "/") {
+        path = "/" + path
+      }
+
+      // Ensure that path (if given) starts with a collection name
+      let levels = path.split("/")
+      const collectionName = levels[1]
+      if (!collections[collectionName]) {
+        // Leave page unchanged
+
+      } else {
+        let lastIndex = levels.length - 1
+
+        // <<< HACK to ensure that all levels are shown in the menu
+        // ASSUMES:
+        // • path is complete except for the last item
+        // • the tag is the same as the last item should be, except
+        //   that the first char is in lowercase
+        if (tag)
+          if (levels[lastIndex].toLowerCase() !== tag.toLowerCase()) {
+          levels.push(tag[0].toUpperCase() + tag.substring(1))
+          path = levels.join("/")
+          lastIndex += 1
+        }
+        // HACK >>>
+
+        if (isNaN(index) || index > lastIndex || index < 0) {
+          index = lastIndex
+        }
+
+        page = { path, tag, index, data }
+      }
+    }
+
+    result.page = page
+    this.setSessionDataFrom(result) // unnecessary keys ignored
+
+    if (ignorePath || !page) {
+      page = defaultPage
+    }
+
+    this.go = page
+    this.hideSplash()
+  }
+
+
   manualLoginAfterAutoLoginFailed(data) {
     switch (data.status) {
       case "RequestPIN":
@@ -501,81 +694,6 @@ export default class StartUp {
         )
 
     }
-  }
-
-
-  getParamsFromURL({
-    query = new URLSearchParams(window.location.search)
-  , without = []
-  }) {
-
-    without.forEach( item => {
-      query.delete(item)
-    })
-
-    const data = {}
-    query.forEach(function(value, key) {
-      data[key] = value
-    })
-
-    return data
-  }
-
-
-  /** Checks for a search parameter or a shortcut teacher id
-   *
-   *    http://activities.jazyx.com/?teacher=<teacher_id>
-   * OR http://activities.jazyx.com/<teacher_id>
-   *
-   * If a shortcut is used, no other data will be found in the URL
-   *
-   * Returns undefined or an object with the format:
-   *  {
-   *    "_id" : "MQoQa3MsixrkjgLWg",
-   *    "file" : "aa.jpg",
-   *    "id" : "aa",
-   *    "name" : {
-   *      "cyrl" : "Анастасия",
-   *      "latn" : "Anastacia"
-   *    },
-   *    "with" : "Учить русский с Анастасией",
-   *    "language" : "ru",
-   *    "script" : "cyrl",
-   *    "type" : "profile",
-   *    "version" : 4,
-   *    "logged_in" : [
-   *      "JSQTk6f"
-   *    ]
-   *  }
-   */
-  getTeacherFromURL(query) {
-    // Look for a "? ... &teacher=XX" search entry first
-    let id = query.get("teacher")
-
-    if (!id) {
-      // Look for a "/XX" shortcut second
-      id = window.location.pathname.substring(1) // /id => id
-    }
-
-    let teacher = this.getTeacher(id)
-
-    // // Really desperate: check for "tEAchEr" case-insensitively
-    // if (!teacher) {
-    //   const search = window.location.search.toLowerCase()
-    //   id = new URLSearchParams(search).get("teacher")
-    //   if (id) {
-    //     teacher = this.getTeacher(id)
-    //   }
-    // }
-
-    return teacher // may be undefined
-  }
-
-
-  getTeacher(id) {
-    id = decodeURI(id)
-         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
-    return collections.Teacher.findOne({ id })
   }
 
 
@@ -610,23 +728,35 @@ export default class StartUp {
     , "page"
     , "auto_login"
     , "restore_all"
+    , "role"
     ]
 
     keys.forEach( key => {
-      Session.set(key, data[key])
+      const value = data[key]
+      if (value) {
+        Session.set(key, value)
+      } else {
+        Session.set(key, undefined)
+        delete Session.keys[key]
+      }
     })
 
-    /// <<< TEMPORARY HACK UNTIL MENU IS WORKING
-    const auto_login  = data.auto_login || this.hack
-    const restore_all = data.restore_all || this.hack
-    Session.set("auto_login", auto_login)
-    Session.set("restore_all", restore_all)
-    /// TEMPORARY HACK >>>
+    console.log(
+      "Session.keys"
+    , Session.keys
+    )
+    
+    // /// <<< TEMPORARY HACK UNTIL MENU IS WORKING
+    // const auto_login  = data.auto_login || this.hack
+    // const restore_all = data.restore_all || this.hack
+    // Session.set("auto_login", auto_login)
+    // Session.set("restore_all", restore_all)
+    // /// TEMPORARY HACK >>>
 
-    if (!auto_login) {
-      Session.set("group_id", undefined)
-      delete Session.keys.group_id
-    }
+    // if (!auto_login) {
+    //   Session.set("group_id", undefined)
+    //   delete Session.keys.group_id
+    // }
   }
 
 
@@ -693,27 +823,13 @@ export default class StartUp {
 
 
   hideSplash() {
-    // console.log("hideSplash — this.timeOut", this.timeOut)
-    if (+ new Date() < this.showSplash) {
+    const remaining = this.showSplash - new Date()
+    if (remaining > 0) {
       // console.log("Polling for", this.showSplash, "in", this.showSplash - + new Date())
-      return setTimeout(this.hideSplash, 100)
-    }
-
-    if (!this.timeOut) {
-      // connectionTimedOut was triggered, and the TimeOut screen is
-      // showing.
-      // TODO: Provide three buttons on the TimeOut screen:
-      // * Reload
-      // * Wait
-      // * Continue
-      // Continue will be disabled until this method is called. When
-      // it becomes enabled, it will jump to the view store in Groups.
-      return this.preloadComplete({ view: "TimeOut" })
+      return setTimeout(this.hideSplash, remaining)
     }
 
     this.showSplash = 0
-
-    // console.log("Hide splash and go", this.go)
 
     // Tell Share to replace the Splash screen will with an
     // interactive view (Profile, Activity or an activity-in-progress)

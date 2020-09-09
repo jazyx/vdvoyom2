@@ -58,6 +58,8 @@ class Submit extends Component {
     , teacher:     Session.get("teacher")
     , d_code:      Session.get("d_code")
     , restore_all: Session.get("restore_all")
+    , page:        Session.get("page")
+    , join:        Session.get("join")
     }
 
     // Add data that could have been read in from the localStorage
@@ -156,6 +158,7 @@ class Submit extends Component {
     delete this.accountData.isMaster
     delete this.accountData.status
     delete this.accountData.d_code
+    delete this.accountData.join
 
     // Save permanently to localStorage (if available)
     const stored = Storage.set(this.accountData)

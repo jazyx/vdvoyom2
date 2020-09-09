@@ -220,10 +220,22 @@ export const buttonColors = (color, values) => {
 }
 
 
-/// ARRAY FUNCTIONS ///
+/// ARRAY FUNCTIONS ///
 
 export const removeFrom = (array, item, removeAll) => {
   let removed = 0
+
+  // If `item` is an array of items or functions, treat recursively
+  if (Array.isArray(item)) {
+    removed = item.reduce((excess, entry) => {
+      excess += removeFrom(array, entry, removeAll)
+      return excess
+    }, 0)
+
+    return removed
+  }
+
+  // If we get here, item is an individual items or function
   let index
     , found
 
@@ -547,6 +559,39 @@ export const valuesMatch = (a, b) => {
   }
 
   return true
+}
+
+
+
+export const deleteFrom = (object, key, removed) => {
+  if (typeof removed !== "object") {
+    removed = {}
+  }
+
+  // If `key` is an array of keys, treat recursively
+  if (Array.isArray(key)) {
+    key.forEach( entry => deleteFrom(object, entry, removed) )
+    return removed
+  }
+
+  // If we get here, key is an individual item
+  if (typeof key === "function") {
+    const keys = Object.keys(object)
+    keys.forEach( property => {
+      const value = object[property]
+      const deleteIt = key(property, value)
+      if (deleteIt) {
+        removed[property] = value
+        delete object[property]
+      }
+    })
+
+  } else if (object.hasOwnProperty(key)) {
+    removed[key] = object[key]
+    delete object[key]
+  }
+
+  return removed
 }
 
 

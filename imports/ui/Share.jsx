@@ -42,7 +42,7 @@ import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 
 // view_size
-import StartUp from './startup/StartUp'
+// import StartUp from './startup/StartUp'
 
 import { methods } from '../api/methods/mint'
 const { share } = methods

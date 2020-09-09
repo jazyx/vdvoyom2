@@ -19,6 +19,7 @@ const formats = "jpe?g|png|svg|gif|webm)"  // trailing ) deliberate
 const lookAhead = "\\.(?:" + formats + "$" // leading ( only
 
 /// <<< HARD-CODED
+const SPLASH_DELAY     = 1 // * 1000
 const STARTUP_TIMEOUT  = 10 * 1000
 const PUBLIC_DIRECTORY = Meteor.isDevelopment
                        ? PWD + "/public"
@@ -45,7 +46,8 @@ const NO_AUDIO_DELAY = 1500
 
 
 export {
-  STARTUP_TIMEOUT
+  SPLASH_DELAY
+, STARTUP_TIMEOUT
 
 , PUBLIC_DIRECTORY
 , ACTIVITY_FOLDER

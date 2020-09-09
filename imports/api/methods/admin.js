@@ -91,6 +91,7 @@ export const createAccount = {
 
     // action will have been added if the original call was to logIn
     , action:   { type: String, optional: true }
+    , page:     { type: Object, optional: true, blackbox: true }
     }).validate(accountData)
   }
 
@@ -135,6 +136,7 @@ export const createGroup = {
     , native:   { type: String, optional: true }
     , d_code:   { type: String, optional: true }
     , action:   { type: String, optional: true }
+    , page:     { type: Object, optional: true, blackbox: true }
     }).validate(accountData)
   }
 
@@ -172,6 +174,8 @@ export const logIn = {
     , d_code:   { type: String }
 
     , restore_all: { type: Boolean, optional: true }
+    , join:        { type: Boolean, optional: true }
+    , page:        { type: Object, optional: true, blackbox: true }
 
     // Sent only if automatic login is NOT used
     , native:   { type: String, optional: true } // for User doc
