@@ -35,16 +35,16 @@ export default class StartUp {
     /// <<< HARD-CODED
     this.hack = window.location.pathname.startsWith("/*")
     /// HARD-CODED >>>
-    
+
     this.preloadComplete = preloadComplete
     this.showSplash  = + new Date() + SPLASH_DELAY
 
     this.oneOff = this.oneOff.bind(this)
-    
+
     preloadCollections.then(this.prepareLaunch.bind(this))
                       .catch(preloadComplete) // shows "TimeOut"
     // preloadCollections is a promise, so it is guaranteed to be
-    // asynchronous. The next command _will_ be executed before 
+    // asynchronous. The next command _will_ be executed before
     // prepareLaunch or preloadComplete is called.
 
     this.readInPresets()
@@ -63,7 +63,7 @@ export default class StartUp {
   }
 
 
-  readDataFromURL() {  
+  readDataFromURL() {
     const search  = window.location.search
     const query   = new URLSearchParams(search)
     this.setContext(query)
@@ -94,7 +94,7 @@ export default class StartUp {
   setAccountDataAndPage(data) {
     const {
       // login
-      user: username 
+      user: username
     , vo:   native
     , own:  teacher
     , pin:  q_code
@@ -136,7 +136,7 @@ export default class StartUp {
 
     // If neither view or path is given, this.page will be undefined
     const page ={ view, path, tag, index, data }
-    deleteFrom(page, trim) 
+    deleteFrom(page, trim)
     this.page = this.normalizePage(page) // may be undefined
   }
 
@@ -145,7 +145,7 @@ export default class StartUp {
     if (!page.view && !page.path) {
       return
     }
-  
+
     let { path, view, tag, index } = page
 
     if (typeof path === "string") {
@@ -216,13 +216,13 @@ export default class StartUp {
     }
 
     accountData = Object.assign(defaultValues, accountData)
-   
-    return accountData 
+
+    return accountData
   }
 
   ///// MongoDB COLLECTIONS ARE NOW AVAILABLE. LOGIN CAN HAPPEN /////
 
-  prepareLaunch() {    
+  prepareLaunch() {
     console.log("prepareLaunch")
     switch (this.context) {
       case "once":
@@ -297,7 +297,7 @@ export default class StartUp {
       "this.page"
     , JSON.stringify(this.page, null, "  ")
     )
-    
+
 
     // username: "deleteTempUser_8fbkqvueP"
     // user_id: "qbK7SjzunhotN6nK3"
@@ -509,13 +509,13 @@ export default class StartUp {
       const data = this.getParamsFromURL({ without })
       // console.log("treatUserInvitation data:", data)
       // { join
-      // 
+      //
       // , user
       // , own
       // , pin
       // , vo
       // , lang
-      // 
+      //
       // , view
       // , path
       // , index
@@ -535,7 +535,7 @@ export default class StartUp {
       const page = { view: "Profile" }
       const ignorePath = true
 
-      this.mergeParamsAndAccountData(result, data, page, ignorePath)   
+      this.mergeParamsAndAccountData(result, data, page, ignorePath)
     }
   }
 
@@ -745,7 +745,7 @@ export default class StartUp {
       "Session.keys"
     , Session.keys
     )
-    
+
     // /// <<< TEMPORARY HACK UNTIL MENU IS WORKING
     // const auto_login  = data.auto_login || this.hack
     // const restore_all = data.restore_all || this.hack

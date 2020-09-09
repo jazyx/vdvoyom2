@@ -114,7 +114,7 @@ export default class JoinGroup {
     // Check if this group already has another member, who will be
     // master, in which case we'll go to the view that is already
     // active
-    let readFromGroup = d_codes.length > 1 
+    let readFromGroup = d_codes.length > 1
                      ||  accountData.restore_all
 
     if (readFromGroup) {

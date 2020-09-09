@@ -132,7 +132,7 @@ class App extends Component {
     if (!page) {
       page = "TimeOut"
     }
-    
+
     // Setting this.state.ready is redundant if page can be set,
     // since setting it will alter this.props. But it's just neater
     // to have ready set to true, regardless of the circumstances.
