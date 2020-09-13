@@ -29,19 +29,19 @@ const { Group } = collections
 // instance is used for the whole lifetime of the app, it also
 // opens connections to all non-activity collections, and keeps them
 // open until the user quits the app.
-import Share from './Share.jsx';
+import Share from './Share.jsx'
 
-// Splash is shown until all the collections are ready, or for 1 s,
-// whichever is longer. TimeOut is shown if the non-activity
-// collections take too long to load.
-import Splash from './startup/Splash.jsx';
-import TimeOut from './startup/TimeOut.jsx';
+// // Splash is shown until all the collections are ready, or for 1 s,
+// // whichever is longer. TimeOut is shown if the non-activity
+// // collections take too long to load.
+// import Splash from './login/landing/Splash.jsx'
+// import TimeOut from './login/landing/TimeOut.jsx'
 
 // The Menu is an overlay which users can slide out from the left to
 // choose different activities, different options within an activity
 // or their profile settings. The teacher (as a privileged slave) can
 // interact with the menu, but other users cannot.
-import Menu from './Menu.jsx';
+import Menu from './Menu.jsx'
 
 // "<<< TODO
 // The Points view sits above Menu and the other Share'd content
@@ -59,21 +59,20 @@ import Chat from './Chat.jsx'
 // development. It should be removed for production.
 import Debug from './debug/Debug.jsx'
 
-
 // Profile is basically a switch which shows one by one a series of
 // screens used by first time users, and for updating your profile.
-import Profile from './profile/Profile.jsx';
+import Profile from './login/Profile.jsx'
 
 // Activity shows a scrolling list of available activities, or of
 // options that are accessible from inside an activity
-import Activity from './activities/Activity.jsx';
+import Activity from './activities/Activity.jsx'
 
 // Activity modules
 import views from './activities/mint'
 
 
 
-// Disable the context menu. Everywhere.
+// Disable the context menu. Everywhere. (TODO - for production )
 document.body.addEventListener("contextmenu", (event) => {
   // event.preventDefault()
   return false
@@ -86,20 +85,19 @@ class App extends Component {
     super(props)
 
     this.views = {
-      Splash
-    , TimeOut
-
-    // Prefile
-    , Profile
+      Profile
     // Aliases for the Profile views, so that the Menu can show them
-    , Name: true
-    , Group: true
-    , Teach: true
+    , Splash: true
+    , TimeOut: true
+
     , Native: true
-    , Submit: true
-    , NewPIN: true
+    , Name: true
     , Teacher: true
-    , Language: true
+    , Teach: true
+
+    , Submit: true // TODO: remove when no longer needed
+
+    , NewPIN: true
     , EnterPIN: true
 
     // Activities
@@ -118,11 +116,18 @@ class App extends Component {
   }
 
 
-  /** Called by Share.setViewSize after StartUp has loaded collections
-   *  and determined which view to show. We need to set all three
-   *  state variables at once in order to avoid an unnecessary and
-   *  disruptive re-render.
+  /** Called by Share.setViewSize
+   *
+   * @param {object}  sizeAndRatio   { "aspectRatio": <number>,
+   *                                    "view_size": {
+   *                                      "width":  <number>,
+   *                                      "height": <number>,
+   *                                      "top":    <number>,
+   *                                      "left":   <number>
+   *                                    }
+   *                                  }
    */
+
   setViewSize(sizeAndRatio) {
     this.setState(sizeAndRatio)
   }
@@ -153,7 +158,7 @@ class App extends Component {
 
 
   /** Called by hideSplash, from Menu component and profile Views
-   *  such as Name, Language, Native, CheckPIN, EnterPIN and Submit.
+   *  such as Name, Native and EnterPIN.
    *
    * Calls the setPage Meteor method to update the page object of the
    * current group. The page object will be available via
@@ -185,8 +190,6 @@ class App extends Component {
    *                               lastItemIsTag will default to false
    */
   setPage(page, group_id = this.props.group_id) {
-    // console.log("App setPage:", page)
-
     if (page && group_id) {
       if (typeof page === "string") {
         page = { view: page }
@@ -199,9 +202,7 @@ class App extends Component {
       setPage.call(options)
 
     } else {
-      // console.log("No group_id or no page", this.props.group_id, page)
       const view = page.view || page
-      // console.log("setting view to", view)
       this.setState({ view }) // string
     }
   }
@@ -241,6 +242,31 @@ class App extends Component {
   }
 
 
+  getLayers(showLayers, aspectRatio) {
+    if (!showLayers) {
+      return ""
+    }
+
+        // hide={this.state.view === "Profile"}
+ 
+    return [
+      <Menu
+        key="menu"
+        setPage={this.setPage}
+        aspectRatio={aspectRatio}
+      />
+    , <Points
+        key="points"
+        ref={this.storePointsMethod}
+        rect={this.state.view_size}
+      />
+    , <Chat
+        key="chat"
+      />
+    ]
+  }
+
+
   storePointsMethod(pointsComponent) {
     if (pointsComponent) {
       this.pointsMethod = pointsComponent.pointsMethod
@@ -256,47 +282,42 @@ class App extends Component {
     // this.state.units to be set, so the first render will have no
     // content
 
+    const aspectRatio = this.state.aspectRatio
+    // Will be meaningless until setViewSize is called
+
     let view = this.getView()
     let View = this.views[view]
 
-    // console.log("App render view:", view)
-
-    if (view === "Splash") {
-      // When all the collections are ready and the best landing view
-      // has been determined, we need to set view, aspectRatio and
-      // sharedRect all at once; we use this.setViewSize for that
-      return <Share
-        setViewSize={this.setViewSize}
-      >
-        <View
-          hideSplash={this.hideSplash}
-        />
-      </Share>
-    }
-
-    const aspectRatio = this.state.aspectRatio
+    let showLayers = true
+    let hideSplash
 
     // Menu might ask to jump directly to a basic choice view. Use
     // Profile to navigate between them.
     switch (view) {
+      case "Splash":
+        hideSplash = this.hideSplash // fall through
+
+      case "TimeOut":
+
       case "Name":
-      case "Group":
       case "Teach":
       case "Native":
       case "Teacher":
-      case "Language":
-      case "Submit":
+
+      case "Submit": // TODO: Remove when no longer needed
+
       case "NewPIN":
       case "EnterPIN":
+        showLayers = false
         View = this.views.Profile
       break
+
       case "Profile":
         view = "Native"
+        showLayers = false
     }
 
-    // console.log("App about to render view:", view)
-
-    // console.log(this.state.view_size, aspectRatio)
+    const layers = this.getLayers(showLayers, aspectRatio)
 
     return <Share
       setViewSize={this.setViewSize} // <View /> will set the view
@@ -307,17 +328,10 @@ class App extends Component {
         aspectRatio={aspectRatio}
         points={this.pointMethod}
         rect={this.state.view_size}
+
+        hideSplash={hideSplash}
       />
-      <Menu
-        hide={this.state.view === "Profile"}
-        setPage={this.setPage}
-        aspectRatio={aspectRatio}
-      />
-      <Points
-        ref={this.storePointsMethod}
-        rect={this.state.view_size}
-      />
-      <Chat />
+      {layers}
     </Share>
 
     //  <Debug />

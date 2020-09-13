@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 import { localize
        , getElementIndex
-       } from '../../tools/generic/utilities'
+       } from '/imports/tools/generic/utilities'
 
 import { StyledProfile
        , StyledPrompt
@@ -18,9 +18,9 @@ import { StyledProfile
        , StyledButton
        , StyledNavArrow
        , StyledButtonBar
-       } from './styles'
+       } from '../styles'
 
-import collections from '../../api/collections/publisher'
+import collections from '/imports/api/collections/publisher'
 const { UIText } = collections
 
 
@@ -32,7 +32,7 @@ class Native extends Component {
     // console.log("Native", props)
 
     const codes = this.codes = this.props.flags.map(flag => flag.cue)
-    const code  = Session.get("native") || this._getDefaultCode()
+    const code  = this.getDefaultCode(Session.get("native"))
     const selected = codes.indexOf(code)
 
     this.scrollTo = React.createRef()
@@ -50,16 +50,33 @@ class Native extends Component {
   }
 
 
-  _getDefaultCode() {
-    let code = navigator.language || navigator.userLanguage // "co-DE"
+  getDefaultCode(code) {
+    code = code
+        || navigator.language
+        || navigator.userLanguage // "co-DE"
     let index = this.codes.indexOf(code)
 
     if (index < 0) {
-      code = code.replace(/-\w*/, "")
-      index = index = this.codes.indexOf(code)
+      const trimCode = code => code.replace(/-\w*/, "")
+
+      // this.codes may not contain the specific region; ignore region
+      code = trimCode(code)
+      index = this.codes.indexOf(code)
+
+      if (index < 0) {
+        // code may not include a region; ignore regions in this.codes
+        const codes = this.codes.map( code => trimCode(code))
+        index = codes.indexOf(code)       
+      }
+
+      if (index < 0 && Session.get("native")) {
+        index = this.getDefaultCode() // ignore Session.get("native")
+      }
 
       if (index < 0) {
         code = this.codes[0]
+      } else {
+        code = this.codes[index]
       }
     }
 

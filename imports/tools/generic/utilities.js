@@ -572,6 +572,9 @@ export const deleteFrom = (object, key, removed) => {
   if (Array.isArray(key)) {
     key.forEach( entry => deleteFrom(object, entry, removed) )
     return removed
+
+  } else if (key === undefined) {
+    key = (key, value) => (value === undefined || value === null)
   }
 
   // If we get here, key is an individual item

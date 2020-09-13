@@ -8,17 +8,17 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 
-import Storage from '../../tools/generic/storage'
+import Storage from '/imports/tools/generic/storage'
 import { localize
        , getRandomFromArray
-       } from '../../tools/generic/utilities'
+       } from '/imports/tools/generic/utilities'
 
-import { StyledCentred } from './styles'
+import { StyledCentred } from '../styles'
 
-import { methods } from '../../api/methods/mint'
+import { methods } from '/imports/api/methods/mint'
 const { logIn } = methods
 
-import collections from '../../api/collections/publisher'
+import collections from '/imports/api/collections/publisher'
 const { UIText } = collections
 
 

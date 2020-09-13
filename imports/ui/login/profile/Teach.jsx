@@ -8,13 +8,13 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 
-import { teacher } from '../../tools/custom/teacher'
+import { teacher } from '/imports/tools/custom/teacher'
 
 import { localize
        , getElementIndex
        , removeFrom
        , arrayOverlap
-       } from '../../tools/generic/utilities'
+       } from '/imports/tools/generic/utilities'
 
 import { StyledProfile
        , StyledPrompt
@@ -23,12 +23,12 @@ import { StyledProfile
        , StyledButton
        , StyledNavArrow
        , StyledButtonBar
-       } from './styles'
+       } from '../styles'
 
-import { methods } from '../../api/methods/mint'
+import { methods } from '/imports/api/methods/mint'
 const { toggleActivation } = methods
 
-import collections from '../../api/collections/publisher'
+import collections from '/imports/api/collections/publisher'
 const { UIText, User, Group } = collections
 
 

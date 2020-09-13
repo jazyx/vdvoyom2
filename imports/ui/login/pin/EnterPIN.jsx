@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 
-import { localize } from '../../tools/generic/utilities'
+import { localize } from '/imports/tools/generic/utilities'
 
 import { StyledProfile
        , StyledPrompt
@@ -13,9 +13,9 @@ import { StyledProfile
        , StyledButton
        , StyledNavArrow
        , StyledButtonBar
-       } from './styles'
+       } from '../styles'
 
-import collections from '../../api/collections/publisher'
+import collections from '/imports/api/collections/publisher'
 const { UIText } = collections
 
 

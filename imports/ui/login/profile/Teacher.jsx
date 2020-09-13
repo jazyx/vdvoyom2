@@ -10,7 +10,7 @@ import { Session } from 'meteor/session'
 
 import { localize
        , getElementIndex
-       } from '../../tools/generic/utilities'
+       } from '/imports/tools/generic/utilities'
 
 import { StyledProfile
        , StyledPrompt
@@ -19,9 +19,9 @@ import { StyledProfile
        , StyledButton
        , StyledNavArrow
        , StyledButtonBar
-       } from './styles'
+       } from '../styles'
 
-import collections from '../../api/collections/publisher'
+import collections from '/imports/api/collections/publisher'
 const { UIText, Teacher } = collections
 
 

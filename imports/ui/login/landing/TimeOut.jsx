@@ -14,7 +14,7 @@ import React, { Component } from 'react';
 
 import { StyledProfile
        , StyledPrompt
-       } from '../profile/styles'
+       } from '../styles'
 
 
 

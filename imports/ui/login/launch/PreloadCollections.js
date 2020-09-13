@@ -5,10 +5,10 @@
 
 
 // Helpers
-import { removeFrom } from '../../tools/generic/utilities'
+import { removeFrom } from '/imports/tools/generic/utilities'
 
 // Subscriptions
-import collections from '../../api/collections/publisher'
+import collections from '/imports/api/collections/publisher'
 
 // Constant
 import { STARTUP_TIMEOUT } from '/imports/tools/custom/constants'
