@@ -66,7 +66,7 @@ class Native extends Component {
       if (index < 0) {
         // code may not include a region; ignore regions in this.codes
         const codes = this.codes.map( code => trimCode(code))
-        index = codes.indexOf(code)       
+        index = codes.indexOf(code)
       }
 
       if (index < 0 && Session.get("native")) {

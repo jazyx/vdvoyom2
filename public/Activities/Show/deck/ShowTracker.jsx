@@ -72,21 +72,3 @@ export default class ShowTracker extends Tracker{
     props.isPilot = !props.active || props.soloPilot === props.d_code
   }
 }
-
-
-
-
-
-// // MENU.jsx
-// const isPilot = soloPilot
-//               ? soloPilot === d_code
-//               : undefined
-
-// No teacher ? isPilot === undefined
-// => Menu is hidden if teacher is piloting
-
-// // ShowTracker.js
-// props.isPilot = !props.active
-//               || props.soloPilot === props.d_code
-
-//No teacher ? isPilot should be true

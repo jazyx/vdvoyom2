@@ -1,7 +1,7 @@
 /**
  * /imports/ui/login/Profile.jsx
- * 
- * The Profile component acts as a wrapper for a number of other 
+ *
+ * The Profile component acts as a wrapper for a number of other
  * components which may need to be shown during the login process,
  * when details need to be entered manually
  */
@@ -61,6 +61,17 @@ export default class Profile extends Component {
 
   render() {
     // console.log("Profile.props:", this.props)
+
+    /** Profile is rendered several times when app is first loaded:
+     *  1. To show the Splash component
+     *  2. To show the Splash component again after aspectRatio is set
+     *  3. After hideSplash is called, to show the Native component
+     *
+     *  If a preset page is given by the URL parameters or from
+     *  LocalStorage, then step 3 will not occure and Profile will
+     *  not be shown again.
+     */
+
     const View = this.views[this.props.view]
 
     // console.log(View)

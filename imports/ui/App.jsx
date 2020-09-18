@@ -31,12 +31,6 @@ const { Group } = collections
 // open until the user quits the app.
 import Share from './Share.jsx'
 
-// // Splash is shown until all the collections are ready, or for 1 s,
-// // whichever is longer. TimeOut is shown if the non-activity
-// // collections take too long to load.
-// import Splash from './login/landing/Splash.jsx'
-// import TimeOut from './login/landing/TimeOut.jsx'
-
 // The Menu is an overlay which users can slide out from the left to
 // choose different activities, different options within an activity
 // or their profile settings. The teacher (as a privileged slave) can
@@ -129,6 +123,7 @@ class App extends Component {
    */
 
   setViewSize(sizeAndRatio) {
+    // console.log("setViewSize", sizeAndRatio)
     this.setState(sizeAndRatio)
   }
 
@@ -141,19 +136,22 @@ class App extends Component {
     // Setting this.state.ready is redundant if page can be set,
     // since setting it will alter this.props. But it's just neater
     // to have ready set to true, regardless of the circumstances.
-    this.setState({ ready: true })
+    const toSet = { ready: true }
 
-    let view
-    if (view = page.view) {
-      // During a hot reload, Session.get("group_id") will get reset
-      // to undefined, so this.props not include a `page` property.
-      // Saving the view in this.state so that it can be used if
-      // this.props.page is missing means that the StartUp sequence
-      // will not be run a second time.
-      this.setState({ view })
-    }
+    // let view
+    // if (view = page.view) {
+    //   // During a hot reload, Session.get("group_id") will get reset
+    //   // to undefined, so this.props does not include a `page`
+    //   // property. Saving the view in this.state so that it can be
+    //   // used if this.props.page is missing means that the StartUp
+    //   // sequence will not be run a second time.
 
-    this.setPage(page, group_id)
+    //   toSet.view = view
+    // }
+
+    console.log("hideSplash", page, group_id, toSet)
+    this.setPage(page, group_id, toSet)
+    console.log("hideSplash after setting state")
   }
 
 
@@ -164,7 +162,7 @@ class App extends Component {
    * current group. The page object will be available via
    * this.props.page to all members of the group.
    *
-   * @param      {object}  page    string
+   * @param  {object} page         string
    *                               OR object with the format:
    *                               { view: "Native"
    *                               , next: { // optional: where to g
@@ -177,20 +175,29 @@ class App extends Component {
    *                               }
    *                               OR
    *                               { view: "Ignored"
-   *                               , path: [<string>, ...]
+   *                               , path: <"/Collection/folder/...>
    *                               , index: <integer>
-   *                               , lastItemIsTag: <boolean>
+   *                               , tag:   <string>
    *                               , data: {...}
    *                               }
    *                               Either view or path is required.
    *                               view is ignored if path is present
-   *                               data is required if lastItemIsTag
-   *                                 is true
    *                               index will default to 0 if missing
-   *                               lastItemIsTag will default to false
+   * @param  {string} group_id    undefined while hot-reloading
+   * @param  {object} stateHolder if called by hideSplash, will be=
+   *                              { ready: true
+   *                              , view:  <string> | {
+   *                                                  ,
+   *                                                  }
+   *                              }
    */
-  setPage(page, group_id = this.props.group_id) {
+  setPage(page, group_id = this.props.group_id, stateHolder={ }) {
+
+    console.log("setPage page", page, group_id, stateHolder)
+
     if (page && group_id) {
+      // The app is not hot-reloading during development, and a page
+      // is given
       if (typeof page === "string") {
         page = { view: page }
       }
@@ -202,14 +209,19 @@ class App extends Component {
       setPage.call(options)
 
     } else {
-      const view = page.view || page
-      this.setState({ view }) // string
+      // Hot reloading, so group_id is missing. Use state to remember
+      // which view to show until group_id is restored.
+      stateHolder.view = page.view || page
+
+      this.setState(stateHolder) // string
     }
   }
 
 
   getView() {
     const page = this.props.page
+
+    // console.log("getView this.props.page", page)
 
     if (!page) {
       return this.state.view
@@ -248,7 +260,7 @@ class App extends Component {
     }
 
         // hide={this.state.view === "Profile"}
- 
+
     return [
       <Menu
         key="menu"
@@ -278,6 +290,8 @@ class App extends Component {
 
 
   render() {
+    // console.log("App this.state:", this.state)
+    // console.log("App this.props:", this.props)
     // The Share component needs to be rendered in order for
     // this.state.units to be set, so the first render will have no
     // content

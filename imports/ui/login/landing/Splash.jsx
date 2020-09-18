@@ -1,6 +1,6 @@
 /**
  * /imports/ui/login/landing/Splash.jsx
- * 
+ *
  * Wrapper for the generic Throbber component and a splashscreen image
  */
 

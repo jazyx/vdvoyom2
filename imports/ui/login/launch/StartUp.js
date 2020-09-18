@@ -40,6 +40,7 @@ export default class StartUp {
     this.showSplash  = + new Date() + SPLASH_DELAY
 
     this.oneOff = this.oneOff.bind(this)
+    this.prepareLaunch = this.prepareLaunch.bind(this)
     this.welcomeNewUser = this.welcomeNewUser.bind(this)
 
     preloadCollections.then(this.prepareLaunch.bind(this))
@@ -51,6 +52,7 @@ export default class StartUp {
     this.readInPresets()
   }
 
+
   ///// DETERMINE this.context, this.accountData AND this.page //////
 
   readInPresets() {
@@ -59,41 +61,6 @@ export default class StartUp {
     this.readDataFromURL()     // sets this.accountData
                                //      this.page
                                //      this.context
-    if (this.context === "check") {
-      // The window.location.path may be a teacher id shortcut,
-      // or their may be no presets in the URL at all.
-      this.context = this.setTeacherFromPathName()
-      // "teacher" | "user"
-      // 
-      // NOTE: If this.context is _now_ "teacher", then
-      // this.teacherData will have been set. If this.context was set
-      // to "teacher" by readDataFromURL, then this.teacherData will
-      // still be undefined.
-    }
-  }
-
-
-  /**  Checks if the URL has the form "httpx://example.com/xx" where
-   *   <xx> is the `id` of a Teacher document. If so, pro-actively
-   *   reads this.teacherData from the Teacher collection.
-   *
-   * @return  {string}  "teacher" if <xx> is indeed a teacher id
-   *                    "user" if no id is present (nor once nor join) 
-   */
-  setTeacherFromPathName() {
-    const id = window.location.pathname.substring(1)
-    this.teacherData = this.getTeacherData(id)
-
-    return this.teacherData
-         ? "teacher"
-         : "user"
-  }
-
-
-  getTeacherData(id) {
-    id = decodeURI(id)
-         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
-    return collections.Teacher.findOne({ id }) // may be undefined
   }
 
 
@@ -167,11 +134,12 @@ export default class StartUp {
 
 
   setAccountDataAndPage(data) {
-    const {
+    let {
       // login
       user: username
     , vo:   native
     , own:  teacher
+    , teacher: id
     , lang: language
     , pin:  q_code
       // page
@@ -186,6 +154,7 @@ export default class StartUp {
       "user"
     , "vo"
     , "own"
+    , "teacher"
     , "language"
 
     , "pin"
@@ -199,13 +168,20 @@ export default class StartUp {
     ]
     deleteFrom(data, notPageDataKeys)
 
-    // Ignore data if it contains none
+    // Ignore data if it contains no data
     if (!Object.keys(data).length) {
       data = undefined
     }
 
     // this.accountData will be an object, but it may be empty
-    const accountData = {username, native, teacher, q_code, language}
+    const accountData = {
+      username
+    , native
+    , teacher // id for teacher for username
+    , id      // id for teacher who is logging in
+    , q_code
+    , language
+    }
     deleteFrom(accountData)
     this.accountData = this.normalizeAccountData(accountData)
 
@@ -260,6 +236,8 @@ export default class StartUp {
 
         if (isNaN(index) || index > lastIndex || index < 0) {
           page.index = lastIndex
+        } else {
+          page.index = parseInt(index, 10)
         }
       }
 
@@ -270,6 +248,11 @@ export default class StartUp {
   }
 
 
+  /** Sent by setAccountDataAndPage() from readDataFromURL()
+   *
+   * @param      {<type>}  accountData  The account data
+   * @return     {<type>}  { description_of_the_return_value }
+   */
   normalizeAccountData(accountData) {
     // console.log(
     //   "accountData"
@@ -283,9 +266,10 @@ export default class StartUp {
     }
 
     const defaultValues = Object.assign(
-      { teacher:     "none"
-      , language:    "en-GB"
+      { language:    "en-GB"
       , native:      navigator.language || navigator.userLanguage
+      , teacher:     ""
+      // , teacher:     "none"
       // , restore_all: true
       // , auto_login:  true
       }
@@ -303,23 +287,52 @@ export default class StartUp {
   ///// MongoDB COLLECTIONS ARE NOW AVAILABLE. LOGIN CAN HAPPEN /////
 
   prepareLaunch() {
-    console.log("prepareLaunch")
     switch (this.context) {
       case "once":
         return this.autoLogIn("once", this.oneOff)
       case "join":
         return this.treatUserInvitation()
       case "admin":
-        return this.treatAdmin(user)
+        return this.treatAdmin()
       case "teacher":
-        return this.getTeacherFromURL(query) //may be undefined
+        return this.treatTeacher()
+
       default:
-
-
-      // this.setSessionDataFromStorage(teacher)
-      // // TODO: Add test for admin
-      // this.prepareUIForRole()
+        // this.context will be "check". The URL may be just a
+        // shortcut teach id, but we couldn't check that until the
+        // Teacher collection (and the other MongoDB collections)
+        // became available.
+        this.checkForTeacherShortcut()
     }
+  }
+
+
+  /**  Checks if the URL has the form "httpx://example.com/xx" where
+   *   <xx> is the `id` of a Teacher document. If so, pro-actively
+   *   reads this.teacherData from the Teacher collection.
+   *
+   * @return  {string}  "teacher" if <xx> is indeed a teacher id
+   *                    "user" if no id is present (nor once nor join)
+   */
+  checkForTeacherShortcut() {
+    const id = window.location.pathname.substring(1)
+    const teacherData = this.getTeacherData(id)
+
+    if (teacherData) {
+      this.context = "teacher"
+      this.treatTeacher(teacherData)
+
+    } else {
+      this.context = "user"
+      this.treatUser()
+    }
+  }
+
+
+  getTeacherData(id) {
+    id = decodeURI(id)
+         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
+    return collections.Teacher.findOne({ id }) // may be undefined
   }
 
 
@@ -353,8 +366,8 @@ export default class StartUp {
     }
 
     const defaultValues = {
-      d_code:      this.getRandomString(7)
-    , teacher:     "none"
+      d_code:      this.getD_Code()
+    , teacher:     ""
     , language:    "en-GB"
     , native:      navigator.language || navigator.userLanguage
     , restore_all: true
@@ -363,6 +376,11 @@ export default class StartUp {
     this.accountData = Object.assign(defaultValues, this.accountData)
 
     logIn.call(this.accountData, callback)
+  }
+
+
+  getD_Code() {
+    return this.getRandomString(7)
   }
 
 
@@ -403,7 +421,7 @@ export default class StartUp {
   }
 
 
-  /** 
+  /**
    */
   treatUserInvitation() {
     const callback = this.welcomeNewUser
@@ -414,7 +432,7 @@ export default class StartUp {
       // All login data is given in the URL. Log in automatically.
       this.autoLogIn( isSingleUse, callback )
 
-    } else {     
+    } else {
       // At least one property is missing for autoLogIn. Use data
       // from local storage to fill in the gaps in the data read in
       // from the URL...
@@ -442,12 +460,12 @@ export default class StartUp {
       return console.log("welcomeNewUser error:", error)
     }
 
-    console.log(
-      "welcomeNewUser error:", error,
-      "result:", JSON.stringify(result, null, "  ")
-     )
+    // console.log(
+    //   "welcomeNewUser error:", error,
+    //   "result:", JSON.stringify(result, null, "  ")
+    //  )
 
-      /*    
+      /*
         "teacher":    "jn",
         "language":   "en-GB",
         "native":     "en"
@@ -484,6 +502,55 @@ export default class StartUp {
   }
 
 
+  treatUser() {
+    console.log("TODO: treatUser")
+  }
+
+
+  treatTeacher(teacherData) {
+    if (!teacherData) {
+      teacherData = this.getTeacherData(this.accountData.id)
+    }
+
+    if (!teacherData) {
+      console.log("Unknown teacher:", this.accountData)
+      return
+    }
+
+    console.log("teacherData:", teacherData)
+
+    const d_code  = this.getD_Code()
+
+    /// <<< HARD-CODED
+    const q_color = "#f00"
+    const role    = "teacher"
+    /// HARD-CODED >>>
+
+    const {
+      id: teacher_id
+    , language: native
+    } = teacherData
+
+    const accountData = {
+      d_code
+    , teacher_id
+    , native
+    , q_color
+    , role
+    }
+
+    this.setSessionDataFrom(accountData)
+    this.go = { view: "Teach" }
+    this.hideSplash()
+  }
+
+
+  treatAdmin() {
+    console.log("TODO: treatAdmin")
+  }
+
+  /// UTILITY METHODS /// UTILITY METHODS /// UTILITY METHODS ///
+
 
   /**
    * Called by setSessionDataFromStorage(), oneOff()
@@ -496,7 +563,9 @@ export default class StartUp {
     , "user_id"
     , "native"
     , "teacher"
+    , "teacher_id"
     , "language"
+    , "d_code"
     , "q_code"
     , "q_color"
     , "group_id"
@@ -547,63 +616,6 @@ export default class StartUp {
 
     return randomString
   }
-
-
-  // /** Checks for a search parameter or a shortcut teacher id
-  //  *
-  //  *    http://activities.jazyx.com/?teacher=<teacher_id>
-  //  * OR http://activities.jazyx.com/<teacher_id>
-  //  *
-  //  * If a shortcut is used, no other data will be found in the URL
-  //  *
-  //  * Returns undefined or an object with the format:
-  //  *  {
-  //  *    "_id" : "MQoQa3MsixrkjgLWg",
-  //  *    "file" : "aa.jpg",
-  //  *    "id" : "aa",
-  //  *    "name" : {
-  //  *      "cyrl" : "Анастасия",
-  //  *      "latn" : "Anastacia"
-  //  *    },
-  //  *    "with" : "Учить русский с Анастасией",
-  //  *    "language" : "ru",
-  //  *    "script" : "cyrl",
-  //  *    "type" : "profile",
-  //  *    "version" : 4,
-  //  *    "logged_in" : [
-  //  *      "JSQTk6f"
-  //  *    ]
-  //  *  }
-  //  */
-  // getTeacherFromURL(query) {
-  //   // Look for a "? ... &teacher=XX" search entry first
-  //   let id = query.get("teacher")
-
-  //   if (!id) {
-  //     // Look for a "/XX" shortcut second
-  //     id = window.location.pathname.substring(1) // /id => id
-  //   }
-
-  //   let teacher = this.getTeacher(id)
-
-  //   // // Really desperate: check for "tEAchEr" case-insensitively
-  //   // if (!teacher) {
-  //   //   const search = window.location.search.toLowerCase()
-  //   //   id = new URLSearchParams(search).get("teacher")
-  //   //   if (id) {
-  //   //     teacher = this.getTeacher(id)
-  //   //   }
-  //   // }
-
-  //   return teacher // may be undefined
-  // }
-
-
-  // getTeacher(id) {
-  //   id = decodeURI(id)
-  //        .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
-  //   return collections.Teacher.findOne({ id })
-  // }
 
 
   // prepareUIForRole() {
@@ -691,148 +703,6 @@ export default class StartUp {
   // }
 
 
-  // welcomeNewUser(error, result) {
-  //   if (error) {
-  //     return console.log("welcomeNewUser error:", error)
-  //   }
-
-  //   // console.log(
-  //   //   "welcomeNewUser error:", error,
-  //   //   "result:", JSON.stringify(result, null, "  ")
-  //   // )
-  //    {"d_code": "qvyOJ3g",
-  //    *  "q_code": "1459",
-  //    *  "username": "ele",
-  //    *  "group_id": "6ZTtdSw4kofaDYutN",
-  //    *  "teacher": "jn",
-  //    *    "restore_all": true,
-  //    *    "language": "en-GB",
-  //    *  "native": "en",
-  //    *  "user_id": "t5H3s8nvWMhbYTbqG",
-  //    *  "q_color": "#ccb933",
-
-  //    *  "page": {
-  //    *    "path": "/Show/OatsAndBeans",
-  //    *    "tag": "oatsAndBeans",
-  //    *    "index": 2,
-  //    *    "data": {
-  //    *      "menu_open": false
-  //    *    }
-  //    *
-  //    *  "status": "JoinGroup_success",
-  //    *  "loggedIn": true,
-  //    *  }
-     
-
-  //   let page = result.page // likely to change
-  //   let ignorePath = false
-
-  //   if (!result.loggedIn) {
-  //     // `pin` was defined and used for d_code, but it was wrong.
-  //     page = this.manualLoginAfterAutoLoginFailed(result)
-  //     ignorePath = true
-  //     if (!page) {
-  //       return console.log("NO PAGE FOUND IN STARTUP")
-  //     }
-  //   }
-
-  //   const without = [ "join", "user", "own", "pin" ]
-  //   const data = this.getParamsFromURL({ without })
-  //   // console.log("welcomeNewUser data:", data)
-  //   // { vo
-  //   // , lang
-  //   // , view
-  //   // , path
-  //   // , index
-  //   // , [data]
-  //   // }
-
-  //   this.mergeParamsAndAccountData(result, data, page, ignorePath)
-  // }
-
-
-  // /**
-  //  * result = account data
-  //  * data   = url params
-  //  * page   = default { view: "Activity" }
-  //  */
-  // mergeParamsAndAccountData(result, data, defaultPage, ignorePath) {
-  //   result.native     = data.vo
-  //   result.language   = data.lang
-  //   result.auto_login = true // <<< HARD-CODED
-  //   result.role       = "user"
-
-  //   delete data.vo
-  //   delete data.own
-  //   delete data.lang
-
-  //   // Convert numerical params from strings to numbers
-  //   for (const key in data) {
-  //     let value = data[key]
-  //     if (!isNaN(value)) {
-  //       data[key] = parseInt(value, 10)
-  //     }
-  //   }
-
-  //   // Extract expected keys; the rest will be treated as 'data'
-  //   let page
-  //   let { view, path, index, tag } = data
-  //   delete data.view
-  //   delete data.path
-  //   delete data.index
-  //   delete data.tag
-
-  //   if(!path) {
-  //     // Leave page unchanged
-
-  //   } else {
-  //     // Ensure path begins with a slash
-  //     if (path[0] !== "/") {
-  //       path = "/" + path
-  //     }
-
-  //     // Ensure that path (if given) starts with a collection name
-  //     let levels = path.split("/")
-  //     const collectionName = levels[1]
-  //     if (!collections[collectionName]) {
-  //       // Leave page unchanged
-
-  //     } else {
-  //       let lastIndex = levels.length - 1
-
-  //       // <<< HACK to ensure that all levels are shown in the menu
-  //       // ASSUMES:
-  //       // • path is complete except for the last item
-  //       // • the tag is the same as the last item should be, except
-  //       //   that the first char is in lowercase
-  //       if (tag)
-  //         if (levels[lastIndex].toLowerCase() !== tag.toLowerCase()) {
-  //         levels.push(tag[0].toUpperCase() + tag.substring(1))
-  //         path = levels.join("/")
-  //         lastIndex += 1
-  //       }
-  //       // HACK >>>
-
-  //       if (isNaN(index) || index > lastIndex || index < 0) {
-  //         index = lastIndex
-  //       }
-
-  //       page = { path, tag, index, data }
-  //     }
-  //   }
-
-  //   result.page = page
-  //   this.setSessionDataFrom(result) // unnecessary keys ignored
-
-  //   if (ignorePath || !page) {
-  //     page = defaultPage
-  //   }
-
-  //   this.go = page
-  //   this.hideSplash()
-  // }
-
-
   manualLoginAfterAutoLoginFailed(data) {
     switch (data.status) {
       case "RequestPIN":
@@ -846,26 +716,6 @@ export default class StartUp {
 
     }
   }
-
-
-  // sessionSetD_code() {
-  //   const length = 7 // Creates 4 398 046 511 104 possible strings
-  //   const d_code = this.getRandomString(length)
-
-  //   Session.set("d_code", d_code)
-
-  //   return d_code
-  // }
-
-
-  // /** Check if the connection just broke and if so, log back in
-  //  *  to the shared group. Otherwise, go to the Teach view.
-  //  */
-  // checkForActiveGroup() {
-  //   // TODO: Integrate menu then remove the following 2 lines
-  //   this.go = { view: "Teach" }
-  //   return this.hideSplash()
-  // }
 
 
   // reJoinGroups() {
@@ -911,7 +761,9 @@ export default class StartUp {
 
     // console.log("StartUp preloadComplete(\"" + this.go + "\")")
 
-    //////////////////// ADD group_id???///////////////////////
+    // Add group_id, because this will be undefined during a
+    // hot reload, and we can use this fact to prevent a freeze
+    // during development.
     this.preloadComplete(this.go, Session.get("group_id"))
   }
 }
