@@ -471,7 +471,7 @@ export default class ImportAssets extends IOHelper{
     const audio = assets.audio
     const image = assets.image
 
-    console.log("addAssetsToPhrases image:", image)
+    // console.log("addAssetsToPhrases image:", image)
 
     phrases.forEach( phraseData => {
       let name = phraseData.name

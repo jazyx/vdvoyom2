@@ -1,0 +1,22 @@
+
+{ "collection": "Shortcut"
+
+, "as_is": {
+    "version": 1
+  }
+
+, "": [
+    { "_id": "aa"
+    , "query": "teacher=aa"
+    }
+  , { "_id": "jn"
+    , "query": "teacher=jn"
+    }
+  , { "_id": "ml"
+    , "query": "teacher=ml"
+    }
+  , { "_id": "oats"
+    , "query": "join&path=Show&tag=oatsAndBeans&user=ele&vo=en&lang=en&own=jn&pin=3819"
+    }
+  ]
+}

@@ -104,7 +104,6 @@ class App extends Component {
     this.state = { view: "Splash" }
 
     this.setPage           = this.setPage.bind(this)
-    this.hideSplash        = this.hideSplash.bind(this)
     this.setViewSize       = this.setViewSize.bind(this)
     this.storePointsMethod = this.storePointsMethod.bind(this)
   }
@@ -128,76 +127,46 @@ class App extends Component {
   }
 
 
-  hideSplash(page, group_id) {
-    if (!page) {
-      page = "TimeOut"
-    }
-
-    // Setting this.state.ready is redundant if page can be set,
-    // since setting it will alter this.props. But it's just neater
-    // to have ready set to true, regardless of the circumstances.
-    const toSet = { ready: true }
-
-    // let view
-    // if (view = page.view) {
-    //   // During a hot reload, Session.get("group_id") will get reset
-    //   // to undefined, so this.props does not include a `page`
-    //   // property. Saving the view in this.state so that it can be
-    //   // used if this.props.page is missing means that the StartUp
-    //   // sequence will not be run a second time.
-
-    //   toSet.view = view
-    // }
-
-    console.log("hideSplash", page, group_id, toSet)
-    this.setPage(page, group_id, toSet)
-    console.log("hideSplash after setting state")
-  }
-
-
-  /** Called by hideSplash, from Menu component and profile Views
-   *  such as Name, Native and EnterPIN.
+  /** Called by from the StartUp scripts and from Menu component
    *
    * Calls the setPage Meteor method to update the page object of the
    * current group. The page object will be available via
    * this.props.page to all members of the group.
    *
-   * @param  {object} page         string
-   *                               OR object with the format:
-   *                               { view: "Native"
-   *                               , next: { // optional: where to g
-   *                                         // when [Done] is pressed
-   *                                   path: []
-   *                                 , index: <integer>
-   *                                 , lastItemIsTag: false
-   *                                 , data: {...}
-   *                                 }
-   *                               }
-   *                               OR
-   *                               { view: "Ignored"
-   *                               , path: <"/Collection/folder/...>
-   *                               , index: <integer>
-   *                               , tag:   <string>
-   *                               , data: {...}
-   *                               }
-   *                               Either view or path is required.
-   *                               view is ignored if path is present
-   *                               index will default to 0 if missing
-   * @param  {string} group_id    undefined while hot-reloading
-   * @param  {object} stateHolder if called by hideSplash, will be=
-   *                              { ready: true
-   *                              , view:  <string> | {
-   *                                                  ,
-   *                                                  }
-   *                              }
+   * @param   {object} page    string
+   *                           OR object with the format:
+   *                           { view: "Native"
+   *                           , next: { // optional: where to g
+   *                                     // when [Done] is pressed
+   *                               path: []
+   *                             , index: <integer>
+   *                             , lastItemIsTag: false
+   *                             , data: {...}
+   *                             }
+   *                           }
+   *                           OR
+   *                           { view: "Ignored"
+   *                           , path: <"/Collection/folder/...>
+   *                           , index: <integer>
+   *                           , tag:   <string>
+   *                           , data: {...}
+   *                           }
+   *                           Either view or path is required.
+   *                           view is ignored if path is present
    */
-  setPage(page, group_id = this.props.group_id, stateHolder={ }) {
+  setPage(page) {
+    const group_id = this.props.group_id
 
-    console.log("setPage page", page, group_id, stateHolder)
+    if (!page) {
+      this.setState({ view: "TimeOut" })
 
-    if (page && group_id) {
-      // The app is not hot-reloading during development, and a page
-      // is given
+    } else if (group_id) {
+      /* The app is not hot-reloading during development, and a page
+       * is given. Change the view for everyone in the Group
+       * NOTE: if the Group is already active, the page data will
+       * have just been read in from the Group, so nothing will
+       * change.
+       */
       if (typeof page === "string") {
         page = { view: page }
       }
@@ -211,9 +180,7 @@ class App extends Component {
     } else {
       // Hot reloading, so group_id is missing. Use state to remember
       // which view to show until group_id is restored.
-      stateHolder.view = page.view || page
-
-      this.setState(stateHolder) // string
+      this.setState({ view: page.view || page }) // string
     }
   }
 
@@ -338,12 +305,11 @@ class App extends Component {
     >
       <View
         view={view}
-        setPage={this.setPage}
         aspectRatio={aspectRatio}
         points={this.pointMethod}
         rect={this.state.view_size}
 
-        hideSplash={hideSplash}
+        setPage={this.setPage}
       />
       {layers}
     </Share>

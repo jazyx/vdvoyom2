@@ -188,7 +188,9 @@ export default class CollectJSON {
 
       if (Array.isArray(value)) {
         value.forEach(document => {
-          document.type = key
+          if (key !== "") {
+            document.type = key
+          }
           document.version = version
           collection.insert(document)
           counter += 1

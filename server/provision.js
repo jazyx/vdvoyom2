@@ -11,17 +11,24 @@
 
 import CollectJSON from './collectJSON'
 
+
 const fs = require('fs')
 const path = require('path')
 
 
+/// <<< HARD-CODED
+const knownFile   = "l10n.json"
+/// HARD-CODED >>>
+
+
 export default class Provision{
   constructor() {
-    const knownFile   = "l10n.json"
     const privatePath = Assets.absoluteFilePath(knownFile)
-                            .replace(knownFile, "")
+                              .replace(knownFile, "")
     const jsonRegex = /.json$/
     const JSONfiles = this.crawl(privatePath, jsonRegex)
+
+    // console.log(JSONfiles)
 
     JSONfiles.forEach(jsonFile => {
       new CollectJSON(jsonFile)

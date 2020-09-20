@@ -36,7 +36,7 @@ export default class Profile extends Component {
   constructor(props) {
     super(props)
 
-    this.startup = new StartUp(this.props.hideSplash)
+    this.startup = new StartUp(this.props.setPage)
 
     this.views = {
       Splash

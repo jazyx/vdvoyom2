@@ -15,6 +15,7 @@ import Storage from '/imports/tools/generic/storage'
 
 // Subscriptions
 import collections from '/imports/api/collections/publisher'
+const { Shortcut } = collections
 
 // Connection
 import { preloadCollections } from './PreloadCollections'
@@ -31,23 +32,23 @@ import { SPLASH_DELAY
 
 
 export default class StartUp {
-  constructor(preloadComplete) {
+  constructor( setPage ) {
     /// <<< HARD-CODED
     this.hack = window.location.pathname.startsWith("/*")
     /// HARD-CODED >>>
 
-    this.preloadComplete = preloadComplete
+    this.setPage = setPage
     this.showSplash  = + new Date() + SPLASH_DELAY
 
     this.oneOff = this.oneOff.bind(this)
     this.prepareLaunch = this.prepareLaunch.bind(this)
-    this.welcomeNewUser = this.welcomeNewUser.bind(this)
+    this.welcomeGuestUser = this.welcomeGuestUser.bind(this)
 
     preloadCollections.then(this.prepareLaunch.bind(this))
-                      .catch(preloadComplete) // shows "TimeOut"
+                      .catch(setPage) // shows "TimeOut"
     // preloadCollections is a promise, so it is guaranteed to be
     // asynchronous. The next command _will_ be executed before
-    // prepareLaunch or preloadComplete is called.
+    // prepareLaunch or setPage is called.
 
     this.readInPresets()
   }
@@ -58,7 +59,8 @@ export default class StartUp {
   readInPresets() {
     this.readDataFromStorage() // sets this.storedAccount
                                //      this.storedPage
-    this.readDataFromURL()     // sets this.accountData
+    this.readDataFromQuery(window.location.search)
+                               // sets this.accountData
                                //      this.page
                                //      this.context
   }
@@ -105,16 +107,18 @@ export default class StartUp {
   }
 
 
-  readDataFromURL() {
-    const search  = window.location.search
-    const query   = new URLSearchParams(search)
-    this.setContext(query)
-                 // once | join | admin | teacher | bare
-
+  readDataFromQuery(search) {
     const data = {}
-    query.forEach(function(value, key) {
-      data[key] = value
-    })
+
+    if (search) {
+      const query   = new URLSearchParams(search)
+      this.setContext(query)
+                   // once | join | admin | teacher | bare
+
+      query.forEach(function(value, key) {
+        data[key] = value
+      })
+    }
 
     this.setAccountDataAndPage(data)
   }
@@ -134,14 +138,14 @@ export default class StartUp {
 
 
   setAccountDataAndPage(data) {
-    let {
+    const {
       // login
-      user: username
-    , vo:   native
-    , own:  teacher
-    , teacher: id
-    , lang: language
-    , pin:  q_code
+      user:    username
+    , vo:      native
+    , own:     teacher
+    , teacher: teacher_id
+    , lang:    language
+    , pin:     q_code
       // page
     , view
     , path
@@ -177,8 +181,8 @@ export default class StartUp {
     const accountData = {
       username
     , native
-    , teacher // id for teacher for username
-    , id      // id for teacher who is logging in
+    , teacher    // id for teacher for username
+    , teacher_id // id for teacher who is logging in
     , q_code
     , language
     }
@@ -188,11 +192,13 @@ export default class StartUp {
     // If neither view or path is given, this.page will be undefined
     const page ={ view, path, tag, index, data }
     deleteFrom(page)
-    this.page = this.normalizePage(page) // may be undefined
+    this.page = this.definePage(page) // may be undefined
+
+    console.log("this.page:", this.page, "this.accountData:", this.accountData)
   }
 
 
-  normalizePage(page) {
+  definePage(page) {
     if (!page.view && !page.path) {
       return
     }
@@ -248,7 +254,7 @@ export default class StartUp {
   }
 
 
-  /** Sent by setAccountDataAndPage() from readDataFromURL()
+  /** Sent by setAccountDataAndPage() from readDataFromQuery()
    *
    * @param      {<type>}  accountData  The account data
    * @return     {<type>}  { description_of_the_return_value }
@@ -263,22 +269,27 @@ export default class StartUp {
       const nonce = accountData.username || this.getRandomString(9)
       accountData.username = "deleteTempUser_" + nonce
       // accountData.restore_all = true
+
+      const defaultValues = Object.assign(
+        { language:    "en-GB"
+        , native:      navigator.language || navigator.userLanguage
+        , teacher:     ""
+        // , teacher:     "none"
+        // , restore_all: true
+        // , auto_login:  true
+        }
+      , this.storedData // empty if "once" is used
+      )
+
+      accountData = Object.assign(defaultValues, accountData)
     }
 
-    const defaultValues = Object.assign(
-      { language:    "en-GB"
-      , native:      navigator.language || navigator.userLanguage
-      , teacher:     ""
-      // , teacher:     "none"
-      // , restore_all: true
-      // , auto_login:  true
-      }
-    , this.storedData // empty if "once" is used
-    )
-
-    accountData = Object.assign(defaultValues, accountData)
-
     // console.log("accountData from URL:", accountData)
+    deleteFrom(accountData)
+
+    // if (!Object.keys(accountData).length) {
+    //   accountData = undefined
+    // }
 
     return accountData
   }
@@ -302,7 +313,7 @@ export default class StartUp {
         // shortcut teach id, but we couldn't check that until the
         // Teacher collection (and the other MongoDB collections)
         // became available.
-        this.checkForTeacherShortcut()
+        this.checkForShortcut()
     }
   }
 
@@ -314,14 +325,28 @@ export default class StartUp {
    * @return  {string}  "teacher" if <xx> is indeed a teacher id
    *                    "user" if no id is present (nor once nor join)
    */
-  checkForTeacherShortcut() {
-    const id = window.location.pathname.substring(1)
-    const teacherData = this.getTeacherData(id)
+  checkForShortcut() {
+    let _id = window.location.pathname.substring(1)
 
-    if (teacherData) {
-      this.context = "teacher"
-      this.treatTeacher(teacherData)
+    /// <<< HACK
+    _id = decodeURI(_id)
+          .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
+    /// HACK >>>
 
+    const select = { _id }
+    const project = { fields: {
+        query: 1
+      }
+    }
+    const { query } = Shortcut.findOne(select, project) || {}
+    console.log(
+      "query", query
+    , `db.shortcut.find(${JSON.stringify(select)}, ${JSON.stringify(project.fields)})`
+    )
+
+    if (query) {
+      this.readDataFromQuery(query)
+      this.prepareLaunch()
     } else {
       this.context = "user"
       this.treatUser()
@@ -330,8 +355,6 @@ export default class StartUp {
 
 
   getTeacherData(id) {
-    id = decodeURI(id)
-         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
     return collections.Teacher.findOne({ id }) // may be undefined
   }
 
@@ -424,7 +447,7 @@ export default class StartUp {
   /**
    */
   treatUserInvitation() {
-    const callback = this.welcomeNewUser
+    const callback = this.welcomeGuestUser
     const isSingleUse = false
     const { username, native, teacher, q_code } = this.accountData
 
@@ -455,13 +478,13 @@ export default class StartUp {
   }
 
 
-  welcomeNewUser(error, result) {
+  welcomeGuestUser(error, result) {
     if (error) {
-      return console.log("welcomeNewUser error:", error)
+      return console.log("welcomeGuestUser error:", error)
     }
 
     // console.log(
-    //   "welcomeNewUser error:", error,
+    //   "welcomeGuestUser error:", error,
     //   "result:", JSON.stringify(result, null, "  ")
     //  )
 
@@ -509,7 +532,7 @@ export default class StartUp {
 
   treatTeacher(teacherData) {
     if (!teacherData) {
-      teacherData = this.getTeacherData(this.accountData.id)
+      teacherData = this.getTeacherData(this.accountData.teacher_id)
     }
 
     if (!teacherData) {
@@ -616,31 +639,6 @@ export default class StartUp {
 
     return randomString
   }
-
-
-  // prepareUIForRole() {
-  //   // First time user: no Session data
-  //   // Returning user:  user_id is set
-  //   // Teacher:         teacher_id is set
-
-  //   switch (Session.get("role")) {
-  //     case "admin":
-  //     // TODO
-  //     break
-
-  //     case "teacher":
-  //       this.checkForActiveGroup()
-  //     break
-
-  //     case "user":
-  //       this.reJoinGroups()
-  //     break
-
-  //     default:
-  //       this.go = { view: "Profile" }
-  //       this.hideSplash()
-  //   }
-  // }
 
 
   // /** Called by prepareApp()
@@ -759,11 +757,11 @@ export default class StartUp {
     // Tell Share to replace the Splash screen will with an
     // interactive view (Profile, Activity or an activity-in-progress)
 
-    // console.log("StartUp preloadComplete(\"" + this.go + "\")")
+    // console.log("StartUp setPage(\"" + this.go + "\")")
 
     // Add group_id, because this will be undefined during a
     // hot reload, and we can use this fact to prevent a freeze
     // during development.
-    this.preloadComplete(this.go, Session.get("group_id"))
+    this.setPage(this.go, Session.get("group_id"))
   }
 }

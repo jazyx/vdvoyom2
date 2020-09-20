@@ -1,14 +1,15 @@
 import { Mongo } from 'meteor/mongo';
 
 // Export collections individually: import { Name } from '...'
-const Chat     = new Mongo.Collection('chat')
-const User     = new Mongo.Collection('user')
-const Group    = new Mongo.Collection('group')
-const Fluency  = new Mongo.Collection('fluency')
-const UIText   = new Mongo.Collection('uitext')
-const Counters = new Mongo.Collection('counters')
-const Teacher  = new Mongo.Collection('teacher')
-const Activity = new Mongo.Collection('activity')
+const Chat      = new Mongo.Collection('chat')
+const User      = new Mongo.Collection('user')
+const Group     = new Mongo.Collection('group')
+const Fluency   = new Mongo.Collection('fluency')
+const UIText    = new Mongo.Collection('uitext')
+const Counters  = new Mongo.Collection('counters')
+const Teacher   = new Mongo.Collection('teacher')
+const Activity  = new Mongo.Collection('activity')
+const Shortcut  = new Mongo.Collection('shortcut')
 
 
 // Define the queries that will be used to publish these collections
@@ -26,6 +27,7 @@ export const publishQueries = {
                 ]
               }
 , Activity: {}
+, Shortcut: {}
 }
 
 // Export a collections map
@@ -38,4 +40,5 @@ export const collections = {
 , Counters
 , Teacher
 , Activity
+, Shortcut
 }
