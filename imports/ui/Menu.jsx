@@ -81,6 +81,7 @@ const StyledSVG = styled.svg`
   `
 
 
+
 const StyledMenu = styled.div`
   position: absolute;
   display: flex;
@@ -165,7 +166,7 @@ class BreadCrumbs extends Component {
 
   showActivity(index) {
     const options = {
-      group_id: Session.get("group_id")
+      group_id: this.props.group_id
     , index
     }
 
@@ -234,14 +235,6 @@ class Profile extends Component {
 
 
   getItems() {
-    const code = Session.get("native")
-    const actions = [
-      () => this.props.setPage("Teacher")
-    , () => this.props.setPage("Native")
-    , this.togglePIN
-    , () => this.props.setPage("Name")
-    ]
-
     let items = [
       "change_course"
     , "change_interface_language"
@@ -249,31 +242,31 @@ class Profile extends Component {
     , "log_out"
     ]
 
-    items = items.map(cue => (
-      this.props.uiText.find(item => item.cue === cue)
-    ))
+    const actions = {
+      change_course:             () => this.props.setPage("Teacher")
+    , change_interface_language: () => this.props.setPage("Native")
+    , view_pincode:              this.togglePIN
+    , log_out:                   () => this.props.setPage("Name")
+    }
 
-    items = items.map((item, index) => {
-      const src = item.icon
-      const text = (item[code] || item.en).replace(/_/g, " ")
+    items = items.map((cue) => {
+      const src  = this.props.uiData.icon[cue]
+      const text = this.props.uiData.text[cue]
+      // Used only for view_pincode:
       let q_code
         , action
 
-      if (item.cue === "view_pincode") {
-        if (this.state.showPIN) {
-          q_code = Session.get("q_code")
-        }
-
-        action = this.togglePIN
+      if (cue === "view_pincode" && this.state.showPIN) {
+        q_code = this.props.q_code
       }
 
       return (
         <li
-          key={item.cue}
+          key={cue}
         >
           <button
             disabled={false}
-            onMouseUp={actions[index]}
+            onMouseUp={actions[cue]}
             onMouseDown={action}
           >
             <img
@@ -304,15 +297,13 @@ class Profile extends Component {
 
 
 const Items = (props) => {
+  // console.log("Items props:", props)
   return <StyledMenu
     ref={props.pane}
-    open={props.open}
+    open={props.menu_open}
   >
     <BreadCrumbs
-      index={props.index}
-      items={props.items}
-      setPage={props.setPage}
-      closeMenu={props.closeMenu}
+      {...props}
     />
     <hr
       style={{
@@ -322,8 +313,7 @@ const Items = (props) => {
       }}
     />
     <Profile
-      uiText={props.uiText}
-      setPage={props.setPage}
+      {...props}
     />
   </StyledMenu>
 }
@@ -450,11 +440,12 @@ class Menu extends Component {
     // Prepare to delete both the user and the group if the user is
     // temporary. See getURLQueryData() for the creation of the temp
     // username
+    const { username, user_id, teacher_id, d_code } = this.props
     const regex = /deleteTempUser_[A-Za-z0-9&#]+/
-    const remove = regex.test(Session.get("username"))
+    const remove = regex.test(username)
 
     // console.log(
-    //   "Logging out user", Session.get("username")
+    //   "Logging out user", username)
     // , "remove:", remove
     // )
 
@@ -463,8 +454,7 @@ class Menu extends Component {
     // the teacher_id is not stored, so if it is present, this
     // user logged in as a teacher.
 
-    const id = Session.get("teacher_id") || Session.get("user_id")
-    const d_code = Session.get("d_code")
+    const id = teacher_id || user_id
 
     if (!(id && d_code)) {
       // id and d_code will not be set unless basic profile is
@@ -474,7 +464,6 @@ class Menu extends Component {
       return
     }
 
-    // const group_id = Session.get("group_id")
     const userAndDevice = { id, d_code, remove } //, group_id }
 
     logOut.call(userAndDevice) // no callback = synchronous
@@ -482,11 +471,11 @@ class Menu extends Component {
 
 
   render() {
-    if (!this.props.uiText.length) {
+    if (!this.props.uiData.ready) {
       // The chances are that the connection timed out before loading
       // the UIText collection, or that the app was hot reloaded so
       // the collection had not yet had time to load. As a result
-      // there's nothing for the menu to
+      // there's nothing for the menu to show
       // console.log("No phrases for UI")
 
       return ""
@@ -504,14 +493,8 @@ class Menu extends Component {
         id="menu-items"
       >
         <Items
+          {...this.props}
           pane={this.pane}
-          open={this.props.menu_open}
-
-          index={this.props.index}
-          items={this.props.items}
-          uiText={this.props.uiText}
-
-          setPage={this.props.setPage}
           closeMenu={this.closeMenu}
         />
         <StyledSVG
@@ -536,18 +519,36 @@ class Menu extends Component {
 
 class MenuTracker{
   getProps() {
-    const group_id = Session.get("group_id")
-    const uiText  = this.getUIText()
-    const { page, menu_open, isPilot } = this.getGroupData()
+    const username   = Session.get("username")
+    const user_id    = Session.get("user_id")
+    const teacher_id = Session.get("teacher_id")
+    const group_id   = Session.get("group_id")
+    const d_code     = Session.get("d_code")
+    const q_code     = Session.get("q_code")
+
+    const native     = Session.get("native")
+
+    const uiData     = this.getUIData(native)
+    const {
+      page
+    , menu_open
+    , isPilot
+    } = this.getGroupData(group_id, d_code)
     const { path, index } = page
-    const items   = this.getItems(path, uiText)
+    const items = this.getMenuItems(path, uiData, native)
 
     const props = {
-      uiText
+      username
+    , user_id
+    , teacher_id
+    , group_id
+    , d_code
+    , q_code
+
+    , uiData
     , path
     , index
     , items
-    , group_id
     , menu_open
     , isPilot
     }
@@ -556,7 +557,7 @@ class MenuTracker{
   }
 
 
-  getUIText() {
+  getUIData(native) {
     const select = {
       $or: [
         { cue: "all_activities" }
@@ -566,22 +567,52 @@ class MenuTracker{
       , { cue: "log_out" }
       ]
     }
-    const uiText = UIText.find(select).fetch()
+    const uiData = UIText.find(select)
+                         .fetch()
+                         .reduce((map, uiItem) => {
+                           const text = getLocalized(uiItem, native)
 
-    // console.log( "uiText:", uiText
+                           map.text[uiItem.cue] = text
+                           if (uiItem.icon) {
+                             map.icon[uiItem.cue] = uiItem.icon
+                           }
+
+                           return map
+                         }, { text: {}, icon: {} })
+
+    // console.log( "uiData:", JSON.stringify(uiData, null, "  ")
     //            , "<<<   db.uitext.find("
     //            + JSON.stringify(select)
     //            + ")"
     //            )
+    // [ { _id: "uW2YPk3QZetoP43PY"
+    //   , cue: "log_out"
+    //   , ru: "Выйти"
+    //   , en: "Log out"
+    //   , fr: "Déconnexion"
+    //   }
+    // , ...
+    // ]
+    //  =>
+    // { all_activities:            { text:   "All activities"
+    //                              , icon:   undefined
+    //                              , action: undefined
+    //                              }
+    // , change_course:             "Choose course"
+    // , change_interface_language: "Set interface language"
+    // , log_out:                   "Log out"
+    // , view_pincode:              "Show PIN code"
+    // }
 
-    return uiText
+    if (Object.keys(uiData.text).length) {
+      uiData.ready = true
+    }
+
+    return uiData
   }
 
 
-  getGroupData() {
-    const group_id = Session.get("group_id")
-    const d_code = Session.get("d_code")
-
+  getGroupData(group_id, d_code) {
     if (group_id) {
       const groupSelect = { _id: group_id }
       const groupProject = {
@@ -634,17 +665,12 @@ class MenuTracker{
    * Gets the items.
    *
    * @param      {string}  path     "/Game/set/match"
-   * @param      {object}  uiText   [ { cue: "all_activities"
-   *                                  , "en": "text"
-   *                                  , "ru": "текст"
-   *                                  , ...
-   *                                  }
+   * @param      {object}  uiData   { <cue>: <string>
    *                                , ...
-   *                                ]
+   *                                }
    * @return     {array} [ {...} ]
    */
-  getItems(path, uiText) {
-    const lang = Session.get("native")
+  getMenuItems( path, uiData, native ) {
     const sets = path
                ? path.split(SET_REGEX) // [""] || ["/Game", "/set"]
                : []
@@ -681,8 +707,8 @@ class MenuTracker{
         //            + ")"
         //            )
       }
-      const icon = getIconSrc(setData.icon, lang)
-      const name = getLocalized(setData.name, lang)
+      const icon = getIconSrc(setData.icon, native)
+      const name = getLocalized(setData.name, native)
 
       return {
         name
@@ -694,7 +720,7 @@ class MenuTracker{
     const items = sets.map(getItemArray)
                       .filter(item => !!item)
 
-    const name = localize("all_activities", lang, uiText)
+    const name = uiData.text.all_activities
     items.unshift({
       name
     , path: ""

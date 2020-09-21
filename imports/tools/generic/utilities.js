@@ -721,7 +721,7 @@ export const trimImage = (image) => {
  *                                { simple:  "Log in"
  *                                , replace: "Log in as ^0"
  *                                }
- * @param     {object}   options  { "^0": "admin", ...}
+ * @param     {object}   options  { "^0": "admin", ... }
  *
  * @return    {string}   string (with customized inserts)
  */
@@ -749,14 +749,15 @@ export const substitute = (phrase, options) => {
 /**
  * Returns the best localized string from a map of phrases
  *
- * @param      {object}  phraseData   { ...
- *                                    , "co-DE": "regional string"
- *                                    , "co": "generic string"
- *                                    , ...
- *                                    }
- * @param      {string}  [code="en"]  language code ≈ "co" or "co-DE"
+ * @param   {object}  phraseData   { ...
+ *                                 , "co-DE": "regional string"
+ *                                 , "co": "generic string"
+ *                                 , ...
+ *                                 }
+ * @param   {string}  code         language code ≈ "co" or "co-DE"
+ * @param   {object}  options      { "^0": "admin", ... }
  *
- * @return     {string}  "<Missing>" or the localized string
+ * @return  {string}  "<Missing>" or the localized string
  */
 export const getLocalized = (phraseData, code = "en", options) => {
   let phrase = phraseData[code]

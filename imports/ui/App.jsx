@@ -129,34 +129,37 @@ class App extends Component {
 
   /** Called by from the StartUp scripts and from Menu component
    *
+   * If called from the hideSplash method of the StartUp instance,
+   * this.props.group_id
+   *
    * Calls the setPage Meteor method to update the page object of the
    * current group. The page object will be available via
    * this.props.page to all members of the group.
    *
-   * @param   {object} page    string
-   *                           OR object with the format:
-   *                           { view: "Native"
-   *                           , next: { // optional: where to g
-   *                                     // when [Done] is pressed
-   *                               path: []
-   *                             , index: <integer>
-   *                             , lastItemIsTag: false
-   *                             , data: {...}
-   *                             }
-   *                           }
-   *                           OR
-   *                           { view: "Ignored"
-   *                           , path: <"/Collection/folder/...>
-   *                           , index: <integer>
-   *                           , tag:   <string>
-   *                           , data: {...}
-   *                           }
-   *                           Either view or path is required.
-   *                           view is ignored if path is present
+   * @param  {object}  page       string
+   *                              OR object with the format:
+   *                              { view: "Native"
+   *                              , next: { // optional: where to g
+   *                                        // when [Done] is pressed
+   *                                  path: []
+   *                                , index: <integer>
+   *                                , lastItemIsTag: false
+   *                                , data: {...}
+   *                                }
+   *                              }
+   *                              OR
+   *                              { view: "Ignored"
+   *                              , path: <"/Collection/folder/...>
+   *                              , index: <integer>
+   *                              , tag:   <string>
+   *                              , data: {...}
+   *                              }
+   *                              Either view or path is required.
+   *                              view is ignored if path is present
+   * @param   {string}  group_id  may be string if sent from StartUp's
+   *                              hideSplash()
    */
-  setPage(page) {
-    const group_id = this.props.group_id
-
+  setPage(page, group_id = this.props.group_id) {
     if (!page) {
       this.setState({ view: "TimeOut" })
 

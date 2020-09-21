@@ -187,14 +187,18 @@ export default class StartUp {
     , language
     }
     deleteFrom(accountData)
-    this.accountData = this.normalizeAccountData(accountData)
+    if (this.context === "once") {
+      this.accountData = this.addNonceDefaults(accountData)
+    } else {
+      this.accountData = accountData
+    }
 
     // If neither view or path is given, this.page will be undefined
     const page ={ view, path, tag, index, data }
     deleteFrom(page)
     this.page = this.definePage(page) // may be undefined
 
-    console.log("this.page:", this.page, "this.accountData:", this.accountData)
+    // console.log("this.page:", this.page, "this.accountData:", this.accountData)
   }
 
 
@@ -254,42 +258,23 @@ export default class StartUp {
   }
 
 
-  /** Sent by setAccountDataAndPage() from readDataFromQuery()
-   *
-   * @param      {<type>}  accountData  The account data
-   * @return     {<type>}  { description_of_the_return_value }
-   */
-  normalizeAccountData(accountData) {
+  addNonceDefaults(accountData) {
     // console.log(
-    //   "accountData"
+    //   "addNonceDefaults accountData:"
     // , JSON.stringify(accountData, null, "  ")
     // )
 
-    if (this.context === "once") {
-      const nonce = accountData.username || this.getRandomString(9)
-      accountData.username = "deleteTempUser_" + nonce
-      // accountData.restore_all = true
+    const nonce = accountData.username || this.getRandomString(9)
+    accountData.username = "deleteTempUser_" + nonce
 
-      const defaultValues = Object.assign(
-        { language:    "en-GB"
-        , native:      navigator.language || navigator.userLanguage
-        , teacher:     ""
-        // , teacher:     "none"
-        // , restore_all: true
-        // , auto_login:  true
-        }
-      , this.storedData // empty if "once" is used
-      )
+    const defaultValues = Object.assign(
+      { language: "en-GB"
+      , native:   navigator.language || navigator.userLanguage
+      , teacher:  "none"
+      }
+    )
 
-      accountData = Object.assign(defaultValues, accountData)
-    }
-
-    // console.log("accountData from URL:", accountData)
-    deleteFrom(accountData)
-
-    // if (!Object.keys(accountData).length) {
-    //   accountData = undefined
-    // }
+    accountData = Object.assign(defaultValues, accountData)
 
     return accountData
   }
@@ -300,7 +285,7 @@ export default class StartUp {
   prepareLaunch() {
     switch (this.context) {
       case "once":
-        return this.autoLogIn("once", this.oneOff)
+        return this.autoLogin(this.oneOff)
       case "join":
         return this.treatUserInvitation()
       case "admin":
@@ -340,65 +325,20 @@ export default class StartUp {
     }
     const { query } = Shortcut.findOne(select, project) || {}
     console.log(
-      "query", query
-    , `db.shortcut.find(${JSON.stringify(select)}, ${JSON.stringify(project.fields)})`
+      "query", query, `\ndb.shortcut.find(
+        ${JSON.stringify(select)} ${project && project.fields ? `
+      , ${JSON.stringify(project.fields)}` : ""}
+      )`
     )
 
     if (query) {
       this.readDataFromQuery(query)
       this.prepareLaunch()
+
     } else {
-      this.context = "user"
+      // leave this.context as "check"
       this.treatUser()
     }
-  }
-
-
-  getTeacherData(id) {
-    return collections.Teacher.findOne({ id }) // may be undefined
-  }
-
-
-  /* Prepares accountData for a call to logIn method, with callback
-   *
-   * Called by:
-   * • prepareApp() if window.location.search includes "once"
-   * •treatUserInvitation if         ~.search includes "join"
-   *
-   * @param  {URLSearchParams}  accountData { username
-   *                                        , native
-   *                                        , teacher
-   *                                        , language
-   *                                        , restore_all
-   *                                        }
-   * @param  {truthy}           singleUse  true if the User and Group
-   *                                       documents are to be deleted
-   *                                       when this session ends.
-   * @param  {Function}         callback   Function to call after the
-   *                                       logIn method has run
-   */
-  autoLogIn(singleUse, callback) {
-    if (typeof singleUse === "function") {
-      // Allow singleUse to be omitted
-      callback = singleUse
-      singleUse = false
-
-    } else if (singleUse) {
-      const nonce = this.accountData.username||this.getRandomString(9)
-      this.accountData.username = "deleteTempUser_" + nonce
-    }
-
-    const defaultValues = {
-      d_code:      this.getD_Code()
-    , teacher:     ""
-    , language:    "en-GB"
-    , native:      navigator.language || navigator.userLanguage
-    , restore_all: true
-    }
-
-    this.accountData = Object.assign(defaultValues, this.accountData)
-
-    logIn.call(this.accountData, callback)
   }
 
 
@@ -433,6 +373,10 @@ export default class StartUp {
     //   loggedIn: true
     //   status: "JoinGroup_success"
 
+    this.group_id = result.group_id
+
+    result.native = this.accountData.native
+    result.language = this.accountData.language
     if (this.page) {
       result.page = this.page
     }
@@ -444,18 +388,30 @@ export default class StartUp {
   }
 
 
+  autoLogin(callback) {
+    this.accountData.d_code = this.getD_Code()
+
+    console.log(
+      "autoLogin this.accountData"
+    , JSON.stringify(this.accountData, null, "  ")
+    )
+
+    logIn.call(this.accountData, callback)
+  }
+
+
   /**
    */
-  treatUserInvitation() {
+  treatUserInvitation(recursive) {
     const callback = this.welcomeGuestUser
     const isSingleUse = false
     const { username, native, teacher, q_code } = this.accountData
 
     if ( username && native && teacher && q_code ) {
       // All login data is given in the URL. Log in automatically.
-      this.autoLogIn( isSingleUse, callback )
+      return this.autoLogIn(callback )
 
-    } else {
+    } else if (!recursive) {
       // At least one property is missing for autoLogIn. Use data
       // from local storage to fill in the gaps in the data read in
       // from the URL...
@@ -465,16 +421,14 @@ export default class StartUp {
       )
 
       if (this.storedAccount.auto_login) {
-        // ...but only log in automatically if this was requested
-        this.autoLogIn( isSingleUse, callback )
-
-      } else {
-        // Step through Profile screens with given presets
-        this.setSessionDataFrom(this.accountData)
-        this.go = { view: "Profile" }
-        this.hideSplash()
+        return this.treatUserInvitation("recursive")
       }
     }
+
+    // Step through Profile screens with given presets
+    this.setSessionDataFrom(this.accountData)
+    this.go = { view: "Profile" }
+    this.hideSplash()
   }
 
 
@@ -487,35 +441,31 @@ export default class StartUp {
     //   "welcomeGuestUser error:", error,
     //   "result:", JSON.stringify(result, null, "  ")
     //  )
+    /*
+      "teacher":    "jn",
+      "language":   "en-GB",
+      "native":     "en"
+      "username":   "ele",
+      "q_code":     "4377",
+      "user_id":     "nyGGa7aCYJPtzfGbZ",
+      "group_id":    "haqWCZeyKa4nCNiaQ",
+      "q_color":     "#33cc93",,
+      "restore_all": true,
 
-      /*
-        "teacher":    "jn",
-        "language":   "en-GB",
-        "native":     "en"
-        "username":   "ele",
-        "q_code":     "4377",
-        "user_id":     "nyGGa7aCYJPtzfGbZ",
-        "group_id":    "haqWCZeyKa4nCNiaQ",
-        "q_color":     "#33cc93",,
-        "restore_all":  true,
+      "d_code":  "Pd720t1",
+      "status":  "JoinGroup_success",
+      "loggedIn": true
 
-        "d_code":  "Pd720t1",
-        "status":  "JoinGroup_success",
-        "loggedIn": true
-
-        ?? auto_login ??
-      */
-
+      ?? auto_login ??
+    */
 
     if (!result.loggedIn) {
       // `pin` was defined and used for d_code, but it was wrong.
-      page = this.manualLoginAfterAutoLoginFailed(result)
-      ignorePath = true
-      if (!page) {
-        return console.log("NO PAGE FOUND IN STARTUP")
-      }
+      this.profilePages = this.getProfilePages(result)
+      this.treatUser()
     }
 
+    this.group_id = result.group_id
     result.role = "user"
     result.page = this.page
     this.setSessionDataFrom(result)
@@ -525,22 +475,34 @@ export default class StartUp {
   }
 
 
+  getProfilePages(accountData) {
+    const profilePages = []
+
+
+    return profilePages
+  }
+
+
   treatUser() {
     console.log("TODO: treatUser")
   }
 
 
-  treatTeacher(teacherData) {
-    if (!teacherData) {
-      teacherData = this.getTeacherData(this.accountData.teacher_id)
-    }
+  treatTeacher() {
+    const select = { id: this.accountData.teacher_id }
+    const teacherData = collections.Teacher.findOne(select)
+
+    console.log(
+      "teacherData", teacherData, "\n"
+    , `db.teacher.findOne(
+        ${JSON.stringify(select)}
+      )`
+    )
 
     if (!teacherData) {
       console.log("Unknown teacher:", this.accountData)
-      return
+      return this.treatUser()
     }
-
-    console.log("teacherData:", teacherData)
 
     const d_code  = this.getD_Code()
 
@@ -762,6 +724,6 @@ export default class StartUp {
     // Add group_id, because this will be undefined during a
     // hot reload, and we can use this fact to prevent a freeze
     // during development.
-    this.setPage(this.go, Session.get("group_id"))
+    this.setPage(this.go, this.group_id)
   }
 }
