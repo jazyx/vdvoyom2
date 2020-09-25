@@ -1,5 +1,5 @@
 /**
- * /public/Activities/Show/deck/components/quote.jsx
+ * /public/Activities/Show/deck/components/header_quote.jsx
  *
  *
  */
@@ -9,6 +9,7 @@ import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react'
 
 import styled from 'styled-components'
+
 
 
 
@@ -34,13 +35,22 @@ const StyledQuote = styled.div`
     padding: 0.75em;
   }
 
+  & h1 {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
   & p {
     margin: 0;
+  }
+
+  & b {
+    color: var(--menuColor);
   }
 `
 
 
-export class Quote extends Component {
+export default class Quote extends Component {
   constructor(props) {
     super(props)
 
@@ -97,6 +107,104 @@ export class Quote extends Component {
   }
 
 
+  getHeaderAndText(legend) {
+    const regex = /(?:#([^#]+)#)?(.*)/
+    const match = regex.exec(legend)
+
+    if (!match) {
+      return "" + legend
+    }
+
+    let [ , header, text ] = match
+    if (header) {
+      header = this.addLinks(header, "h1", "_ele")
+    }
+
+    text = text.split("\n")
+    let lastIndex = text.length - 1
+
+    text = text.map(
+      ( paragraph, index ) => {
+        const ref = index === lastIndex ? this.pRef : ""
+        paragraph = this.addFontStyles(paragraph, "p", index, ref)
+        return paragraph
+      }
+    )
+
+    return { header, text }
+  }
+
+
+  addLinks(text, Tag, target) {
+    const regex = /\[([^\]]+)]\(([^)]+)\)/g
+
+    const children = []
+    let start = 0
+    let match
+
+    while (match = regex.exec(text)) {
+      const anchor = match[1]
+      const href = match[2]
+      const index = match.index
+      const length = 1 + anchor.length + 1 + 1 + href.length + 1
+
+      const link = <a
+        key={index}
+        href={href}
+        target={target}
+      >
+        {anchor}
+      </a>
+      children.push(text.substring(start, index), link)
+      start = index + length
+    }
+
+    children.push(text.substring(start))
+
+    const component = <Tag>{children}</Tag>
+
+    return component
+  }
+
+
+  addFontStyles(text, Tag, key, ref) {
+    const regex = /(?:\b_(\w.*?\w)_\b)|(?:[\^\s]\*(\w.*?\w)\*[$\s])/g
+    const children = []
+    let start = 0
+    let match
+      , tag
+      , length
+
+    while (match = regex.exec(text)) {
+      let index = match.index
+      const [, italic, bold] = match
+
+      if (italic) {
+        tag = <i key={index}>{italic}</i>
+        length = 1 + italic.length + 1
+      } else {
+        tag = <b key={index}>{bold}</b>
+        index += !!index
+        length = 1 + bold.length + 1
+      }
+
+      children.push(text.substring(start, index), tag)
+      start = index + length
+    }
+
+    children.push(text.substring(start))
+
+    const component = <Tag
+      key={key}
+      ref={ref}
+    >
+      {children}
+    </Tag>
+
+    return component
+  }
+
+
   render() {
     // console.log("QUOTE", JSON.stringify(this.props, null, "  "))
     // { "_id": "TvfpevCvE5TdxJ5qa",
@@ -124,21 +232,23 @@ export class Quote extends Component {
     if (aspectRatio < limit) {
       direction = "column"
       src = image.h
+
     } else {
-      direction = "row"
+      if (this.props.textPosition === "left") {
+        direction = "row-reverse"
+
+      } else {
+        direction = "row"
+      }
+
       src = image.v
     }
 
-    let text = legend[0].legend.split("\n")
-    let lastIndex = text.length - 1
-    text = text.map(( paragraph, index ) => (
-                     <p
-                       key={index}
-                       ref={index ===lastIndex ? this.pRef : ""}
-                     >
-                       {paragraph}
-                     </p>
-                   ))
+    let { header, text } = this.getHeaderAndText(legend[0].legend)
+
+    // console.log("menu:", menu, "aspectRatio:", aspectRatio)
+    // console.log("limit:", limit, "legend:", legend, "image:", image)
+    // console.log("header:", header, "text:", text)
 
     return <StyledQuote
       direction={direction}
@@ -150,7 +260,15 @@ export class Quote extends Component {
       />
       <div
         ref={this.divRef}
-      >{text}</div>
+      >
+        {header}
+        {text}
+      </div>
     </StyledQuote>
+  }
+
+
+  componentDidMount() {
+    this.fitFont()
   }
 }

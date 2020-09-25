@@ -166,6 +166,16 @@ export const StyledButton = styled.button`
              `
            : `cursor: pointer;`
    }
+  ${props => props.smaller
+           ? `color: #999;
+              border-width: 1.5px;
+              height: calc(12 * var(--min));
+              width: calc(54 * var(--w));
+              max-width: calc(54 * var(--h));
+              font-size: calc(4.20 * var(--min));
+             `
+           : ""
+   }
 
   &:active {
     background: ${colors.active};

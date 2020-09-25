@@ -78,6 +78,7 @@ const StyledSVG = styled.svg`
   transition: left .3s linear, opacity .1s;
   transition-property: left, opacity;
   transition-delay: ${props => props.open ? ".1s, 0s;" :"0s, .3s;"}
+  cursor: pointer;
   `
 
 

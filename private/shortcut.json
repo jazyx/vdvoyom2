@@ -16,7 +16,10 @@
     , "query": "teacher=ml"
     }
   , { "_id": "oats"
-    , "query": "join&path=Show&tag=oatsAndBeans&user=ele&vo=en&lang=en&own=jn&pin=3819"
+    , "query": "join&path=Show&tag=oatsAndBeans&user=ELE&vo=en&lang=en&own=jn&pin=3819"
+    }
+  , { "_id": "ele_oats"
+    , "query": "once&path=Show&tag=oatsAndBeans&vo=en&lang=en"
     }
   ]
 }

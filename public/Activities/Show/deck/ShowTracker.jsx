@@ -59,6 +59,14 @@ export default class ShowTracker extends Tracker{
       }, {})
     }
 
+    if (typeof document.header === "object") {
+      document.header = getLocalized(document.header, this.code)
+    }
+
+    if (typeof document.items === "object") {
+      document.items = getLocalized(document.items,this.code,"as_is")
+    }
+
     delete document.tags
 
     return document

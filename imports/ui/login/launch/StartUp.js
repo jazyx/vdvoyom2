@@ -3,6 +3,7 @@
  */
 
 
+
 import { Session } from 'meteor/session'
 
 // Helpers
@@ -31,7 +32,11 @@ import { SPLASH_DELAY
 
 
 
-export default class StartUp {
+let singleton =  0
+
+
+
+class StartUpSingleton {
   constructor( setPage ) {
     /// <<< HARD-CODED
     this.hack = window.location.pathname.startsWith("/*")
@@ -43,6 +48,7 @@ export default class StartUp {
     this.oneOff = this.oneOff.bind(this)
     this.prepareLaunch = this.prepareLaunch.bind(this)
     this.welcomeGuestUser = this.welcomeGuestUser.bind(this)
+    this.updateProfile = this.updateProfile.bind(this)
 
     preloadCollections.then(this.prepareLaunch.bind(this))
                       .catch(setPage) // shows "TimeOut"
@@ -160,6 +166,7 @@ export default class StartUp {
     , "own"
     , "teacher"
     , "language"
+    , "lang"
 
     , "pin"
     , "view"
@@ -285,7 +292,7 @@ export default class StartUp {
   prepareLaunch() {
     switch (this.context) {
       case "once":
-        return this.autoLogin(this.oneOff)
+        return this.autoLogIn(this.oneOff)
       case "join":
         return this.treatUserInvitation()
       case "admin":
@@ -324,12 +331,12 @@ export default class StartUp {
       }
     }
     const { query } = Shortcut.findOne(select, project) || {}
-    console.log(
-      "query", query, `\ndb.shortcut.find(
-        ${JSON.stringify(select)} ${project && project.fields ? `
-      , ${JSON.stringify(project.fields)}` : ""}
-      )`
-    )
+    // console.log(
+    //   "query", query, `\ndb.shortcut.find(
+    //     ${JSON.stringify(select)} ${project && project.fields ? `
+    //   , ${JSON.stringify(project.fields)}` : ""}
+    //   )`
+    // )
 
     if (query) {
       this.readDataFromQuery(query)
@@ -337,6 +344,7 @@ export default class StartUp {
 
     } else {
       // leave this.context as "check"
+      this.setProfilePages(this.accountData)
       this.treatUser()
     }
   }
@@ -388,13 +396,13 @@ export default class StartUp {
   }
 
 
-  autoLogin(callback) {
+  autoLogIn(callback) {
     this.accountData.d_code = this.getD_Code()
 
-    console.log(
-      "autoLogin this.accountData"
-    , JSON.stringify(this.accountData, null, "  ")
-    )
+    // console.log(
+    //   "autoLogIn this.accountData"
+    // , JSON.stringify(this.accountData, null, "  ")
+    // )
 
     logIn.call(this.accountData, callback)
   }
@@ -403,12 +411,19 @@ export default class StartUp {
   /**
    */
   treatUserInvitation(recursive) {
-    const callback = this.welcomeGuestUser
-    const isSingleUse = false
-    const { username, native, teacher, q_code } = this.accountData
+    const callback     = this.welcomeGuestUser
 
-    if ( username && native && teacher && q_code ) {
-      // All login data is given in the URL. Log in automatically.
+    const isSingleUse  = false
+    const { username, native, teacher, q_code } = this.accountData
+    const canRegister  = !!(username && native && teacher)
+    const canAutoLogIn = !!(q_code && canRegister)
+    this.accountData.pin_absent = canRegister && !canAutoLogIn
+
+    if ( canRegister ) {
+      // All login data is given in the URL — although perhaps the
+      // q_code is missing. Log in automatically. If the name is
+      // unique then a q_code is not needed, but the NewPIN screen
+      // must be shown.
       return this.autoLogIn(callback )
 
     } else if (!recursive) {
@@ -426,9 +441,8 @@ export default class StartUp {
     }
 
     // Step through Profile screens with given presets
-    this.setSessionDataFrom(this.accountData)
-    this.go = { view: "Profile" }
-    this.hideSplash()
+    this.setProfilePages(this.accountData)
+    this.treatUser()
   }
 
 
@@ -459,10 +473,26 @@ export default class StartUp {
       ?? auto_login ??
     */
 
-    if (!result.loggedIn) {
-      // `pin` was defined and used for d_code, but it was wrong.
-      this.profilePages = this.getProfilePages(result)
-      this.treatUser()
+    /* this.accountData
+      teacher: "jn"
+      language: "en"
+      native: "en"
+      username: "ELE"
+
+      d_code: "zDgdeMF"
+      pin_absent: true
+    */
+
+    this.accountData = result // orginal augmented with new properties
+
+    if (!result.loggedIn || result.pin_absent) {
+      // EITHER `pin` was defined and used for q_code, but it was
+      //         wrong
+      // OR      A new account was created for a user with a unique
+      //         name, so we must show the NewPIN screen
+
+      this.setProfilePages(result)
+      return this.treatUser()
     }
 
     this.group_id = result.group_id
@@ -475,17 +505,125 @@ export default class StartUp {
   }
 
 
-  getProfilePages(accountData) {
-    const profilePages = []
+  setProfilePages(accountData) {
+    this.profilePages = []
+
+    let pageData
+
+    if (accountData.status === "RequestPIN" || !accountData.q_code) {
+      pageData = { view: "EnterPIN" }
+      return this.profilePages.push(pageData)
+
+    } else if (accountData.pin_absent && accountData.q_code) {
+      pageData = { view: "NewPIN" }
+      return this.profilePages.push(pageData)
+    }
+
+    if (!accountData.native) {
+      pageData = {
+        view: "Native"
+      }
+      this.profilePages.push(pageData)
+    }
+
+    if (!accountData.username) {
+      pageData = {
+        view: "Name"
+      }
+      this.profilePages.push(pageData)
+    }
+
+    if (!accountData.teacher) {
+      pageData = {
+        view: "Teacher"
+      }
+      this.profilePages.push(pageData)
+    }
+   }
 
 
-    return profilePages
+   treatUser() {
+    this.go = this.profilePages.shift()
+    console.log("treatUser called. this.profilePages", this.profilePages)
+    this.hideSplash()
   }
 
 
-  treatUser() {
-    console.log("TODO: treatUser")
+  updateProfile(profileData) {
+    console.log(
+      "updateProfile profileData"
+    , JSON.stringify(profileData, null, "  ")
+    , "\nthis.profilePages"
+    , JSON.stringify(this.profilePages, null, "  ")
+    )
+
+    const actions = [ "back", "view", "next" ]
+    const { back, view, next } = deleteFrom(profileData, actions)
+
+    if (back) {
+      return console.log("Back button at", view, "=", back)
+    } else if (next) {
+      return console.log("Next button at", view, "=", next)
+    }
+
+    switch (view) {
+      case "Native":
+        this.setNative(profileData)
+      break
+      case "Name":
+        this.setName(profileData)
+      break
+      case "Teacher":
+        this.setTeacher(profileData)
+      break
+      case "EnterPIN":
+        this.submitPIN(profileData)
+      break
+
+      case "NewPIN":
+        return this.start()
+    }
+
+    const nextPage = this.profilePages.shift()
+    if (nextPage) {
+      this.setPage(nextPage, this.group_id)
+    } else if (!this.accountData.logged_in) {
+      this.autoLogIn(this.welcomeGuestUser)
+    } else {
+      this.setPage(this.page, this.group_id)
+    }
   }
+
+
+  setNative(profileData) {
+    console.log("setNative called", profileData)
+    this.accountData.native = profileData.native
+  }
+
+
+  setName(profileData) {
+    console.log("setName called")
+    this.accountData.name = profileData.name
+  }
+
+
+  setTeacher(profileData) {
+    console.log("setTeacher called")
+    this.accountData.teacher = profileData.teacher
+  }
+
+
+  submitPIN(profileData) {
+    if (profileData.q_code) {
+      this.accountData.q_code = profileData.q_code
+      this.accountData.pin_given = true
+      this.autoLogIn(this.welcomeGuestUser)
+
+    } else if (profileData.create_account) {
+      this.accountData.status = "CreateAccount"
+      this.autoLogIn(this.welcomeGuestUser)
+    }
+   }
 
 
   treatTeacher() {
@@ -603,108 +741,9 @@ export default class StartUp {
   }
 
 
-  // /** Called by prepareApp()
-  //  *
-  //  * @param  {object}  teacher  undefined OR
-  //  *                            {"_id" :       <string>,
-  //  *                              "file" :     <image filename>,
-  //  *                              "id" :       <string>,
-  //  *                              "name" : {
-  //  *                                "cyrl" :   <string>,
-  //  *                                "latn" :   <string>
-  //  *                              },
-  //  *                              "with" :     <"learn x with Y">,
-  //  *                              "language" : <ISO code string,
-  //  *                              "script" :   <one of name keys>,
-  //  *                              "type" :     "profile",
-  //  *                              "version" :  <integer (irrelevant)>,
-  //  *                              "logged_in" : [ ... ]
-  //  *                            }
-  //  */
-  // setSessionDataFromStorage(teacher) {
-  //   const storedData = Storage.get()
-
-  //   // console.log(
-  //   //   "storedData"
-  //   // , JSON.stringify(storedData, null, "  ")
-  //   // )
-  //   /* { username:    "James"
-  //    * , user_id:     "H9uMqxwvkySYt7QtP"
-  //    * , native:      "en-GB"
-  //    * , teacher:     "aa"
-  //    * , language:    "ru"
-  //    * , group_id:    "naRRNbnrr2syzEhPz"
-  //    * , q_code:      "3819"
-  //    * , q_color:     "#33cc60"
-  //    * , restore_all: false
-  //    * , "auto_login":false
-  //    *
-  //    * [, view:       "Activity"]
-  //    * }
-  //    */
-
-  //   const keys = Object.keys(storedData)
-
-  //   if (teacher) {
-  //     Session.set("teacher_id", teacher.id)
-  //     Session.set("native",     teacher.language)
-  //     Session.set("language",   teacher.language)
-  //     Session.set("role",       "teacher")
-  //     Session.set("q_color",    "#f00") // red by default for Teachers
-  //     // d_code, q_code, q_color
-
-  //   } else if (keys.length) {
-  //     Session.set("role", "user")
-  //     this.setSessionDataFrom(storedData)
-
-  //   } else {
-  //     // First time user on this device. No storedData to treat
-  //   }
-  // }
-
-
-  manualLoginAfterAutoLoginFailed(data) {
-    switch (data.status) {
-      case "RequestPIN":
-        return { view: "Submit" }
-      break
-      default:
-        console.log(
-          "manualLoginAfterAutoLoginFailed status:", data.status
-        , "data" , JSON.stringify(data, null, "  ")
-        )
-
-    }
+  getAccountDetail(key) {
+    return this.accountData[key]
   }
-
-
-  // reJoinGroups() {
-  //   // TODO: Integrate menu then remove the following 4 lines
-  //   if (!Session.get("auto_login")) {
-  //     // console.log("reJoinGroups Returning user:", Session.get("username"))
-  //     this.go = { view: "Profile" }
-  //     return this.hideSplash()
-  //   }
-
-  //   // Log in automatically
-  //   const accountData = {
-  //     d_code:      Session.get("d_code")
-  //   , username:    Session.get("username")
-  //   , q_code:      Session.get("q_code")
-  //   , group_id:    Session.get("group_id")
-  //   , restore_all: Session.get("restore_all")
-  //   }
-
-  //   logIn.call(accountData, this.loggedInToGroups)
-  // }
-
-
-  // loggedInToGroups(error, data) {
-  //   Session.set("isMaster", data.isMaster || false)
-  //   const page = data.page || {}
-  //   this.go = page
-  //   this.hideSplash()
-  // }
 
 
   hideSplash() {
@@ -716,14 +755,27 @@ export default class StartUp {
 
     this.showSplash = 0
 
-    // Tell Share to replace the Splash screen will with an
-    // interactive view (Profile, Activity or an activity-in-progress)
-
-    // console.log("StartUp setPage(\"" + this.go + "\")")
-
     // Add group_id, because this will be undefined during a
     // hot reload, and we can use this fact to prevent a freeze
     // during development.
     this.setPage(this.go, this.group_id)
   }
+
+
+  start(page) {
+    this.setSessionDataFrom(this.accountData)
+    const { group_id } = this.accountData
+    const go = page || this.page || { view: "Activity" }
+    this.setPage(go, group_id)
+  }
+}
+
+
+
+export default function StartUp(setPage) {
+  if (!singleton) {
+    singleton = new StartUpSingleton(setPage)
+  }
+
+  return singleton
 }

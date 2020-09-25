@@ -16,9 +16,9 @@ import { setPageData
        , setSoloPilot
        } from '/imports/api/methods/admin.js'
 
-import { Menu } from './components/menu'
-import { Video } from './components/video'
-import { Quote } from './components/quote'
+import Menu from './components/menu'
+import Video from './components/video'
+import Quote from './components/quote'
 import { StyledContainer
        , StyledNotes
        , StyledVideo
@@ -26,6 +26,7 @@ import { StyledContainer
        , StyledSolo
        , StyledDuo
        , StyledHTML
+       , StyledList
        } from './styles'
 
 
@@ -94,23 +95,23 @@ export default class Show extends Component {
   }
 
 
-  getTextOrLink(string, key) {
+  getTextOrLink(Tag, string, key) {
     const match = LINK_REGEX.exec(string)
     if (match[2]) {
-      return <p
+      return <Tag
         key={key}
       >
         {match[1]}
-        <a href={match[3]} target="newtab">{match[2]}</a>
+        <a href={match[3]} target="ele">{match[2]}</a>
         {match[4]}
-      </p>
+      </Tag>
 
     }  else {
-      return <p
+      return <Tag
         key={key}
       >
         {string}
-      </p>
+      </Tag>
     }
   }
 
@@ -123,7 +124,7 @@ export default class Show extends Component {
     // _id: "4pT9midTF7Dvjo5rY"
 
     let text = item.text.split("\n").map(( line, index ) => {
-      return this.getTextOrLink(line, index)
+      return this.getTextOrLink("p", line, index)
     })
 
     return <StyledSplash
@@ -165,7 +166,7 @@ export default class Show extends Component {
 
 
     const legend = item.legend
-                 ? this.getTextOrLink(item.legend[0].legend)
+                 ? this.getTextOrLink("p", item.legend[0].legend)
                  : ""
 
     let image = item.image
@@ -243,10 +244,15 @@ export default class Show extends Component {
 
 
   getQuote(item) {
-    return <Quote
+    const textPosition = item.layout === "quote-left"
+                       ? "left"
+                       : "right"
+    const component = <Quote
       {...item}
+      textPosition={textPosition}
       aspectRatio={this.props.aspectRatio}
     />
+    return component
   }
 
 
@@ -255,6 +261,30 @@ export default class Show extends Component {
     return <div
       dangerouslySetInnerHTML={{__html: item.html}}
     />
+  }
+
+
+  getList(item) {
+    let header = item.header
+    if (header) {
+      header =  <h1>
+        {header}
+      </h1>
+    }
+
+    const items = item.items.map( item => {
+      const key = item.substring(0, 16)
+      item = this.getTextOrLink("li", item, key)
+
+      return item
+    })
+
+    return <StyledList>
+      {header}
+      <ul>
+        {items}
+      </ul>
+    </StyledList>
   }
 
 
@@ -286,9 +316,13 @@ export default class Show extends Component {
       case "video":
         return this.getVideo(item)
       case "quote":
+      case "quote-right":
+      case "quote-left":
         return this.getQuote(item)
       case "html":
         return this.getHTML(item)
+      case "list":
+        return this.getList(item)
     }
   }
 
@@ -351,6 +385,7 @@ export default class Show extends Component {
 
   render() {
     // console.log("Show", JSON.stringify(this.props, null, "  "))
+
     const items = this.props.items
 
     if (!items) {

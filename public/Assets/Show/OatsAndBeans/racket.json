@@ -149,9 +149,9 @@
 		{
 			"name": "first_plants",
 			"menu": {
-				"en": "Liverwort, moss and hornwort",
-				"fr": "Hépatiques, mousse et anthocérote",
-				"ru": "Печёночные мох, мох и антоцеротовидные"
+				"en": "The First Plants on Dry Land",
+				"fr": "Les premières plantes sur la terre",
+				"ru": "Первые растения на суше"
 			},
 			"image": [
 				{
@@ -1338,9 +1338,7 @@
 				"Gecko: 4.5 million",
 				"Zebrafish: 10 million",
 				"Frog: 16 million",
-				"Human: 86 billion",
-				"",
-				"Look at the senses later"
+				"Human: 86 billion"
 			],
 			"image": [
 				{
@@ -1352,6 +1350,78 @@
 				"oatsAndBeans"
 			],
 			"_id": "Y6LSJkuaBqQ8gPoTG"
+		},
+		{
+			"name": "senses",
+			"menu": {
+				"en": "Plant Senses",
+				"fr": "Les sens des plants",
+				"ru": "Что могут воспринимать растения"
+			},
+			"layout": "list",
+			"header": {
+				"en": "Plant Senses",
+				"fr": "Les sens des plants",
+				"ru": "Что могут воспринимать растения"
+			},
+			"items": {
+				"en": [
+					"gravity",
+					"moisture",
+					"light",
+					"pressure",
+					"hardness",
+					"volume",
+					"nitrogen",
+					"phosphorus",
+					"salt",
+					"various toxins",
+					"microbes",
+					"chemical signals from neighboring plants",
+					"other roots (self, kin, stranger)"
+				],
+				"fr": [
+					"gravité",
+					"humidité",
+					"lumière",
+					"pression",
+					"dureté",
+					"volume",
+					"azote",
+					"phosphore",
+					"sel",
+					"diverses toxines",
+					"microbes",
+					"signaux chimiques des plantes voisines",
+					"autres racines (soi-même, parents, inconnus)"
+				],
+				"ru": [
+					"сила тяжести",
+					"влага",
+					"свет",
+					"давление",
+					"твердость",
+					"объем",
+					"азот",
+					"фосфор",
+					"соль",
+					"различные токсины",
+					"микробы",
+					"химические сигналы от соседних растений",
+					"другие корни (свои, родственники, чужие)"
+				]
+			},
+			"tweak": {
+				"font-size": "calc(4.5 * var(--min))"
+			},
+			"notes": [
+				"",
+				""
+			],
+			"tags": [
+				"oatsAndBeans"
+			],
+			"_id": "9SwMXr2c3s3Pg4Fsy"
 		},
 		{
 			"name": "stump",
@@ -1638,573 +1708,6 @@
 				"oatsAndBeans"
 			],
 			"_id": "5MgDBBzA2YuBLTDXf"
-		},
-		{
-			"name": "StefanoMancuso",
-			"menu": {
-				"en": "Stefano Mancuso",
-				"fr": "Stefano Mancuso",
-				"ru": "русски"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "StefanoMancuso",
-					"en": "Stefano Mancuso, International Laboratory of Plant Neurobiology, University of Florence",
-					"fr": "Stefano Mancuso, Stefano Mancuso, Laboratoire international de neurobiologie végétale, Université de Florence",
-					"ru": "Стефано Манкузо из Международной лаборатории нейробиологии растений Флорентийского университета"
-				}
-			],
-			"tweak": {
-				"font-size": "0.8em"
-			},
-			"notes": [
-				"List by Stefano Mancuso (bean + poles video)",
-				"Plants 'talk'",
-				"How many words to speak a foreign language?",
-				"a plant has three thousand chemicals in its vocabulary"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/StefanoMancuso.jpg",
-					"size": 98039
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "sGF5NHPeH5mfrB5M8"
-		},
-		{
-			"name": "senses",
-			"menu": {
-				"en": "Plant Senses",
-				"fr": "Les sens des plants",
-				"ru": "Что могут воспринимать растения"
-			},
-			"header": {
-				"en": "Plant Senses",
-				"fr": "Les sens des plants",
-				"ru": "Что могут воспринимать растения"
-			},
-			"layout": "list",
-			"items": {
-				"en": [
-					"gravity",
-					"moisture",
-					"light",
-					"pressure",
-					"hardness",
-					"volume",
-					"nitrogen",
-					"phosphorus",
-					"salt",
-					"various toxins",
-					"microbes",
-					"chemical signals from neighboring plants",
-					"other roots (self, kin, stranger)"
-				],
-				"fr": [
-					"gravité",
-					"humidité",
-					"lumière",
-					"pression",
-					"dureté",
-					"volume",
-					"azote",
-					"phosphore",
-					"sel",
-					"diverses toxines",
-					"microbes",
-					"signaux chimiques des plantes voisines",
-					"autres racines (soi-même, parents, inconnus)"
-				],
-				"ru": [
-					"сила тяжести",
-					"влага",
-					"свет",
-					"давление",
-					"твердость",
-					"объем",
-					"азот",
-					"фосфор",
-					"соль",
-					"различные токсины",
-					"микробы",
-					"химические сигналы от соседних растений",
-					"другие корни (свои, родственники, чужие)"
-				]
-			},
-			"tweak": {
-				"font-size": "calc(4.5 * var(--min))"
-			},
-			"notes": [
-				"Plants use data from senses to seek or avoid area",
-				"BEFORE they reach it",
-				"Last skill important: Marcuso believes plants are conscious",
-				"Plants have social lives",
-				"And their own Internet: the Wood Wide Web"
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "9SwMXr2c3s3Pg4Fsy"
-		},
-		{
-			"name": "SuzanneSimard",
-			"menu": {
-				"en": "Suzanne Simard",
-				"fr": "Suzanne Simard",
-				"ru": "русски"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "SuzanneSimard",
-					"en": "Suzanne Simard, professor of forest ecology, University of British Columbia",
-					"fr": "Suzanne Simard, professeure d'écologie forestière, Université de la Colombie-Britannique",
-					"ru": "Сюзанна Симард, профессор экологии лесов, Университет Британской Колумбии"
-				}
-			],
-			"notes": [
-				"",
-				""
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/SuzanneSimard.jpg",
-					"size": 567129
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "zxHeEc4EmPLe3EETp"
-		},
-		{
-			"name": "birch_fir",
-			"menu": {
-				"en": "Sharing Carbon",
-				"fr": "Partager du charbon",
-				"ru": "Совместное использование углерода"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "birch_fir",
-					"en": "Sharing Carbon",
-					"fr": "Partager du charbon",
-					"ru": "Совместное использование углерода"
-				}
-			],
-			"notes": [
-				"Young birch and fir tree",
-				"Radioactive Carbon-14 in bag around birch",
-				"Fir tree hidden under a cloth",
-				"Two hours later, use Geiger counter to detect C14 in fir",
-				"Shade: birch->fir; winter: fir->birch"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/birch_fir.jpg",
-					"size": 144639
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "Reutaz9huS8bvgJQP"
-		},
-		{
-			"name": "hub",
-			"menu": {
-				"en": "Root Connections",
-				"fr": "Connections par les racines",
-				"ru": "Связи через корни"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "hub",
-					"en": "A network of connected trees",
-					"fr": "Un réseau des arbres",
-					"ru": "Сеть связанных деревьев"
-				}
-			],
-			"notes": [
-				"Gets better: SS shows mother trees recognize their own seedlings",
-				"Arrange roots to give space, stay in touch",
-				"Connect to all neigbouring trees",
-				"More connections with their own kind",
-				"Suck up water during day, release for seedlings at night"
-			],
-			"tweak": {
-				"background-color": "#fff;"
-			},
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/hub.jpg",
-					"size": 119302
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "Yb9yWNNDPMM3sQo3K"
-		},
-		{
-			"name": "roots",
-			"menu": {
-				"en": "Mycelium",
-				"fr": "Mycélium",
-				"ru": "Мицелий"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "roots",
-					"en": "[Mycelium](http://www.bbc.com/earth/story/20141111-plants-have-a-hidden-internet)",
-					"fr": "Mycélium",
-					"ru": "Мицелий"
-				}
-			],
-			"notes": [
-				"Extends root system",
-				"Receives trace elements",
-				"Pays with sugars (investment)"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/roots.jpg",
-					"size": 170786
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "S3BjJ8HuXW9RjarJH"
-		},
-		{
-			"name": "walnut",
-			"menu": {
-				"en": "Cybercrime",
-				"fr": "La cybercriminalité",
-				"ru": "Киберпреступность"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "walnut",
-					"en": "[The American black walnut tree sends hate mail](http://www.bbc.com/earth/story/20141111-plants-have-a-hidden-internet)",
-					"fr": "Le noyer noir américain pollue le terrain",
-					"ru": "Американский черный орех"
-				}
-			],
-			"notes": [
-				"Juglans nigra",
-				"Creates jugalone to inhibit growth of other plants"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/walnut.jpg",
-					"size": 106097
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "bCaSYKXYTvyeGN54d"
-		},
-		{
-			"name": "ikea_bin",
-			"menu": {
-				"en": "DIY Firewall",
-				"fr": "Pare-feu système D",
-				"ru": "Брандмауэр своими руками"
-			},
-			"layout": "solo",
-			"notes": [
-				"Dig holes, bury IKEA bins, plant tomatoes",
-				"Rotate half the bins a quarter turn each day, to break mycelium",
-				"4x as much jugalone",
-				"36% less root mass"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/ikea_bin.jpg",
-					"size": 37386
-				}
-			],
-			"tweak": {
-				"background-color": "#fff"
-			},
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "8GKR5zqiHPFKsv5EQ"
-		},
-		{
-			"name": "coffee_bee",
-			"menu": {
-				"en": "Drug Lords",
-				"fr": "Barons de la drogue",
-				"ru": "Наркобароны"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "coffee_bee",
-					"en": "Drug Lords",
-					"fr": "Barons de la drogue",
-					"ru": "Наркобароны"
-				}
-			],
-			"notes": [
-				"",
-				""
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/coffee_bee.jpg",
-					"size": 99378
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "MoBsvDMd7DGWER6nB"
-		},
-		{
-			"name": "waggle_dance",
-			"menu": {
-				"en": "The Waggle Dance",
-				"fr": "Danse des abeilles",
-				"ru": "Танец пчёл"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "waggle_dance",
-					"en": "[The Waggle Dance](https://marcsplained.com/entomology/the-honeybee-waggle-dance/)",
-					"fr": "Danse des abeilles",
-					"ru": "Танец пчёл"
-				}
-			],
-			"notes": [
-				"Caffeine buzz",
-				"More time spent dancing to share location",
-				"Bees ignore better sources of nectar",
-				"",
-				"the world's seventh-largest legal agricultural export",
-				"the second most valuable commodity exported by developing countries (oil)"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/waggle_dance.jpg",
-					"size": 68469
-				}
-			],
-			"tweak": {
-				"background-color": "#fff"
-			},
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "8WwMKwk9BW7AnGQkS"
-		},
-		{
-			"name": "wasp_armyworm_maize",
-			"menu": {
-				"en": "Calling for Reinforcements",
-				"fr": "Appeler du renfort",
-				"ru": "Вызов подкрепления"
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "wasp_armyworm_maize",
-					"en": "[Maize releases VOCs that attract wasps when it's eaten](https://www.washingtonpost.com/archive/politics/1992/09/01/plants-call-wasps-to-the-rescue-with-an-aroma-the-insects-love/db7e2e1c-5b51-4feb-8648-b97a9a68840b/)",
-					"fr": "Le maïs libère des COV qui attirent les guêpes lorsqu'il est consommé",
-					"ru": "Кукуруза выделяет летучие органические соединения, которые привлекают ос, когда ее едят"
-				}
-			],
-			"notes": [
-				"Armyworms",
-				"linalool, nerolidol and other flowery-smelling chemicals",
-				"'sting' lays eggs inside caterpillar",
-				"Immediately, caterpillar's feeding activity drops by 90%",
-				"Collect caterpillar saliva, cut plant, rub saliva in",
-				"Remove undamaged leaves from this plant + other plant",
-				"Release wasps: attracted by uneaten leaves",
-				"Not deliberate: result of 100s of 1000s of years of co-evolution"
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/wasp_armyworm_maize.jpg",
-					"size": 177050
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "5gJqSnuen6Ye6g82X"
-		},
-		{
-			"name": "gaia",
-			"menu": {
-				"en": "The Gaia Hypothesis",
-				"fr": "L'Hypothèse Gaia",
-				"ru": "Гипотеза Гайи"
-			},
-			"layout": "solo",
-			"notes": [
-				"Timothy Lenton: Earth acts as a single living organism",
-				"James Lovelock, 1970",
-				"Pyotr Alexeyevich Kropotkin, a century ago, said:",
-				"Darwin: most successful species are those who achieve the greatest cooperation both within the species and with other species, to overcome all the naturally unfavourable conditions."
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/gaia.jpg",
-					"size": 149186
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "mkcqgLZ3aZc2CB8ux"
-		},
-		{
-			"name": "cut_grass",
-			"menu": {
-				"en": "The Smell of Freshly Cut Grass",
-				"fr": "L'odeur de l'herbe coupée",
-				"ru": "Запах свежескошенной травы"
-			},
-			"layout": "solo",
-			"notes": [
-				"Cut grass acts as if it is attacked by insects",
-				"Releases ketones, esters, alcohols, acids and aldehydes",
-				"To prevent infection, to heal itself, to make itself toxic",
-				"To prime the grass around it",
-				"*** a chemical called (Z)-3-hexenal ***",
-				"Your nose exquisitely sensitive, can detect fewer than 1 part in a billion."
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/cut_grass.png",
-					"size": 105425
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "xRTxovmLZJDLnPmw4"
-		},
-		{
-			"name": "the_end",
-			"menu": {
-				"en": "The End.",
-				"fr": "Fin.",
-				"ru": "Конец."
-			},
-			"layout": "solo",
-			"legend": [
-				{
-					"id": "id",
-					"en": "The End.",
-					"fr": "Fin.",
-					"ru": "Конец."
-				}
-			],
-			"tweak": {
-				"background-color": "#200",
-				"font-size": "calc(16 * var(--min))",
-				"font-family": "'Permanent Marker', cursive"
-			},
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "LyF9Ki7KDYCAmGQyu"
-		},
-		{
-			"name": "qr",
-			"menu": {
-				"en": "QR Code",
-				"fr": "Code QR",
-				"ru": "QR код"
-			},
-			"layout": "solo",
-			"legends": [
-				{
-					"id": "qr",
-					"en": "[Oats and Beans and Barley Grow](http://staging.jazyx.com/ele_oats)",
-					"fr": "Savez-vous planter les choux",
-					"ru": "Oats and Beans and Barley Grow"
-				}
-			],
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/qr.svg",
-					"size": 39893
-				}
-			],
-			"tweak": {
-				"background-color": "#fff"
-			},
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "5NrARFv9J2XtkZxpx"
-		},
-		{
-			"name": "Joustra",
-			"menu": {
-				"en": "Biologie 2000",
-				"fr": "Biologie 2000",
-				"ru": "Biologie 2000"
-			},
-			"layout": "solo",
-			"image": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/Joustra.jpg",
-					"size": 149419
-				}
-			],
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "ZGWcCsq7Nu4RRCAPQ"
-		},
-		{
-			"name": "further_reading",
-			"menu": {
-				"en": "Further Reading",
-				"fr": "À lire",
-				"ru": "Тексты"
-			},
-			"layout": "list",
-			"items": {
-				"en": [
-					"[Childseye](https://russkiy.fun/support/texts/childseye/)",
-					"[The Bridge](https://russkiy.fun/support/texts/bridge/)"
-				],
-				"fr": [
-					"[Childseye](https://russkiy.fun/support/texts/childseye/)",
-					"[The Bridge](https://russkiy.fun/support/texts/bridge/)"
-				],
-				"ru": [
-					"[Childseye](https://russkiy.fun/support/texts/childseye/)",
-					"[The Bridge](https://russkiy.fun/support/texts/bridge/)"
-				]
-			},
-			"tweak": {
-				"font-size": "calc(10 * var(--min))"
-			},
-			"tags": [
-				"oatsAndBeans"
-			],
-			"_id": "sBaZFAKk7HK2gYefk"
 		}
 	]
 }

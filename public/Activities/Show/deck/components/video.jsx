@@ -19,7 +19,7 @@ import { setPageData } from '/imports/api/methods/admin.js'
 
 
 
-export class Video extends Component {
+export default class Video extends Component {
   constructor(props) {
     super(props)
 

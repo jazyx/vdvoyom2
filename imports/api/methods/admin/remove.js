@@ -3,6 +3,7 @@
  */
 
 
+import { Session } from 'meteor/session'
 
 import collections from '../../collections/publisher'
 const { User, Group } = collections
@@ -17,18 +18,35 @@ export default class RemoveUserAndGroup {
       group_id = this.getGroup_id(d_code)
     }
 
-    // console.log("Removing user", id, "from group", group_id)
+    //console.log("Removing user", id, "from group", group_id)
 
-    User.remove({ _id: id })
-    Group.remove( { _id: group_id } )
+    let result = User.remove({ _id: id })
+    // console.log("Remove user:", result)
+    result = Group.remove( { _id: group_id } )
+    // console.log("Remove group:", result)
 
-    Session.set("user_id", undefined)
-    Session.set("username", undefined)
-    Session.set("group_id", undefined)
+    // result = User.find().fetch()
+    // console.log(
+    //   "Users:"
+    // , JSON.stringify(result.length, null, "  ")
+    // )
 
-    delete Session.keys['user_id']
-    delete Session.keys['user_name']
-    delete Session.keys['group_id']
+    // result = Group.find().fetch()
+    // console.log(
+    //   "Group:"
+    // , JSON.stringify(result.length, null, "  ")
+    // )
+
+
+    if (Meteor.isClient) {
+      Session.set("user_id", undefined)
+      Session.set("username", undefined)
+      Session.set("group_id", undefined)
+
+      delete Session.keys['user_id']
+      delete Session.keys['user_name']
+      delete Session.keys['group_id']
+    }
   }
 
 

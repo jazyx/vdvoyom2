@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 
-import { localize } from '/imports/tools/generic/utilities'
+import { getLocalized } from '/imports/tools/generic/utilities'
 
 import { StyledProfile
        , StyledPrompt
@@ -29,30 +29,15 @@ class NewPIN extends Component {
   constructor(props) {
     super(props)
 
-    this.goNext = this.goNext.bind(this)
-    document.addEventListener("keydown", this.goNext, false)
-  }
-
-
-  goNext(event) {
-    if (event && event.type === "keydown" && event.key !== "Enter") {
-      return
-    }
-
-    // console.log("NewPIN view", Session.get("view"))
-    this.props.setPage("Activity")
-    // this.props.setPage("CheckPIN")
+    this.updateProfile = this.updateProfile.bind(this)
+    document.addEventListener("keydown", this.updateProfile, false)
   }
 
 
   getPrompt() {
-    const code = Session.get("native")
-
-    let cue = "remember_pin"
-    const prompt = localize(cue, code, this.props.uiText)
-    const PIN = Session.get("q_code")
-    cue = "pin_reason"
-    const reason = localize(cue, code, this.props.uiText)
+    const prompt = this.props.uiText.remember_pin
+    const PIN = this.props.startUp.getAccountDetail("q_code")
+    const reason = this.props.uiText.pin_reason
 
     return <StyledProfile>
       <StyledPrompt>
@@ -69,9 +54,7 @@ class NewPIN extends Component {
 
 
   getButtonBar() {
-    const cue = "pin_memorized"
-    const code = Session.get("native")
-    const prompt = localize(cue, code, this.props.uiText)
+    const prompt = this.props.uiText.pin_memorized
 
     return <StyledButtonBar>
       <StyledNavArrow
@@ -80,7 +63,7 @@ class NewPIN extends Component {
       />
       <StyledButton
         disabled={false}
-        onMouseUp={this.goNext}
+        onMouseUp={this.updateProfile}
       >
         {prompt}
       </StyledButton>
@@ -89,6 +72,15 @@ class NewPIN extends Component {
         invisible={true}
       />
     </StyledButtonBar>
+  }
+
+
+  updateProfile(event) {
+    if (event && event.type === "keydown" && event.key !== "Enter") {
+      return
+    }
+
+    this.props.startUp.updateProfile({ view: "NewPIN" })
   }
 
 
@@ -108,6 +100,8 @@ class NewPIN extends Component {
 
 
 export default withTracker(() => {
+  const native = Session.get("native")
+
   const select = {
    $or: [
       { cue: "remember_pin" }
@@ -115,7 +109,16 @@ export default withTracker(() => {
     , { cue: "pin_memorized" }
     ]
   }
-  const uiText = UIText.find(select).fetch()
+  const uiText = UIText.find(select)
+                       .fetch()
+                       .reduce((map, item) => {
+                         const text = getLocalized(
+                           item
+                         , native
+                         )
+                         map[item.cue] = text
+                         return map
+                       }, {})
 
   return {
     uiText

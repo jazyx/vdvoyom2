@@ -20,7 +20,7 @@ const lookAhead = "\\.(?:" + formats + "$" // leading ( only
 
 /// <<< HARD-CODED
 const SPLASH_DELAY     = 1 // * 1000
-const STARTUP_TIMEOUT  = 10 * 1000
+const STARTUP_TIMEOUT  = 10 * 1000 * 10000
 const PUBLIC_DIRECTORY = Meteor.isDevelopment
                        ? PWD + "/public"
                        : PWD + "/programs/web.browser/app"

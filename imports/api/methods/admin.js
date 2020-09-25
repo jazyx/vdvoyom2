@@ -188,16 +188,17 @@ export const logIn = {
     // In that case, status will be set to "RequestPIN" which may be
     // altered to "CreateAccount" if user has no PIN, and pin_given
     // will be set to true
-    , pin_given:{ type: Boolean, optional: true }
-    , status :  { type: String, optional: true }
+    , pin_absent: { type: Boolean, optional: true }
+    , pin_given:  { type: Boolean, optional: true }
+    , status :    { type: String, optional: true }
 
     // Sent only if localStorage is available on Client
-    , user_id:  { type: String, optional: true }
-    , group_id: { type: String, optional: true }
-    , q_color:  { type: String, optional: true }
+    , user_id:    { type: String, optional: true }
+    , group_id:   { type: String, optional: true }
+    , q_color:    { type: String, optional: true }
 
     // May not be useful on Client, so not available
-    , q_index:  { type: Number, optional: true }
+    , q_index:    { type: Number, optional: true }
     }).validate(logInData)
   }
 
@@ -329,10 +330,10 @@ export const logOut = {
   }
 
 , run(logOutData) {
-    console.log(
-      "logOutData"
-    , JSON.stringify(logOutData, null, "  ")
-    )
+    // console.log(
+    //   "logOutData"
+    // , JSON.stringify(logOutData, null, "  ")
+    // )
 
     if (logOutData.remove) {
       new RemoveUserAndGroup(logOutData)

@@ -65,7 +65,12 @@ export const createTracker = {
    */
 
 , run(trackerData) {
-    const _id = Points.insert( trackerData )
+    // _id = Points.insert( select, trackerData )
+
+    let { _id } = trackerData
+    let select  = { _id }
+    _id = Points.upsert( select, trackerData )
+
 
     return _id // should be same as trackerData._id
   }

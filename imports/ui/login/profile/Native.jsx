@@ -43,6 +43,7 @@ class Native extends Component {
     this.mouseEnter     = this.mouseEnter.bind(this)
     this.mouseLeave     = this.mouseLeave.bind(this)
     this.scrollIntoView = this.scrollIntoView.bind(this)
+    this.goNext         = this.goNext.bind(this)
 
     // Allow Enter to accept the default/current language
     document.addEventListener("keydown", this.selectLanguage, false)
@@ -89,10 +90,9 @@ class Native extends Component {
       return
     }
 
-    const code = this.codes[this.state.selected]
-    Session.set("native", code)
+    const native = this.codes[this.state.selected]
 
-    this.props.setPage("Name")
+    this.callback({ native })
   }
 
 
@@ -150,7 +150,7 @@ class Native extends Component {
       // The UIText collection has been reset while a visitor is at
       // this view. Return to the Splash screen until the collection
       // is repopulated
-      setTimeout(this.props.setPage, 0)
+      setTimeout(() => this.callback({ reset: true }), 0)
       return -1
     }
   }
@@ -218,11 +218,24 @@ class Native extends Component {
         {prompt}
       </StyledButton>
       <StyledNavArrow
+        className="next"
         way="forward"
         disabled={disabled}
-        onMouseUp={() => this.props.setPage("Name")}
+        onMouseUp={this.goNext}
       />
     </StyledButtonBar>
+  }
+
+
+  goNext() {
+    this.callback({ next: true })
+  }
+
+
+  callback(settings) {
+    settings.view = "Native"
+
+    this.props.callback(settings)
   }
 
 

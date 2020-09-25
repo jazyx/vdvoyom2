@@ -32,11 +32,16 @@ import Submit      from './launch/Submit.jsx'
 
 
 
+/// DEBUGGING // DEBUGGING // DEBUGGING // DEBUGGING // DEBUGGING ///
+import { logRenderTriggers } from '/imports/tools/generic/debug.js'
+
+
+
 export default class Profile extends Component {
   constructor(props) {
     super(props)
 
-    this.startup = new StartUp(this.props.setPage)
+    this.startup = StartUp(this.props.setPage)
 
     this.views = {
       Splash
@@ -60,6 +65,7 @@ export default class Profile extends Component {
 
 
   render() {
+    logRenderTriggers("Profile Trigger", this)
     // console.log("Profile.props:", this.props)
 
     /** Profile is rendered several times when app is first loaded:
@@ -73,13 +79,13 @@ export default class Profile extends Component {
      */
 
     const View = this.views[this.props.view]
+    const callback = this.startup.callbackFromProfile
 
     // console.log(View)
 
     return <View
-      aspectRatio={this.props.aspectRatio}
-      setPage={this.props.setPage}
-      points={this.props.points}
+      {...this.props}
+      startUp={this.startup}
     />
   }
 }

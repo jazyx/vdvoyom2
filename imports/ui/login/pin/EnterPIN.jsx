@@ -4,7 +4,10 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
 import { Session } from 'meteor/session'
 
-import { localize } from '/imports/tools/generic/utilities'
+import { getLocalized
+       , substitute
+       , valuesDontMatch
+       } from '/imports/tools/generic/utilities'
 
 import { StyledProfile
        , StyledPrompt
@@ -20,12 +23,18 @@ const { UIText } = collections
 
 
 
+/// DEBUGGING // DEBUGGING // DEBUGGING // DEBUGGING // DEBUGGING ///
+import { logRenderTriggers } from '/imports/tools/generic/debug.js'
+
+
 
 class EnterPIN extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { q_code: Session.get("q_code") || ""}
+    this.startUp = this.props.startUp
+    const q_code = this.startUp.getAccountDetail("q_code") || ""
+    this.state = { q_code }
 
     this.submit = this.submit.bind(this)
     this.editPIN = this.editPIN.bind(this)
@@ -56,24 +65,23 @@ class EnterPIN extends Component {
     }
 
     event.preventDefault()
-    Session.set("q_code", this.state.q_code)
-    Session.set("pin_given", true)
 
-    this.props.setPage("Submit")
+    const profile = {
+      q_code: this.state.q_code
+    }
+    this.updateProfile(profile)
   }
 
 
   createAccount() {
-    Session.set("status", "CreateAccount")
-    this.props.setPage("Submit")
+    this.updateProfile({ create_account: true })
   }
 
 
   getPrompt() {
-    const code = Session.get("native")
-    let prompt = localize("enter_pin", code, this.props.uiText)
+    let prompt = this.props.uiText.enter_pin
 
-    if (Session.get("pin_given")) {
+    if (this.startUp.getAccountDetail("pin_given")) {
       // The user already entered one 4-digit PIN, but this was not
       // accepted. Show an error warning.
 
@@ -81,7 +89,7 @@ class EnterPIN extends Component {
         <span
           style={{ color: "#900" }}
         >
-          {localize("wrong_pin", code, this.props.uiText)}
+          {this.props.uiText.wrong_pin}
         </span><br />
         <span>{prompt}</span>
       </span>
@@ -95,17 +103,16 @@ class EnterPIN extends Component {
 
   getPINInput() {
     return <StyledInput
-      onKeyUp={this.editPIN}
+      onChange={this.editPIN}
       onKeyDown={this.submit}
       autoFocus={true}
+      value={this.state.q_code}
     />
   }
 
 
   getHint() {
-    const cue = "no_pin"
-    const code = Session.get("native")
-    const prompt = localize(cue, code, this.props.uiText)
+    const prompt = this.props.uiText.no_pin
 
     return <StyledP>
       {prompt}
@@ -114,11 +121,10 @@ class EnterPIN extends Component {
 
 
   getCreateAccountButton() {
-    const cue = "create_account"
-    const code = Session.get("native")
-    const prompt = localize(cue, code, this.props.uiText)
+    const prompt = this.props.uiText.create_account
 
     return <StyledButton
+      smaller="true"
       onMouseUp={this.createAccount}
     >
       {prompt}
@@ -127,10 +133,10 @@ class EnterPIN extends Component {
 
 
   getButtonBar() {
-    const cue = "log_in"
-    const code = Session.get("native")
-    const options = { "^0": Session.get("username") }
-    const prompt = localize(cue, code, this.props.uiText, options)
+    const options = this.state.q_code.length === 4
+                  ? {"^0": this.startUp.getAccountDetail("username")}
+                  : undefined
+    const prompt = substitute(this.props.uiText.log_in, options)
     const disabled = this.state.q_code.length !== 4
 
     return <StyledButtonBar>
@@ -152,7 +158,21 @@ class EnterPIN extends Component {
   }
 
 
+  updateProfile(profile) {
+    profile.view = "EnterPIN"
+
+    this.startUp.updateProfile(profile)
+  }
+
+
   render() {
+    logRenderTriggers("EnterPIN Trigger", this)
+
+    // console.log(
+    //   "EnterPIN props"
+    // , JSON.stringify(this.props, null, "  ")
+    // )
+
     const prompt = this.getPrompt()
     const input = this.getPINInput()
     const hint = this.getHint()
@@ -169,11 +189,26 @@ class EnterPIN extends Component {
       {buttonBar}
     </StyledProfile>
   }
+
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if ( valuesDontMatch(nextProps, this.props)
+      || valuesDontMatch(nextState, this.state)
+       ) {
+      return true
+    }
+
+    return false
+  }
 }
 
 
+// let oldText = {}
+
 
 export default withTracker(() => {
+  const native = Session.get("native")
+
   const select = {
    $or: [
       { cue: "enter_pin" }
@@ -183,7 +218,35 @@ export default withTracker(() => {
     , { cue: "log_in" }
     ]
   }
-  const uiText = UIText.find(select).fetch()
+  let uiText = UIText.find(select)
+                     .fetch()
+                     .reduce((map, item) => {
+                       const text = getLocalized(
+                         item
+                       , native
+                       , "as_is"
+                       )
+                       map[item.cue] = text
+                       return map
+                     }, {})
+
+  // const altered = valuesDontMatch(oldText, uiText)
+
+  // console.log("EnterPIN ALTERED", altered)
+
+  // if (altered) {
+  //   oldText = uiText
+  // } else {
+  //   // Use the existing object, so that it is identical and
+  //   // doesn't cause a re-render
+  //   uiText = oldText
+  // }
+
+  // console.log(
+  //   "uiText", uiText, `\ndb.uitext.find(
+  //     ${JSON.stringify(select)}
+  //   ).pretty()`
+  // )
 
   return {
     uiText

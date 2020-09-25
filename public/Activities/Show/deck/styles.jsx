@@ -65,11 +65,46 @@ export const StyledSVG = styled.svg`
   bottom: 0;
   left: ${props => props.open
                  ? "calc(45 * var(--min));"
-                 : 0};
+                 : 0
+         };
   z-index: 2;
   transition: left .3s linear, opacity .1s;
   transition-property: left, opacity;
   transition-delay: ${props => props.open ? ".1s, 0s;" :"0s, .3s;"}
+  cursor: pointer;
+`
+
+
+export const StyledNavBar = styled.div`
+  position: absolute;
+  width: calc(37.5 * var(--min));
+  height: calc(15 * var(--min));
+  bottom: 0;
+  left: calc(22.5 * var(--min));
+`
+
+
+export const StyledNavButton = styled.svg`
+  position: absolute;
+  width: calc(15 * var(--min));
+  height: calc(15 * var(--min));
+  fill: var(--fillColor);
+  stroke: var(--strokeColor);
+  opacity: ${props => (
+    props.open ? 1 : (props.over ? 0.75 : 0.25)
+  )};
+  bottom: 0;
+  left: ${props => props.direction === "back"
+                 ? "0;"
+                 : "calc(22.5 * var(--min));"
+         };
+  ${props => props.disabled
+           ? `opacity: 0.1;
+              pointer-events: none;
+             `
+           : `cursor: pointer;`
+
+   }
 `
 
 
@@ -93,9 +128,7 @@ export const StyledShowMenu = styled.div`
    }
   height: calc(100 * var(--h));
   width: calc(60 * var(--min));
-  /* padding: calc(2 * var(--min)); */
-  padding-top: calc(15 * var(--min));
-  padding-bottom: 0;
+  padding: calc(15 * var(--min)) 0;
   background-color: var(--menuBackground);
 
   transition: left .40s linear;
@@ -103,6 +136,9 @@ export const StyledShowMenu = styled.div`
 
 
 export const StyledShowList = styled.ul`
+  font-family: Arial, sans-serif;
+  font-size: calc(3.5 * var(--min));
+
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -300,5 +336,18 @@ export const StyledDuo = styled.div`
                               `
                    };
   }
+`
 
+
+export const StyledList = styled.div`
+  & h1 {
+    width: 100%;
+    color: var(--menuColor);
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  & ul {
+
+  }
 `

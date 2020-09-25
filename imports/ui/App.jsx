@@ -3,19 +3,25 @@
  */
 
 
-
 import { Meteor } from 'meteor/meteor'
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data'
 
 import { teacher } from '../tools/custom/teacher'
 import { SET_REGEX } from '../tools/custom/constants'
+import { deleteFrom
+       , valuesDontMatch
+       } from '/imports/tools/generic/utilities'
 
 import { methods } from '../api/methods/mint'
 const { setPage, toggleActivation } = methods
 
 import collections from '../api/collections/publisher'
 const { Group } = collections
+
+
+/// DEBUGGING // DEBUGGING // DEBUGGING // DEBUGGING // DEBUGGING ///
+import { logRenderTriggers } from '/imports/tools/generic/debug.js'
 
 
 //// VIEWS // VIEWS // VIEWS // VIEWS // VIEWS // VIEWS // VIEWS ////
@@ -160,10 +166,15 @@ class App extends Component {
    *                              hideSplash()
    */
   setPage(page, group_id = this.props.group_id) {
-    if (!page) {
-      this.setState({ view: "TimeOut" })
 
-    } else if (group_id) {
+    if (!page) {
+      return this.setState({ view: "TimeOut" })
+
+    }
+
+    const toSet = deleteFrom(page, "settings") // { settings: < > }
+
+    if (group_id) {
       /* The app is not hot-reloading during development, and a page
        * is given. Change the view for everyone in the Group
        * NOTE: if the Group is already active, the page data will
@@ -183,8 +194,10 @@ class App extends Component {
     } else {
       // Hot reloading, so group_id is missing. Use state to remember
       // which view to show until group_id is restored.
-      this.setState({ view: page.view || page }) // string
+      toSet.view = page.view || page
     }
+
+    this.setState(toSet)
   }
 
 
@@ -194,12 +207,16 @@ class App extends Component {
     // console.log("getView this.props.page", page)
 
     if (!page) {
+      //console.log("getView from state")
       return this.state.view
 
     } else if (this.props.emptyGroup) {
+      //console.log("getView with emptyGroup")
       teacher.leaveGroup()
       return "Teach"
     }
+
+    //console.log("getView from props")
 
     let path = page.path // "/Activity/folder//exercise"
 
@@ -260,14 +277,18 @@ class App extends Component {
 
 
   render() {
+    // const triggered = logRenderTriggers("App RenderTriggers", this)
+    // console.log("APP TRIGGERED", triggered)
+
+
     // console.log("App this.state:", this.state)
     // console.log("App this.props:", this.props)
     // The Share component needs to be rendered in order for
     // this.state.units to be set, so the first render will have no
     // content
 
-    const aspectRatio = this.state.aspectRatio
-    // Will be meaningless until setViewSize is called
+    const { aspectRatio, settings } = this.state
+    // aspectRatio will be meaningless until setViewSize is called
 
     let view = this.getView()
     let View = this.views[view]
@@ -302,12 +323,14 @@ class App extends Component {
     }
 
     const layers = this.getLayers(showLayers, aspectRatio)
+    //console.log("App view:", view, "layers:", layers.length)
 
     return <Share
       setViewSize={this.setViewSize} // <View /> will set the view
     >
       <View
         view={view}
+        settings={settings}
         aspectRatio={aspectRatio}
         points={this.pointMethod}
         rect={this.state.view_size}
@@ -318,6 +341,17 @@ class App extends Component {
     </Share>
 
     //  <Debug />
+  }
+
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if ( valuesDontMatch(nextProps, this.props)
+      || valuesDontMatch(nextState, this.state)
+       ) {
+      return true
+    }
+
+    return false
   }
 }
 

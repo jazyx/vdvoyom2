@@ -563,6 +563,63 @@ export const valuesMatch = (a, b) => {
 
 
 
+export const valuesDontMatch = (a, b) => {
+  const nonMatching = {}
+
+  if ( !a || typeof a !== "object" || !b || typeof b !== "object") {
+    return { a, b }
+  }
+
+  const propsA = Object.getOwnPropertyNames(a)
+  const propsB = Object.getOwnPropertyNames(b)
+
+  propsA.forEach(prop => {
+    if (propsB.indexOf(prop) < 0) {
+      nonMatching[prop] = ["delete", a[prop]]
+
+    } else {
+      removeFrom(propsB, prop)
+
+      const valueA = a[prop]
+      const valueB = b[prop]
+
+      // if (path) {
+      //   prop = path + "."+ prop
+      // }
+
+      if (typeof valueA === "object" && typeof valueB === "object") {
+        const nested = valuesDontMatch(valueA, valueB)
+        if (nested) {
+          nonMatching[prop] = nested
+        }
+
+      } else if (valueA !== valueB) {
+        nonMatching[prop] = [
+          "change"
+       , getString(valueA)
+       , getString(valueB)
+       ]
+      }
+    }
+  })
+
+  propsB.forEach(prop => {
+    if (propsA.indexOf(prop) < 0) {
+      // if (path) {
+      //   prop = path + "."+ prop
+      // }
+
+      nonMatching[prop] = ["insert", getString(b[prop])]
+    }
+  })
+
+  if (Object.keys(nonMatching).length) {
+    return nonMatching
+  }
+}
+
+
+
 export const deleteFrom = (object, key, removed) => {
   if (typeof removed !== "object") {
     removed = {}
@@ -752,10 +809,22 @@ export const substitute = (phrase, options) => {
  * @param   {object}  phraseData   { ...
  *                                 , "co-DE": "regional string"
  *                                 , "co": "generic string"
+ *                                 , "xx": {
+ *                                     simple:  "Log in"
+ *                                   , replace: "Log in as ^0"
+ *                                   }
+ *                                 , "zz": "String with ^0 to replace"
  *                                 , ...
  *                                 }
  * @param   {string}  code         language code ≈ "co" or "co-DE"
  * @param   {object}  options      { "^0": "admin", ... }
+ *                                 OR
+ *                                 "as_is", in which case any object
+ *                                 containing simple and replace
+ *                                 strings will be returned as an
+ *                                 object
+ *                                 OR
+ *                                 other values are ignored
  *
  * @return  {string}  "<Missing>" or the localized string
  */
@@ -786,7 +855,9 @@ export const getLocalized = (phraseData, code = "en", options) => {
     }
   }
 
-  phrase = substitute(phrase, options)
+  if (options !== "as_is") {
+    phrase = substitute(phrase, options)
+  }
 
   return phrase
 }
@@ -829,6 +900,27 @@ export const localize = (cue, code, corpus, options) => {
   }
 
   return phrase
+}
+
+
+export const getString = item => {
+  try {
+    switch (typeof item) {
+      case "undefined":
+        return "undefined"
+      case "string":
+      case "object":
+        return item
+      default:
+        if (item.toString) {
+          return item.toString()
+        } else {
+          return item
+        }
+    }
+  } catch {
+    return "Unable to convert " + type + ": " + item
+  }
 }
 
 
