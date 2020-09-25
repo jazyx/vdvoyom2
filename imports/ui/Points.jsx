@@ -102,10 +102,10 @@ class PointsClass extends Component {
     const { d_code: _id, q_color: color } = this.props
     const group_id = this.group_id
 
-    // console.log("createTracker: _id", _id
-    //            , "color:", color
-    //            , "group_id:", group_id
-    //            )
+    console.log("createTracker: _id", _id
+               , "color:", color
+               , "group_id:", group_id
+               )
 
     createTracker.call({ _id, color, group_id }, this.setPointerId)
   }
