@@ -3,12 +3,14 @@
  */
 
 
-import { hsl2hex } from '../../../tools/generic/utilities'
+import { hsl2hex
+       , deleteFrom
+       } from '/imports/tools/generic/utilities'
 import { getGoldenAngleAt
        , getCodeFrom
-       } from '../../../tools/custom/project'
+       } from '/imports/tools/custom/project'
 
-import collections from '../../collections/publisher'
+import collections from '/imports/api/collections/publisher'
 const { User, Teacher, Group } = collections
 
 
@@ -67,7 +69,7 @@ export default class CreateAccount {
     , "logged_in"
     ]
 
-    notNeeded.forEach(key => {delete accountData[key]})
+    deleteFrom(accountData, notNeeded)
   }
 
 

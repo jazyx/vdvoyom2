@@ -149,7 +149,7 @@ class NavBar extends Component{
   constructor(props) {
     super(props)
 
-    console.log("NavBar", props.slideIndex)
+    // console.log("NavBar", props.slideIndex)
 
     this.chooseSlide = props.chooseSlide
     // this.slideIndex  = props.slideIndex

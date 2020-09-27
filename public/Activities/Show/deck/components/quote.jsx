@@ -108,7 +108,7 @@ export default class Quote extends Component {
 
 
   getHeaderAndText(legend) {
-    const regex = /(?:#([^#]+)#)?(.*)/
+    const regex = /(?:#([^#]+)#)?([\S\s]*)/
     const match = regex.exec(legend)
 
     if (!match) {
@@ -206,7 +206,7 @@ export default class Quote extends Component {
 
 
   render() {
-    // console.log("QUOTE", JSON.stringify(this.props, null, "  "))
+    console.log("QUOTE", JSON.stringify(this.props, null, "  "))
     // { "_id": "TvfpevCvE5TdxJ5qa",
     //   "name": "HopeJahren",
     //   "menu": "Почва",

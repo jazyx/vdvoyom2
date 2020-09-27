@@ -129,10 +129,16 @@ export const destroyTracker = {
   }
 
 , validate(trackerData) {
+    // console.log("destroyTracker", "trackerData:", trackerData)
     new SimpleSchema({
-      _id:      { type: String } // d_code for user|teacher's device
+      _id:      SimpleSchema.oneOf(
+        { type: String, optional: true }
+      , { type: Boolean, optional: true }
+      ) // d_code for user|teacher's device
+
     , group_id: { type: String }
     }).validate(trackerData)
+    // console.log("trackerData validated")
   }
 
 , run(trackerData) {

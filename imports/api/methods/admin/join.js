@@ -119,7 +119,11 @@ export default class JoinGroup {
 
     if (readFromGroup) {
       const select = { _id: accountData.group_id }
-      const options = { fields: { page: 1 }}
+      const options = {
+        fields: {
+          page: 1
+        }
+      }
       const groupData = Group.findOne(select, options)
       if (groupData && groupData.page) {
         page = groupData.page
@@ -215,7 +219,11 @@ export default class JoinGroup {
     const userSelect = {
       $or: logged_in
     }
-    const options = { fields: { logged_in: 1 } }
+    const options = {
+      fields: {
+        logged_in: 1
+      }
+    }
     const users = User.find(userSelect, options).fetch()
 
     // console.log( "user:", user

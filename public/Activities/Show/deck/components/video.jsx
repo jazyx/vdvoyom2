@@ -149,7 +149,7 @@ export default class Video extends Component {
       />
     </StyledButtons>
 
-    console.log("buttons:", buttons)
+    // console.log("buttons:", buttons)
 
     return buttons
   }

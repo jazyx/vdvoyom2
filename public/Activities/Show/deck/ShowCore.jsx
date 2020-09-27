@@ -51,7 +51,11 @@ export default class Show extends Component {
 
 
   togglePilot(off) {
-    if (off || this.props.isTeacher || !this.props.active) {
+    if ( off
+      || this.props.isTeacher
+      || (!this.props.active && this.props.isMaster)
+       ) {
+
       const _id = this.props.group_id
       const soloPilot = off
                       ? undefined
@@ -193,22 +197,46 @@ export default class Show extends Component {
 
 
   getDuo(item) {
-    const images = item.images.map( imageData => {
-      const src = imageData.src
-      const alt = IMAGE_REGEX.exec(src)[1]
-      return <img
-        key={alt}
-        alt={alt}
-        src={src}
-      />
-    })
+    // const images = item.images.map( imageData => {
+    //   const src = imageData.src
+    //   const alt = IMAGE_REGEX.exec(src)[1]
+    //   return <img
+    //     key={alt}
+    //     alt={alt}
+    //     src={src}
+    //   />
+    // })
 
-    return <StyledDuo
-      limit={item.limit || 1}
-      aspectRatio={this.props.aspectRatio}
+    //return <StyledDuo
+    //  limit={item.limit || 1}
+    //  aspectRatio={this.props.aspectRatio}
+    //>
+    //  {images}
+    //</StyledDuo>
+
+    const legend = item.legend
+                 ? this.getTextOrLink("p", item.legend[0].legend)
+                 : ""
+
+    let image
+    if (this.props.aspectRatio < 1) {
+      image = item.images.v
+    } else {
+      image = item.images.h
+    }
+
+    image = <img
+      src={image}
+      alt={legend || item.menu}
+    />
+
+    return <StyledSolo
+      className="solo"
+      legend={!!legend}
     >
-      {images}
-    </StyledDuo>
+      {image}
+      {legend}
+    </StyledSolo>
   }
 
 

@@ -35,6 +35,7 @@ import { localize
 import { getIconSrc } from '../tools/custom/project'
 import { SET_REGEX } from '../tools/custom/constants'
 
+import { destroyTracker } from '/imports/api/collections/points.js'
 
 import { methods } from '../api/methods/mint'
 const { logOut, setIndex , setPath, toggleMenu } = methods
@@ -441,7 +442,13 @@ class Menu extends Component {
     // Prepare to delete both the user and the group if the user is
     // temporary. See getURLQueryData() for the creation of the temp
     // username
-    const { username, user_id, teacher_id, d_code } = this.props
+    const {
+      username
+    , user_id
+    , teacher_id
+    , d_code
+    , group_id
+    } = this.props
     const regex = /deleteTempUser_[A-Za-z0-9&#]+/
     const remove = regex.test(username)
 
@@ -467,6 +474,7 @@ class Menu extends Component {
 
     const userAndDevice = { id, d_code, remove } //, group_id }
 
+    destroyTracker.call( {_id: id, group_id } )
     logOut.call(userAndDevice) // no callback = synchronous
   }
 

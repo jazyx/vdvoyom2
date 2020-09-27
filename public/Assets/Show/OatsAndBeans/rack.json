@@ -762,9 +762,9 @@
 		{
 			"name": "gas_sylvester",
 			"menu": {
-				"en": "Cellars and Mines",
-				"fr": "Caves et mines",
-				"ru": "Погреба и шахты"
+				"en": "Mines and Cellars",
+				"fr": "Mines et caves",
+				"ru": "Шахты и Погреба"
 			},
 			"layout": "duo",
 			"legend": [
@@ -775,14 +775,10 @@
 					"ru": "Погреба и шахты"
 				}
 			],
-			"images": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/mine.jpg"
-				},
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/wine.jpg"
-				}
-			],
+			"images": {
+				"h": "/Assets/Show/OatsAndBeans/image/co2/m+w_h.jpg",
+				"v": "/Assets/Show/OatsAndBeans/image/co2/m+w_v.jpg"
+			},
 			"notes": [
 				"different from 'air' because poisonous",
 				"cannot breath it, puts out candles"
@@ -989,8 +985,7 @@
 				}
 			],
 			"notes": [
-				"visited Priestley in 1799",
-				""
+				"visited Priestley in 1799"
 			],
 			"tags": [
 				"oatsAndBeans"
@@ -1551,7 +1546,7 @@
 				"fr": "Morrell et Kessler",
 				"ru": "Моррелл и Кесслер"
 			},
-			"layout": "solo",
+			"layout": "duo",
 			"legend": [
 				{
 					"id": "Cornell",
@@ -1560,18 +1555,10 @@
 					"ru": "Кимберли Моррелл и Андре Кесслер, Корнельский университет"
 				}
 			],
-			"images": [
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/Cornell/Andre_Kessler.jpg"
-				},
-				{
-					"src": "/Assets/Show/OatsAndBeans/image/Cornell/Kimberly_Morrell.jpg"
-				}
-			],
-			"notes": [
-				"",
-				""
-			],
+			"images": {
+				"h": "/Assets/Show/OatsAndBeans/image/Cornell/K+M_h.jpg",
+				"v": "/Assets/Show/OatsAndBeans/image/Cornell/K+M_v.jpg"
+			},
 			"tags": [
 				"oatsAndBeans"
 			],
@@ -1766,10 +1753,6 @@
 					"ru": "Сюзанна Симард, профессор экологии лесов, Университет Британской Колумбии"
 				}
 			],
-			"notes": [
-				"",
-				""
-			],
 			"image": [
 				{
 					"src": "/Assets/Show/OatsAndBeans/image/SuzanneSimard.jpg",
@@ -1958,10 +1941,6 @@
 					"fr": "Barons de la drogue",
 					"ru": "Наркобароны"
 				}
-			],
-			"notes": [
-				"",
-				""
 			],
 			"image": [
 				{

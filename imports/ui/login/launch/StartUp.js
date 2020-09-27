@@ -16,7 +16,7 @@ import Storage from '/imports/tools/generic/storage'
 
 // Subscriptions
 import collections from '/imports/api/collections/publisher'
-const { Shortcut } = collections
+const { Shortcut, Group } = collections
 
 // Connection
 import { preloadCollections } from './PreloadCollections'
@@ -495,13 +495,29 @@ class StartUpSingleton {
       return this.treatUser()
     }
 
-    this.group_id = result.group_id
+    const group_id = this.group_id = result.group_id
     result.role = "user"
-    result.page = this.page
+
+    const groupPage = this.getGroupPage(group_id)
+    result.page = groupPage || this.page
     this.setSessionDataFrom(result)
 
-    this.go = this.page || result.page
+    this.go = result.page
     this.hideSplash()
+  }
+
+
+  getGroupPage(_id) {
+    const select = { _id }
+    const project = {
+      fields: {
+        page: 1
+      }
+    }
+
+    const { page } = Group.findOne(select, project) || {}
+
+    return page
   }
 
 
