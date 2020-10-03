@@ -1,6 +1,6 @@
 "use strict"
 
-// console.log(process.argv) 
+// console.log(process.argv)
 
 
 const fs = require('fs')
