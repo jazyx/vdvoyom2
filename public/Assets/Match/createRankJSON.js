@@ -1,5 +1,48 @@
 /**
  * /public/Assets/Match/test/createRankJSON.js
+ *
+ * Call...
+ *
+ *   node createRankJSON.js xxxx
+ *
+ * ... where xxxx is the name of the subfolder containing a topic
+ *
+ * This script generates a file named `rank.json` at the root of the
+ * named subfolder. This file will have the format:
+ *
+ * {
+ *   "set": {
+ *     "tag": "test",
+ *     "name": {
+ *       "en": "Test"
+ *     },
+ *     "icon": {
+ *       "src": "/Assets/Match/test/icon.jpg"
+ *     },
+ *     "path": "/Assets/Match",
+ *     "parent": "/Assets"
+ *   },
+ *   "data": [
+ *     {
+ *       "matches": "James",
+ *       "text": "James",
+ *       "index": 0,
+ *       "src": "/Assets/Match/James/cave.jpg"
+ *     }
+ *   , ...
+ *   ]
+ * }
+ *
+ * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ * WARNING: When the Meteor app is relaunched, new entries will be
+ * created in the Match collection for each object in the "" array,
+ * and their _ids will be inserted into the rank.json document.
+ *
+ * Running this script after the Match collection is created will
+ * remove those _ids. You should drop the Match collection first, or
+ * remove all items with the given tag, otherwise duplicate entries
+ * will be created.
+ * vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
  */
 
 
@@ -22,9 +65,9 @@ class CreateJSON {
     this.assetFolder = this.getAssetFolder()
     const set = this.getSet(this.assetFolder, parentName)
 
-    console.log("set", set)
+    // console.log("set", set)
 
-    console.log("this.assetFolder:", this.assetFolder)
+    // console.log("this.assetFolder:", this.assetFolder)
 
     this.parentName = parentName
     this.parentFolder = path.join(__dirname, parentName)
@@ -41,7 +84,7 @@ class CreateJSON {
     , ".svg"
     , "webm"
     ]
-    console.log("About to treat", this.parentFolder)
+    // console.log("About to treat", this.parentFolder)
 
     const folders = fs.readdirSync(this.parentFolder)
                       .filter(folder => (
@@ -54,22 +97,22 @@ class CreateJSON {
     //   "folders"
     // , JSON.stringify(folders, null, "  ")
     // )
-    
+
     const data = folders.map( this.getJSONEntry )
                         .filter( item => !!item )
                         .reduce(( output, array ) => {
                           Array.prototype.push.apply(output, array)
                           return output
-                          }, [])    
+                          }, [])
     const json = {
       set
-    , "phrases": data
+    , data
     }
     // console.log(
     //   "json"
     // , JSON.stringify(json, null, "  ")
     // )
-    
+
     const jsonString = JSON.stringify(json, null, "  ")
     const file = path.join(this.parentFolder, 'rack.json')
     fs.writeFileSync(
@@ -77,6 +120,8 @@ class CreateJSON {
     , jsonString
     , { encoding: 'utf8' }
     )
+
+    console.log("File written to", file)
   }
 
 
@@ -85,7 +130,7 @@ class CreateJSON {
     const regex = /\/public(\/Assets\/(\w+))/
 
 
-    console.log(pwd, regex)
+    // console.log(pwd, regex)
 
 
     const match = regex.exec(__dirname)
@@ -150,7 +195,7 @@ new CreateJSON(folderName)
 //   , index:   0 | 1 | ...
 //   , src:     <url>
 // }
-// 
+//
   // {
   //   "tag": "test",
   //   "matches": "James",

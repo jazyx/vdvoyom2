@@ -90,6 +90,7 @@ export default class ImportAssets extends IOHelper{
   importSubfoldersOf(folder, activity) {
     const exploreSubFolders = !activity
     const contents = fs.readdirSync(folder)
+
     // console.log("importSubfoldersOf", folder, activity)
     // console.log(contents)
     // [ 'Cloze', 'Nim', 'Spiral', 'Vocabulary' ]
@@ -433,11 +434,13 @@ export default class ImportAssets extends IOHelper{
       , tag
       , ignore_missing_files
       )
-
-      // Insert or update phrase documents in MongoDB
-      this.treatPhrases(phrases, collection)
-      // Each phrase will now have its own _id
+    } else {
+      phrases = json.data || []
     }
+
+    // Insert or update phrase documents in MongoDB
+    this.treatPhrases(phrases, collection)
+    // Each phrase will now have its own _id
 
     const mod = this.writeJSON(jsonPath, json)
 
@@ -580,8 +583,8 @@ export default class ImportAssets extends IOHelper{
       , activity
       ) {
 
-    console.log("crawlSubFolders:",parentFolder)
-    console.log(subFolders)
+    // console.log("crawlSubFolders:",parentFolder)
+    // console.log(subFolders)
 
     // Treat rank.json files
     const jsonFiles = subFolders.filter(item => JSON_REGEX.test(item))
