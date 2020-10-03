@@ -365,13 +365,13 @@ export default withTracker(() => {
   if (group_id) {
     const isTeacher = Session.get("role") === "teacher"
     const groupSelect = { _id: group_id }
-    const groupProject = {
+    const groupOptions = {
       fields: {
         page: 1
       , logged_in: 1
       }
     }
-    const groupData = Group.findOne(groupSelect, groupProject) || {}
+    const groupData = Group.findOne(groupSelect, groupOptions) || {}
     const logged_in = groupData.logged_in || []
 
     if (isTeacher && logged_in.length === 1) {

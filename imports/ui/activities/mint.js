@@ -17,8 +17,10 @@
  * '/imports/ui/App.jsx'
  */
 
+import Match from '../../public/Activities/Match/Match.jsx'
 import Show from '../../public/Activities/Show/Show.jsx'
 
 export {
-  Show
+  Match
+, Show
 }

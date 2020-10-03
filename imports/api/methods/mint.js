@@ -19,8 +19,10 @@
 
 import * as admin from './admin'
 import * as assets from './assets'
+import * as match from '../../public/Activities/Match/methods.js'
 
 export const methods = {
   ...admin
 , ...assets
+, ...match
 }

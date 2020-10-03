@@ -52,8 +52,8 @@ export default class ShowTracker extends Tracker{
       document.image = document.image.reduce(( map, imageData ) => {
         const src   = imageData.src
         const match = IMAGE_REGEX.exec(src)
-        const name  = match[1]
-        map[name]   = imageData.src
+        const key  = match[1]
+        map[key]   = imageData.src
 
         return map
       }, {})

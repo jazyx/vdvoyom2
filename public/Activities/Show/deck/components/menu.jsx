@@ -49,9 +49,11 @@ class Items extends Component{
       const active = index === slideIndex
       const ref = active ? this.selected : undefined
 
+      // console.log("Menu item.key:", item.key)
+
       if (item.menu) {
         return <StyledShowItem
-          key={item._id}
+          key={item.key}
           onMouseUp={onMouseUp}
           active={active}
           ref={ref}

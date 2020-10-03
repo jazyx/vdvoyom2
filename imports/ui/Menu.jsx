@@ -624,14 +624,14 @@ class MenuTracker{
   getGroupData(group_id, d_code) {
     if (group_id) {
       const groupSelect = { _id: group_id }
-      const groupProject = {
+      const groupOptions = {
         fields: {
           page: 1
         , menu_open: 1
         , soloPilot: 1
         }
       }
-      const groupData = Group.findOne(groupSelect, groupProject)
+      const groupData = Group.findOne(groupSelect, groupOptions)
 
       // console.log(
       //   "Menu group_id:", group_id, ", groupData"

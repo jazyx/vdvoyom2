@@ -21,12 +21,12 @@ export default class CreateGroup {
     // in which case, it will have been provided by the URL, or will
     // have defaulted to "en").
     const select = {id: accountData.teacher}
-    const project = {
+    const options = {
       fields: {
         language: 1
       }
     }
-    const { language } = Teacher.findOne(select, project) || {}
+    const { language } = Teacher.findOne(select, options) || {}
 
     if (language) {
       // A teacher doc was found, so we can overwrite accountData

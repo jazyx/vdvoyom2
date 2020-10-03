@@ -22,16 +22,19 @@ import { collections as adminCollections
        } from './admin'
 
 
+const Match = new Mongo.Collection('match')
 const Show = new Mongo.Collection('show')
 
 
 export const collections = {
   ...adminCollections
+, Match
 , Show
 }
 
 
 export const publishQueries = {
   ...adminQueries
+, "Match": {}
 , "Show": {}
 }

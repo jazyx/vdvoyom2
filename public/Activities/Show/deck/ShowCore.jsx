@@ -121,11 +121,11 @@ export default class Show extends Component {
 
 
   getSplash(item) {
-    // image: {splash: "/Assets/Show/OatsAndBeans/image/splash.jpg"}
+    // image:  {splash: "/Assets/Show/OatsAndBeans/image/splash.jpg"}
     // layout: "splash"
-    // name: "splash"
-    // text: "25 September 2020↵James Newton at↵[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
-    // _id: "4pT9midTF7Dvjo5rY"
+    // key:    "splash"
+    // text:   "25 September 2020↵James Newton at↵[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
+    // _id:    "4pT9midTF7Dvjo5rY"
 
     let text = item.text.split("\n").map(( line, index ) => {
       return this.getTextOrLink("p", line, index)
@@ -157,7 +157,7 @@ export default class Show extends Component {
     //   }
     // ]
     // menu: <string>
-    // name: <string>
+    // key: <string>
     // tweak: {
     //   background-color: "#fff"
     // , color: "#000"

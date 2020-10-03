@@ -1,0 +1,18 @@
+{
+	"name": {
+		"en": "Match",
+		"fr": "Faire des paires",
+		"ru": "Совпадать"
+	},
+	"description": {
+		"en": "Create pairs by matching items",
+		"fr": "Faire des paires en reliant deux images",
+		"ru": "Создавайте пары, сопоставляя элементы"
+	},
+	"path": "/Match",
+	"modal": false,
+	"icon": {
+		"src": "/Activities/Match/icon.jpg"
+	},
+	"_id": "CQmwzSRSbJQjPshf3"
+}

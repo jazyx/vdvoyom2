@@ -96,25 +96,27 @@ export default class ImportAssets extends IOHelper{
 
     contents.forEach( subFolder => {
       const parentFolder = path.join(folder, subFolder)
-      const subFolders = fs.readdirSync(parentFolder)
+      if (fs.lstatSync(parentFolder).isDirectory()) {
+        const subFolders = fs.readdirSync(parentFolder)
 
-      // console.log("subfolders of",parentFolder, subFolders)
+        // console.log("subfolders of",parentFolder, subFolders)
 
-      const hasJSON = subFolders.find(item => JSON_REGEX.test(item))
-      if (hasJSON) {
-        if (!activity) {
-          activity = subFolder
+        const hasJSON = subFolders.find(item => JSON_REGEX.test(item))
+        if (hasJSON) {
+          if (!activity) {
+            activity = subFolder
+          }
+          this.treatFolder(activity, parentFolder, subFolders)
+
+        } else if (exploreSubFolders) {
+
+          this.importSubfoldersOf(parentFolder, subFolder)
+
+        } else {
+          const message =`No JSON found: items ignored in ${parentFolder}`
+          this.log(message)
+          console.log(message)
         }
-        this.treatFolder(activity, parentFolder, subFolders)
-
-      } else if (exploreSubFolders) {
-
-        this.importSubfoldersOf(parentFolder, subFolder)
-
-      } else {
-        const message =`No JSON found: items ignored in ${parentFolder}`
-        this.log(message)
-        console.log(message)
       }
     })
   }
@@ -195,6 +197,8 @@ export default class ImportAssets extends IOHelper{
     } else {
       const message =`        Adding assets from: ${localPath}`
       this.log(message)
+
+      // console.log(message)
 
       this.crawlSubFolders(
         parentFolder
@@ -469,7 +473,7 @@ export default class ImportAssets extends IOHelper{
 
   addAssetsToPhrases(phrases,assets,tagArray,ignore_missing_files) {
     const audio = assets.audio
-    const image = assets.image
+    const image = assets.image || {}
 
     // console.log("addAssetsToPhrases image:", image)
 
@@ -576,8 +580,8 @@ export default class ImportAssets extends IOHelper{
       , activity
       ) {
 
-    // console.log("crawlSubFolders:",parentFolder)
-    // console.log(subFolders)
+    console.log("crawlSubFolders:",parentFolder)
+    console.log(subFolders)
 
     // Treat rank.json files
     const jsonFiles = subFolders.filter(item => JSON_REGEX.test(item))

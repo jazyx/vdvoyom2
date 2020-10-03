@@ -326,15 +326,15 @@ class StartUpSingleton {
     /// HACK >>>
 
     const select = { _id }
-    const project = { fields: {
+    const options = { fields: {
         query: 1
       }
     }
-    const { query } = Shortcut.findOne(select, project) || {}
+    const { query } = Shortcut.findOne(select, options) || {}
     // console.log(
     //   "query", query, `\ndb.shortcut.find(
-    //     ${JSON.stringify(select)} ${project && project.fields ? `
-    //   , ${JSON.stringify(project.fields)}` : ""}
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
     //   )`
     // )
 
@@ -509,13 +509,13 @@ class StartUpSingleton {
 
   getGroupPage(_id) {
     const select = { _id }
-    const project = {
+    const options = {
       fields: {
         page: 1
       }
     }
 
-    const { page } = Group.findOne(select, project) || {}
+    const { page } = Group.findOne(select, options) || {}
 
     return page
   }
