@@ -71,6 +71,13 @@ import Activity from './activities/Activity.jsx'
 import views from './activities/mint'
 
 
+// /// <<< TEMP: TODELETE 
+// import { getGoldenAngleAt
+//        , getCodeFrom
+//        } from '/imports/tools/custom/project.js'
+// import { hsl2hex } from '/imports/tools/generic/utilities.js'
+// /// TEMP: TODELETE >>>
+
 
 // Disable the context menu. Everywhere. (TODO - for production )
 document.body.addEventListener("contextmenu", (event) => {
@@ -83,6 +90,9 @@ document.body.addEventListener("contextmenu", (event) => {
 class App extends Component {
   constructor(props) {
     super(props)
+
+    // this.createUsers()
+    // window.createShortcuts = this.createShortcuts.bind(this)
 
     this.views = {
       Profile
@@ -113,6 +123,94 @@ class App extends Component {
     this.setViewSize       = this.setViewSize.bind(this)
     this.storePointsMethod = this.storePointsMethod.bind(this)
   }
+
+
+  // createUsers() {
+  //    /// <<< HARD-CODED
+  //   this.saturation = 60
+  //   this.luminosity = 50
+  //   /// HARD-CODED >>>
+
+  //   let x = [
+  //     "Андрей"
+  //   , "Антон_Фелдт"
+  //   , "Антон_Ступников"
+  //   , "Виталий"
+  //   , "Евгений"
+  //   , "Екатерина"
+  //   , "Кирилл"
+  //   , "Леонид"
+  //   , "Любовь"
+  //   , "Ольга"
+  //   , "Татьяна"
+  //   , "Эльвира"
+  //   , "Юлия"
+  //   ]
+
+  //   x = x.map(( username, index ) => {
+  //     const q_index = index + 10
+  //     const hue = getGoldenAngleAt(q_index)
+  //     const q_code  = getCodeFrom(hue)
+  //     const q_color = hsl2hex(hue, this.saturation, this.luminosity)
+
+  //     return {
+  //       username
+  //     , teacher: "jn"
+  //     , native: "ru"
+  //     , q_index
+  //     , q_code
+  //     , q_color
+  //     }
+  //   })
+
+  //   console.log(
+  //     "x"
+  //   , JSON.stringify(x, null, "  ")
+  //   )
+  // }
+
+
+  // createShortcuts() {
+  //   const User = collections.User
+  //   if (!User) {
+  //     return "Users not available"
+  //   }
+
+  //   const select = { username: { $exists: true }}
+  //   const options = {
+  //     fields: {
+  //       username: 1
+  //     , q_code: 1
+  //     , teacher: 1
+  //     , native: 1
+  //     , language: 1
+  //     }
+  //   }
+
+  //   const users = User.find(select, options)
+  //                     .fetch()
+  //                     .map( userData => {
+  //                       // {
+  //                       //   "q_code": "8196",
+  //                       //   "teacher": "jn",
+  //                       //   "username": "Андрей",
+  //                       //   "_id": "DXQg6GCK3EuwcpKH2"
+  //                       // }
+  //                       const {
+  //                         username: user
+  //                       , teacher: own
+  //                       , q_code: pin
+  //                       , native: vo
+  //                       , language: lang
+  //                       } = userData
+
+  //                       return `?join&user=${user}&own=${own}&pin=${pin}&vo=${vo}&lang=${lang}&path=Match&tag=people`
+  //                     })
+  //   console.log(
+  //     "users"
+  //   , JSON.stringify(users, null, "  ")
+  //   )
+  // }
 
 
   /** Called by Share.setViewSize
@@ -166,6 +264,8 @@ class App extends Component {
    *                              hideSplash()
    */
   setPage(page, group_id = this.props.group_id) {
+
+    // this.createShortcuts()
 
     if (!page) {
       return this.setState({ view: "TimeOut" })

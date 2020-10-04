@@ -8,14 +8,14 @@
 import Tracker from '../../shared/tracker'
 
 import collections from '/imports/api/collections/publisher'
-const { Nim } = collections
+const { Match } = collections
 
 
 
 
 export default class MatchTracker extends Tracker{
   getProps() {
-    const props = super.getProps(Nim)
+    const props = super.getProps("Match")
 
     return props
     // { code      // unused
@@ -29,3 +29,16 @@ export default class MatchTracker extends Tracker{
     // }
   }
 }
+
+
+// items = [ {
+//     index:    0 | 1
+//     matches: <folder name>
+//     src:     "/Assets/Match/Newton/frame.jpg"
+//     text:    <folder name or arbitrary text>
+//
+//     tags:    ["test"]
+//     _id:     "ogczq37KWxh8FkBTN"
+// }
+// , ...
+// ]

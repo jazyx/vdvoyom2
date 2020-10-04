@@ -145,11 +145,11 @@ export default class Tracker{
 
     let items = collection.find(select).fetch()
 
-    // console.log( "items:", items
-    //            , "db." + collection._name + ".find("
-    //            + JSON.stringify(select)
-    //            + ")"
-    //            )
+    console.log( "items:", items
+               , "db." + collection._name + ".find("
+               + JSON.stringify(select)
+               + ")"
+               )
 
     items = items.map(this.getLocalizedItem)
 

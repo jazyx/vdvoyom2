@@ -435,7 +435,9 @@ export default class ImportAssets extends IOHelper{
       , ignore_missing_files
       )
     } else {
+      // There are no phrases to treat, but we must add the tags
       phrases = json.data || []
+      phrases.forEach( phrase => phrase.tags = tag)
     }
 
     // Insert or update phrase documents in MongoDB

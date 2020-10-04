@@ -1,0 +1,128 @@
+
+{ "collection": "User"
+
+, "as_is": {
+    "version": 1
+  }
+
+, "": [
+    {
+      "username": "Андрей",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 10,
+      "q_code": "8196",
+      "q_color": "#bf33cc"
+    },
+    {
+      "username": "Антон",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 11,
+      "q_code": "2016",
+      "q_color": "#accc33"
+    },
+    {
+      "username": "Антон",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 12,
+      "q_code": "5835",
+      "q_color": "#337fcc"
+    },
+    {
+      "username": "Виталий",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 13,
+      "q_code": "9655",
+      "q_color": "#cc3353"
+    },
+    {
+      "username": "Евгений",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 14,
+      "q_code": "3475",
+      "q_color": "#33cc40"
+    },
+    {
+      "username": "Екатерина",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 15,
+      "q_code": "7294",
+      "q_color": "#6d33cc"
+    },
+    {
+      "username": "Кирилл",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 16,
+      "q_code": "1114",
+      "q_color": "#cc9933"
+    },
+    {
+      "username": "Леонид",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 17,
+      "q_code": "4934",
+      "q_color": "#33ccc6"
+    },
+    {
+      "username": "Любовь",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 18,
+      "q_code": "8753",
+      "q_color": "#cc33a5"
+    },
+    {
+      "username": "Ольга",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 19,
+      "q_code": "2573",
+      "q_color": "#79cc33"
+    },
+    {
+      "username": "Татьяна",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 20,
+      "q_code": "6393",
+      "q_color": "#334ccc"
+    },
+    {
+      "username": "Эльвира",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 21,
+      "q_code": "0213",
+      "q_color": "#cc4733"
+    },
+    {
+      "username": "Юлия",
+      "native": "ru",
+      "teacher": "jn",
+      "language": "en-GB",
+      "q_index": 22,
+      "q_code": "4032",
+      "q_color": "#33cc73"
+    }
+  ]
+}
+
