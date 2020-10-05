@@ -204,7 +204,7 @@ class App extends Component {
   //                       , language: lang
   //                       } = userData
 
-  //                       return `?join&user=${user}&own=${own}&pin=${pin}&vo=${vo}&lang=${lang}&path=Match&tag=people`
+  //                       return `?join&name=lactalis&own=${own}&lang=${lang}&path=Match&tag=people&vo=${vo}&pin=${pin}&user=${user}`
   //                     })
   //   console.log(
   //     "users"
@@ -269,7 +269,6 @@ class App extends Component {
 
     if (!page) {
       return this.setState({ view: "TimeOut" })
-
     }
 
     const toSet = deleteFrom(page, "settings") // { settings: < > }

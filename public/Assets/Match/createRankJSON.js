@@ -17,7 +17,7 @@
  *       "en": "Test"
  *     },
  *     "icon": {
- *       "src": "/Assets/Match/test/icon.jpg"
+ *       "src": "/Assets/Match/Test/icon.jpg"
  *     },
  *     "path": "/Assets/Match",
  *     "parent": "/Assets"
@@ -27,7 +27,7 @@
  *       "matches": "James",
  *       "text": "James",
  *       "index": 0,
- *       "src": "/Assets/Match/James/cave.jpg"
+ *       "src": "/Assets/Match/Test/James/cave.jpg"
  *     }
  *   , ...
  *   ]
@@ -63,17 +63,16 @@ class CreateJSON {
     }
 
     this.assetFolder = this.getAssetFolder()
-    const set = this.getSet(this.assetFolder, parentName)
-
-    // console.log("set", set)
-
     // console.log("this.assetFolder:", this.assetFolder)
 
-    this.parentName = parentName
     this.parentFolder = path.join(__dirname, parentName)
     if (!fs.existsSync(this.parentFolder)) {
       return console.log("Unknown folder:" + this.parentFolder)
     }
+
+    this.parentName = parentName
+    const set = this.getSet(this.assetFolder, parentName)
+    // console.log("set", set)
 
     this.getJSONEntry = this.getJSONEntry.bind(this)
     this.imageTypes = [
@@ -82,7 +81,7 @@ class CreateJSON {
     , ".png"
     , ".gif"
     , ".svg"
-    , "webm"
+    , ".webp"
     ]
     // console.log("About to treat", this.parentFolder)
 
@@ -142,13 +141,13 @@ class CreateJSON {
 
   getSet(assetPath, parentName) {
     let parent = "/" + assetPath.split("/")[1]
-    let name =parentName[0].toUpperCase() + parentName.substring(1)
+    let tag =parentName.toLowerCase()
     let src = path.join(assetPath, parentName, "icon.jpg")
 
     return {
-      "tag": parentName
+      "tag": tag
     , "name": {
-        "en": name
+        "en": parentName
       }
     , "icon": {
         src
@@ -166,16 +165,34 @@ class CreateJSON {
                          this.imageTypes.indexOf(path.extname(file)) > -1
                        ))
 
+    // console.log("this.parentFolder:", this.parentFolder)
+    // console.log("folderName:", folderName)
+    // console.log("this.assetFolder:", this.assetFolder)
+    // console.log("folderPath:", folderPath)
+
     if (contents.length > 1) {
       contents = contents.map(( fileName, index ) => ({
         matches: folderName
       , text: folderName
       , index
-      , src: path.join(this.assetFolder, folderName, fileName)
+      , src: path.join(
+          this.assetFolder
+        , this.parentName
+        , folderName
+        , fileName
+        )
       }))
+
+
+      // console.log("expected:")
+      // console.log(contents[0].src)
+      // console.log(contents[1].src)
+
     } else {
       contents = false
     }
+
+    // console.log("")
 
     return contents
   }

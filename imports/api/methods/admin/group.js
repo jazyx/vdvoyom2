@@ -36,6 +36,7 @@ export default class CreateGroup {
     const group = {
       owner:      accountData.teacher
     , language:   accountData.language
+    , name:       accountData.name || ""
     , active:     false // becomes true if Teacher logs in personally
     , lobby:      ""
     , chat_room:  ""

@@ -598,8 +598,10 @@ export default class ImportAssets extends IOHelper{
       folder = path.join(parentFolder, folder)
 
       // try {
-        const contents = fs.readdirSync(folder)
-        this.treatFolder(activity, folder, contents)
+        if (fs.statSync(folder).isDirectory()) {
+          const contents = fs.readdirSync(folder)
+          this.treatFolder(activity, folder, contents)
+        }
 
       // } catch(error) {
       //   const message = `<<<<<<*>>>>>>
