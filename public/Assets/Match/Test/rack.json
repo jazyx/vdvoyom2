@@ -5,9 +5,9 @@
 			"en": "Test"
 		},
 		"icon": {
-			"src": "/Assets/Match/test/icon.jpg"
+			"src": "/Assets/Match/Test/icon.jpg"
 		},
-		"path": "/Match/test",
+		"path": "/Match/Test",
 		"parent": "/Match",
 		"_id": "2YKucpcKvGdEfW2Jp"
 	},
