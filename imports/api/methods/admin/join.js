@@ -31,16 +31,12 @@ export default class JoinGroup {
      * }
      */
 
-    let {user_id, d_code, teacher, group_id, language } = accountData
-    if (teacher) {
-      const result = this.groupWithThisTeacher(user_id, teacher)
-      if (result.group_id) {
-        group_id = result.group_id
-      }
-      if (result.language) {
-        language = result.language
-      }
-    }
+    let {
+      user_id
+    , d_code
+    } = accountData
+
+    const { group_id, language } = this.getGroupAndLang(accountData)
 
     if (group_id) {
       // The user might have chosen a different group from last time
@@ -73,6 +69,64 @@ export default class JoinGroup {
   }
 
 
+  getGroupAndLang(accountData) {
+    let {
+      language
+    , group_id
+
+    , group_name
+    , user_id
+    , teacher
+    } = accountData
+
+    let result = {}
+
+    if (group_name) {
+      result = this.groupWithThisName(group_name)
+    } else if (teacher) {
+      result = this.groupWithThisTeacher(user_id, teacher)
+    }
+
+    if (result.group_id) {
+      group_id = result.group_id
+    }
+    if (result.language) {
+      language = result.language
+    }
+
+    return { group_id, language }
+  }
+
+
+  groupWithThisName(name) {
+    const select = { name }
+    const options = {
+      fields: {
+        language: 1
+      }
+    }
+
+    const result = Group.findOne(select, options) || {}
+
+    console.log(
+      "result", result, `\ndb.group.findOne(
+        ${JSON.stringify(select)} ${options && options.fields ? `
+      , ${JSON.stringify(options.fields)}` : ""}
+      )`
+    )
+
+    const {
+      _id: group_id
+    , language
+    } = result
+
+    return {
+      group_id
+    , language
+    }
+  }
+
+
   groupWithThisTeacher(user_id, teacher) {
     const select = {
       members: {
@@ -83,16 +137,28 @@ export default class JoinGroup {
       , $size: 2
       }
     }
-    const project = {
+    const options = {
       fields: {
         language: 1
       }
     }
 
-    const { _id, language } = (Group.findOne(select, project) || {})
+    const result = Group.findOne(select, options) || {}
+
+    console.log(
+      "result", result, `\ndb.group.findOne(
+        ${JSON.stringify(select)} ${options && options.fields ? `
+      , ${JSON.stringify(options.fields)}` : ""}
+      )`
+    )
+
+    const {
+      _id: group_id
+    , language
+    } = result
 
     return {
-      group_id: _id
+      group_id
     , language
     }
   }

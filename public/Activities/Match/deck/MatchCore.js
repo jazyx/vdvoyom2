@@ -15,7 +15,6 @@ import { valuesDontMatch
 
 import { StyledHalf
        , StyledBlock
-       , StyledHolder
        , StyledThumbnail
        } from './styles'
 
@@ -29,7 +28,7 @@ import { logRenderTriggers } from '/imports/tools/generic/debug.js'
 export default class Match extends Component {
   constructor(props) {
     super(props)
-    this.anon = [...props.item.anon]
+    this.anon = [...props.items.anon]
     shuffle(this.anon)
   }
 
@@ -49,6 +48,13 @@ export default class Match extends Component {
       </StyledThumbnail>
     })
 
+    // if (top) {
+    //   thumbnails.unshift(<StyledThumbnail
+    //     key="blank"
+    //     blank="true"
+    //   />)
+    // }
+
     return <StyledBlock
       aspectRatio={aspectRatio}
       top={top}
@@ -59,13 +65,24 @@ export default class Match extends Component {
 
 
   render() {
-    const triggered = logRenderTriggers("Match RenderTriggers", this)
-    console.log("MATCH TRIGGERED", triggered)
+    // const triggered = logRenderTriggers("Match RenderTriggers", this)
+    // console.log("MATCH TRIGGERED", triggered)
 
-    let { named, anon } = this.props.items
+    let { named } = this.props.items
+
+    // console.log(
+    //   "named"
+    // , JSON.stringify(named, null, "  ")
+    // )
+    
+    // console.log(
+    //   "anon"
+    // , JSON.stringify(anon, null, "  ")
+    // )
+    
     const { aspectRatio } = this.props
     named = this.getThumbnails(named, true, aspectRatio)
-    anon  = this.getThumbnails(anon, false, aspectRatio)
+    const anon  = this.getThumbnails(this.anon, false, aspectRatio)
 
     return (
       <StyledHalf

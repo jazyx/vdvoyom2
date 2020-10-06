@@ -152,6 +152,7 @@ class StartUpSingleton {
     , teacher: teacher_id
     , lang:    language
     , pin:     q_code
+    , group:   group_name
       // page
     , view
     , path
@@ -167,6 +168,7 @@ class StartUpSingleton {
     , "teacher"
     , "language"
     , "lang"
+    , "group"
 
     , "pin"
     , "view"
@@ -192,6 +194,7 @@ class StartUpSingleton {
     , teacher_id // id for teacher who is logging in
     , q_code
     , language
+    , group_name
     }
     deleteFrom(accountData)
     if (this.context === "once") {
@@ -414,7 +417,13 @@ class StartUpSingleton {
     const callback     = this.welcomeGuestUser
 
     const isSingleUse  = false
-    const { username, native, teacher, q_code } = this.accountData
+    const {
+      username
+    , native
+    , teacher
+    , q_code
+    , group_name
+    } = this.accountData
     const canRegister  = !!(username && native && teacher)
     const canAutoLogIn = !!(q_code && canRegister)
     this.accountData.pin_absent = canRegister && !canAutoLogIn
@@ -499,6 +508,10 @@ class StartUpSingleton {
     result.role = "user"
 
     const groupPage = this.getGroupPage(group_id)
+
+    // ALERT: URL search may indicate a specific page, but if the
+    // group is already active, groupPage will overwrite this.
+
     result.page = groupPage || this.page
     this.setSessionDataFrom(result)
 

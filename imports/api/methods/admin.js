@@ -83,15 +83,16 @@ export const createAccount = {
 
 , validate(accountData) {
     new SimpleSchema({
-      username: { type: String }
-    , native:   { type: String }
-    , teacher:  { type: String }
-    , language: { type: String, optional: true }
-    , d_code:   { type: String }
+      username:   { type: String }
+    , native:     { type: String }
+    , teacher:    { type: String }
+    , language:   { type: String, optional: true }
+    , group_name: { type: String, optional: true }
+    , d_code:     { type: String }
 
     // action will have been added if the original call was to logIn
-    , action:   { type: String, optional: true }
-    , page:     { type: Object, optional: true, blackbox: true }
+    , action:     { type: String, optional: true }
+    , page:       { type: Object, optional: true, blackbox: true }
     }).validate(accountData)
   }
 
@@ -127,16 +128,17 @@ export const createGroup = {
 
 , validate(accountData) {
     new SimpleSchema({
-      user_id: { type: String }
-    , teacher:  { type: String }
-    , language: { type: String }
+      user_id:    { type: String }
+    , teacher:    { type: String }
+    , language:   { type: String }
 
     // Other properties may exist but will not be used
-    , username: { type: String, optional: true }
-    , native:   { type: String, optional: true }
-    , d_code:   { type: String, optional: true }
-    , action:   { type: String, optional: true }
-    , page:     { type: Object, optional: true, blackbox: true }
+    , group_name: { type: String, optional: true }
+    , username:   { type: String, optional: true }
+    , native:     { type: String, optional: true }
+    , d_code:     { type: String, optional: true }
+    , action:     { type: String, optional: true }
+    , page:       { type: Object, optional: true, blackbox: true }
     }).validate(accountData)
   }
 
@@ -173,6 +175,7 @@ export const logIn = {
       username: { type: String }
     , d_code:   { type: String }
 
+    , group_name:  { type: String, optional: true }
     , restore_all: { type: Boolean, optional: true }
     , join:        { type: Boolean, optional: true }
     , page:        { type: Object, optional: true, blackbox: true }

@@ -538,11 +538,13 @@ class MenuTracker{
     const native     = Session.get("native")
 
     const uiData     = this.getUIData(native)
+
     const {
       page
     , menu_open
     , isPilot
     } = this.getGroupData(group_id, d_code)
+
     const { path, index } = page
     const items = this.getMenuItems(path, uiData, native)
 
@@ -659,6 +661,12 @@ class MenuTracker{
         }
       }
     }
+
+    /// <<< HACK: Hide Menu from Lactalis
+    if (page && page.path.startsWith("/Match")) {
+      soloPilot = true // nobody's d_code
+    }
+    /// HACK >>>
 
     // isPilot should be undefined if soloPilot is not defined,
     // true if this user/teacher is the soloPilot, false if not
