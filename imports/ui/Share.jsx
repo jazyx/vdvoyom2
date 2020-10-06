@@ -88,7 +88,7 @@ class Share extends Component {
    * their browser window.
    */
   setViewSize(newMaster) {
-    const { isMaster, canMaster } = this.props
+    const { ace, isMaster, canMaster } = this.props
     this.isMaster = isMaster
     this.canMaster = canMaster
 
@@ -237,11 +237,12 @@ export default withTracker(() => {
       fields: {
         view_size: 1
       , logged_in: 1
+      , ace: 1
       }
     }
 
     const groupData = Group.findOne(select, options)
-    const { logged_in } = (groupData || {})
+    var { logged_in, ace } = (groupData || {})
 
     if (groupData) {
       if (groupData.view_size) {
@@ -256,7 +257,7 @@ export default withTracker(() => {
   }
 
   const isMaster  = master && ( master === Session.get("d_code") )
-  const canMaster = !master || isMaster
+  const canMaster = ace || !master || isMaster
 
   return {
     group_id

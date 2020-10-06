@@ -71,12 +71,12 @@ import Activity from './activities/Activity.jsx'
 import views from './activities/mint'
 
 
-// /// <<< TEMP: TODELETE 
-// import { getGoldenAngleAt
-//        , getCodeFrom
-//        } from '/imports/tools/custom/project.js'
-// import { hsl2hex } from '/imports/tools/generic/utilities.js'
-// /// TEMP: TODELETE >>>
+/// <<< TEMP: TODELETE 
+import { getGoldenAngleAt
+       , getCodeFrom
+       } from '/imports/tools/custom/project.js'
+import { hsl2hex } from '/imports/tools/generic/utilities.js'
+/// TEMP: TODELETE >>>
 
 
 // Disable the context menu. Everywhere. (TODO - for production )
@@ -92,7 +92,7 @@ class App extends Component {
     super(props)
 
     // this.createUsers()
-    // window.createShortcuts = this.createShortcuts.bind(this)
+    // this.createShortcuts = this.createShortcuts.bind(this)
 
     this.views = {
       Profile
@@ -132,30 +132,32 @@ class App extends Component {
   //   /// HARD-CODED >>>
 
   //   let x = [
-  //     "Андрей"
-  //   , "Антон_Фелдт"
-  //   , "Антон_Ступников"
-  //   , "Виталий"
-  //   , "Евгений"
-  //   , "Кирилл"
-  //   , "Леонид"
-  //   , "Любовь"
-  //   , "Ольга"
-  //   , "Татьяна"
-  //   , "Эльвира"
-  //   , "Юлия"
-  //   ]
+  //     "Андрей Филиппов"
+  //   , "Антон Ступников"
+  //   , "Антон Фельдт"
+  //   , "Виталий Мороз"
+  //   , "Евгений Трофимов"
+  //   , "Кирилл Зимнухов"
+  //   , "Леонид Шалухин"
+  //   , "Любовь Кутузова"
+  //   , "Ольга Обухова"
+  //   , "Татьяна Демкина"
+  //   , "Эльвира Розова"
+  //   , "Юлия Аполлоник"    ]
 
-  //   x = x.map(( username, index ) => {
+  //   x = x.map(( fullname, index ) => {
+  //     const username = fullname.substring(0, fullname.indexOf(" "))
   //     const q_index = index + 10
   //     const hue = getGoldenAngleAt(q_index)
   //     const q_code  = getCodeFrom(hue)
   //     const q_color = hsl2hex(hue, this.saturation, this.luminosity)
 
   //     return {
-  //       username
-  //     , teacher: "jn"
+  //       fullname
+  //     , username
   //     , native: "ru"
+  //     , teacher: "jn"
+  //     , language: "en-GB"
   //     , q_index
   //     , q_code
   //     , q_color
@@ -203,7 +205,7 @@ class App extends Component {
   //                       , language: lang
   //                       } = userData
 
-  //                       return `?join&name=lactalis&own=${own}&lang=${lang}&path=Match&tag=people&vo=${vo}&pin=${pin}&user=${user}`
+  //                       return `?join&group=lactalis&own=${own}&lang=${lang}&path=Match&tag=people&vo=${vo}&pin=${pin}&user=${user}`
   //                     })
   //   console.log(
   //     "users"

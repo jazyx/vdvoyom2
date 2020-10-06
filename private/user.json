@@ -7,6 +7,7 @@
 
 , "": [
     {
+      "fullname": "Андрей Филиппов",
       "username": "Андрей",
       "native": "ru",
       "teacher": "jn",
@@ -16,6 +17,7 @@
       "q_color": "#bf33cc"
     },
     {
+      "fullname": "Антон Ступников",
       "username": "Антон",
       "native": "ru",
       "teacher": "jn",
@@ -25,6 +27,7 @@
       "q_color": "#accc33"
     },
     {
+      "fullname": "Антон Фельдт",
       "username": "Антон",
       "native": "ru",
       "teacher": "jn",
@@ -34,6 +37,7 @@
       "q_color": "#337fcc"
     },
     {
+      "fullname": "Виталий Мороз",
       "username": "Виталий",
       "native": "ru",
       "teacher": "jn",
@@ -43,6 +47,7 @@
       "q_color": "#cc3353"
     },
     {
+      "fullname": "Евгений Трофимов",
       "username": "Евгений",
       "native": "ru",
       "teacher": "jn",
@@ -52,67 +57,74 @@
       "q_color": "#33cc40"
     },
     {
+      "fullname": "Кирилл Зимнухов",
       "username": "Кирилл",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
       "q_index": 15,
-      "q_code": "1114",
-      "q_color": "#cc9933"
+      "q_code": "7294",
+      "q_color": "#6d33cc"
     },
     {
+      "fullname": "Леонид Шалухин",
       "username": "Леонид",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
       "q_index": 16,
-      "q_code": "4934",
-      "q_color": "#33ccc6"
+      "q_code": "1114",
+      "q_color": "#cc9933"
     },
     {
+      "fullname": "Любовь Кутузова",
       "username": "Любовь",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
       "q_index": 17,
-      "q_code": "8753",
-      "q_color": "#cc33a5"
+      "q_code": "4934",
+      "q_color": "#33ccc6"
     },
     {
+      "fullname": "Ольга Обухова",
       "username": "Ольга",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
       "q_index": 18,
-      "q_code": "2573",
-      "q_color": "#79cc33"
+      "q_code": "8753",
+      "q_color": "#cc33a5"
     },
     {
+      "fullname": "Татьяна Демкина",
       "username": "Татьяна",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
       "q_index": 19,
-      "q_code": "6393",
-      "q_color": "#334ccc"
+      "q_code": "2573",
+      "q_color": "#79cc33"
     },
     {
+      "fullname": "Эльвира Розова",
       "username": "Эльвира",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
-      "q_index": 10,
-      "q_code": "0213",
-      "q_color": "#cc4733"
+      "q_index": 20,
+      "q_code": "6393",
+      "q_color": "#334ccc"
     },
     {
+      "fullname": "Юлия Аполлоник",
       "username": "Юлия",
       "native": "ru",
       "teacher": "jn",
       "language": "en-GB",
       "q_index": 21,
-      "q_code": "4032",
-      "q_color": "#33cc73"
+      "q_code": "0213",
+      "q_color": "#cc4733"
     }
   ]
 }

@@ -72,15 +72,23 @@ createFolders()
 // Yuliya.APOLONNIK@parmalat.ru
 
 
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=8196&user=Андрей
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=2016&user=Антон
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=5835&user=Антон
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=9655&user=Виталий
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=3475&user=Евгений
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=1114&user=Кирилл
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=4934&user=Леонид
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=8753&user=Любовь
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=2573&user=Ольга
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=6393&user=Татьяна
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=0213&user=Эльвира
-// ?join&group=lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=4032&user=Юлия
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=8196&user=Андрей
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=2016&user=Антон
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=5835&user=Антон
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=9655&user=Виталий
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=3475&user=Евгений
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=7294&user=Кирилл
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=1114&user=Леонид
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=4934&user=Любовь
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=8753&user=Ольга
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=2573&user=Татьяна
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=6393&user=Эльвира
+// ?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=people&vo=ru&pin=0213&user=Юлия
+// 
+// 
+/*
+
+localhost:3000/?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=test&vo=ru&pin=8196&user=Андрей
+localhost:3000/?join&ace&group=Lactalis&own=jn&lang=en-GB&path=Match&tag=test&vo=ru&pin=0213&user=Юлия
+
+*/

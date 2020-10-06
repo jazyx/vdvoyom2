@@ -25,34 +25,37 @@ export default class LogIn {
     } else if ( accountData.status === "CreateAccount"
             && !accountData.accountCreated
               ) {
-      // This might be:
-      // [ ] A new user with a common name
-      // An earlier call to log in was referred back to the Client
-      // because a user with the given username already exists and the
-      // q_code was missing or did not match, and the user pressed
-      // the Create New Account button
+      /* This might be:
+       * [ ] A new user with a common name
+       * An earlier call to log in was referred back to the Client
+       * because a user with the given username already exists and the
+       * q_code was missing or did not match, and the user pressed
+       * the Create New Account button
+       */
 
       return // There's nothing to do here yet, but we'll be back
              // with accountCreated set to true
 
     } else if (!accountData.q_code) {
-      // This might be:
-      // [ ] A new user with a common name
-      // [ ] A returning user
-      // [ ] ... on a new device
-      // [ ] --- or on a device with someone else's localStorage
-      // We need to ask if the user has a PIN code (returning user on
-      // device with no [prior] localStorage) or not (new user)
+      /* This might be:
+       * [ ] A new user with a common name
+       * [ ] A returning user
+       * [ ] ... on a new device
+       * [ ] --- or on a device with someone else's localStorage
+       * We need to ask if the user has a PIN code (returning user on
+       * device with no [prior] localStorage) or not (new user)
+       */
 
       accountData.status = "RequestPIN"
 
     } else {
-      // This might be:
-      // [x] A new user for whom a q_code has just been created
-      // [ ] A returning user on a device with so. else's localStorage
-      // [ ] A returning user logging in manually...
-      // [ ] ... perhaps to start with a new teacher
-      // [ ] A returning user logging in automatically
+      /* This might be:
+       * [x] A new user for whom a q_code has just been created
+       * [ ] A returning user on a device with so. else's localStorage
+       * [ ] A returning user logging in manually...
+       * [ ] ... perhaps to start with a new teacher
+       * [ ] A returning user logging in automatically
+       */
 
       const existingUser = this.logInUserFromNameAndQCode()
       if (!existingUser) {

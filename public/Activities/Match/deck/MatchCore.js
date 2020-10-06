@@ -74,12 +74,12 @@ export default class Match extends Component {
     //   "named"
     // , JSON.stringify(named, null, "  ")
     // )
-    
+
     // console.log(
     //   "anon"
     // , JSON.stringify(anon, null, "  ")
     // )
-    
+
     const { aspectRatio } = this.props
     named = this.getThumbnails(named, true, aspectRatio)
     const anon  = this.getThumbnails(this.anon, false, aspectRatio)

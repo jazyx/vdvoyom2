@@ -88,6 +88,7 @@ export const createAccount = {
     , teacher:    { type: String }
     , language:   { type: String, optional: true }
     , group_name: { type: String, optional: true }
+    , ace:        { type: Boolean, optional: true }
     , d_code:     { type: String }
 
     // action will have been added if the original call was to logIn
@@ -133,6 +134,7 @@ export const createGroup = {
     , language:   { type: String }
 
     // Other properties may exist but will not be used
+    , ace:        { type: Boolean, optional: true }
     , group_name: { type: String, optional: true }
     , username:   { type: String, optional: true }
     , native:     { type: String, optional: true }
@@ -175,6 +177,7 @@ export const logIn = {
       username: { type: String }
     , d_code:   { type: String }
 
+    , ace:         { type: Boolean, optional: true }
     , group_name:  { type: String, optional: true }
     , restore_all: { type: Boolean, optional: true }
     , join:        { type: Boolean, optional: true }
@@ -686,6 +689,41 @@ export const setSoloPilot = {
 }
 
 
+export const setAce = {
+  name: "vdvoyom.setAce"
+
+, call(aceData, callback) {
+    const options = {
+      returnStubValue: true
+    , throwStubExceptions: true
+    }
+
+    Meteor.apply(this.name, [aceData], options, callback)
+  }
+
+, validate(aceData) {
+    new SimpleSchema({
+      _id: { type: String }
+    , ace: { type: Boolean, optional: true }
+    }).validate(aceData)
+  }
+
+, run(aceData) {
+    const { _id, ace } = aceData
+    const select = { _id }
+
+    const update = ace
+                 ? {
+                     $set: { ace }
+                   }
+                 : {
+                     $unset: { ace: 0 }
+                   }
+    Group.update(select, update)
+  }
+}
+
+
 
 // To register a new method with Meteor's DDP system, add it here
 const methods = [
@@ -706,6 +744,7 @@ const methods = [
 
   , toggleMenu
   , setSoloPilot
+  , setAce
 ]
 
 

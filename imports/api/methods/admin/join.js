@@ -82,7 +82,7 @@ export default class JoinGroup {
     let result = {}
 
     if (group_name) {
-      result = this.groupWithThisName(group_name)
+      result = this.groupWithThisName(user_id, group_name)
     } else if (teacher) {
       result = this.groupWithThisTeacher(user_id, teacher)
     }
@@ -98,27 +98,46 @@ export default class JoinGroup {
   }
 
 
-  groupWithThisName(name) {
+  groupWithThisName(user_id, name) {
     const select = { name }
-    const options = {
+    let options = {
       fields: {
         language: 1
+      , members: 1
       }
     }
 
-    const result = Group.findOne(select, options) || {}
+    let result = Group.findOne(select, options) || {}
 
-    console.log(
-      "result", result, `\ndb.group.findOne(
-        ${JSON.stringify(select)} ${options && options.fields ? `
-      , ${JSON.stringify(options.fields)}` : ""}
-      )`
-    )
+    // console.log(
+    //   "result", result, `\ndb.group.findOne(
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
+    //   )`
+    // )
 
     const {
       _id: group_id
     , language
+    , members
     } = result
+
+    if (members && members.indexOf(user_id) < 0) {
+      options = {
+        $push: {
+          members: {
+            $each: [ user_id ]
+          , $position: 1
+          }
+        }
+      }
+
+      result = Group.update(select, options)
+      // console.log(
+      //   "Add", user_id, "to Group", name
+      // , `db.group.findOne({${name}},{members: 1})`
+      // )
+    }
 
     return {
       group_id

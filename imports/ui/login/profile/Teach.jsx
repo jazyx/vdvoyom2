@@ -105,17 +105,24 @@ class Teach extends Component {
   }
 
 
+  getNames(members) {
+    return members.map(member => {
+      // TODO: Show username greyed out if user is not logged_in
+      const username = member.username
+      return <p
+        key={username}
+      >
+        {username}
+      </p>
+    })
+  }
+
+
   getGroups() {
     const groups = this.props.groups.map((group, index) => {
-      const names = group.members.map(member => {
-        // TODO: Show username greyed out if user is not logged_in
-        const username = member.username
-        return <p
-          key={username}
-        >
-          {username}
-        </p>
-      })
+      const names = group.name
+                  ? group.name
+                  : this.getNames(group.members)
       const selected = this.state.selected === index
       const ref = selected ? this.scrollTo : ""
       const disabled = !group.logged_in.length
@@ -281,6 +288,7 @@ class TeachTracker{
       fields: {
         members: 1
       , logged_in: 1
+      , name: 1
       , page: 1
       }
     }

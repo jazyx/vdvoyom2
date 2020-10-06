@@ -33,6 +33,11 @@ export default class CreateGroup {
       accountData.language = language
     }
 
+    this.createNewGroup(accountData)
+  }
+
+
+  createNewGroup(accountData) {
     const group = {
       owner:      accountData.teacher
     , language:   accountData.language
@@ -50,12 +55,9 @@ export default class CreateGroup {
     // , view_data: {}
     // , view_size: { width, height }
     }
+
     accountData.group_id = Group.insert(group)
     accountData.groupCreated = true
-
-    if (language) {
-      accountData.language = language
-    }
 
     // console.log("accountData after CreateGroup:", accountData)
   }
