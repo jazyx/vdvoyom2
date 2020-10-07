@@ -158,10 +158,10 @@ class StartUpSingleton {
       }
     }
 
-    console.log(
-      "data"
-    , JSON.stringify(data, null, "  ")
-    )
+    // console.log(
+    //   "data"
+    // , JSON.stringify(data, null, "  ")
+    // )
 
     this.setAccountDataAndPage(data)
   }

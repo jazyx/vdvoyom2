@@ -14,7 +14,8 @@ import { valuesDontMatch
        } from '/imports/tools/generic/utilities'
 
 import { StyledContainer
-       , StyledBlock
+       , StyledFrame
+       , StyledList
        , StyledThumbnail
        } from './styles'
 
@@ -48,12 +49,12 @@ export default class Match extends Component {
       </StyledThumbnail>
     })
 
-    return <StyledBlock
+    return <StyledList
       aspectRatio={aspectRatio}
       top={top}
     >
       {thumbnails}
-    </StyledBlock>
+    </StyledList>
   }
 
 
@@ -61,7 +62,8 @@ export default class Match extends Component {
     return <div
    
     >
-
+      <StyledFrame />
+      <StyledFrame />
     </div>
   }
 

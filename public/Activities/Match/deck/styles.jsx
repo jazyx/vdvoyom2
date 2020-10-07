@@ -10,7 +10,8 @@ import styled from 'styled-components'
 
 
 const size = 12
-const rail = "16px" // depends on OS?
+const tweak = 3
+const rail = 16 // depends on OS?
 
 const getListRules = (portrait, count) => {
   // The lists are always across the min sides
@@ -18,8 +19,8 @@ const getListRules = (portrait, count) => {
   const needsScroll = extent > 100
   const pad         = (100 - extent) / 2
   const space = needsScroll
-              ? `calc(${rail} + ${size} * var(--min )+ 3px)` // scroll
-              : `calc(${size} * var(--min) + 3px)`           // no scroll
+              ? `calc(${rail}px + ${size} * var(--min )+ ${tweak}px)`
+              : `calc(${size} * var(--min) + ${tweak}px)`
   // console.log("getListRules portrait:", portrait, "extent:", extent, "needsScroll:", needsScroll, "pad:", pad)
 
   if (portrait) {
@@ -47,26 +48,54 @@ const getCompareRules = (portrait, count) => {
   // The lists are always across the min sides
   const needsScroll = count * size > 100
   const gapSize = needsScroll
-  ? `calc(100*var(--max) - 6px - 2*(${rail} + ${size} * var(--min)))`
-  : `calc(100*var(--max) - 6px - 2*(${size} * var(--min)))`
+  ? `calc(100*var(--max) - 2*${tweak}px - 2*(${rail}px + ${size} * var(--min)))`
+  : `calc(100*var(--max) - 2*${tweak}px - 2*(${size} * var(--min)))`
+
+  let rules = (portrait)
+            ? `height: ${gapSize};
+               width: 100%;
+               background-color: red;
+              `
+            : `width: ${gapSize};
+               height: 100%;
+               background-color: green;
+              `
+  rules += `position: relative;`
+
+  return rules
+}
 
 
-  // ? `calc(100 * var(--max) - 2 * (${rail} + ${size} * var(--min)))`
-  // : `calc(100 * var(--max) - 2 * (${size} * var(--min)))`
+const getFrameRules = (aspectRatio, count) => {
+  let side
 
-  if (portrait) {
-    return `
-      height: ${gapSize};
-      width: 100%;
-      background-color: red;
-     `
+  const needsScroll = count * size > 100
+  const { width, height } = document.body.getBoundingClientRect()
+  const shortSide = Math.min(width, height) / 2
+  let longSide    = Math.max(width, height) / 2
+  const listSize    = tweak
+                    + (needsScroll ? rail : 0)
+                    + size * shortSide / 50
+  longSide = Math.min(longSide - listSize, shortSide * 2)
+
+  console.log("frame width:", width, "height:", height)
+  console.log("needsScroll:", needsScroll, "listSize:", listSize)
+  console.log("shortSide:", shortSide, "longSide:", longSide)
+
+
+  if (longSide > shortSide) {
+    side = longSide + "px"
   } else {
-    return `
-      width: ${gapSize};
-      height: 100%;
-      background-color: green;
-     `
+    side = shortSide + "px"
   }
+
+  return `
+    position: absolute;
+    width: ${side};
+    height: ${side};
+    top: 0;
+    left: 0;
+  `
 }
 
 
@@ -82,8 +111,19 @@ export const StyledContainer = styled.div`
              `
    };
 
-  & div {
+  & > div {
     ${props => getCompareRules(props.aspectRatio < 1, props.count)}
+  }
+
+  & > div > div {
+    ${props => getFrameRules(props.aspectRatio, props.count)}
+  }
+
+  & > div > div:last-child {
+    top: auto;
+    left: auto;
+    bottom: 0;
+    right: 0;
   }
 
   & ul {   
@@ -100,7 +140,14 @@ export const StyledContainer = styled.div`
 `
 
 
-export const StyledBlock = styled.ul`
+export const StyledFrame = styled.div`
+  background-color: black;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+`
+
+
+export const StyledList = styled.ul`
   list-style-type: none;
   padding: 0px;
   margin: 0px;
