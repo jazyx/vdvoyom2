@@ -55,11 +55,9 @@ const getCompareRules = (portrait, count) => {
   let rules = (portrait)
             ? `height: ${gapSize};
                width: 100%;
-               background-color: #300;
               `
             : `width: ${gapSize};
                height: 100%;
-               background-color: #030;
               `
   rules += `position: relative;`
 
@@ -79,10 +77,9 @@ const getFrameRules = (aspectRatio, count) => {
                     + size * shortSide / 50
   longSide = Math.min(longSide - listSize, shortSide * 2)
 
-  console.log("frame width:", width, "height:", height)
-  console.log("needsScroll:", needsScroll, "listSize:", listSize)
-  console.log("shortSide:", shortSide, "longSide:", longSide)
-
+  // console.log("frame width:", width, "height:", height)
+  // console.log("needsScroll:", needsScroll, "listSize:", listSize)
+  // console.log("shortSide:", shortSide, "longSide:", longSide)
 
   if (longSide > shortSide) {
     side = longSide + "px"
@@ -149,9 +146,29 @@ export const StyledContainer = styled.div`
 
 
 export const StyledFrame = styled.div`
-  background-color: black;
+  position: relative;
   box-sizing: border-box;
   border: 1px solid #fff;
+
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &.fullscreen {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.9);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    border: none;
+  }
 `
 
 

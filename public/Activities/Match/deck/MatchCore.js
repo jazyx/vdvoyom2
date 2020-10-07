@@ -32,10 +32,51 @@ export default class Match extends Component {
     super(props)
     this.anon = [...props.items.anon]
     shuffle(this.anon)
+
+    this.state = {}
+    this.fullScreen = React.createRef()
+
+    this.selectImage = this.selectImage.bind(this)
+    this.toggleFullScreen = this.toggleFullScreen.bind(this)
+  }
+
+
+  selectImage(event) {
+    const type = this.getType(event.currentTarget) // named | anon
+    const target = event.target
+    const img = target.tagName === "IMG"
+              ? target
+              : target.parentNode.getElementsByTagName("IMG")[0]
+    const src = img.src
+
+    this.setState({ [type]: src })
+  }
+
+
+  toggleFullScreen(event) {
+    const type = this.getType(event.currentTarget)
+    const fullScreen = (this.state.fullScreen)
+                     ? undefined
+                     : type
+    this.setState({ fullScreen })
+  }
+
+
+  getType(element) {
+    const className = element.className
+    const regex = /((named)|(anon))/
+    const match = regex.exec(className)
+    if (match) {
+      return match[1]
+    }
   }
 
 
   getThumbnails(array, top, aspectRatio) {
+    const className = top
+                    ? "named"
+                    : "anon"
+
     const thumbnails = array.map( item => {
       const text = item.index
                  ? <span>{item.text}</span>
@@ -53,6 +94,8 @@ export default class Match extends Component {
     return <StyledList
       aspectRatio={aspectRatio}
       top={top}
+      className={className}
+      onClick={this.selectImage}
     >
       {thumbnails}
     </StyledList>
@@ -60,11 +103,36 @@ export default class Match extends Component {
 
 
   getComparison() {
+    let { named, anon, fullScreen } = this.state
+
+    if (named) {
+      named = <img src={named} alt="" />
+    }
+
+    if (anon) {
+      anon = <img src={anon} alt="" />
+    }
     return <div
    
     >
-      <StyledFrame />
-      <StyledFrame />
+      <StyledFrame
+        className={( fullScreen === "named" )
+                   ? "named fullscreen"
+                   : "named"
+                   }
+        onClick={this.toggleFullScreen}
+      >
+        {named}
+      </StyledFrame>
+      <StyledFrame
+        className={( fullScreen === "anon" )
+                   ? "anon fullscreen"
+                   : "anon"
+                   }
+        onClick={this.toggleFullScreen}
+      >
+        {anon}
+      </StyledFrame>
       <StyledButton />
     </div>
   }
