@@ -1,16 +1,16 @@
 /**
  * /imports/ui/login/launch/StartUp.js
- * 
+ *
  * Reads data from the URL query string and from Local Storage (query
  * string data has priority).
- * 
+ *
  * Mode
  * ====
  * • once: creates temporary User and Group documents which are
  *         destroyed when the session ends. Visitor has no access to
  *         a teacher or other users.
  * • join: provides page data (and optionally user data). Can be used
- *         to create a new user account and link it to a teacher 
+ *         to create a new user account and link it to a teacher
  *         Group or a named Group. If no user[name] and pin (q_code)
  *         is given, then data from Local Storage will be used (if
  *         present), or the user will be given the opportunity to
@@ -20,10 +20,10 @@
  *         optimized for each user's device.
  *         Even if only one user logs in to a group with the `ace`
  *         flag, the entire Group will become ace.
- * 
+ *
  * Account
  * =======
- * 
+ *
  * Page data
  * =========
  */
@@ -517,7 +517,7 @@ class StartUpSingleton {
     //   "this.accountData"
     // , JSON.stringify(this.accountData, null, "  ")
     // )
-    
+
     /*
       "teacher":    "jn",
       "language":   "en-GB",
@@ -552,7 +552,7 @@ class StartUpSingleton {
     //   "this.accountData updated"
     // , JSON.stringify(this.accountData, null, "  ")
     // )
-    
+
     if (!result.loggedIn || result.pin_absent) {
       // EITHER `pin` was defined and used for q_code, but it was
       //         wrong

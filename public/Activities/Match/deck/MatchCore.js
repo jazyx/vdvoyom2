@@ -13,7 +13,7 @@ import { valuesDontMatch
        , shuffle
        } from '/imports/tools/generic/utilities'
 
-import { StyledHalf
+import { StyledContainer
        , StyledBlock
        , StyledThumbnail
        } from './styles'
@@ -48,19 +48,21 @@ export default class Match extends Component {
       </StyledThumbnail>
     })
 
-    // if (top) {
-    //   thumbnails.unshift(<StyledThumbnail
-    //     key="blank"
-    //     blank="true"
-    //   />)
-    // }
-
     return <StyledBlock
       aspectRatio={aspectRatio}
       top={top}
     >
       {thumbnails}
     </StyledBlock>
+  }
+
+
+  getComparison() {
+    return <div
+   
+    >
+
+    </div>
   }
 
 
@@ -80,17 +82,21 @@ export default class Match extends Component {
     // , JSON.stringify(anon, null, "  ")
     // )
 
-    const { aspectRatio } = this.props
-    named = this.getThumbnails(named, true, aspectRatio)
-    const anon  = this.getThumbnails(this.anon, false, aspectRatio)
+    const top = true
+    const count = named.length
+    named = this.getThumbnails(named, top)
+    const anon  = this.getThumbnails(this.anon, !top)
+    const compare = this.getComparison()
 
     return (
-      <StyledHalf
+      <StyledContainer
+        count={count}
         aspectRatio={this.props.aspectRatio}
       >
         {named}
+        {compare}
         {anon}
-      </StyledHalf>
+      </StyledContainer>
     )
   }
 

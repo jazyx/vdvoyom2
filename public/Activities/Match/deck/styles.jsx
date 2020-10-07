@@ -9,37 +9,102 @@
 import styled from 'styled-components'
 
 
-export const StyledHalf = styled.div`
+const size = 12
+const rail = "16px" // depends on OS?
+
+const getListRules = (portrait, count) => {
+  // The lists are always across the min sides
+  const extent      = count * size
+  const needsScroll = extent > 100
+  const pad         = (100 - extent) / 2
+  const space = needsScroll
+              ? `calc(${rail} + ${size} * var(--min )+ 3px)` // scroll
+              : `calc(${size} * var(--min) + 3px)`           // no scroll
+  // console.log("getListRules portrait:", portrait, "extent:", extent, "needsScroll:", needsScroll, "pad:", pad)
+
+  if (portrait) {
+    return `
+      width: calc(100 * var(--w));
+      overflow-y: auto;
+      height: ${space};
+      white-space: nowrap;
+     `
+  } else {
+    const padding = needsScroll
+                  ? "0"
+                  : `calc(${pad} * var(--min)) 0`
+    return `
+      height: calc(100 * var(--h));
+      overflow-x: auto;
+      width: ${space};
+      padding: ${padding};
+     `
+  }
+}
+
+
+const getCompareRules = (portrait, count) => {  
+  // The lists are always across the min sides
+  const needsScroll = count * size > 100
+  const gapSize = needsScroll
+  ? `calc(100*var(--max) - 6px - 2*(${rail} + ${size} * var(--min)))`
+  : `calc(100*var(--max) - 6px - 2*(${size} * var(--min)))`
+
+
+  // ? `calc(100 * var(--max) - 2 * (${rail} + ${size} * var(--min)))`
+  // : `calc(100 * var(--max) - 2 * (${size} * var(--min)))`
+
+  if (portrait) {
+    return `
+      height: ${gapSize};
+      width: 100%;
+      background-color: red;
+     `
+  } else {
+    return `
+      width: ${gapSize};
+      height: 100%;
+      background-color: green;
+     `
+  }
+}
+
+
+export const StyledContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   width: calc(100 * var(--w));
   height: calc(100 * var(--h));
-  ${props => props.aspectRatio > 1
-           ? `flex-direction: row;
+  ${props => props.aspectRatio < 1
+           ? `flex-direction: column;
              `
-           : `flex-direction: column;
+           : `flex-direction: row;
              `
    };
+
+  & div {
+    ${props => getCompareRules(props.aspectRatio < 1, props.count)}
+  }
+
+  & ul {   
+    ${props => getListRules(props.aspectRatio < 1, props.count)}
+  }
+
+  & li {
+   ${props => (props.aspectRatio < 1)
+     ? `display: inline-block;
+       `
+     : ""
+    }
+  }
 `
 
 
 export const StyledBlock = styled.ul`
-  position: absolute;
   list-style-type: none;
   padding: 0px;
   margin: 0px;
   text-align: center;
-
-  ${props => (props.aspectRatio < 1)
-   ? `width: calc(100 * var(--w));
-      overflow-y: auto;
-      height: calc(16px + 12 * var(--min));
-      white-space: nowrap;
-     `
-   : `height: calc(100 * var(--h));
-      overflow-x: auto;
-      width: calc(16px + 12 * var(--min));
-     `
-  }
 
   ${props => props.top
     ? `top: 0;
@@ -49,14 +114,6 @@ export const StyledBlock = styled.ul`
        right: 0;
       `
    }
-
-  & li {
-   ${props => (props.aspectRatio < 1)
-     ? `display: inline-block;
-       `
-     : ""
-    }
-  }
 `
 
 // props.aspectRatio < 1
@@ -75,8 +132,8 @@ export const StyledThumbnail = styled.li`
   clear: both;
 
   position: relative;
-  width: calc(12 * var(--min));
-  height: calc(12 * var(--min));
+  width: calc(${size} * var(--min));
+  height: calc(${size} * var(--min));
   font-size: calc(2 * var(--min));
   box-sizing: border-box;
   border: 2px solid #000;
