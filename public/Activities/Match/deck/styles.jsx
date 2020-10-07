@@ -9,9 +9,10 @@
 import styled from 'styled-components'
 
 
-const size = 12
+const size =12
 const tweak = 3
 const rail = 16 // depends on OS?
+const buttonSize = 10
 
 const getListRules = (portrait, count) => {
   // The lists are always across the min sides
@@ -54,11 +55,11 @@ const getCompareRules = (portrait, count) => {
   let rules = (portrait)
             ? `height: ${gapSize};
                width: 100%;
-               background-color: red;
+               background-color: #300;
               `
             : `width: ${gapSize};
                height: 100%;
-               background-color: green;
+               background-color: #030;
               `
   rules += `position: relative;`
 
@@ -119,11 +120,18 @@ export const StyledContainer = styled.div`
     ${props => getFrameRules(props.aspectRatio, props.count)}
   }
 
-  & > div > div:last-child {
+  & > div > div:last-of-type {
     top: auto;
     left: auto;
     bottom: 0;
     right: 0;
+  }
+
+  & button {
+    position: absolute;
+    top: calc(50% - (${buttonSize} * var(--min)) / 2);
+    left: calc(50% - (${buttonSize} * var(--min)) / 2);
+    opacity: 0.5;
   }
 
   & ul {   
@@ -216,5 +224,9 @@ export const StyledThumbnail = styled.li`
   &:hover span {
     visibility: visible;
   }
+`
 
+export const StyledButton = styled.button`
+  width: calc(${buttonSize} * var(--min));
+  height: calc(${buttonSize} * var(--min));
 `

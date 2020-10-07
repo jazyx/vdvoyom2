@@ -15,6 +15,7 @@ import { valuesDontMatch
 
 import { StyledContainer
        , StyledFrame
+       , StyledButton
        , StyledList
        , StyledThumbnail
        } from './styles'
@@ -64,6 +65,7 @@ export default class Match extends Component {
     >
       <StyledFrame />
       <StyledFrame />
+      <StyledButton />
     </div>
   }
 
