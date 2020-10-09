@@ -853,7 +853,11 @@ class StartUpSingleton {
     const remaining = this.showSplash - new Date()
     if (remaining > 0) {
       // console.log("Polling for", this.showSplash, "in", this.showSplash - + new Date())
-      return setTimeout(this.hideSplash, remaining)
+
+      const timeOut = setTimeout(this.hideSplash, remaining)
+      // console.log("StartUp hideSplash timeout", timeOut)
+
+      return
     }
 
     this.showSplash = 0

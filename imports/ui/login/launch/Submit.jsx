@@ -114,10 +114,11 @@ class Submit extends Component {
     }
 
     // ... for just long enough
-    setTimeout(
+    const timeOut = setTimeout(
       () => this.props.setPage(view)
     , this.delay
     )
+    // console.log("Submit callback timeout", timeOut)
   }
 
 

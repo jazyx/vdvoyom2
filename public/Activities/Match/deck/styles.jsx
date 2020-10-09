@@ -14,6 +14,11 @@ const tweak = 3
 const rail = 16 // depends on OS?
 const buttonSize = 10
 
+const tick = "/img/icons/tick.svg"
+const cross = "/img/icons/cross.svg"
+const locked = "/img/icons/locked.png"
+const opened = "/img/icons/opened.png"
+
 const getListRules = (portrait, count) => {
   // The lists are always across the min sides
   const extent      = count * size
@@ -45,7 +50,7 @@ const getListRules = (portrait, count) => {
 }
 
 
-const getCompareRules = (portrait, count) => {  
+const getCompareRules = (portrait, count) => {
   // The lists are always across the min sides
   const needsScroll = count * size > 100
   const gapSize = needsScroll
@@ -97,6 +102,48 @@ const getFrameRules = (aspectRatio, count) => {
 }
 
 
+const getThumbnailBorder = (selected, paired) => {
+  let rules = "border-style: solid;"
+
+  if (paired) {
+    rules += `border-width: 4px;`
+  } else {
+    rules += `border-width: 2px;`
+  }
+
+  if (selected) {
+    rules += `border-color: #f90;`
+
+    if (paired) {
+      rules += `
+        border-left-color: #840;
+        border-top-color: #840;
+      `
+    } else {
+
+      rules += `
+        border-right-color: #840;
+        border-bottom-color: #840;
+      `
+    }
+  } else if (paired) {
+    rules += `
+      border-color: #090;
+      border-left-color: #040;
+      border-top-color: #040;
+    `
+  } else {
+    rules += `
+      border-color: #ccc;
+    `
+  }
+
+  // console.log("rules:", rules)
+
+  return rules
+}
+
+
 export const StyledContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -109,7 +156,7 @@ export const StyledContainer = styled.div`
              `
    };
 
-  & > div {
+  & > div:not(.teacher) {
     ${props => getCompareRules(props.aspectRatio < 1, props.count)}
   }
 
@@ -124,14 +171,7 @@ export const StyledContainer = styled.div`
     right: 0;
   }
 
-  & button {
-    position: absolute;
-    top: calc(50% - (${buttonSize} * var(--min)) / 2);
-    left: calc(50% - (${buttonSize} * var(--min)) / 2);
-    opacity: 0.5;
-  }
-
-  & ul {   
+  & ul {
     ${props => getListRules(props.aspectRatio < 1, props.count)}
   }
 
@@ -149,6 +189,14 @@ export const StyledFrame = styled.div`
   position: relative;
   box-sizing: border-box;
   border: 1px solid #fff;
+
+  border-color: ${
+    props => props.selected
+           ? `#f90`
+           : props.paired
+             ? `#090`
+             : `#999`
+  };
 
 
   & img {
@@ -186,6 +234,13 @@ export const StyledList = styled.ul`
        right: 0;
       `
    }
+
+  ${props => props.locked
+    ? `background: #600;
+      `
+    : `background: #060;
+      `
+   }
 `
 
 // props.aspectRatio < 1
@@ -208,18 +263,9 @@ export const StyledThumbnail = styled.li`
   height: calc(${size} * var(--min));
   font-size: calc(2 * var(--min));
   box-sizing: border-box;
-  border: 2px solid #000;
   margin: 0 auto;
 
-  border-color: ${
-    props => props.selected
-           ? `#f90;`
-           : ( props.paired )
-             ? `#090;`
-             : ( props.blank )
-               ? "#000;"
-               : `#666;`
-  }
+  ${props => getThumbnailBorder(props.selected, props.paired)};
 
   & img {
     object-fit: contain;
@@ -244,6 +290,64 @@ export const StyledThumbnail = styled.li`
 `
 
 export const StyledButton = styled.button`
+  position: absolute;
+  top: calc(50% - (${buttonSize} * var(--min)) / 2);
+  left: calc(50% - (${buttonSize} * var(--min)) / 2);
+
   width: calc(${buttonSize} * var(--min));
   height: calc(${buttonSize} * var(--min));
+
+  border: 1px solid white;
+  border-radius: calc(${buttonSize} * var(--min));
+  opacity: 0.8;
+  outline: none;
+
+  ${
+    props => props.paired
+           ? `background-image:url("${tick}");`
+           : ""
+
+  }
+
+  &:hover {
+    opacity: 1;
+    ${
+      props => props.update
+             ? props.paired
+               ? `background-image:url("${cross}");
+                 `
+               : `background-image:url("${tick}")
+                 `
+             : ""
+
+    }
+  }
+`
+
+export const StyledControls = styled.div`
+  position: relative;
+  width: auto;
+`
+
+export const StyledLock = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(4 * var(--min));
+  height: calc(4 * var(--min));
+  background-image: url("${props => props.locked
+                                  ? locked
+                                  : opened
+  }");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: #fff;
+  border: calc(0.5 * var(--min)) solid #fff;
+  border-radius: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
 `

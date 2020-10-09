@@ -190,7 +190,8 @@ class Teach extends Component {
   componentDidMount(delay) {
     // HACK: Not all images may have been loaded from MongoDB, so
     // let's wait a little before we scrollIntoView
-    setTimeout(this.scrollIntoView, 200)
+    const timeOut = setTimeout(this.scrollIntoView, 200)
+    // console.log("Teach didMount timeOut", timeOut)
   }
 
 

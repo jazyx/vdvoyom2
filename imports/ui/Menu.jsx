@@ -373,7 +373,8 @@ class Menu extends Component {
     window.addEventListener("beforeunload", this.logOut, false)
 
     this.openMenu()
-    setTimeout(this.closeMenu, CLOSE_MENU_DELAY)
+    const timeOut = setTimeout(this.closeMenu, CLOSE_MENU_DELAY)
+    // console.log("Menu constructor timeout", timeOut)
   }
 
 
@@ -399,6 +400,7 @@ class Menu extends Component {
     if (event && event.type === "touchstart") {
       // Prevent the mouseup from firing right behind
       this.timeout = setTimeout(() => this.timeout = 0, 300)
+      // console.log("Menu closeMenu timeout", this.timeOut)
     } else if (this.timeout) {
       return
     }
@@ -410,7 +412,8 @@ class Menu extends Component {
       // close was on the Icon
 
       this.ignoreOpen = true
-      setTimeout(() => this.ignoreOpen = false, 100)
+      const timeOut = setTimeout(() => this.ignoreOpen = false, 100)
+      // console.log("Menu closeMenu timeout", timeOut)
 
       const listener = this.closeMenu
       document.body.removeEventListener("touchstart", listener,true)
