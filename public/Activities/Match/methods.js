@@ -6,40 +6,79 @@ import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
 
 import collections from '/imports/api/collections/publisher'
-const { Groups } = collections
+const { Group } = collections
 
 
 
-export const placeholder = {
-  name: "match.placeholder"
+export const forceSelect = {
+  name: "match.forceSelect"
 
-, call(placeholderData, callback) {
+, call(forceSelectData, callback) {
     const options = {
       returnStubValue: true
     , throwStubExceptions: true
     }
 
-    Meteor.apply(this.name, [placeholderData], options, callback)
+    Meteor.apply(this.name, [forceSelectData], options, callback)
   }
 
-, validate(placeholderData) {
-    // new SimpleSchema({
-    //   group_id: { type: String }
-    // , data: { type: Object, blackbox: true }
-    // }).validate(placeholderData)
+, validate(forceSelectData) {
+    new SimpleSchema({
+      group_id: { type: String }
+    , type:     { type: String }
+    , matches:  { type: String, optional: true }
+    }).validate(forceSelectData)
   }
 
-, run(placeholderData) {
-    // const { group_id: _id, data } = placeholderData
-    // const select = { _id }
-    // const set = { $set: { "page.data": data } }
-    // Groups.update(select, set)
+, run(forceSelectData) {
+    const { group_id: _id, type, matches } = forceSelectData
+    const select = { _id }
+    const path = "page.data." + type
+    const update = matches
+                 ? { $set: { [path]: matches }}
+                 : { $unset: { [path]: 0 }}
+    Group.update(select, update)
+  }
+}
+
+
+
+export const userMatch = {
+  name: "match.userMatch"
+
+, call(userMatchData, callback) {
+    const options = {
+      returnStubValue: true
+    , throwStubExceptions: true
+    }
+
+    Meteor.apply(this.name, [userMatchData], options, callback)
+  }
+
+, validate(userMatchData) {
+    new SimpleSchema({
+      group_id:   { type: String }
+    , user_id:    { type: String }
+    , matches:    { type: String }
+    , pairedWith: { type: String, optional: true }
+    }).validate(userMatchData)
+  }
+
+, run(matchData) {
+    const { group_id: _id, user_id, matches, pairedWith } = matchData
+    const select = { _id }
+    const path = "page.data.matches." + user_id + "." + matches
+    const update = pairedWith
+                 ? { $set: { [path]: pairedWith }}
+                 : { $unset: { [path]: 0 }}
+    Group.update(select, update)
   }
 }
 
 
 const methods = [
-  placeholder
+  forceSelect
+, userMatch
 ]
 
 

@@ -19,6 +19,8 @@ const cross = "/img/icons/cross.svg"
 const locked = "/img/icons/locked.png"
 const opened = "/img/icons/opened.png"
 
+
+
 const getListRules = (portrait, count) => {
   // The lists are always across the min sides
   const extent      = count * size
@@ -102,7 +104,7 @@ const getFrameRules = (aspectRatio, count) => {
 }
 
 
-const getThumbnailBorder = (selected, paired) => {
+const getThumbnailBorder = ({ selected, paired, forced }) => {
   let rules = "border-style: solid;"
 
   if (paired) {
@@ -111,7 +113,12 @@ const getThumbnailBorder = (selected, paired) => {
     rules += `border-width: 2px;`
   }
 
-  if (selected) {
+  if (forced) {
+    rules += `border-color: #fff;
+              border-left-color: #ccc;
+              border-top-color: #ccc;
+             `
+  } else if (selected) {
     rules += `border-color: #f90;`
 
     if (paired) {
@@ -134,7 +141,7 @@ const getThumbnailBorder = (selected, paired) => {
     `
   } else {
     rules += `
-      border-color: #ccc;
+      border-color: #999;
     `
   }
 
@@ -142,6 +149,41 @@ const getThumbnailBorder = (selected, paired) => {
 
   return rules
 }
+
+
+const getParticipantSpanRule = ({ col, correct }) => {
+  let rules = `
+    display: inline-block;
+    overflow-x: hidden;
+  `
+
+  switch (col) {
+    case "name":
+      rules += `width: calc(40*var(--min));`
+    break
+    case "current":
+      rules += `width: calc(30*var(--min));`
+    break
+    case "score":
+      rules += `width: calc(10*var(--min));`
+    break
+    case "recognized":
+      rules += `width: calc(5*var(--min));`
+    break
+  }
+
+  switch (correct) {
+    case true:
+      rules += "color: #090;"
+    break
+    case false:
+      rules += "color: #f00;"
+    break
+  }
+
+  return rules
+}
+
 
 
 export const StyledContainer = styled.div`
@@ -171,7 +213,7 @@ export const StyledContainer = styled.div`
     right: 0;
   }
 
-  & ul {
+  & ul:not(.teacher) {
     ${props => getListRules(props.aspectRatio < 1, props.count)}
   }
 
@@ -241,6 +283,14 @@ export const StyledList = styled.ul`
     : `background: #060;
       `
    }
+
+  & li {
+    cursor: ${props => props.forced
+                    ? `not-allowed;
+                      `
+                    : `pointer;
+                      `
+  }
 `
 
 // props.aspectRatio < 1
@@ -255,7 +305,6 @@ export const StyledList = styled.ul`
 
 
 export const StyledThumbnail = styled.li`
-  cursor: pointer;
   clear: both;
 
   position: relative;
@@ -265,7 +314,7 @@ export const StyledThumbnail = styled.li`
   box-sizing: border-box;
   margin: 0 auto;
 
-  ${props => getThumbnailBorder(props.selected, props.paired)};
+  ${props => getThumbnailBorder(props)};
 
   & img {
     object-fit: contain;
@@ -281,13 +330,14 @@ export const StyledThumbnail = styled.li`
     text-align: center;
     background-color: rgba(0,0,0,0.5);
     padding: 0.25em 0;
-    visibility: hidden;
+    opacity: 0.5;
   }
 
   &:hover span {
-    visibility: visible;
+    opacity: 1;
   }
 `
+
 
 export const StyledButton = styled.button`
   position: absolute;
@@ -324,10 +374,12 @@ export const StyledButton = styled.button`
   }
 `
 
+
 export const StyledControls = styled.div`
   position: relative;
   width: auto;
 `
+
 
 export const StyledLock = styled.button`
   position: absolute;
@@ -349,5 +401,32 @@ export const StyledLock = styled.button`
   &:focus {
     outline: none;
   }
+`
 
+
+export const StyledParticipants = styled.ul`
+  position: absolute;
+  top: calc(15 * var(--min));
+  left: calc(15 * var(--min));
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  font-size: 2em;
+  background-color: rgba(51,0,0,0.5);
+  height: calc(85 * var(--min));
+  overflow-y: auto;
+
+  & li {
+    height: calc(8.5 * var(--min));
+  }
+
+
+  & li: hover {
+    background-color: rgba(85,0,0,0.5)
+  }
+`
+
+
+export const StyledScoreData = styled.span`
+  ${props => getParticipantSpanRule(props)}
 `

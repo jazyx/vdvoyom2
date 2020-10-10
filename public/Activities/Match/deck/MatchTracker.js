@@ -37,6 +37,15 @@ export default class MatchTracker extends Tracker{
 
 
   addCustomProps(props, collectionName) {
+    this.addItemsRegardlessOfMasterStatus(props, collectionName)
+
+    if (props.isTeacher) {
+      this.addGroupMembersForTeacher(props)
+    }
+  }
+
+
+  addItemsRegardlessOfMasterStatus(props, collectionName) {
     // console.log(
     //   "props"
     // , JSON.stringify(props, null, "  ")
@@ -50,6 +59,17 @@ export default class MatchTracker extends Tracker{
     // )
 
     let { named, anon } = items.reduce(( map, itemData ) => {
+      // { "matches" : "James",
+      //   "text" : "James",
+      //   "index" : 0,
+      //   "src" : "/Assets/Match/Test/James/cave.jpg",
+      //
+      //   "_id" : "8RQnpQgCdA63Ate8s",
+      //   "tags" : [
+      //     "test"
+      //   ]
+      // }
+
       deleteFrom(itemData, ["tags", "_id"])
 
       if (itemData.index) {
@@ -64,6 +84,7 @@ export default class MatchTracker extends Tracker{
     //   "anon"
     // , JSON.stringify(anon, null, "  ")
     // )
+
     // console.log(
     //   "named"
     // , JSON.stringify(named, null, "  ")
@@ -71,17 +92,46 @@ export default class MatchTracker extends Tracker{
 
     props.items = { named, anon }
   }
+
+
+  addGroupMembersForTeacher(props) {
+    let select = { _id: props.group_id }
+    let options = {
+      fields: {
+        logged_in: 1
+      }
+    }
+
+    let { logged_in } = collections.Group.findOne(select, options)
+
+    console.log(
+      "logged_in", logged_in, `\ndb.group.findOne(
+        ${JSON.stringify(select)} ${options && options.fields ? `
+      , ${JSON.stringify(options.fields)}` : ""}
+      )`
+    )
+
+    /// <<< CALC on join.js moveTeacherDCodeToEnd()
+    logged_in = logged_in.map( d_code => ({ logged_in: d_code }) )
+    select = {
+      $or: logged_in
+    }
+    /// CALC >>>
+    options = {
+      fields: {
+        fullname: 1
+      }
+    }
+
+    const users = collections.User.find(select, options).fetch()
+
+    console.log(
+      "users", users, `\ndb.user.find(
+        ${JSON.stringify(select)} ${options && options.fields ? `
+      , ${JSON.stringify(options.fields)}` : ""}
+      ).pretty()`
+    )
+
+    props.users = users
+  }
 }
-
-
-// items = [ {
-//     index:    0 | 1
-//     matches: <folder name>
-//     src:     "/Assets/Match/Newton/frame.jpg"
-//     text:    <folder name or arbitrary text>
-//
-//     tags:    ["test"]
-//     _id:     "ogczq37KWxh8FkBTN"
-// }
-// , ...
-// ]

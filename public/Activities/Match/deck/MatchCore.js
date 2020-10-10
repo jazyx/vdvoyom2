@@ -22,7 +22,13 @@ import { StyledContainer
        , StyledThumbnail
        , StyledControls
        , StyledLock
+       , StyledParticipants
+       , StyledScoreData
        } from './styles'
+
+import { forceSelect
+       , userMatch
+       } from '../methods'
 
 
 
@@ -72,6 +78,11 @@ export default class Match extends Component {
     // const src = img.src
 
     this.setState({ [type]: index })
+
+    if (this.state[type+"-locked"]) {
+      this.forceSelect(type, true, index)
+
+    }
   }
 
 
@@ -84,9 +95,22 @@ export default class Match extends Component {
   }
 
 
-  toggleMatch(event) {
-    const named = this.state.named // index
-    const matches = this.named[named].matches // string
+  getMatches() {
+    // Check if there is a force choice of named
+    let matches = this.props.data
+                ? this.props.data.named
+                : undefined
+    if (!matches) {
+      const index = this.state.named
+      matches = this.named[index].matches
+    }
+
+    return matches
+  }
+
+
+  toggleMatch(event) { // event is not used
+    const matches = this.getMatches()
     let pairedWith = this.state[matches] // string or undefined
 
     if (pairedWith) {
@@ -99,6 +123,22 @@ export default class Match extends Component {
     // console.log("MatchCore toggleMatch timeout", timeOut)
 
     this.setState({ [matches]: pairedWith, timeOut })
+
+    this.shareMatch(matches, pairedWith)
+  }
+
+
+  shareMatch(matches, pairedWith) {
+    const group_id = this.props.group_id
+    const user_id = this.props.user_id
+    const options = {
+      group_id
+    , user_id
+    , matches
+    , pairedWith
+    }
+
+    userMatch.call(options)
   }
 
 
@@ -109,11 +149,106 @@ export default class Match extends Component {
   }
 
 
+  /** <<< Only called by teacher
+   *
+   * @param      {<type>}  event   The event
+   */
   toggleLock(event) {
-    const type = this.getType(event.target) + "-locked"
-    const locked = !this.state[type]
-    this.setState({ [type]: locked })
+    const type = this.getType(event.target)
+    const key  = type + "-locked"
+    const locked = !this.state[key]
+    const index = this.state[type]
+
+    this.forceSelect(type, locked, index)
+    this.setState({ [key]: locked })
   }
+
+
+  forceSelect(type, locked, index) {
+    const group_id = this.props.group_id
+    const options = {
+      group_id
+    , type
+    }
+    if (locked) {
+      options.matches = this[type][index].matches
+    }
+
+    forceSelect.call(options)
+  }
+
+
+  getParticipants(type) {
+    // fullname > selected pair > right/paired > recognized
+
+    // console.log(
+    //   "this.props.users"
+    // , JSON.stringify(this.props.users, null, "  ")
+    // )
+
+    const index    = this.state.named
+    const selected = this.named[index].matches
+    const matches  = this.props.data
+                   ? this.props.data.matches
+                   : {}
+
+    const participants = this.props.users.map( userData => {
+      const pairs   = matches[userData._id] || {}
+      const current = pairs[selected]
+      const correct = current === selected
+
+      let paired = Object.keys(pairs)
+      const right = paired.reduce(( count, named ) => {
+        if (named === pairs[named]) {
+          count++
+        }
+
+        return count
+      }, 0)
+
+      paired = paired.length
+      const recognized = "-"
+
+      return (
+        <li
+          key={userData._id}
+        >
+          <StyledScoreData
+            key="name"
+            col="name"
+          >
+            {userData.fullname}
+          </StyledScoreData>
+          <StyledScoreData
+            key="current"
+            col="current"
+            correct={correct}
+          >
+            {current}
+          </StyledScoreData>
+          <StyledScoreData
+            key="score"
+            col="score"
+          >
+            {right + "/" + paired}
+          </StyledScoreData>
+          <StyledScoreData
+            key="recognized"
+            col="recognized"
+          >
+            {recognized}
+          </StyledScoreData>
+        </li>
+       )
+    })
+
+    return <StyledParticipants
+      className="teacher"
+    >
+      {participants}
+    </StyledParticipants>
+  }
+  /// Only called by teacher >>>
 
 
   getType(element) {
@@ -145,6 +280,8 @@ export default class Match extends Component {
                     : "anon"
 
     // console.log("thumbnails keys:", keys, "values:", values)
+    const forced = (this.props.data || {})[className]
+    //             matches | undefined
 
     const thumbnails = array.map((item, index) => {
       // console.log("thumbnail item", item)
@@ -154,8 +291,9 @@ export default class Match extends Component {
       // text:    <folder name or custom string>
 
       const selected = this.state[className] === index
+      const isForced = item.matches === forced
 
-      const text = top
+      const text = top || isTeacher
                  ? <span>{item.text}</span>
                  : ""
 
@@ -169,6 +307,7 @@ export default class Match extends Component {
         key={item.text}
         selected={selected}
         paired={paired}
+        forced={isForced}
       >
         <img
           src={item.src}
@@ -203,6 +342,7 @@ export default class Match extends Component {
         top={top}
         className={className}
         onClick={this.selectImage}
+        forced={!!forced}
       >
         {thumbnails}
       </StyledList>
@@ -211,9 +351,22 @@ export default class Match extends Component {
 
 
   getComparison() {
-    let { named, anon, fullScreen } = this.state
+    let { named, anon, fullScreen } = this.state // index
 
-    const namedData = this.named[named]
+    // Overwrite with selections in props, created by teacher
+    let {
+      named: namedMatch
+    , anon: anonMatch
+    } = this.props.data || {} // matches
+
+    if (namedMatch) {
+      named = this.named.findIndex(item => item.matches === namedMatch)
+    }
+    if (anonMatch) {
+      anon = this.anon.findIndex(item => item.matches === anonMatch)
+    }
+
+    const namedData = this.named[named] || {} //fallback if hot reload
     const paired = this.state[namedData.matches]
     const updateButton = !this.state.timeOut
 
@@ -225,10 +378,10 @@ export default class Match extends Component {
     // , "timeOut:", this.state.timeOut
     // )
 
-    named = this.named[named].src
+    named = namedData.src
     named = <img src={named} alt="" />
 
-    anon = this.anon[anon].src
+    anon = (this.anon[anon] || {}).src // fallback if hot reload
     anon = <img src={anon} alt="" />
 
     return <div
@@ -263,10 +416,12 @@ export default class Match extends Component {
 
 
   getTeacherControls(isTeacher) {
-    console.log("isTeacher:", isTeacher)
+    console.log("TODO add teacher controls:", isTeacher)
     if (!isTeacher) {
       return ""
     }
+
+    return this.getParticipants()
   }
 
 
