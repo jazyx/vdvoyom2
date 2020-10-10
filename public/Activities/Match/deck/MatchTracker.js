@@ -104,12 +104,12 @@ export default class MatchTracker extends Tracker{
 
     let { logged_in } = collections.Group.findOne(select, options)
 
-    console.log(
-      "logged_in", logged_in, `\ndb.group.findOne(
-        ${JSON.stringify(select)} ${options && options.fields ? `
-      , ${JSON.stringify(options.fields)}` : ""}
-      )`
-    )
+    // console.log(
+    //   "logged_in", logged_in, `\ndb.group.findOne(
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
+    //   )`
+    // )
 
     /// <<< CALC on join.js moveTeacherDCodeToEnd()
     logged_in = logged_in.map( d_code => ({ logged_in: d_code }) )
@@ -125,12 +125,12 @@ export default class MatchTracker extends Tracker{
 
     const users = collections.User.find(select, options).fetch()
 
-    console.log(
-      "users", users, `\ndb.user.find(
-        ${JSON.stringify(select)} ${options && options.fields ? `
-      , ${JSON.stringify(options.fields)}` : ""}
-      ).pretty()`
-    )
+    // console.log(
+    //   "users", users, `\ndb.user.find(
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
+    //   ).pretty()`
+    // )
 
     props.users = users
   }

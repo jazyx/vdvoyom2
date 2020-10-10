@@ -66,23 +66,98 @@ export default class Match extends Component {
   selectImage(event) {
     const index = getElementIndex(event.target)
     const type = this.getType(event.currentTarget) // named | anon
+    const [ array, other ] = type === "anon"
+                           ? [ this.anon, "named" ]
+                           : [ this.named, "anon" ]
 
-    const array = (type === "anon")
-                ? this.anon
-                : this.named
-    const src = array[index].src
-    // const target = event.target
-    // const img = target.tagName === "IMG"
-    //           ? target
-    //           : target.parentNode.getElementsByTagName("IMG")[0]
-    // const src = img.src
+    const imageData  = array[index]
+    const matches    = imageData.matches
+    const pairedWith = this.getPairedImageIndex(other, matches)
+    const set = { [type]: index }
 
-    this.setState({ [type]: index })
+    if (pairedWith < 0) {
+      if (type === "named") {
+        this.ensureThatAnonImageIsNotPaired(set)
+      }
 
+    } else {
+      set[other] = pairedWith
+    }
+
+    this.setState(set)
+
+    // Teacher only
     if (this.state[type+"-locked"]) {
       this.forceSelect(type, true, index)
-
     }
+  }
+
+
+  getPairedImageIndex(type, matches) {
+    const array = this[type]
+    let pair
+
+    if (type === "anon") {
+      pair = this.state[matches] // may be undefined
+
+    } else {
+      const names = this.getKeysFromState()
+
+      names.every(name => {
+        if (this.state[name] === matches) {
+          pair = name
+          return false
+        } else {
+          return true
+        }
+      })
+    }
+
+    return array.findIndex( item => item.matches === pair )
+  }
+
+
+  ensureThatAnonImageIsNotPaired(set) {
+    let matches = this.anon[this.state.anon].matches
+    let index = this.getPairedImageIndex("anon", matches)
+    let pair
+
+    if (index < 0) {
+      // The current named selection is not paired
+    } else {
+      // Find the next unmatched named image
+      const array = this.anon
+      const total = array.length
+
+      do {
+        if (++index === total) {
+          index = 0
+        }
+
+        matches = array[index].matches
+        pair = this.state[matches]
+
+      } while (pair)
+
+      set.anon = index
+    }
+  }
+
+
+  getKeysFromState() {
+    const removeUndefined = key => this.state[key] === undefined
+    const notMatches = [
+      "anon"
+    , "named"
+    , "timeOut"
+    , "anon-locked"
+    , "named-locked"
+    , removeUndefined
+    ]
+    const keys = Object.keys(this.state)
+    removeFrom(keys, notMatches, true)
+
+    return keys
   }
 
 
@@ -189,7 +264,7 @@ export default class Match extends Component {
     const index    = this.state.named
     const selected = this.named[index].matches
     const matches  = this.props.data
-                   ? this.props.data.matches
+                   ? this.props.data.matches || {}
                    : {}
 
     const participants = this.props.users.map( userData => {
@@ -262,17 +337,7 @@ export default class Match extends Component {
 
 
   getThumbnails(array, top, isTeacher) {
-    const removeUndefined = key => this.state[key] === undefined
-    const notMatches = [
-      "anon"
-    , "named"
-    , "timeOut"
-    , "anon-locked"
-    , "named-locked"
-    , removeUndefined
-    ]
-    const keys = Object.keys(this.state)
-    removeFrom(keys, notMatches, true)
+    const keys = this.getKeysFromState()
     const values = keys.map(key => this.state[key])
 
     const className = top
@@ -358,12 +423,38 @@ export default class Match extends Component {
       named: namedMatch
     , anon: anonMatch
     } = this.props.data || {} // matches
+    let pair
 
     if (namedMatch) {
-      named = this.named.findIndex(item => item.matches === namedMatch)
+      named = this.named.findIndex(
+        item => item.matches === namedMatch
+      )
+
+      if (!anonMatch) {
+        // Select the image paired by the user, if there is one
+        pair = this.getPairedImageIndex("anon", namedMatch)
+        if (pair < 0) {
+          pair = {}
+          this.ensureThatAnonImageIsNotPaired(pair)
+          anon = pair.anon || anon
+
+        } else{
+          anon = pair
+        }
+      }
     }
+
     if (anonMatch) {
       anon = this.anon.findIndex(item => item.matches === anonMatch)
+
+      if (!namedMatch) {
+        pair = this.getPairedImageIndex("named", anonMatch)
+        if (pair < 0) {
+          //
+        } else {
+          named = pair
+        }
+      }
     }
 
     const namedData = this.named[named] || {} //fallback if hot reload
@@ -416,7 +507,6 @@ export default class Match extends Component {
 
 
   getTeacherControls(isTeacher) {
-    console.log("TODO add teacher controls:", isTeacher)
     if (!isTeacher) {
       return ""
     }
@@ -426,7 +516,7 @@ export default class Match extends Component {
 
 
   render() {
-    // const triggered = logRenderTriggers("Match RenderTriggers", this)
+    const triggered = logRenderTriggers("Match RenderTriggers", this)
     // console.log("MATCH TRIGGERED", triggered)
 
     // console.log(
@@ -462,13 +552,70 @@ export default class Match extends Component {
   }
 
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if ( valuesDontMatch(nextProps, this.props)
-      || valuesDontMatch(nextState, this.state)
-       ) {
-      return true
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if ( valuesDontMatch(nextProps, this.props)
+  //     || valuesDontMatch(nextState, this.state)
+  //      ) {
+  //     return true
+  //   }
+
+  //   return false
+  // }
+
+
+  /** Update this.state.named and ~anon to reflect this.props.data.~
+   *
+   * this.state will update as soon as the teacher forces a selection
+   * but this.props will not have updated yet. So, on the teacher's
+   * device only, this.state will first be reverted to the former
+   * value given by this.props, then this.props will update, then
+   * this.state will be synced. This will lead to 4 renders on the
+   * teacher's device, but only 2 on the users'.
+   */
+  componentDidUpdate() {
+    const set = {}
+    const data = this.props.data
+    if (!data) {
+      return
     }
 
-    return false
+    let refresh = false
+
+    let temp = data.named && this.named.findIndex(
+      item => item.matches === data.named
+    )
+    if (!isNaN(temp) && (this.state.named !== temp)) {
+      // this.props.named should overwrite this.state.named
+      set.named = temp
+      refresh = true
+    }
+
+    temp = data.anon && this.anon.findIndex(
+      item => item.matches === data.anon
+    )
+    if (!isNaN(temp) && (this.state.anon !== temp)) {
+      set.anon = temp
+      refresh = true
+
+    } else if (!data.named) {
+      // Check if this.state.named is paired and restore pairing
+      // if necessary
+
+      const named = this.named[this.state.named].matches
+      const anon  = this.state[temp]
+
+      if (anon) {
+        temp = this.anon.findIndex(item => item.matches === anon)
+        if (this.state.anon !== temp) {
+          set.anon = temp
+          refresh = true
+        }
+      }
+    }
+
+    if (refresh) {
+      console.log("Match refresh state:", set)
+      this.setState(set)
+    }
   }
 }
