@@ -14,8 +14,10 @@ const tweak = 3
 const rail = 16 // depends on OS?
 const buttonSize = 10
 
-const tick = "/img/icons/tick.svg"
+const tick  = "/img/icons/tick.svg"
 const cross = "/img/icons/cross.svg"
+const swap  = "/img/icons/mark.svg"
+
 const locked = "/img/icons/locked.png"
 const opened = "/img/icons/opened.png"
 
@@ -352,24 +354,15 @@ export const StyledButton = styled.button`
   opacity: 0.8;
   outline: none;
 
-  ${
-    props => props.paired
-           ? `background-image:url("${tick}");`
-           : ""
-
-  }
-
-  &:hover {
-    opacity: 1;
-    ${
-      props => props.update
-             ? props.paired
-               ? `background-image:url("${cross}");
-                 `
-               : `background-image:url("${tick}")
-                 `
-             : ""
-
+  ${props => {
+      switch (props.status) {
+        case "paired":
+          return `background-image:url("${tick}");`
+        case "swap":
+          return `background-image:url("${swap}");`
+        case "break":
+          return `background-image:url("${cross}");`
+      }
     }
   }
 `

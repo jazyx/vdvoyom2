@@ -51,11 +51,11 @@ export default class Match extends Component {
     this.state = {
       anon: 0
     , named: 0
-    , timeOut: 0
     , "anon-locked": false
     , "named-locked": false
     }
 
+    this.showHover      = true
     this.forcedName     = undefined
     this.nameJustForced = false
     this.forcedAnon     = undefined
@@ -63,9 +63,14 @@ export default class Match extends Component {
 
     this.selectImage = this.selectImage.bind(this)
     this.toggleMatch = this.toggleMatch.bind(this)
-    this.toggleReset = this.toggleReset.bind(this)
     this.toggleFullScreen = this.toggleFullScreen.bind(this)
     this.toggleLock = this.toggleLock.bind(this)
+    this.toggleHover = this.toggleHover.bind(this)
+  }
+
+
+  toggleHover(event) {
+    this.showHover = event.type = "mouseenter"
   }
 
 
@@ -92,6 +97,7 @@ export default class Match extends Component {
     }
 
     this.setState(set)
+    this.showHover = false
 
     // Teacher only
     if (this.state[type+"-locked"]) {
@@ -156,7 +162,6 @@ export default class Match extends Component {
     const notMatches = [
       "anon"
     , "named"
-    , "timeOut"
     , "anon-locked"
     , "anon_local"
     , "named-locked"
@@ -202,10 +207,7 @@ export default class Match extends Component {
       pairedWith = this.anon[this.state.anon].matches
     }
 
-    const timeOut = setTimeout(this.toggleReset, hoverDelay)
-    // console.log("MatchCore toggleMatch timeout", timeOut)
-
-    this.setState({ [matches]: pairedWith, timeOut })
+    this.setState({ [matches]: pairedWith })
 
     this.shareMatch(matches, pairedWith)
   }
@@ -222,13 +224,6 @@ export default class Match extends Component {
     }
 
     userMatch.call(options)
-  }
-
-
-  toggleReset() {
-    clearTimeout(this.state.timeOut)
-    this.setState({ timeOut: 0 })
-    console.log("TimeOut cleared")
   }
 
 
@@ -468,10 +463,6 @@ export default class Match extends Component {
       }
     }
 
-    const namedData = this.named[named] || {} //fallback if hot reload
-    const paired = this.state[namedData.matches]
-    const updateButton = !this.state.timeOut
-
     // Store new forced named/anon, if it only just changed
     this.nameJustForced = ( namedMatch !== this.forcedName )
                        && !!namedMatch
@@ -480,20 +471,19 @@ export default class Match extends Component {
                        && !!anonMatch
     this.forcedAnon     = anonMatch
 
-
     // console.log(
     //   "this.state"
     // , JSON.stringify(this.state, null, "  ")
     // , "named:", named
     // , "paired:", paired
-    // , "timeOut:", this.state.timeOut
     // )
 
-    named = namedData.src
-    named = <img src={named} alt="" />
+    named = this.named[named] || {} //fallback if hot reload
+    anon  = this.anon[anon]   || {} // fallback if hot reload
+    const status = this.getStatusOfSelectedImages(named, anon)
 
-    anon = (this.anon[anon] || {}).src // fallback if hot reload
-    anon = <img src={anon} alt="" />
+    named = <img src={named.src} alt={named.text} />
+    anon  = <img src={anon.src} alt={anon.text} />
 
     return <div
 
@@ -518,11 +508,41 @@ export default class Match extends Component {
       </StyledFrame>
       <StyledButton
         onClick={this.toggleMatch}
-        onMouseLeave={this.toggleReset}
-        paired={paired}
-        update={updateButton}
+        onMouseEnter={this.toggleHover}
+        onMouseLeave={this.toggleHover}
+        showHover={this.showHover}
+        status={status}
       />
     </div>
+  }
+
+
+  getStatusOfSelectedImages(named, anon) {
+    return ""
+    
+    const namedMatches = named.matches
+    const anonMatches  = anon.matches
+    const namedPair    = this[namedMatches]
+    let anonPaired = this.getPairedImageIndex("named", anonMatches)
+    anonPaired     = !(anonPaired < 0)
+
+    if (namedPair === anonMatches) {
+      if (this.showHover) {
+        return "break"
+      } else {
+        return "paired"
+      }
+    } else if (namedPair || anonPaired) {
+      if (this.showHover) {
+        return "paired"
+      } else {
+        return "swap"
+      }
+    } else if (this.showHover) {
+      return "paired"
+    } else {
+      return "unpaired"
+    }
   }
 
 
