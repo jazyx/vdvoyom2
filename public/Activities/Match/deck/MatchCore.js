@@ -39,6 +39,7 @@ import { logRenderTriggers } from '/imports/tools/generic/debug.js'
 const hoverDelay = 2000 //ms before button switches to toggled display
 
 
+
 export default class Match extends Component {
   constructor(props) {
     super(props)
@@ -55,6 +56,9 @@ export default class Match extends Component {
     , "named-locked": false
     }
 
+    this.forcedName     = undefined
+    this.nameJustForced = false
+
     this.selectImage = this.selectImage.bind(this)
     this.toggleMatch = this.toggleMatch.bind(this)
     this.toggleReset = this.toggleReset.bind(this)
@@ -70,18 +74,19 @@ export default class Match extends Component {
                            ? [ this.anon, "named" ]
                            : [ this.named, "anon" ]
 
-    const imageData  = array[index]
-    const matches    = imageData.matches
-    const pairedWith = this.getPairedImageIndex(other, matches)
     const set = { [type]: index }
 
-    if (pairedWith < 0) {
-      if (type === "named") {
-        this.ensureThatAnonImageIsNotPaired(set)
-      }
+    if (type === "named") {
+      const imageData  = array[index]
+      const matches    = imageData.matches
+      const pairedWith = this.getPairedImageIndex(other, matches)
 
-    } else {
-      set[other] = pairedWith
+      if (pairedWith < 0) {
+        this.ensureThatAnonImageIsNotPaired(set)
+
+      } else {
+        set[other] = pairedWith
+      }
     }
 
     this.setState(set)
@@ -151,6 +156,7 @@ export default class Match extends Component {
     , "named"
     , "timeOut"
     , "anon-locked"
+    , "anon_local"
     , "named-locked"
     , removeUndefined
     ]
@@ -416,7 +422,10 @@ export default class Match extends Component {
 
 
   getComparison() {
-    let { named, anon, fullScreen } = this.state // index
+    let {
+      named, anon  // index 
+    , fullScreen
+    } = this.state
 
     // Overwrite with selections in props, created by teacher
     let {
@@ -425,7 +434,7 @@ export default class Match extends Component {
     } = this.props.data || {} // matches
     let pair
 
-    if (namedMatch) {
+    if (namedMatch && this.nameJustForced) {
       named = this.named.findIndex(
         item => item.matches === namedMatch
       )
@@ -438,7 +447,7 @@ export default class Match extends Component {
           this.ensureThatAnonImageIsNotPaired(pair)
           anon = pair.anon || anon
 
-        } else{
+        } else {
           anon = pair
         }
       }
@@ -460,6 +469,12 @@ export default class Match extends Component {
     const namedData = this.named[named] || {} //fallback if hot reload
     const paired = this.state[namedData.matches]
     const updateButton = !this.state.timeOut
+
+    // Store new forced name, if it only just changed
+    this.nameJustForced = ( namedMatch !== this.forcedName )
+                       && !!namedMatch
+    this.forcedName     = namedMatch
+
 
     // console.log(
     //   "this.state"

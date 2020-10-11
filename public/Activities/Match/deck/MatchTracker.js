@@ -14,7 +14,6 @@ const { Match } = collections
 
 
 
-
 export default class MatchTracker extends Tracker{
   getProps() {
     const props = super.getProps("Match")
