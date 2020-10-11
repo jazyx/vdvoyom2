@@ -58,6 +58,8 @@ export default class Match extends Component {
 
     this.forcedName     = undefined
     this.nameJustForced = false
+    this.forcedAnon     = undefined
+    this.anonJustForced = false
 
     this.selectImage = this.selectImage.bind(this)
     this.toggleMatch = this.toggleMatch.bind(this)
@@ -68,8 +70,8 @@ export default class Match extends Component {
 
 
   selectImage(event) {
-    const index = getElementIndex(event.target)
     const type = this.getType(event.currentTarget) // named | anon
+    const index = getElementIndex(event.target)
     const [ array, other ] = type === "anon"
                            ? [ this.anon, "named" ]
                            : [ this.named, "anon" ]
@@ -453,7 +455,7 @@ export default class Match extends Component {
       }
     }
 
-    if (anonMatch) {
+    if (anonMatch && this.anonJustForced) {
       anon = this.anon.findIndex(item => item.matches === anonMatch)
 
       if (!namedMatch) {
@@ -470,10 +472,13 @@ export default class Match extends Component {
     const paired = this.state[namedData.matches]
     const updateButton = !this.state.timeOut
 
-    // Store new forced name, if it only just changed
+    // Store new forced named/anon, if it only just changed
     this.nameJustForced = ( namedMatch !== this.forcedName )
                        && !!namedMatch
     this.forcedName     = namedMatch
+    this.anonJustForced = ( anonMatch !== this.forcedAnon )
+                       && !!anonMatch
+    this.forcedAnon     = anonMatch
 
 
     // console.log(
