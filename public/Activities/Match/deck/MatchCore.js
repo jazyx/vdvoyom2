@@ -53,9 +53,9 @@ export default class Match extends Component {
     , named: 0
     , "anon-locked": false
     , "named-locked": false
+    , "showHover": false
     }
 
-    this.showHover      = true
     this.forcedName     = undefined
     this.nameJustForced = false
     this.forcedAnon     = undefined
@@ -70,7 +70,8 @@ export default class Match extends Component {
 
 
   toggleHover(event) {
-    this.showHover = event.type = "mouseenter"
+    const showHover = (event.type === "mouseenter")
+    this.setState({ showHover })
   }
 
 
@@ -97,7 +98,6 @@ export default class Match extends Component {
     }
 
     this.setState(set)
-    this.showHover = false
 
     // Teacher only
     if (this.state[type+"-locked"]) {
@@ -106,8 +106,7 @@ export default class Match extends Component {
   }
 
 
-  getPairedImageIndex(type, matches) {
-    const array = this[type]
+  getPairedImage(type, matches) {
     let pair
 
     if (type === "anon") {
@@ -125,6 +124,14 @@ export default class Match extends Component {
         }
       })
     }
+
+    return pair
+  }
+
+
+  getPairedImageIndex(type, matches) {
+    const array = this[type]
+    const pair = this.getPairedImage(type, matches)
 
     return array.findIndex( item => item.matches === pair )
   }
@@ -163,8 +170,8 @@ export default class Match extends Component {
       "anon"
     , "named"
     , "anon-locked"
-    , "anon_local"
     , "named-locked"
+    , "showHover"
     , removeUndefined
     ]
     const keys = Object.keys(this.state)
@@ -183,14 +190,14 @@ export default class Match extends Component {
   }
 
 
-  getMatches() {
+  getMatches(type) {
     // Check if there is a force choice of named
     let matches = this.props.data
-                ? this.props.data.named
+                ? this.props.data[type]
                 : undefined
     if (!matches) {
-      const index = this.state.named
-      matches = this.named[index].matches
+      const index = this.state[type]
+      matches = this[type][index].matches
     }
 
     return matches
@@ -198,29 +205,38 @@ export default class Match extends Component {
 
 
   toggleMatch(event) { // event is not used
-    const matches = this.getMatches()
-    let pairedWith = this.state[matches] // string or undefined
+    const named = this.getMatches("named")
+    let pairedWith = this.state[named] // string or undefined
+    const anon = this.anon[this.state.anon].matches
+    const anonPair = this.getPairedImage("anon", anon)
 
-    if (pairedWith) {
-      pairedWith = undefined
+    const pairs = {}
+
+    if (pairedWith && pairedWith === anon) {
+      pairs[named] = undefined
+
     } else {
-      pairedWith = this.anon[this.state.anon].matches
+      if (anonPair) {
+        pairs[anonPair] = undefined
+      }
+
+      pairs[named] = anon
     }
 
-    this.setState({ [matches]: pairedWith })
+    this.shareMatch(pairs)
 
-    this.shareMatch(matches, pairedWith)
+    pairs.showHover = false
+    this.setState(pairs)
   }
 
 
-  shareMatch(matches, pairedWith) {
+  shareMatch(pairs) {
     const group_id = this.props.group_id
     const user_id = this.props.user_id
     const options = {
       group_id
     , user_id
-    , matches
-    , pairedWith
+    , pairs
     }
 
     userMatch.call(options)
@@ -420,7 +436,7 @@ export default class Match extends Component {
 
   getComparison() {
     let {
-      named, anon  // index 
+      named, anon  // index
     , fullScreen
     } = this.state
 
@@ -510,7 +526,7 @@ export default class Match extends Component {
         onClick={this.toggleMatch}
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover}
-        showHover={this.showHover}
+        showHover={this.state.showHover}
         status={status}
       />
     </div>
@@ -518,27 +534,25 @@ export default class Match extends Component {
 
 
   getStatusOfSelectedImages(named, anon) {
-    return ""
-    
+    const showHover    = this.state.showHover
     const namedMatches = named.matches
     const anonMatches  = anon.matches
-    const namedPair    = this[namedMatches]
-    let anonPaired = this.getPairedImageIndex("named", anonMatches)
-    anonPaired     = !(anonPaired < 0)
+    const namedPair    = this.state[namedMatches]
+    let anonPair       = this.getPairedImage("named", anonMatches)
 
     if (namedPair === anonMatches) {
-      if (this.showHover) {
+      if (showHover) {
         return "break"
       } else {
         return "paired"
       }
-    } else if (namedPair || anonPaired) {
-      if (this.showHover) {
+    } else if (namedPair || anonPair) {
+      if (showHover) {
         return "paired"
       } else {
         return "swap"
       }
-    } else if (this.showHover) {
+    } else if (showHover) {
       return "paired"
     } else {
       return "unpaired"

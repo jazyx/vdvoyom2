@@ -57,20 +57,40 @@ export const userMatch = {
 
 , validate(userMatchData) {
     new SimpleSchema({
-      group_id:   { type: String }
-    , user_id:    { type: String }
-    , matches:    { type: String }
-    , pairedWith: { type: String, optional: true }
+      group_id: { type: String }
+    , user_id:  { type: String }
+    , pairs:    { type: Object, blackbox: true }
     }).validate(userMatchData)
   }
 
 , run(matchData) {
-    const { group_id: _id, user_id, matches, pairedWith } = matchData
+    const { group_id: _id, user_id, pairs } = matchData
     const select = { _id }
-    const path = "page.data.matches." + user_id + "." + matches
-    const update = pairedWith
-                 ? { $set: { [path]: pairedWith }}
-                 : { $unset: { [path]: 0 }}
+    const path   = "page.data.matches." + user_id + "."
+    const $set   = {}
+    const $unset = {}
+    const update = {}
+    let anon
+
+
+    const names = Object.keys(pairs)
+    names.forEach( named => {
+      if (anon = pairs[named]) {
+        $set[path + named] = anon
+        update.$set = $set
+
+      } else {
+        $unset[path + named] = 0
+        update.$unset = $unset
+      }
+    })
+
+    console.log(
+      `db.group.update(
+        ${JSON.stringify(select)}
+      , ${JSON.stringify(update)}
+      )`
+    )
     Group.update(select, update)
   }
 }
