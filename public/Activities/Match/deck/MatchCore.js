@@ -69,12 +69,6 @@ export default class Match extends Component {
   }
 
 
-  toggleHover(event) {
-    const showHover = (event.type === "mouseenter")
-    this.setState({ showHover })
-  }
-
-
   selectImage(event) {
     const type = this.getType(event.currentTarget) // named | anon
     const index = getElementIndex(event.target)
@@ -85,11 +79,12 @@ export default class Match extends Component {
     const set = { [type]: index }
 
     if (type === "named") {
-      const imageData  = array[index]
-      const matches    = imageData.matches
+      const matches    = array[index].matches // named matches
       const pairedWith = this.getPairedImageIndex(other, matches)
+      // index of anon image paired with this named image
 
       if (pairedWith < 0) {
+        // This named image has no match, but the anon image might
         this.ensureThatAnonImageIsNotPaired(set)
 
       } else {
@@ -103,6 +98,47 @@ export default class Match extends Component {
     if (this.state[type+"-locked"]) {
       this.forceSelect(type, true, index)
     }
+  }
+
+
+  toggleMatch(event) { // event is not used
+    const named = this.getMatches("named")
+    let pairedWith = this.state[named] // string or undefined
+    const anon = this.anon[this.state.anon].matches
+    const anonPair = this.getPairedImage("named", anon)
+
+    const pairs = {}
+
+    if (pairedWith && pairedWith === anon) {
+      pairs[named] = 0
+
+    } else {
+      if (anonPair) {
+        pairs[anonPair] = 0
+      }
+
+      pairs[named] = anon
+    }
+
+    this.shareMatch(pairs)
+
+    pairs.showHover = false
+    this.setState(pairs)
+  }
+
+
+  toggleFullScreen(event) {
+    const type = this.getType(event.currentTarget)
+    const fullScreen = (this.state.fullScreen)
+                     ? undefined
+                     : type
+    this.setState({ fullScreen })
+  }
+
+
+  toggleHover(event) {
+    const showHover = (event.type === "mouseenter")
+    this.setState({ showHover })
   }
 
 
@@ -138,16 +174,18 @@ export default class Match extends Component {
 
 
   ensureThatAnonImageIsNotPaired(set) {
-    let matches = this.anon[this.state.anon].matches
-    let index = this.getPairedImageIndex("anon", matches)
-    let pair
+    const array = this.anon
+    let index = this.state.anon
 
-    if (index < 0) {
-      // The current named selection is not paired
-    } else {
+    // Get matches for anon image
+    let matches = array[index].matches
+    // Find if a named image is matched with this anon image
+    let named = this.getPairedImage("named", matches)
+
+    if (named) {
       // Find the next unmatched named image
-      const array = this.anon
       const total = array.length
+      let pair
 
       do {
         if (++index === total) {
@@ -155,9 +193,9 @@ export default class Match extends Component {
         }
 
         matches = array[index].matches
-        pair = this.state[matches]
+        named = this.getPairedImage("named", matches)
 
-      } while (pair)
+      } while (named)
 
       set.anon = index
     }
@@ -181,15 +219,6 @@ export default class Match extends Component {
   }
 
 
-  toggleFullScreen(event) {
-    const type = this.getType(event.currentTarget)
-    const fullScreen = (this.state.fullScreen)
-                     ? undefined
-                     : type
-    this.setState({ fullScreen })
-  }
-
-
   getMatches(type) {
     // Check if there is a force choice of named
     let matches = this.props.data
@@ -201,32 +230,6 @@ export default class Match extends Component {
     }
 
     return matches
-  }
-
-
-  toggleMatch(event) { // event is not used
-    const named = this.getMatches("named")
-    let pairedWith = this.state[named] // string or undefined
-    const anon = this.anon[this.state.anon].matches
-    const anonPair = this.getPairedImage("anon", anon)
-
-    const pairs = {}
-
-    if (pairedWith && pairedWith === anon) {
-      pairs[named] = undefined
-
-    } else {
-      if (anonPair) {
-        pairs[anonPair] = undefined
-      }
-
-      pairs[named] = anon
-    }
-
-    this.shareMatch(pairs)
-
-    pairs.showHover = false
-    this.setState(pairs)
   }
 
 
@@ -448,16 +451,21 @@ export default class Match extends Component {
     let pair
 
     if (namedMatch && this.nameJustForced) {
+      // Use index of forced match instead of user selection
       named = this.named.findIndex(
         item => item.matches === namedMatch
-      )
+      ) 
 
       if (!anonMatch) {
         // Select the image paired by the user, if there is one
         pair = this.getPairedImageIndex("anon", namedMatch)
         if (pair < 0) {
+          // The forced named image has not been paired by this user.
+          // If the anon image selected by the user _is_ paired with
+          // some other named image, we need to choose a different
+          // anon image
           pair = {}
-          this.ensureThatAnonImageIsNotPaired(pair)
+          this.ensureThatAnonImageIsNotPaired(pair) // ads {anon: <>}
           anon = pair.anon || anon
 
         } else {

@@ -63,35 +63,43 @@ export const userMatch = {
     }).validate(userMatchData)
   }
 
-, run(matchData) {
-    const { group_id: _id, user_id, pairs } = matchData
+, run(userMatchData) {
+    const { group_id: _id, user_id, pairs } = userMatchData
     const select = { _id }
     const path   = "page.data.matches." + user_id + "."
     const $set   = {}
     const $unset = {}
     const update = {}
+    let execute = false
     let anon
-
 
     const names = Object.keys(pairs)
     names.forEach( named => {
       if (anon = pairs[named]) {
         $set[path + named] = anon
         update.$set = $set
+        execute = true
 
       } else {
         $unset[path + named] = 0
         update.$unset = $unset
+        execute = true
       }
     })
 
-    console.log(
-      `db.group.update(
-        ${JSON.stringify(select)}
-      , ${JSON.stringify(update)}
-      )`
-    )
-    Group.update(select, update)
+    // console.log(
+    //   "execute:", execute,
+    //   `db.group.update(
+    //     ${JSON.stringify(select)}
+    //   , ${JSON.stringify(update)}
+    //   )`
+    // )
+
+    if (execute) {
+      Group.update(select, update)
+    } else {
+      console.log("userMatch: no data to update")
+    }
   }
 }
 

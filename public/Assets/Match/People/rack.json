@@ -1,0 +1,236 @@
+{
+	"set": {
+		"tag": "people",
+		"name": {
+			"en": "People"
+		},
+		"icon": {
+			"src": "/Assets/Match/People/icon.jpg"
+		},
+		"path": "/Match/People",
+		"parent": "/Match",
+		"_id": "KWXid7cNuBEGbFtwZ"
+	},
+	"data": [
+		{
+			"matches": "James",
+			"text": "James",
+			"index": 0,
+			"src": "/Assets/Match/People/James/cave.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "shkMdRY5mpFiniW5G"
+		},
+		{
+			"matches": "James",
+			"text": "James",
+			"index": 1,
+			"src": "/Assets/Match/People/James/step.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "dQfnc4wRZFZZv6cJx"
+		},
+		{
+			"matches": "Karsh",
+			"text": "Karsh",
+			"index": 0,
+			"src": "/Assets/Match/People/Karsh/humphrey_bogart.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "GFnhBxneYNa7d9RKt"
+		},
+		{
+			"matches": "Karsh",
+			"text": "Karsh",
+			"index": 1,
+			"src": "/Assets/Match/People/Karsh/joan_crawford.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "zoS2DAueBHpnT8kXJ"
+		},
+		{
+			"matches": "Андрей",
+			"text": "Андрей",
+			"index": 0,
+			"src": "/Assets/Match/People/Андрей/IMG_2670.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "teGHkwiNpSt8r2ZkM"
+		},
+		{
+			"matches": "Андрей",
+			"text": "Андрей",
+			"index": 1,
+			"src": "/Assets/Match/People/Андрей/IMG_3322.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "awjGHvBZSbRuuPYhK"
+		},
+		{
+			"matches": "Антон_Фелдт",
+			"text": "Антон_Фелдт",
+			"index": 0,
+			"src": "/Assets/Match/People/Антон_Фелдт/Anton Photos.jpeg",
+			"tags": [
+				"people"
+			],
+			"_id": "g3jD7i2r49GFTap4W"
+		},
+		{
+			"matches": "Антон_Фелдт",
+			"text": "Антон_Фелдт",
+			"index": 1,
+			"src": "/Assets/Match/People/Антон_Фелдт/Anton Secret Photos.jpeg",
+			"tags": [
+				"people"
+			],
+			"_id": "LQJofq8NAWP7EuqLa"
+		},
+		{
+			"matches": "Виталий",
+			"text": "Виталий",
+			"index": 0,
+			"src": "/Assets/Match/People/Виталий/IMG_6836.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "uTxJjFcE6LwhEkvqf"
+		},
+		{
+			"matches": "Виталий",
+			"text": "Виталий",
+			"index": 1,
+			"src": "/Assets/Match/People/Виталий/IMG_8887.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "JNTuLngbSpNPGi2pj"
+		},
+		{
+			"matches": "Евгений",
+			"text": "Евгений",
+			"index": 0,
+			"src": "/Assets/Match/People/Евгений/1.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "KuXyz8PNbFJrs2d3Z"
+		},
+		{
+			"matches": "Евгений",
+			"text": "Евгений",
+			"index": 1,
+			"src": "/Assets/Match/People/Евгений/2.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "3w288nkPpnuYbSvEp"
+		},
+		{
+			"matches": "Кирилл",
+			"text": "Кирилл",
+			"index": 0,
+			"src": "/Assets/Match/People/Кирилл/IMG_0294.JPG",
+			"tags": [
+				"people"
+			],
+			"_id": "iT4DQDyneQXs4XBFZ"
+		},
+		{
+			"matches": "Кирилл",
+			"text": "Кирилл",
+			"index": 1,
+			"src": "/Assets/Match/People/Кирилл/IMG_1027.JPG",
+			"tags": [
+				"people"
+			],
+			"_id": "yeYebzr3sXPKiRijH"
+		},
+		{
+			"matches": "Любовь",
+			"text": "Любовь",
+			"index": 0,
+			"src": "/Assets/Match/People/Любовь/man.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "fyjPGPsu9Xj8r4S2g"
+		},
+		{
+			"matches": "Любовь",
+			"text": "Любовь",
+			"index": 1,
+			"src": "/Assets/Match/People/Любовь/woman.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "vGNfmg9fXvH3zEYFc"
+		},
+		{
+			"matches": "Татьяна",
+			"text": "Татьяна",
+			"index": 0,
+			"src": "/Assets/Match/People/Татьяна/IMG_20200503_110607.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "vjo4gyembARGzwfxm"
+		},
+		{
+			"matches": "Татьяна",
+			"text": "Татьяна",
+			"index": 1,
+			"src": "/Assets/Match/People/Татьяна/IMG_20200808_192106.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "EvjWkNQuTjfkPNRFg"
+		},
+		{
+			"matches": "Эльвира",
+			"text": "Эльвира",
+			"index": 0,
+			"src": "/Assets/Match/People/Эльвира/20190429_170503.JPG",
+			"tags": [
+				"people"
+			],
+			"_id": "utuFXeN8MzQN3Wugk"
+		},
+		{
+			"matches": "Эльвира",
+			"text": "Эльвира",
+			"index": 1,
+			"src": "/Assets/Match/People/Эльвира/IMG-20191018-WA0031.JPG",
+			"tags": [
+				"people"
+			],
+			"_id": "FMzm5HKhMyAMCFuk4"
+		},
+		{
+			"matches": "Юлия",
+			"text": "Юлия",
+			"index": 0,
+			"src": "/Assets/Match/People/Юлия/IMG_1405.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "t4qA93spPYL9XYHPt"
+		},
+		{
+			"matches": "Юлия",
+			"text": "Юлия",
+			"index": 1,
+			"src": "/Assets/Match/People/Юлия/IMG_3289.jpg",
+			"tags": [
+				"people"
+			],
+			"_id": "7vHsDXK9ScqnbHAXo"
+		}
+	]
+}

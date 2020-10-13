@@ -1,0 +1,538 @@
+{
+	"set": {
+		"tag": "colours",
+		"name": {
+			"en": "Colours",
+			"fr": "Couleurs",
+			"ru": "Цвета"
+		},
+		"icon": {
+			"src": "/Assets/Spiral/Colours/icon.jpg"
+		},
+		"parent": "/Spiral",
+		"path": "/Spiral/Colours",
+		"_id": "xaDGQHu3So4fLy65Y"
+	},
+	"phrases": [
+		{
+			"name": "00Black_owl",
+			"tags": [
+				"colours"
+			],
+			"_id": "eotc6AzmPArQM3wGH",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/00Black_owl.jpg",
+					"size": 98195
+				}
+			]
+		},
+		{
+			"name": "03_Black_nightSky",
+			"tags": [
+				"colours"
+			],
+			"_id": "cwvq8EExun4sYKzcv",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/03_Black_nightSky.jpg",
+					"size": 99437
+				}
+			]
+		},
+		{
+			"name": "04_Black_pencilGlass",
+			"tags": [
+				"colours"
+			],
+			"_id": "DvDEJhmovtHP6mrtu",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/04_Black_pencilGlass.jpg",
+					"size": 98953
+				}
+			]
+		},
+		{
+			"name": "08_Blue_dancer",
+			"tags": [
+				"colours"
+			],
+			"_id": "N9smKZJwGTBJocrhF",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/08_Blue_dancer.jpg",
+					"size": 96469
+				}
+			]
+		},
+		{
+			"name": "09_Blue_tango",
+			"tags": [
+				"colours"
+			],
+			"_id": "C5mbAbkg2Khk6NWe4",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/09_Blue_tango.jpg",
+					"size": 98362
+				}
+			]
+		},
+		{
+			"name": "10_Blue_jellyfish",
+			"tags": [
+				"colours"
+			],
+			"_id": "hoY3vMYpz3doQAyB8",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/10_Blue_jellyfish.jpg",
+					"size": 93765
+				}
+			]
+		},
+		{
+			"name": "12_Blue_noctilucent",
+			"tags": [
+				"colours"
+			],
+			"_id": "gtTu8EC9XG9E92XgL",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/12_Blue_noctilucent.jpg",
+					"size": 100001
+				}
+			]
+		},
+		{
+			"name": "15_Blue_bearGirl",
+			"tags": [
+				"colours"
+			],
+			"_id": "8y7WiHzXtP4mA9oCh",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/15_Blue_bearGirl.jpg",
+					"size": 98782
+				}
+			]
+		},
+		{
+			"name": "19_Blue_krabi",
+			"tags": [
+				"colours"
+			],
+			"_id": "RHeCQCFbuzEcScfzv",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/19_Blue_krabi.jpg",
+					"size": 99156
+				}
+			]
+		},
+		{
+			"name": "20_Teal_pigBird",
+			"tags": [
+				"colours"
+			],
+			"_id": "ugqEwWjnXz9Js2fwd",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/20_Teal_pigBird.jpg",
+					"size": 126231
+				}
+			]
+		},
+		{
+			"name": "29_Green_seal",
+			"tags": [
+				"colours"
+			],
+			"_id": "ADjxHXiP8Wm8APdGx",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/29_Green_seal.jpg",
+					"size": 99252
+				}
+			]
+		},
+		{
+			"name": "30_Green_birdOrator",
+			"tags": [
+				"colours"
+			],
+			"_id": "uBrAbbSXEgQ86G5bN",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/30_Green_birdOrator.jpg",
+					"size": 99732
+				}
+			]
+		},
+		{
+			"name": "32_Green_babyShoes",
+			"tags": [
+				"colours"
+			],
+			"_id": "eXyTYp2tKLvzgafEY",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/32_Green_babyShoes.jpg",
+					"size": 98175
+				}
+			]
+		},
+		{
+			"name": "35_Green_forest",
+			"tags": [
+				"colours"
+			],
+			"_id": "nPyL4zCJfBRSdqEkS",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/35_Green_forest.jpg",
+					"size": 150781
+				}
+			]
+		},
+		{
+			"name": "37_Green_girl",
+			"tags": [
+				"colours"
+			],
+			"_id": "fsf84neWTtFW8yXYG",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/37_Green_girl.jpg",
+					"size": 99880
+				}
+			]
+		},
+		{
+			"name": "38_Green_disguise",
+			"tags": [
+				"colours"
+			],
+			"_id": "eBBRjvu7vusTn4e65",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/38_Green_disguise.jpg",
+					"size": 99770
+				}
+			]
+		},
+		{
+			"name": "39_Green_tightrope",
+			"tags": [
+				"colours"
+			],
+			"_id": "v9X6Y8jzeoAPgYBv5",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/39_Green_tightrope.jpg",
+					"size": 99033
+				}
+			]
+		},
+		{
+			"name": "40_Yellow_lionCub",
+			"tags": [
+				"colours"
+			],
+			"_id": "yF6BSEQcuHj9Qrm6v",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/40_Yellow_lionCub.jpg",
+					"size": 144009
+				}
+			]
+		},
+		{
+			"name": "45_Yellow_cat",
+			"tags": [
+				"colours"
+			],
+			"_id": "EvH5EmoFqCc4rvySS",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/45_Yellow_cat.jpg",
+					"size": 99746
+				}
+			]
+		},
+		{
+			"name": "48_Brown_archaeologist",
+			"tags": [
+				"colours"
+			],
+			"_id": "Eq2PdSostbasD9uZq",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/48_Brown_archaeologist.jpg",
+					"size": 98005
+				}
+			]
+		},
+		{
+			"name": "49_Brown_sparrows",
+			"tags": [
+				"colours"
+			],
+			"_id": "MDzkNgJcFhFWpDkhC",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/49_Brown_sparrows.jpg",
+					"size": 98337
+				}
+			]
+		},
+		{
+			"name": "50_Orange_clothes",
+			"tags": [
+				"colours"
+			],
+			"_id": "mhQBqzGyi8HmqTbAY",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/50_Orange_clothes.jpg",
+					"size": 144976
+				}
+			]
+		},
+		{
+			"name": "55_Orange_hiphop",
+			"tags": [
+				"colours"
+			],
+			"_id": "7iW8toBb8eZHgDNuR",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/55_Orange_hiphop.jpg",
+					"size": 136468
+				}
+			]
+		},
+		{
+			"name": "60_Orange_rider",
+			"tags": [
+				"colours"
+			],
+			"_id": "JnWyrHX6W7gwdaqLp",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/60_Orange_rider.jpg",
+					"size": 96371
+				}
+			]
+		},
+		{
+			"name": "65_Brown_horse",
+			"tags": [
+				"colours"
+			],
+			"_id": "ruT7wLpMdmJtnE3QK",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/65_Brown_horse.jpg",
+					"size": 99792
+				}
+			]
+		},
+		{
+			"name": "66_Red_lightning",
+			"tags": [
+				"colours"
+			],
+			"_id": "LnEy6AnZ9A94QKGYj",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/66_Red_lightning.jpg",
+					"size": 99632
+				}
+			]
+		},
+		{
+			"name": "67_Red_ballet",
+			"tags": [
+				"colours"
+			],
+			"_id": "CCrzTgMFqcPNtzF3r",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/67_Red_ballet.jpg",
+					"size": 99203
+				}
+			]
+		},
+		{
+			"name": "68_Red_dancers",
+			"tags": [
+				"colours"
+			],
+			"_id": "9ptBwXz5gYd8DiXGh",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/68_Red_dancers.jpg",
+					"size": 98155
+				}
+			]
+		},
+		{
+			"name": "70_Red_umbrellas",
+			"tags": [
+				"colours"
+			],
+			"_id": "NvscHDqaWxYrNY4bv",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/70_Red_umbrellas.jpg",
+					"size": 97455
+				}
+			]
+		},
+		{
+			"name": "75_Pink_balloon",
+			"tags": [
+				"colours"
+			],
+			"_id": "6tKfiX7FNpwPfMq9C",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/75_Pink_balloon.jpg",
+					"size": 99159
+				}
+			]
+		},
+		{
+			"name": "76_Pink-painting",
+			"tags": [
+				"colours"
+			],
+			"_id": "3pXaiXr4njbq4uMNC",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/76_Pink-painting.jpg",
+					"size": 99644
+				}
+			]
+		},
+		{
+			"name": "81_Purple_woman",
+			"tags": [
+				"colours"
+			],
+			"_id": "Aty9iJ3uscBRSkPAF",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/81_Purple_woman.jpg",
+					"size": 98390
+				}
+			]
+		},
+		{
+			"name": "90_White_ZhangDi",
+			"tags": [
+				"colours"
+			],
+			"_id": "D5BKkRdKoATD8beHY",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/90_White_ZhangDi.jpg",
+					"size": 99388
+				}
+			]
+		},
+		{
+			"name": "92_White_snowboard",
+			"tags": [
+				"colours"
+			],
+			"_id": "k4zPd4vojYQSjfvLL",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/92_White_snowboard.jpg",
+					"size": 99865
+				}
+			]
+		},
+		{
+			"name": "94_Grey_microscope",
+			"tags": [
+				"colours"
+			],
+			"_id": "cGNGx9GLNR73cuBZY",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/94_Grey_microscope.jpg",
+					"size": 98816
+				}
+			]
+		},
+		{
+			"name": "94_Grey_rotifer",
+			"tags": [
+				"colours"
+			],
+			"_id": "mWuxoW26NcDvEWtGY",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/94_Grey_rotifer.jpg",
+					"size": 97348
+				}
+			]
+		},
+		{
+			"name": "95_Grey_labMouse",
+			"tags": [
+				"colours"
+			],
+			"_id": "fKb5GzkJ6LyoGTPAu",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/95_Grey_labMouse.jpg",
+					"size": 99515
+				}
+			]
+		},
+		{
+			"name": "96_Grey_skateboard",
+			"tags": [
+				"colours"
+			],
+			"_id": "aQE3WJ9n3rLZYTvKb",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/96_Grey_skateboard.jpg",
+					"size": 97865
+				}
+			]
+		},
+		{
+			"name": "97_Grey_waterDance",
+			"tags": [
+				"colours"
+			],
+			"_id": "3Raqd8reqHh6pJZSo",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/97_Grey_waterDance.jpg",
+					"size": 148345
+				}
+			]
+		},
+		{
+			"name": "99_Grey_iceBubble",
+			"tags": [
+				"colours"
+			],
+			"_id": "X68DYcQgreQucTGdn",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Colours/image/99_Grey_iceBubble.jpg",
+					"size": 148018
+				}
+			]
+		}
+	]
+}

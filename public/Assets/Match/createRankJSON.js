@@ -159,11 +159,15 @@ class CreateJSON {
 
 
   getJSONEntry(folderName) {
+    const filter = file => {
+      const ext = path.extname(file).toLowerCase()
+      return !(this.imageTypes.indexOf(ext) < 0)
+    }
+    
+
     const folderPath = path.join(this.parentFolder, folderName)
     let contents = fs.readdirSync(folderPath)
-                       .filter( file => (
-                         this.imageTypes.indexOf(path.extname(file)) > -1
-                       ))
+                       .filter(filter)
 
     // console.log("this.parentFolder:", this.parentFolder)
     // console.log("folderName:", folderName)

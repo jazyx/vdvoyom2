@@ -1,0 +1,18 @@
+{
+	"name": {
+		"en": "Home",
+		"fr": "À la maison",
+		"ru": "Дом"
+	},
+	"description": {
+		"en": "Rooms, furniture, household items, activities and places around your home",
+		"fr": "Les pièces, meubles, objets domestiques, activités et lieux autour de la maison",
+		"ru": "Комнаты, мебель, предметы быта, развлечения и места вокруг вашего дома"
+	},
+	"icon": {
+		"src": "/Assets/Vocabulary/home/icon.jpg"
+	},
+	"parent": "/Vocabulary",
+	"path": "/Vocabulary/home",
+	"_id": "wQEdETDpQjvYnwkKp"
+}

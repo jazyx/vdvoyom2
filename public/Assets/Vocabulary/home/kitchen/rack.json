@@ -1,0 +1,343 @@
+{
+	"set": {
+		"tag": [
+			"kitchen"
+		],
+		"name": {
+			"en": "Kitchen",
+			"fr": "Cuisine",
+			"ru": "Кухня"
+		},
+		"icon": {
+			"src": "/Assets/Vocabulary/home/kitchen/icon.svg"
+		},
+		"parent": "/Vocabulary/home",
+		"path": "/Vocabulary/home/kitchen",
+		"_id": "XGjSxv64KGNdkmLvY"
+	},
+	"phrases": [
+		{
+			"name": "bowl",
+			"phrase": {
+				"en": "bowl",
+				"fr": "un bol",
+				"ru": "миска"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "WuWnBmBXGzC9pdZ2G",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/bowl.jpg",
+					"size": 20855
+				}
+			]
+		},
+		{
+			"name": "coffee_cup",
+			"phrase": {
+				"en": "coffee_cup",
+				"fr": "une tasse_à_café",
+				"ru": "чашка_кофе"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "6ybpZawBDtZjvJTKb",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/coffee_cup.jpg",
+					"size": 30494
+				}
+			]
+		},
+		{
+			"name": "fork",
+			"phrase": {
+				"en": "fork",
+				"fr": "une fourchette",
+				"ru": "вилка"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "6pRBcf7QeofhRL7pS",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/fork.jpg",
+					"size": 11005
+				}
+			]
+		},
+		{
+			"name": "frying_pan",
+			"phrase": {
+				"en": "frying_pan",
+				"fr": "une poêle_à_frire",
+				"ru": "сковородка"
+			},
+			"tags": [
+				"cookware",
+				"kitchen"
+			],
+			"_id": "DxJAqcbD8CqrRE2ak",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/frying_pan.jpg",
+					"size": 17756
+				}
+			]
+		},
+		{
+			"name": "glass",
+			"phrase": {
+				"en": "glass",
+				"fr": "un verre",
+				"ru": "стакан"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "AWKJRbvuCQqj7C9zh",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/glass.jpg",
+					"size": 45452
+				}
+			]
+		},
+		{
+			"name": "jar",
+			"phrase": {
+				"en": "jar",
+				"fr": "un pot",
+				"ru": "банка"
+			},
+			"tags": [
+				"storage",
+				"kitchen"
+			],
+			"_id": "Zcu5DaSxwyubJgEgt",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/jar.jpg",
+					"size": 48454
+				}
+			]
+		},
+		{
+			"name": "jug",
+			"phrase": {
+				"en": "jug",
+				"fr": "une cruche",
+				"ru": "кувшин"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "jyHy6YJwAboeZknrY",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/jug.jpg",
+					"size": 48264
+				}
+			]
+		},
+		{
+			"name": "kettle",
+			"phrase": {
+				"en": "kettle",
+				"fr": "une bouilloire",
+				"ru": "чайник"
+			},
+			"tags": [
+				"cookware",
+				"kitchen"
+			],
+			"_id": "6DQRoS3ADo69MSEqG",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/kettle.jpg",
+					"size": 37796
+				}
+			]
+		},
+		{
+			"name": "knife",
+			"phrase": {
+				"en": "knife",
+				"fr": "un couteau",
+				"ru": "нож"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "DKgdoXpHTKcu5mwMs",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/knife.jpg",
+					"size": 11999
+				}
+			]
+		},
+		{
+			"name": "lid",
+			"phrase": {
+				"en": "lid",
+				"fr": "un couvercle",
+				"ru": "крышка"
+			},
+			"tags": [
+				"storage",
+				"kitchen"
+			],
+			"_id": "y2JanoEeTgBWaybAp",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/lid.jpg",
+					"size": 44647
+				}
+			]
+		},
+		{
+			"name": "mug",
+			"phrase": {
+				"en": "mug",
+				"fr": "une chope",
+				"ru": "кружка"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "SgxRmj5CDpFNbqJDx",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/mug.jpg",
+					"size": 49989
+				}
+			]
+		},
+		{
+			"name": "plate",
+			"phrase": {
+				"en": "plate",
+				"fr": "une assiette",
+				"ru": "тарелка"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "eLHAhpn7K4orj3ssT",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/plate.jpg",
+					"size": 49066
+				}
+			]
+		},
+		{
+			"name": "saucepan",
+			"phrase": {
+				"en": "saucepan",
+				"fr": "une casserole",
+				"ru": "кастрюля"
+			},
+			"tags": [
+				"cookware",
+				"kitchen"
+			],
+			"_id": "FbJ9fpJXNjavS9bze",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/saucepan.jpg",
+					"size": 46723
+				}
+			]
+		},
+		{
+			"name": "spoon",
+			"phrase": {
+				"en": "spoon",
+				"fr": "une cuillère",
+				"ru": "ложка"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "aMHxFpgEQAvx6cknr",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/spoon.jpg",
+					"size": 12020
+				}
+			]
+		},
+		{
+			"name": "tea_cup",
+			"phrase": {
+				"en": "tea_cup",
+				"fr": "une tasse_à_thé",
+				"ru": "чашка чая"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "RaDYWoh8Pm9ovhbjT",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/tea_cup.jpg",
+					"size": 49599
+				}
+			]
+		},
+		{
+			"name": "teapot",
+			"phrase": {
+				"en": "teapot",
+				"fr": "une théière",
+				"ru": "чайник"
+			},
+			"tags": [
+				"cookware",
+				"kitchen"
+			],
+			"_id": "SwQxaeB7nNnkpthZQ",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/teapot.jpg",
+					"size": 47811
+				}
+			]
+		},
+		{
+			"name": "wineglass",
+			"phrase": {
+				"en": "wineglass",
+				"fr": "un verre_à_vin",
+				"ru": "бокал"
+			},
+			"tags": [
+				"tableware",
+				"kitchen"
+			],
+			"_id": "jzGGS2d59jLkHb32p",
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/kitchen/image/wineglass.jpg",
+					"size": 28159
+				}
+			]
+		}
+	]
+}

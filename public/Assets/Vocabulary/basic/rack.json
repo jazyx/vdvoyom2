@@ -1,0 +1,1372 @@
+{
+	"set": {
+		"tag": "basic",
+		"name": {
+			"en": "Basic words",
+			"fr": "Mots de base",
+			"ru": "Основные слова"
+		},
+		"description": {
+			"en": "Essential words for everyday life",
+			"fr": "Les mots essentiels pour tous les jours",
+			"ru": "Слова, которые вам нужно каждый день"
+		},
+		"icon": {
+			"src": "/Assets/Vocabulary/basic/icon.jpg"
+		},
+		"parent": "/Vocabulary",
+		"path": "/Vocabulary/basic",
+		"_id": "SchSRuA72qgcfP3En"
+	},
+	"phrases": [
+		{
+			"name": "1",
+			"phrase": {
+				"en": "soup",
+				"fr": "une soupe",
+				"ru": "суп"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/1.jpg",
+					"size": 118896
+				}
+			],
+			"_id": "yhhFtet2cPQEcPisT"
+		},
+		{
+			"name": "2",
+			"phrase": {
+				"en": "bread",
+				"fr": "du pain",
+				"ru": "хлеб"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/2.jpg",
+					"size": 157026
+				}
+			],
+			"_id": "cBmXQ6qF8ZvsvTPsd"
+		},
+		{
+			"name": "3",
+			"phrase": {
+				"en": "fish",
+				"fr": "du poisson",
+				"ru": "рыба"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/3.jpg",
+					"size": 260667
+				}
+			],
+			"_id": "WgGmnPZthjxsfZiks"
+		},
+		{
+			"name": "4",
+			"phrase": {
+				"en": "meat",
+				"fr": "de la viande",
+				"ru": "мясо"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/4.jpg",
+					"size": 66726
+				}
+			],
+			"_id": "rutsiBnmS2SPsGALx"
+		},
+		{
+			"name": "5",
+			"phrase": {
+				"en": "chicken",
+				"fr": "du poulet",
+				"ru": "курица"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/5.jpg",
+					"size": 92659
+				}
+			],
+			"_id": "cRYfuGTj7PGcyLrJX"
+		},
+		{
+			"name": "6",
+			"phrase": {
+				"en": "eggs",
+				"fr": "des oeufs",
+				"ru": "яйца"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/6.jpg",
+					"size": 9633
+				}
+			],
+			"_id": "BpvsEtHtwAAkRsSzk"
+		},
+		{
+			"name": "7",
+			"phrase": {
+				"en": "rice",
+				"fr": "du riz",
+				"ru": "рис"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/7.jpg",
+					"size": 58758
+				}
+			],
+			"_id": "SBRFvMa9F878dX5fb"
+		},
+		{
+			"name": "8",
+			"phrase": {
+				"en": "salad",
+				"fr": "une salade",
+				"ru": "салат"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/8.jpg",
+					"size": 153352
+				}
+			],
+			"_id": "9CpD5Az8ZsTfaiiSN"
+		},
+		{
+			"name": "9",
+			"phrase": {
+				"en": "vegetables",
+				"fr": "des légumes",
+				"ru": "овощи"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/9.jpg",
+					"size": 80138
+				}
+			],
+			"_id": "6gSbCSs569Gr2kW4j"
+		},
+		{
+			"name": "10",
+			"phrase": {
+				"en": "potatoes",
+				"fr": "des pommes de terre",
+				"ru": "картофель"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/10.jpg",
+					"size": 334227
+				}
+			],
+			"_id": "mqLFKHKEm55hXqCwJ"
+		},
+		{
+			"name": "11",
+			"phrase": {
+				"en": "fruit",
+				"fr": "des fruits",
+				"ru": "фрукты"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/11.jpg",
+					"size": 52421
+				}
+			],
+			"_id": "faymu2QwhA7nzqZw3"
+		},
+		{
+			"name": "12",
+			"phrase": {
+				"en": "cheese",
+				"fr": "du fromage",
+				"ru": "сыр"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/12.jpg",
+					"size": 49643
+				}
+			],
+			"_id": "stB7mY3eMyszmTkAA"
+		},
+		{
+			"name": "13",
+			"phrase": {
+				"en": "milk",
+				"fr": "du lait",
+				"ru": "молоко"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/13.jpg",
+					"size": 29847
+				}
+			],
+			"_id": "pd8SeWwYGZuzzGeyQ"
+		},
+		{
+			"name": "14",
+			"phrase": {
+				"en": "tea",
+				"fr": "du thé",
+				"ru": "чай"
+			},
+			"tags": [
+				"food",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/14.jpg",
+					"size": 36730
+				}
+			],
+			"_id": "NG5gXRBZjvotfvraw"
+		},
+		{
+			"name": "15",
+			"phrase": {
+				"en": "coffee",
+				"fr": "du café",
+				"ru": "кофе"
+			},
+			"tags": [
+				"drink",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/15.jpg",
+					"size": 162471
+				}
+			],
+			"_id": "Kb9zDPixweydX9tHQ"
+		},
+		{
+			"name": "16",
+			"phrase": {
+				"en": "juice",
+				"fr": "du jus",
+				"ru": "сок"
+			},
+			"tags": [
+				"drink",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/16.jpg",
+					"size": 18741
+				}
+			],
+			"_id": "4pNRc6aootBmwFboM"
+		},
+		{
+			"name": "17",
+			"phrase": {
+				"en": "water",
+				"fr": "de l'eau",
+				"ru": "вода"
+			},
+			"tags": [
+				"drink",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/17.jpg",
+					"size": 203246
+				}
+			],
+			"_id": "5GzoK3ZLvkQQba9wC"
+		},
+		{
+			"name": "18",
+			"phrase": {
+				"en": "beer",
+				"fr": "de la bière",
+				"ru": "пиво"
+			},
+			"tags": [
+				"drink",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/18.jpg",
+					"size": 88307
+				}
+			],
+			"_id": "g4QxwupsWrNzJtxyZ"
+		},
+		{
+			"name": "19",
+			"phrase": {
+				"en": "wine",
+				"fr": "du vin",
+				"ru": "вино"
+			},
+			"tags": [
+				"drink",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/19.jpg",
+					"size": 253912
+				}
+			],
+			"_id": "NRKTg4jQTysq5BSE5"
+		},
+		{
+			"name": "20",
+			"phrase": {
+				"en": "house",
+				"fr": "une maison",
+				"ru": "дом"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/20.jpg",
+					"size": 242860
+				}
+			],
+			"_id": "TYhvrctxvi9bHDuvk"
+		},
+		{
+			"name": "21",
+			"phrase": {
+				"en": "door",
+				"fr": "une porte",
+				"ru": "дверь"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/21.jpg",
+					"size": 201087
+				}
+			],
+			"_id": "mLRaDsDuP8LMrWkuy"
+		},
+		{
+			"name": "22",
+			"phrase": {
+				"en": "window",
+				"fr": "une fenêtre",
+				"ru": "окно"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/22.jpg",
+					"size": 9606
+				}
+			],
+			"_id": "hcDh5bLGkTNPc9uMR"
+		},
+		{
+			"name": "23",
+			"phrase": {
+				"en": "table",
+				"fr": "une table",
+				"ru": "стол"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/23.png",
+					"size": 117966
+				}
+			],
+			"_id": "52pCyaAnoLau36oqg"
+		},
+		{
+			"name": "24",
+			"phrase": {
+				"en": "chair",
+				"fr": "une chaise",
+				"ru": "стул"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/24.png",
+					"size": 139880
+				}
+			],
+			"_id": "zF9PQc7FqjQQohjLo"
+		},
+		{
+			"name": "25",
+			"phrase": {
+				"en": "clock",
+				"fr": "une horloge",
+				"ru": "часы"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/25.jpg",
+					"size": 49287
+				}
+			],
+			"_id": "nvx7BPDsGwvsHgTo8"
+		},
+		{
+			"name": "26",
+			"phrase": {
+				"en": "book",
+				"fr": "un livre",
+				"ru": "книга"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/26.jpg",
+					"size": 88051
+				}
+			],
+			"_id": "xeDtphaSrnJ8WMdBc"
+		},
+		{
+			"name": "27",
+			"phrase": {
+				"en": "letter",
+				"fr": "une lettre",
+				"ru": "письмо"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/27.png",
+					"size": 114481
+				}
+			],
+			"_id": "ZZrwrKvando9vfRtb"
+		},
+		{
+			"name": "28",
+			"phrase": {
+				"en": "computer",
+				"fr": "un ordinateur",
+				"ru": "компьютер"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/28.jpg",
+					"size": 105808
+				}
+			],
+			"_id": "Y9e6TwiyXfDoQgG3H"
+		},
+		{
+			"name": "29",
+			"phrase": {
+				"en": "telephone",
+				"fr": "un téléphone",
+				"ru": "телефон"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/29.jpg",
+					"size": 92508
+				}
+			],
+			"_id": "Gmiafa4XQHvHyLtga"
+		},
+		{
+			"name": "30",
+			"phrase": {
+				"en": "television",
+				"fr": "une télévision",
+				"ru": "телевизор"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/30.jpg",
+					"size": 185868
+				}
+			],
+			"_id": "ijGyoGArfJD2rRwEn"
+		},
+		{
+			"name": "31",
+			"phrase": {
+				"en": "lamp",
+				"fr": "une lampe",
+				"ru": "лампа"
+			},
+			"tags": [
+				"home",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/31.png",
+					"size": 166885
+				}
+			],
+			"_id": "BmtD6B6XTwgKnbPEe"
+		},
+		{
+			"name": "32",
+			"phrase": {
+				"en": "car",
+				"fr": "une voiture",
+				"ru": "машина"
+			},
+			"tags": [
+				"travel",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/32.jpg",
+					"size": 47611
+				}
+			],
+			"_id": "itw3Tqe5mK5HNwCTe"
+		},
+		{
+			"name": "33",
+			"phrase": {
+				"en": "money",
+				"fr": "de l'argent",
+				"ru": "деньги"
+			},
+			"tags": [
+				"travel",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/33.jpg",
+					"size": 584494
+				}
+			],
+			"_id": "NDMKhFQpSPPFLPQMt"
+		},
+		{
+			"name": "34",
+			"phrase": {
+				"en": "passport",
+				"fr": "une passeport",
+				"ru": "паспорт"
+			},
+			"tags": [
+				"travel",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/34.jpg",
+					"size": 34018
+				}
+			],
+			"_id": "zLPpy8mCNqe9j5wFH"
+		},
+		{
+			"name": "35",
+			"phrase": {
+				"en": "bag",
+				"fr": "un sac",
+				"ru": "сумка"
+			},
+			"tags": [
+				"travel",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/35.jpg",
+					"size": 22793
+				}
+			],
+			"_id": "nxCECeqnPK6o5NP4D"
+		},
+		{
+			"name": "36",
+			"phrase": {
+				"en": "pen",
+				"fr": "un stylo",
+				"ru": "ручка"
+			},
+			"tags": [
+				"travel",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/36.jpg",
+					"size": 119514
+				}
+			],
+			"_id": "NcHhauByJRHNT5Ehk"
+		},
+		{
+			"name": "37",
+			"phrase": {
+				"en": "man",
+				"fr": "un homme",
+				"ru": "мужчина"
+			},
+			"tags": [
+				"family",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/37.jpg",
+					"size": 43507
+				}
+			],
+			"_id": "LPMip2xc2mgEEE6p4"
+		},
+		{
+			"name": "38",
+			"phrase": {
+				"en": "woman",
+				"fr": "une femme",
+				"ru": "женщина"
+			},
+			"tags": [
+				"family",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/38.jpg",
+					"size": 125262
+				}
+			],
+			"_id": "f6FcX7KCEZixu97b5"
+		},
+		{
+			"name": "39",
+			"phrase": {
+				"en": "boy",
+				"fr": "un garçon",
+				"ru": "мальчик"
+			},
+			"tags": [
+				"family",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/39.jpg",
+					"size": 13001
+				}
+			],
+			"_id": "BBCJRqSDgn2QCiNK9"
+		},
+		{
+			"name": "40",
+			"phrase": {
+				"en": "girl",
+				"fr": "une fille",
+				"ru": "девочка"
+			},
+			"tags": [
+				"family",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/40.jpg",
+					"size": 159112
+				}
+			],
+			"_id": "uuETs6YfdFCyZS9XR"
+		},
+		{
+			"name": "41",
+			"phrase": {
+				"en": "grandfather",
+				"fr": "un grandpère",
+				"ru": "дедушка"
+			},
+			"tags": [
+				"family",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/41.jpg",
+					"size": 53058
+				}
+			],
+			"_id": "m3GAzZgPCbcw8ZaS5"
+		},
+		{
+			"name": "42",
+			"phrase": {
+				"en": "grandmother",
+				"fr": "une grandmère",
+				"ru": "бабушка"
+			},
+			"tags": [
+				"family",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/42.jpg",
+					"size": 126393
+				}
+			],
+			"_id": "jRLw4MfoSDAw8qvFo"
+		},
+		{
+			"name": "43",
+			"phrase": {
+				"en": "red",
+				"fr": "du rouge",
+				"ru": "красный"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/43.svg",
+					"size": 379
+				}
+			],
+			"_id": "X7LrCj9jpcZCS5h6g"
+		},
+		{
+			"name": "44",
+			"phrase": {
+				"en": "orange",
+				"fr": "de l'orange",
+				"ru": "оранжевый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/44.jpg",
+					"size": 94896
+				}
+			],
+			"_id": "Tv8Tr3m9ax9ZHoFNG"
+		},
+		{
+			"name": "45",
+			"phrase": {
+				"en": "yellow",
+				"fr": "du jaune",
+				"ru": "жёлтый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/45.jpg",
+					"size": 6304
+				}
+			],
+			"_id": "F9CdXwDWwejWbsjHp"
+		},
+		{
+			"name": "46",
+			"phrase": {
+				"en": "green",
+				"fr": "du vert",
+				"ru": "зелёный"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/46.svg",
+					"size": 379
+				}
+			],
+			"_id": "CaSpwyM5RSPG7tDrd"
+		},
+		{
+			"name": "47",
+			"phrase": {
+				"en": "light blue",
+				"fr": "du bleu clair",
+				"ru": "голубой"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/47.jpg",
+					"size": 3354
+				}
+			],
+			"_id": "cnNcdzFaCzscnEyYq"
+		},
+		{
+			"name": "48",
+			"phrase": {
+				"en": "dark blue",
+				"fr": "du bleu foncé",
+				"ru": "синий"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/48.jpg",
+					"size": 2384
+				}
+			],
+			"_id": "kTthxgbtTe5HQdhCg"
+		},
+		{
+			"name": "49",
+			"phrase": {
+				"en": "purple",
+				"fr": "du mauve",
+				"ru": "фиолетовый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/49.png",
+					"size": 144
+				}
+			],
+			"_id": "btXHJeRWYD7RrHpZD"
+		},
+		{
+			"name": "50",
+			"phrase": {
+				"en": "black",
+				"fr": "du noir",
+				"ru": "чёрный"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/50.jpg",
+					"size": 2556
+				}
+			],
+			"_id": "bN62CxYo9AEtAaXqS"
+		},
+		{
+			"name": "51",
+			"phrase": {
+				"en": "grey",
+				"fr": "du gris",
+				"ru": "серый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/51.jpg",
+					"size": 2453
+				}
+			],
+			"_id": "cCmes5jcYEF5Ttyh8"
+		},
+		{
+			"name": "52",
+			"phrase": {
+				"en": "white",
+				"fr": "du blanc",
+				"ru": "белый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/52.jpg",
+					"size": 11948
+				}
+			],
+			"_id": "pYrNwfaT6B3qZFnTH"
+		},
+		{
+			"name": "53",
+			"phrase": {
+				"en": "brown",
+				"fr": "du marron",
+				"ru": "коричневый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/53.jpg",
+					"size": 6303
+				}
+			],
+			"_id": "PDfMwh6r8qfLL6m7t"
+		},
+		{
+			"name": "54",
+			"phrase": {
+				"en": "pink",
+				"fr": "du rose",
+				"ru": "розовый"
+			},
+			"tags": [
+				"colour",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/54.jpg",
+					"size": 16147
+				}
+			],
+			"_id": "r59TRqr6WhjiqsiKg"
+		},
+		{
+			"name": "55",
+			"phrase": {
+				"en": "chemists",
+				"fr": "une pharmacie",
+				"ru": "аптека"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/55.jpg",
+					"size": 76510
+				}
+			],
+			"_id": "J55J8i2oBHhywHmi4"
+		},
+		{
+			"name": "56",
+			"phrase": {
+				"en": "restaurant",
+				"fr": "un restaurant",
+				"ru": "ресторан"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/56.jpg",
+					"size": 192394
+				}
+			],
+			"_id": "Km542FjEj6SbyeB7t"
+		},
+		{
+			"name": "57",
+			"phrase": {
+				"en": "station",
+				"fr": "une gare",
+				"ru": "вокзал"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/57.jpg",
+					"size": 36366
+				}
+			],
+			"_id": "r7Ezrx8jvt8ExAwqJ"
+		},
+		{
+			"name": "58",
+			"phrase": {
+				"en": "bank",
+				"fr": "une banque",
+				"ru": "банк"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/58.jpg",
+					"size": 65290
+				}
+			],
+			"_id": "oa93WZ2wQ57t7qLvJ"
+		},
+		{
+			"name": "59",
+			"phrase": {
+				"en": "museum",
+				"fr": "un musée",
+				"ru": "музей"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/59.jpg",
+					"size": 358958
+				}
+			],
+			"_id": "7hAo9gDs8AEXxEZAF"
+		},
+		{
+			"name": "60",
+			"phrase": {
+				"en": "theatre",
+				"fr": "un théatre",
+				"ru": "театр"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/60.jpg",
+					"size": 122328
+				}
+			],
+			"_id": "ad4kBMpwdpbmKJxih"
+		},
+		{
+			"name": "61",
+			"phrase": {
+				"en": "park",
+				"fr": "un parc",
+				"ru": "парк"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/61.jpg",
+					"size": 362377
+				}
+			],
+			"_id": "D3TqfKjdELwNdm5Ww"
+		},
+		{
+			"name": "62",
+			"phrase": {
+				"en": "shop",
+				"fr": "un magasin",
+				"ru": "магазин"
+			},
+			"tags": [
+				"town",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/62.jpg",
+					"size": 249907
+				}
+			],
+			"_id": "qCjybRE5r7bJzK3D9"
+		},
+		{
+			"name": "63",
+			"phrase": {
+				"en": "spring",
+				"fr": "le printemps",
+				"ru": "весна"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/63.jpg",
+					"size": 50384
+				}
+			],
+			"_id": "bkWKd3WRrnjgBAtRz"
+		},
+		{
+			"name": "64",
+			"phrase": {
+				"en": "summer",
+				"fr": "l'été",
+				"ru": "лето"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/64.jpg",
+					"size": 1053608
+				}
+			],
+			"_id": "zHh38ZCdJJerSfQvR"
+		},
+		{
+			"name": "65",
+			"phrase": {
+				"en": "winter",
+				"fr": "l'hiver",
+				"ru": "зима"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/65.jpg",
+					"size": 277290
+				}
+			],
+			"_id": "KChu7h3295pYjtqaT"
+		},
+		{
+			"name": "66",
+			"phrase": {
+				"en": "autumn",
+				"fr": "l'automne",
+				"ru": "осень"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/66.jpg",
+					"size": 296776
+				}
+			],
+			"_id": "hrSjLZcs8Q6hDWSYB"
+		},
+		{
+			"name": "67",
+			"phrase": {
+				"en": "rain",
+				"fr": "la pluie",
+				"ru": "дождь"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/67.jpg",
+					"size": 64938
+				}
+			],
+			"_id": "kfTsTvcA77suKDvao"
+		},
+		{
+			"name": "68",
+			"phrase": {
+				"en": "sun",
+				"fr": "le soleil",
+				"ru": "солнце"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/68.jpg",
+					"size": 231633
+				}
+			],
+			"_id": "Y4jmgkTW8rXJW6zn7"
+		},
+		{
+			"name": "69",
+			"phrase": {
+				"en": "snow",
+				"fr": "la neige",
+				"ru": "снег"
+			},
+			"tags": [
+				"season",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/69.jpg",
+					"size": 356199
+				}
+			],
+			"_id": "MQxMWiRcMy8DqZP9k"
+		},
+		{
+			"name": "70",
+			"phrase": {
+				"en": "cat",
+				"fr": "un chat",
+				"ru": "кошка"
+			},
+			"tags": [
+				"pet",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/70.jpg",
+					"size": 628706
+				}
+			],
+			"_id": "ghuFWyEfny8hH5xYK"
+		},
+		{
+			"name": "71",
+			"phrase": {
+				"en": "dog",
+				"fr": "un chien",
+				"ru": "собака"
+			},
+			"tags": [
+				"pet",
+				"basic"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/basic/image/71.jpg",
+					"size": 52306
+				}
+			],
+			"_id": "tbFDhpwYQu2E7gBuQ"
+		}
+	]
+}

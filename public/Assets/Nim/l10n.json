@@ -1,0 +1,305 @@
+{
+	"set": {
+		"tag": "phrase",
+		"ignore_missing_files": true,
+		"icon": {
+			"src": "/Assets/Nim/icon.svg"
+		},
+		"parent": "",
+		"_id": "MvNmf36TBje7cb4Bz",
+		"path": "/Nim"
+	},
+	"phrases": [
+		{
+			"name": "title",
+			"phrase": {
+				"en": "Nim",
+				"fr": "Nim",
+				"ru": "Ним"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "R3hR2mqpFzj5TompE"
+		},
+		{
+			"name": "slogan",
+			"phrase": {
+				"en": "The game that will beat you",
+				"fr": "Le jeu qui va vous battre",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "xJ5mpQx4MRx8E6ZK6"
+		},
+		{
+			"name": "showRules",
+			"phrase": {
+				"en": "Show Rules",
+				"fr": "Afficher les règles",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "jguHuPxu25ZkEYTgw"
+		},
+		{
+			"name": "rules",
+			"phrase": {
+				"en": [
+					"When it's your turn",
+					"take one or more coins",
+					"from one of the lines",
+					"then press *Play*.",
+					"",
+					"The player",
+					"who takes the last coin",
+					"*loses*."
+				],
+				"fr": [
+					"Quand c'est à vous de jouer",
+					"prenez de l'une des lignes",
+					"une ou plusieurs pièces",
+					"puis appuyez sur *Jouer*.",
+					"",
+					"Le joueur qui prend la dernière pièce",
+					"*perd le jeu*."
+				],
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "rGEtRJRxAiRYirPTq"
+		},
+		{
+			"name": "playAI",
+			"phrase": {
+				"en": "Play the AI",
+				"fr": "Jouer contre l'IA",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "NFogHPEYv6RnkDAgT"
+		},
+		{
+			"name": "playMate",
+			"phrase": {
+				"en": "Play a friend",
+				"fr": "Jouer contre un(e) ami(e)",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "pM4oybjznJRzwG8e3"
+		},
+		{
+			"name": "yourTurn",
+			"phrase": {
+				"en": "Your turn",
+				"fr": "Votre tour",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "EpGKMnA6jcPWB8ish"
+		},
+		{
+			"name": "play",
+			"phrase": {
+				"en": "Play",
+				"fr": "Jouer",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "uQ9uzHJ6DZgKon2sq"
+		},
+		{
+			"name": "aiThinking",
+			"phrase": {
+				"en": "The AI is thinking...",
+				"fr": "L'IA refléchit",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "tMhKS387u4zkEX36d"
+		},
+		{
+			"name": "you-win",
+			"phrase": {
+				"en": "You win!",
+				"fr": "Vous avez gagné!",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "fA6tvWzkXDCTQy2rN"
+		},
+		{
+			"name": "rules",
+			"phrase": {
+				"en": [
+					"You won...",
+					"",
+					"... but can you beat the AI",
+					"without using any hints?"
+				],
+				"fr": [
+					"Vous avez gagné...",
+					"",
+					"... mais sauriez-vous battre l'IA",
+					"sans l'aide des indices_?"
+				],
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "4ipRWdBYDTRedGatB"
+		},
+		{
+			"name": "rules",
+			"phrase": {
+				"en": [
+					"Excellent!",
+					"",
+					"Congratulations!",
+					"",
+					"You beat the AI",
+					"without using any hints!",
+					"",
+					"Now you can challenge",
+					"all your friends..."
+				],
+				"fr": [
+					"Excellent_!",
+					"",
+					"Félicitations_!",
+					"",
+					"Vous avez battu l'IA",
+					"sans l'aide des indices_!",
+					"",
+					"Maintenant vous pouvez mettre",
+					"tou(te)s vos ami(e)s au défi..."
+				],
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "L2AEqPT335XbrLwSt"
+		},
+		{
+			"name": "rules",
+			"phrase": {
+				"en": [
+					"The AI wins.",
+					"",
+					"But don't give up!",
+					"",
+					"With a little effort",
+					"and the help of the hints",
+					"you can learn its trick."
+				],
+				"fr": [
+					"L'IA a gagné",
+					"",
+					"Mais ne perdez pas l'espoir_!",
+					"",
+					"Avec un peu d'effor",
+					"et l'aide des indices",
+					"vous pouvez apprendre son astuce."
+				],
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "fbQKXfe5fjDQ2H5hJ"
+		},
+		{
+			"name": "ai",
+			"phrase": {
+				"en": "AI",
+				"fr": "IA",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "mmCoMq3jyqGoZayCY"
+		},
+		{
+			"name": "player1",
+			"phrase": {
+				"en": "Player 1",
+				"fr": "Joueur 1",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "z3Dk86QXPK5nqd3F9"
+		},
+		{
+			"name": "player2",
+			"phrase": {
+				"en": "Player 2",
+				"fr": "Joueur 2",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "AJTbKEitQiNK6xiBN"
+		},
+		{
+			"name": "toPlay",
+			"phrase": {
+				"en": " to play",
+				"fr": " à jouer",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "quQwW3Aq2GwpfJvM4"
+		},
+		{
+			"name": "wins",
+			"phrase": {
+				"en": " wins!",
+				"fr": " a gagné!",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "HATSbHsirKJiWx5Ms"
+		},
+		{
+			"name": "undo",
+			"phrase": {
+				"en": "Undo",
+				"fr": "Reprendre",
+				"ru": "xxx"
+			},
+			"tags": [
+				"phrase"
+			],
+			"_id": "SydWpSWeNijJNjdSg"
+		}
+	]
+}

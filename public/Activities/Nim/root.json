@@ -1,0 +1,19 @@
+{
+	"name": {
+		"en": "Nim",
+		"fr": "Nim",
+		"ru": "Ним"
+	},
+	"description": {
+		"en": "Learn how to win at the classic game of Nim.",
+		"fr": "Apprendre comment gagner au jeu classique Nim.",
+		"ru": "Узнайте, как выиграть в классической игре Nim"
+	},
+	"path": "/Nim",
+	"tag": "/Nim",
+	"modal": false,
+	"icon": {
+		"src": "/Activities/Nim/icon.jpg"
+	},
+	"_id": "FXDc3YSt7AaxkKJz7"
+}

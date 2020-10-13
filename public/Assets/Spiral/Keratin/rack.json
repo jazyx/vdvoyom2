@@ -1,0 +1,356 @@
+{
+	"set": {
+		"tag": "keratin",
+		"name": {
+			"en": "Keratin",
+			"fr": "Kératine",
+			"ru": "Кератин"
+		},
+		"icon": {
+			"src": "/Assets/Spiral/Keratin/icon.jpg"
+		},
+		"parent": "/Spiral",
+		"path": "/Spiral/Keratin",
+		"_id": "fbD3wAzpKcNxeA2ye"
+	},
+	"phrases": [
+		{
+			"name": "00_lion",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/00_lion.jpg",
+					"size": 99324
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "hmCf33Ak56oGJhMxE"
+		},
+		{
+			"name": "01_dog",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/01_dog.jpg",
+					"size": 98587
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "a85uLNrSWxT7cqAje"
+		},
+		{
+			"name": "02_horse",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/02_horse.jpg",
+					"size": 97077
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "BwE5AJ6Lz2sBLn3Bs"
+		},
+		{
+			"name": "03_cow",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/03_cow.jpg",
+					"size": 99253
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "zgsMKjvqb46Q7MBW9"
+		},
+		{
+			"name": "04_raccoonDog",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/04_raccoonDog.jpg",
+					"size": 148562
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "MZ96Y6uc7xGmfsayo"
+		},
+		{
+			"name": "05_wool",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/05_wool.jpg",
+					"size": 99356
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "og5nHuavocCpbkqf2"
+		},
+		{
+			"name": "06_babyPorcupine",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/06_babyPorcupine.jpg",
+					"size": 150879
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "yGz3npksC7WNE7JN3"
+		},
+		{
+			"name": "07_porcupineQuills",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/07_porcupineQuills.jpg",
+					"size": 99216
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "c3ZymtQX9rTGMcziB"
+		},
+		{
+			"name": "08_quill",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/08_quill.jpg",
+					"size": 98539
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "ty7ZHQiELEzMqMzCD"
+		},
+		{
+			"name": "09_starling",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/09_starling.jpg",
+					"size": 98887
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "mPyjFXJALLtgaKecN"
+		},
+		{
+			"name": "10_bird",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/10_bird.jpg",
+					"size": 49968
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "jQMeQTduhhFGPyq5s"
+		},
+		{
+			"name": "11_emu",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/11_emu.jpg",
+					"size": 97902
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "3ntPmMehYj5C6eZ2x"
+		},
+		{
+			"name": "12_harpyEagle",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/12_harpyEagle.jpg",
+					"size": 99341
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "Hfdz6JDvSMtvKTFFt"
+		},
+		{
+			"name": "13_dogPaw",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/13_dogPaw.jpg",
+					"size": 99952
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "ZMA6WEMrb4SaEWgKh"
+		},
+		{
+			"name": "14_crab",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/14_crab.jpg",
+					"size": 96254
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "DQFHnTjznCcqdPrjL"
+		},
+		{
+			"name": "15_elephant",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/15_elephant.jpg",
+					"size": 144912
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "Wo73vK5XGNJ6FCXHW"
+		},
+		{
+			"name": "16_hoof",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/16_hoof.jpg",
+					"size": 97875
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "NZMEKMwKvHbZNMFkS"
+		},
+		{
+			"name": "17_nails",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/17_nails.jpg",
+					"size": 95481
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "nBPkb2fhY6HkEpfAT"
+		},
+		{
+			"name": "18_toenails",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/18_toenails.jpg",
+					"size": 97883
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "4r9SF8ekzQhi9WFJE"
+		},
+		{
+			"name": "19_rhino",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/19_rhino.jpg",
+					"size": 98775
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "LbKa8LoYausZQwvx9"
+		},
+		{
+			"name": "20_pangolin",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/20_pangolin.jpg",
+					"size": 98234
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "BFt6q9CwBTmRm43tT"
+		},
+		{
+			"name": "21_fish",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/21_fish.jpg",
+					"size": 96642
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "xy5yjzBEGgMJMti8d"
+		},
+		{
+			"name": "22_snake",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/22_snake.jpg",
+					"size": 98398
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "RcnDcqqhJgHJCk9pG"
+		},
+		{
+			"name": "23_beardedAgama",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/23_beardedAgama.jpg",
+					"size": 98975
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "JD2pWhuuLHFrs5e8o"
+		},
+		{
+			"name": "24_turtle",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/24_turtle.jpg",
+					"size": 118924
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "wiiee43kDXTfDvBHB"
+		},
+		{
+			"name": "25_nodosaurus",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Keratin/image/25_nodosaurus.jpg",
+					"size": 99432
+				}
+			],
+			"tags": [
+				"keratin"
+			],
+			"_id": "FuMDsJN7xK7F6m4s5"
+		}
+	]
+}

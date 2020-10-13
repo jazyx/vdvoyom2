@@ -19,10 +19,20 @@
 
 import * as admin from './admin'
 import * as assets from './assets'
+import * as cloze from '../../public/Activities/Cloze/methods.js'
+import * as drag from '../../public/Activities/Drag/methods.js'
+import * as flash from '../../public/Activities/Flash/methods.js'
 import * as match from '../../public/Activities/Match/methods.js'
+import * as nim from '../../public/Activities/Nim/methods.js'
+import * as spiral from '../../public/Activities/Spiral/methods.js'
 
 export const methods = {
   ...admin
 , ...assets
+, ...cloze
+, ...drag
+, ...flash
 , ...match
+, ...nim
+, ...spiral
 }

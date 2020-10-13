@@ -161,13 +161,13 @@ const getParticipantSpanRule = ({ col, correct }) => {
 
   switch (col) {
     case "name":
-      rules += `width: calc(40*var(--min));`
+      rules += `width: calc(35*var(--min));`
     break
     case "current":
-      rules += `width: calc(30*var(--min));`
+      rules += `width: calc(25*var(--min));`
     break
     case "score":
-      rules += `width: calc(10*var(--min));`
+      rules += `width: calc(5*var(--min));`
     break
     case "recognized":
       rules += `width: calc(5*var(--min));`
@@ -399,20 +399,21 @@ export const StyledLock = styled.button`
 
 export const StyledParticipants = styled.ul`
   position: absolute;
-  top: calc(15 * var(--min));
+  top: 0;
   left: calc(15 * var(--min));
+  width: calc(70 * var(--min));
+  height: calc(100 * var(--h));
   list-style-type: none;
   padding: 0px;
   margin: 0px;
-  font-size: 2em;
+  font-size: 1.8em;
   background-color: rgba(51,0,0,0.5);
-  height: calc(85 * var(--min));
   overflow-y: auto;
 
   & li {
     height: calc(8.5 * var(--min));
+    pointer-events: none;
   }
-
 
   & li: hover {
     background-color: rgba(85,0,0,0.5)
