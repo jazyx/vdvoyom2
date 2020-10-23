@@ -19,35 +19,59 @@
   ]
 
 , "profile": [
-    { "file": "aa.jpg"
-    , "id": "aa"
+    { "id": "aa"
+    , "file": "aa.jpg"
     , "name": {
          "cyrl": "Анастасия"
        , "latn": "Anastacia"
        }
-    , "with": "Учить русский с Анастасией"
     , "language": "ru"
     , "script": "cyrl"
+    , "with": {
+        "ru": "Учить русский с Анастасией"
+      , "en": "Learn Russian with Anastacia"
+      , "fr": "Apprendre le russe avec Anastacia"
+      }
+    , "schools": [
+        "jazyx"
+      ]
+    , "status": "contributor"
     }
-  , { "file": "jn.jpg"
-    , "id": "jn"
+  , { "id": "jn"
+    , "file": "jn.jpg"
     , "name": {
          "latn": "James"
        , "cyrl": "Джеймс"
        }
-    , "with": "Learn English with James"
     , "language": "en-GB"
     , "script": "latn"
+    , "with": {
+        "en": "Learn English with James"
+      , "fr": "Apprendre l'anglais avec James"
+      , "ru": "Учить английский с Джеймсом"
+      }
+    , "schools": [
+        "jazyx"
+      , "prolangue"
+      ]
+    , "status": "admin"
     }
-  , { "file": "ml.jpg"
-    , "id": "ml"
+  , { "id": "ml"
+    , "file": "ml.jpg"
     , "name": {
          "latn": "Michaël"
        , "cyrl": "Михаэль"
        }
-    , "with": "Apprendre le français avec Michaël"
     , "language": "fr"
     , "script": "latn"
+    , "with": {
+        "fr": "Apprendre le français avec Michaël"
+      , "ru": "Учить английский с Микаэлем"
+      }
+    , "schools": [
+        "perso"
+      ]
+    , "status": "user"
     }
   ]
 }

@@ -667,7 +667,7 @@ class MenuTracker{
 
     /// <<< HACK: Hide Menu from Lactalis
     if (page && page.path.startsWith("/Match")) {
-      soloPilot = true // nobody's d_code
+      //soloPilot = true // nobody's d_code
     }
     /// HACK >>>
 

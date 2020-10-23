@@ -1,23 +1,31 @@
 /**
  * /imports/ui/login/launch/StartUp.js
  *
- * Before the app can open at an Activity page, it needs to:
- * 
- * > Determine who is logging in
- * > Which group this user should be assigned to
- * > What page and data is associated with this group. (If no page
- *   is given then the Activity selection page should be shown)
- *   
- * This information may be gathered from 3 different places:
- * 
- * 1. The URL
- * 2. Local Storage (if a previous log in was made and saved locally)
- * 3. The Login pages, which may overwrite data from Local Storage if
- *    auto_login is not set to true.
- * 
- * If this is a new user, we need to create new User and Group
- * documents.
- * 
+ * Reads data from the URL query string and from Local Storage (query
+ * string data has priority).
+ *
+ * Mode
+ * ====
+ * • once: creates temporary User and Group documents which are
+ *         destroyed when the session ends. Visitor has no access to
+ *         a teacher or other users.
+ * • join: provides page data (and optionally user data). Can be used
+ *         to create a new user account and link it to a teacher
+ *         Group or a named Group. If no user[name] and pin (q_code)
+ *         is given, then data from Local Storage will be used (if
+ *         present), or the user will be given the opportunity to
+ *         create a new User account (if not)
+ * • ace:  May be used in conjunction with `join` to indicate that no
+ *         user will be considered Master, so the display will be
+ *         optimized for each user's device.
+ *         Even if only one user logs in to a group with the `ace`
+ *         flag, the entire Group will become ace.
+ *
+ * Account
+ * =======
+ *
+ * Page data
+ * =========
  */
 
 
@@ -30,13 +38,11 @@ import { removeFrom
        , getRandom
        , getRandomFromArray
        } from '/imports/tools/generic/utilities'
-import ReadFromStorage from './ReadFromStorage'
-import ReadFromURL from './ReadFromURL'
-
+import Storage from '/imports/tools/generic/storage'
 
 // Subscriptions
 import collections from '/imports/api/collections/publisher'
-const { Group } = collections
+const { Shortcut, Group } = collections
 
 // Connection
 import { preloadCollections } from './PreloadCollections'
@@ -78,82 +84,183 @@ class StartUpSingleton {
     // asynchronous. The next command _will_ be executed before
     // prepareLaunch or setPage is called.
 
-    this.data = new ReadFromStorage()
+    this.readInPresets()
   }
 
 
-  ///// MongoDB COLLECTIONS ARE NOW AVAILABLE. LOGIN CAN HAPPEN /////
+  ///// DETERMINE this.context, this.accountData AND this.page //////
 
-  prepareLaunch() {
-    const params = new ReadFromURL()
-    Object.assign(this.data, params)
-    this.defineAccountAndPage()
-
-    // this.accountData, .pageData and .data are now all set up
+  readInPresets() {
+    this.readDataFromStorage() // sets this.storedAccount
+                               //      this.storedPage
+    this.readDataFromQuery(window.location.search)
+                               // sets this.accountData
+                               //      this.page
+                               //      this.context
   }
 
 
-  defineAccountAndPage() {
-    // const untreated = [
-    // , "language"
-    // , "ace"
-    // ]
+  readDataFromStorage() {
+    let storedData = Storage.get()
+    if (this.context !== "once") {
+      storedData = {}
+    }
 
-    const accountKeys = [
-      "join"
-    , "anon"
-    , "auto_login"
-    , "restore_all"
+    // Any or all of the following values may be undefined
+    const {
+      auto_login
+    , restore_all
+    , username
+    // , user_id
+    , native
+    , teacher
+    // , group_id
+    , q_code
+    , page
+    } = storedData
 
-    , "user"
-    , "pin"
+    this.storedAccount = {
+        auto_login
+      , restore_all
+      , username
+      // , user_id
+      , native
+      , teacher
+      // , group_id
+      , q_code
+    }
+    deleteFrom(this.storedAccount) // remove all undefined keys
+
+    if (restore_all) {
+      this.storedPage = page || {}
+      deleteFrom(this.storedPage) // remove all undefined keys
+
+    } else {
+      this.storedPage = {}
+    }
+  }
+
+
+  readDataFromQuery(search) {
+    const data = {}
+
+    if (search) {
+      const query   = new URLSearchParams(search)
+      this.setContext(query)
+                   // once | join | admin | teacher | bare
+
+      query.forEach(function(value, key) {
+        data[key] = value
+      })
+
+      if (query.has("ace")) {
+        data.ace = data.ace !== "false"
+      }
+    }
+
+    // console.log(
+    //   "data"
+    // , JSON.stringify(data, null, "  ")
+    // )
+
+    this.setAccountDataAndPage(data)
+  }
+
+
+  setContext(query) {
+    this.context = query.has("once")
+                  ? "once"
+                  : query.has("join")
+                    ? "join"
+                    : query.has("admin")
+                      ? "admin"
+                      : query.has("teacher")
+                        ? "teacher"
+                        : "check" // plain user or shortcut teacher
+  }
+
+
+  setAccountDataAndPage(data) {
+    const {
+      // login
+      user:    username
+    , vo:      native
+    , own:     teacher
+    , teacher: teacher_id
+    , lang:    language
+    , pin:     q_code
+    , group:   group_name
+    // mode
+    , ace
+      // page
+    , view
+    , path
+    , tag
+    , index
+    } = data
+
+    // Reduce `data` to just those entries that are not spoken for
+    const notPageDataKeys = [
+      "user"
     , "vo"
-    , "lang"
     , "own"
     , "teacher"
+    , "language"
+    , "lang"
     , "group"
-    , "group_id"
-    , "school"
-    ]
-    const pageKeys = [
-      "view"
+
+    , "ace"
+
+    , "pin"
+    , "view"
     , "path"
-    , "index"
     , "tag"
+    , "index"
+
+    , "join"
+    , "once"
     ]
-    this.accountData = deleteFrom(this.data, accountKeys)
-    this.pageData = this.sanitize(deleteFrom(this.data, pageKeys))
-    // The contents of this.data is now be all remaining key-values
+    deleteFrom(data, notPageDataKeys)
 
-    // console.log(
-    //   "this.context"
-    // , JSON.stringify(this.context, null, "  ")
-    // )  
-    // console.log(
-    //   "this.accountData"
-    // , JSON.stringify(this.accountData, null, "  ")
-    // )
-    // console.log(
-    //   "this.pageData"
-    // , JSON.stringify(this.pageData, null, "  ")
-    // )
-    // console.log(
-    //   "this.data"
-    // , JSON.stringify(this.data, null, "  ")
-    // )
+    // Ignore data if it contains no data
+    if (!Object.keys(data).length) {
+      data = undefined
+    }
 
-    if (this.accountData.anon) {
-      this.addNonceDefaults()
-    } 
+    // this.accountData will be an object, but it may be empty
+    const accountData = {
+      username
+    , native
+    , teacher    // id for teacher for username
+    , teacher_id // id for teacher who is logging in
+    , q_code
+    , language
+    , group_name
+    , ace
+    }
+    deleteFrom(accountData)
+
+    if (this.context === "once") {
+      this.accountData = this.addNonceDefaults(accountData)
+    } else {
+      this.accountData = accountData
+    }
+
+    // If neither view or path is given, this.page will be undefined
+    const page ={ view, path, tag, index, data }
+    deleteFrom(page)
+    this.page = this.definePage(page) // may be undefined
+
+    // console.log("this.page:", this.page, "this.accountData:", this.accountData)
   }
 
 
-  sanitize(page) {
+  definePage(page) {
     if (!page.view && !page.path) {
       return
     }
 
-    let { view, path, tag, index } = page
+    let { path, view, tag, index } = page
 
     if (typeof path === "string") {
       // Ensure path begins with a slash
@@ -171,12 +278,10 @@ class StartUpSingleton {
           return // entire page is invalid if view is not a string
         }
 
-        // Remove properties which are meaningless with `view`
+        // Remove unusable properties
         deleteFrom(page, ["path", "tag", "index", "data"])
 
       } else {
-        deleteFrom(page, "view") // if path exists, view is ignored
-
         let lastIndex = levels.length - 1
 
         // <<< HACK to ensure that all levels are shown in the menu
@@ -206,42 +311,33 @@ class StartUpSingleton {
   }
 
 
-  addNonceDefaults() {
-    const nonce = this.accountData.user || this.getRandomString(9)
-    this.accountData.user = "deleteTempUser_" + nonce
+  addNonceDefaults(accountData) {
+    // console.log(
+    //   "addNonceDefaults accountData:"
+    // , JSON.stringify(accountData, null, "  ")
+    // )
 
-    const defaultValues = {
-      lang:    "en-GB"
-    , vo:      navigator.language || navigator.userLanguage
-    , teacher: "none"
-    }
-    
-    const overrides = {
-      auto_login: true
-    }
+    const nonce = accountData.username || this.getRandomString(9)
+    accountData.username = "deleteTempUser_" + nonce
 
-    this.accountData = Object.assign(
-      defaultValues
-    , this.accountData
-    , overrides
+    const defaultValues = Object.assign(
+      { language: "en-GB"
+      , native:   navigator.language || navigator.userLanguage
+      , teacher:  "none"
+      }
     )
+
+    accountData = Object.assign(defaultValues, accountData)
+
+    return accountData
   }
 
 
-  xxx() {
-    // const params = debug.params
-    // console.log(
-    //   "params"
-    // , JSON.stringify(params, null, "  ")
-    // )
-    
+  ///// MongoDB COLLECTIONS ARE NOW AVAILABLE. LOGIN CAN HAPPEN /////
 
-
-    return
-
-
+  prepareLaunch() {
     switch (this.context) {
-      case "anon":
+      case "once":
         return this.autoLogIn(this.oneOff)
       case "join":
         return this.treatUserInvitation()
@@ -260,44 +356,44 @@ class StartUpSingleton {
   }
 
 
-  // /**  Checks if the URL has the form "httpx://example.com/xx" where
-  //  *   <xx> is the `id` of a Teacher document. If so, pro-actively
-  //  *   reads this.teacherData from the Teacher collection.
-  //  *
-  //  * @return  {string}  "teacher" if <xx> is indeed a teacher id
-  //  *                    "user" if no id is present (nor anon nor join)
-  //  */
-  // checkForShortcut() {
-  //   let _id = window.location.pathname.substring(1)
+  /**  Checks if the URL has the form "httpx://example.com/xx" where
+   *   <xx> is the `id` of a Teacher document. If so, pro-actively
+   *   reads this.teacherData from the Teacher collection.
+   *
+   * @return  {string}  "teacher" if <xx> is indeed a teacher id
+   *                    "user" if no id is present (nor once nor join)
+   */
+  checkForShortcut() {
+    let _id = window.location.pathname.substring(1)
 
-  //   /// <<< HACK
-  //   _id = decodeURI(_id)
-  //         .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
-  //   /// HACK >>>
+    /// <<< HACK
+    _id = decodeURI(_id)
+          .replace(/^аа$/i, "aa") // Russian а to Latin a for Настя
+    /// HACK >>>
 
-  //   const select = { _id }
-  //   const options = { fields: {
-  //       query: 1
-  //     }
-  //   }
-  //   const { query } = Shortcut.findOne(select, options) || {}
-  //   // console.log(
-  //   //   "query", query, `\ndb.shortcut.find(
-  //   //     ${JSON.stringify(select)} ${options && options.fields ? `
-  //   //   , ${JSON.stringify(options.fields)}` : ""}
-  //   //   )`
-  //   // )
+    const select = { _id }
+    const options = { fields: {
+        query: 1
+      }
+    }
+    const { query } = Shortcut.findOne(select, options) || {}
+    // console.log(
+    //   "query", query, `\ndb.shortcut.find(
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
+    //   )`
+    // )
 
-  //   if (query) {
-  //     this.readDataFromQuery(query)
-  //     this.prepareLaunch()
+    if (query) {
+      this.readDataFromQuery(query)
+      this.prepareLaunch()
 
-  //   } else {
-  //     // leave this.context as "check"
-  //     this.setProfilePages(this.accountData)
-  //     this.treatUser()
-  //   }
-  // }
+    } else {
+      // leave this.context as "check"
+      this.setProfilePages(this.accountData)
+      this.treatUser()
+    }
+  }
 
 
   getD_Code() {

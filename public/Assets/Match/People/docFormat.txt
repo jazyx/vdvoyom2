@@ -1,0 +1,104 @@
+Changes to User doc format
+==========================
+
+1. Move History to separate docs
+   { _id: <>
+   , user_id: <>
+   , group_id: <>
+   , start: <>
+   , end: <>
+   , page: {} // closing state
+   }
+
+2. Add most recent group_ids for groups in which user is a member, so that the most recent can be shown as Go back to <xxx>", if there are more than 1.
+
+{ _id:      <>
+, fullname: <>
+, username: <>
+, native:   <>
+, q_index:  <>
+, q_code:   <>
+, q_color:  <>
+, group_history: [
+    <> // ordered by recency; group knows language and owner/teacher
+  ]
+, logged_in: ]
+    <d_code>
+  ]
+, view_size: {
+    <d_code>: {
+      width:       <number>
+    , height:      <number>
+    , aspectRatio: <number>
+    }
+  }
+}
+
+When we create a User doc, we also create a Group doc with the User as the owner and only member. This acts as the final fallback for when the user's current group closes.
+
+---
+
+Changes to Group doc format
+===========================
+
+Take data out of the page. It doesn't have to be that deep.
+
+{ _id: <>
+, name: <>
+, owner: <>
+, language: <>
+, active: <>
+, lobby: <>
+, chat_room: <>
+, ace: <>
+, menu_open: <>
+, members: [
+    <>
+  ]
+, logged_in: [
+    <>
+  ]
+, page: {
+    view: <string | missing>
+  , path: <string | missing>
+  , tag:  <string | missing>
+  , index:<number | missing>
+  }
+, data: {
+
+  },
+, view_size: {
+    width:       <number>
+  , height:      <number>
+  , aspectRatio: <number>
+  }
+}
+
+A Group where the owner is the only member could be:
+
+* A teacher's group, for a Show
+* A user's group for solo study
+
+The difference will be in the type of id: less than 4 letters, or not.
+
+
+Just knowing the group_id defines the owner and the language.
+
+Device
+======
+A Device doc will be temporary, and will be destroyed when the user logs off from the device. Page + data will be stored elsewhere.
+
+{ _id:      <d_code>
+, user_id:  <>
+, group_id: <>
+, master:   <d_code>
+, view_size: {
+    width:       <number>
+  , height:      <number>
+  , aspectRatio: <number>
+  }
+}
+
+You log on. An arbitrary d_code is attributed. Let's rename it as device_id.
+
+You log on as a user. You

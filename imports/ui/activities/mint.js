@@ -20,6 +20,7 @@
 import Cloze from '../../public/Activities/Cloze/Cloze.jsx'
 import Match from '../../public/Activities/Match/Match.jsx'
 import Nim from '../../public/Activities/Nim/Nim.jsx'
+import Puzzle from '../../public/Activities/Puzzle/Puzzle.jsx'
 import Show from '../../public/Activities/Show/Show.jsx'
 import Spiral from '../../public/Activities/Spiral/Spiral.jsx'
 import Stories from '../../public/Activities/Stories/Stories.jsx'
@@ -29,6 +30,7 @@ export {
   Cloze
 , Match
 , Nim
+, Puzzle
 , Show
 , Spiral
 , Stories

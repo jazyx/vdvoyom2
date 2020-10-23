@@ -21,5 +21,12 @@
   , { "_id": "ele_oats"
     , "query": "once&path=Show&tag=oatsAndBeans&vo=en&lang=en"
     }
+    
+  , { "_id": "schoolX"
+    , "query": "school=bestSchoolEver&lang=en-GB"
+    }
+  , { "_id": "pageY"
+    , "query": "page=Activity&tag=task&lang=fr"
+    }
   ]
 }

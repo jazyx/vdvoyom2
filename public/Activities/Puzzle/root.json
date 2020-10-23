@@ -1,0 +1,18 @@
+{
+	"name": {
+		"en": "Puzzles",
+		"fr": "Puzzles",
+		"ru": "Пазлы"
+	},
+	"description": {
+		"en": "Solve problems together",
+		"fr": "Resoudre des énigmens ensemble",
+		"ru": "Решать проблемы вместе"
+	},
+	"path": "/Puzzle",
+	"modal": false,
+	"icon": {
+		"src": "/Activities/Puzzle/icon.png"
+	},
+	"_id": "jiLHWrLzDjs4ERwXr"
+}

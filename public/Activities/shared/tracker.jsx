@@ -52,16 +52,17 @@ export default class Tracker{
     , d_code
     , user_id
     , group_id
-    , logged_in // used by Drag to tell if pilot is still online
     , uiText
     , path
     , tag
     , activity
     , data
     , active
+    
     , isMaster
     , isTeacher
 
+    , logged_in // used by Drag to tell if pilot is still online
     , soloPilot // undefined for most activities; a d_code for others
 
     // items will be undefined if isMaster is false

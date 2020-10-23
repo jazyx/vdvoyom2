@@ -26,6 +26,7 @@ const Cloze = new Mongo.Collection('cloze')
 const Flash = new Mongo.Collection('flash')
 const Match = new Mongo.Collection('match')
 const Nim = new Mongo.Collection('nim')
+const Puzzle = new Mongo.Collection('puzzle')
 const Show = new Mongo.Collection('show')
 const Spiral = new Mongo.Collection('spiral')
 const Stories = new Mongo.Collection('stories')
@@ -38,6 +39,7 @@ export const collections = {
 , Flash
 , Match
 , Nim
+, Puzzle
 , Show
 , Spiral
 , Stories
@@ -51,6 +53,7 @@ export const publishQueries = {
 , "Flash": {}
 , "Match": {}
 , "Nim": {}
+, "Puzzle": {}
 , "Show": {}
 , "Spiral": {}
 , "Stories": {}
