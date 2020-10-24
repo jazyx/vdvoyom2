@@ -21,5 +21,11 @@
   , { "_id": "ele_oats"
     , "query": "once&path=Show&tag=oatsAndBeans&vo=en&lang=en"
     }
+  , { "_id": "newton"
+    , "query": "join&path=Show&tag=newton&user=ELE&vo=en&lang=en&own=jn&pin=3819"
+    }
+  , { "_id": "ele-newton"
+    , "query": "once&path=Show&tag=newton&vo=en&lang=en"
+    }
   ]
 }
