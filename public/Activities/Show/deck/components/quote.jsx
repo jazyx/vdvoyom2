@@ -38,6 +38,7 @@ const StyledQuote = styled.div`
   & h1 {
     font-size: 1.1em;
     font-weight: bold;
+    color: var(--linkColor)
   }
 
   & p {
@@ -206,7 +207,7 @@ export default class Quote extends Component {
 
 
   render() {
-    console.log("QUOTE", JSON.stringify(this.props, null, "  "))
+    // console.log("QUOTE", JSON.stringify(this.props, null, "  "))
     // { "_id": "TvfpevCvE5TdxJ5qa",
     //   "name": "HopeJahren",
     //   "menu": "Почва",
@@ -225,9 +226,13 @@ export default class Quote extends Component {
     //   "aspectRatio": 0.937
     // }
 
-    const { menu, aspectRatio, limit, legend, image } = this.props
+    let { menu, aspectRatio, limit, legend, image } = this.props
     let direction
       , src
+
+    if (!image) {
+      image = {}
+    }
 
     if (aspectRatio < limit) {
       direction = "column"
@@ -245,6 +250,13 @@ export default class Quote extends Component {
     }
 
     let { header, text } = this.getHeaderAndText(legend[0].legend)
+    const img = src
+              ? <img
+                  src={src}
+                  alt={menu}
+                  ref={this.imageLoading}
+                />
+              : ""
 
     // console.log("menu:", menu, "aspectRatio:", aspectRatio)
     // console.log("limit:", limit, "legend:", legend, "image:", image)
@@ -253,11 +265,7 @@ export default class Quote extends Component {
     return <StyledQuote
       direction={direction}
     >
-      <img
-        src={src}
-        alt={menu}
-        ref={this.imageLoading}
-      />
+      {src}
       <div
         ref={this.divRef}
       >
@@ -269,6 +277,11 @@ export default class Quote extends Component {
 
 
   componentDidMount() {
+    this.fitFont()
+  }
+
+
+  componentDidUpdate() {
     this.fitFont()
   }
 }

@@ -1,0 +1,1711 @@
+{
+	"set": {
+		"tag": "newton",
+		"name": {
+			"en": "Isaac Newton",
+			"fr": "Isaac Newton",
+			"ru": "Исаак Ньютон"
+		},
+		"icon": {
+			"src": "/Assets/Show/Newton/icon.jpg"
+		},
+		"path": "/Show/Newton",
+		"parent": "/Show",
+		"_id": "BXxtqYb6EChFyndBr"
+	},
+	"phrases": [
+		{
+			"name": "splash",
+			"menu": "exclude-from-menu",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/splash.jpg",
+					"size": 97537
+				}
+			],
+			"layout": "splash",
+			"text": {
+				"en": "23 October 2020\nJames Newton at\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)",
+				"fr": "23 octobre 2020\nJames Newton aux\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)",
+				"ru": "23 октября 2020 г.\nJames Newton в\n[English Language Evenings III Moscow](http://elemoscow.net/location.html)"
+			},
+			"tags": [
+				"newton"
+			],
+			"_id": "RwxYdwqdhyGwBb2dB"
+		},
+		{
+			"name": "familyTree",
+			"menu": {
+				"en": "Family Tree",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "familyTree",
+					"en": "Family Tree",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"descended from grandfather, uncle, cousin",
+				"Richard, great-grandfather is an illiterate farm labourer",
+				"Robert grandfather buys manor",
+				"yeoman farmer, who might perhaps be called gentry since he was the lord of a minor manor.",
+				"Isaac born 1606, died in October 1642, aged 36"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/familyTree.png",
+					"size": 84160
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "4esZ9QDyxXjTmsPLS"
+		},
+		{
+			"name": "HannahAyscough",
+			"menu": {
+				"en": "Hannah Ayscough",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "HannahAyscough",
+					"en": "Hannah Ayscough, 1623 - 1679",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Hannah Ayscough, 1623 - 1679",
+				"married April 1642 (aged 19)"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/HannahAyscough.jpg",
+					"size": 16803
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "aEimeKFt5DEqAX3Jh"
+		},
+		{
+			"name": "Woolsthorpe-Manor",
+			"menu": {
+				"en": "Woolsthorpe Manor",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Woolsthorpe-Manor",
+					"en": "Woolsthorpe Manor",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/Woolsthorpe-Manor.jpg",
+					"size": 228460
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "YYFAJZaJodifk5Czx"
+		},
+		{
+			"name": "stainedGlass",
+			"menu": {
+				"en": "Born on Christmas Day 1642",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Birth on Christmas Day (old style) 1642, at 1 or 2 a.m.",
+				"Premature birth, tiny baby",
+				"Suspicion of illegitimate conception",
+				"Maidservants sent to get doctor did not hurry, they thought he would die."
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "8kEbCnkiaqiQjhL9M",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/stainedGlass.jpg",
+					"size": 150608
+				}
+			]
+		},
+		{
+			"name": "cosmos",
+			"menu": {
+				"en": "Alternative Facts",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Let's imagine that the baby died",
+				"Let's imagine that dead souls are released from this astral plane and can discover the whole of creation",
+				"Let's imagine that the soul of baby Isaac Newton was able to apprehend the whole of creation...",
+				"... and that the doctor, when he arrived and rubbed the baby's cooling body with salves and sweet-smelling towels, forces the baby's soul back into its body",
+				"What sort of memories could a baby only a few hours old retain of this experience? What sort of life would a human with such powerful but inaccessible memories live?"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/cosmos.jpg",
+					"size": 33426
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "JAiNvkDuZCEQsxC7T"
+		},
+		{
+			"name": "stillborn",
+			"menu": {
+				"en": "What if the baby had died?",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"And another question:",
+				"How would history have been different if the baby had died?",
+				"We'll come back to that"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/stillborn.jpg",
+					"size": 105358
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "7jXpKkGLpA6v8ca8E"
+		},
+		{
+			"name": "StMary'sNorthWitham",
+			"menu": {
+				"en": "english",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Reverend Barnabas Smith 1582 - 1653",
+				"63 years old = 41 years older",
+				"Refuses to accept Isaac the toddler",
+				"raised by his grandmother Margery",
+				"hates stepfather (and by extension mother)",
+				"Threatening my father and mother to burn them and the house over them.'",
+				"half siblings: Benjamin, Mary and Hannah"
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "A3fiPoreebFDBBZXh",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/StMary'sNorthWitham.jpg",
+					"size": 190080
+				}
+			]
+		},
+		{
+			"name": "King's_School_Grantham",
+			"menu": {
+				"en": "King's School, Grantham",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "King's_School_Grantham",
+					"en": "King's School, Grantham",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Sent to King's School, aged 12",
+				"learns Latin, Greek, arithmetic and geometry."
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/King's_School_Grantham.jpg",
+					"size": 351517
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "z58zRJTzzmHJWb8gi"
+		},
+		{
+			"name": "geometry",
+			"menu": {
+				"en": "Geometry",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Not a brilliant student. Lazy",
+				"Gets into a fight with a bright bully, and wins",
+				"becomes top student in order to beat bully in classwork too",
+				"then can't be bothered any more",
+				"too busy making toys"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/geometry.jpg",
+					"size": 133792
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "NWeLw2kDvFShfhBZ9"
+		},
+		{
+			"name": "apothecary",
+			"menu": {
+				"en2": "William Clarke, apothecary",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "apothecary",
+					"en": "William Clarke, apothecary",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"House of treasures",
+				"asocial",
+				"good with hands"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/apothecary.jpg",
+					"size": 97691
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "SrmDcGREFvuGzrLj6"
+		},
+		{
+			"name": "MysteryesCover",
+			"menu": {
+				"en": "Mysteryes of Nature and Art",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/MysteryesCover.jpg",
+					"size": 595144
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "sim5CHPzhT3eA3y2b"
+		},
+		{
+			"name": "Mysteryes",
+			"menu": {
+				"en": "english",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"builds mouse powered windmill for Clarke's daughter"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/Mysteryes.jpg",
+					"size": 108857
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "aydj8wNPJSDdwuDZu"
+		},
+		{
+			"name": "Cambridge",
+			"menu": {
+				"en": "Cambridge 1661",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/Cambridge.jpg",
+					"size": 97418
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "WwWTupgxM4YvF7oj3"
+		},
+		{
+			"name": "AppleTree",
+			"menu": {
+				"en": "Woolsthorpe Apple Tree",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/AppleTree.jpg",
+					"size": 389255
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "GuNjBwyBFAjaatLAJ"
+		},
+		{
+			"name": "english-civil-war",
+			"menu": {
+				"en": "English Civil War",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Civil war broke out in 1642, before Isaac's birth"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/english-civil-war.jpg",
+					"size": 426624
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "rRLAZ3Td7BitE8J4n"
+		},
+		{
+			"name": "Charles_I",
+			"menu": {
+				"en": "Charles I",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "Charles_I",
+					"en": "Charles I, Henrietta Maria, Prince Charles, Princess Mary",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Son of James VI and I, king of Scotland, England + Ireland",
+				"Divine Right, absolute power",
+				"Can only raise taxes with support of English parliament",
+				"Nobles + rich landowners",
+				"Can write acts and laws and statutes, but no power to enforce them"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/Charles_I.jpg",
+					"size": 357868
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "SsH3jChnAwACvN2LZ"
+		},
+		{
+			"name": "civilWarMap",
+			"menu": {
+				"en": "English Civil War",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"King wanted to unite 3 kingdoms",
+				"Impose religious practice in Scotland and Ireland",
+				"Married a Catholic",
+				"Parliament, and kingdoms opposed",
+				"King ruled for 11 years without parliament, and without foreign wars",
+				"Needed money to put down Scottish/Irish uprising"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/civilWarMap.jpg",
+					"size": 196700
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "pPGMAYaDKuzqd4KwY"
+		},
+		{
+			"name": "execution",
+			"menu": {
+				"en": "Execution",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Executed as traiter to his own country in 1649"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/execution.jpg",
+					"size": 546492
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "S9dx5Qsa3WfnkM8co"
+		},
+		{
+			"name": "cromwell",
+			"menu": {
+				"en": "Oliver Cromwell",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "cromwell",
+					"en": "Oliver Cromwell 1599 – 1658, Lord Protector from 1653",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/cromwell.jpg",
+					"size": 198546
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "c4jGfbZexFyiXcFN2"
+		},
+		{
+			"name": "CharlesII",
+			"menu": {
+				"en": "Charles II",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "CharlesII",
+					"en": "Charles II",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"King in 1651 at age 29",
+				"Fled to Holland",
+				"Parliamentary elections held after Cromwell's death",
+				"Restored as king in 1660",
+				"... the year before Isaac goes to Cambridge"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/CharlesII.jpg",
+					"size": 163439
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "JTW6ah3uRMGXyWqRc"
+		},
+		{
+			"name": "religion",
+			"menu": {
+				"en": "Religious Groups",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "religion",
+					"en": "Religious Groups",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Actual battles affect Isaac's life little",
+				"Catholics and Presbyterians, Calvinists and Lutherans, Anglicans and Quakers, Ranters, Baptists, Diggers, Levellers, ...",
+				"Reverend Barnabus Smith, whom the young Isaac hated."
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/religion.jpg",
+					"size": 297904
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "CFaRENHhBn75XasMw"
+		},
+		{
+			"name": "Galileo_Galilei",
+			"menu": {
+				"en": "Galileo Galilei",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"New kind of thought: science",
+				"26 February 1616, forced to deny Earth moves round Sun",
+				"The book of God and the work of God: Bible and Nature",
+				"Holy Spirit shows how to make your way to Heaven",
+				"...does not show the way the heavens are made"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/Galileo_Galilei.jpg",
+					"size": 164264
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "ovi3wiHyhdba8YapX"
+		},
+		{
+			"name": "aristotle",
+			"menu": {
+				"en": "Aristotle",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "aristotle",
+					"en": "Aristotle",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Philosophy which matches Christian ethos",
+				"Creator god, free will for humans",
+				"'Thought experiments'",
+				"Quintessence, music of the spheres"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/aristotle.jpg",
+					"size": 425174
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "g9mLRW6HZdMyYj3ev"
+		},
+		{
+			"name": "mast",
+			"menu": {
+				"en": "The Stone and the Mast",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "mast",
+					"en": "How Aristotle saw a stone falling from a mast",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/mast.jpg",
+					"size": 14194
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "F32BtzdhvxYNeubCK"
+		},
+		{
+			"name": "discorsi",
+			"menu": {
+				"en": "Experimentation",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Tower of Pisa",
+				"Friction-compensated planes"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/discorsi.png",
+					"size": 118225
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "GZo4W4kCpx5wmkh2x"
+		},
+		{
+			"name": "jupiter",
+			"menu": {
+				"en": "The Moons of Jupiter",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "jupiter",
+					"en": "The Moons of Jupiter",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Sometimes 3, sometimes 4",
+				"Passing behind Jupiter",
+				"=> passing through the Sphere"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/jupiter.jpg",
+					"size": 153444
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "taWYgdCDQ5g6f4z5k"
+		},
+		{
+			"name": "royalSociety",
+			"menu": {
+				"en": "The Royal Society",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"May 1660, return to England",
+				"November 1660, founded Royal Society"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/royalSociety.jpg",
+					"size": 476149
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "WP65HhEsiNuD7MKdb"
+		},
+		{
+			"name": "cambridgeMap",
+			"menu": {
+				"en": "Cambridge University",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "cambridgeMap",
+					"en": "Cambridge University, founded in 1209",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Map from 1575",
+				"Founded after Arab scholars had brought forgotten books of Aristotle to Spain",
+				"King favourable to new knowledge",
+				"Books by Galileo and Descartes read outside main courses"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/cambridgeMap.jpg",
+					"size": 521286
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "HezFeFWanygJwo34h"
+		},
+		{
+			"name": "gravity",
+			"menu": {
+				"en": "Gravity",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Inverse square law"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/gravity.jpg",
+					"size": 424783
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "NcaaiANM4PetGdo4K"
+		},
+		{
+			"name": "prism",
+			"menu": {
+				"en": "Prism",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/prism.jpg",
+					"size": 521207
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "rXcKNkYoCHt5iTayq"
+		},
+		{
+			"name": "calculus",
+			"menu": {
+				"en": "Calculus",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"That's it. That's all I'm going to say about that.",
+				"Common knowledge",
+				"Read about this in Wikipedia"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/calculus.jpg",
+					"size": 87543
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "5WBQBaTxasMNSRmDa"
+		},
+		{
+			"name": "NewtonsPrincipia",
+			"menu": {
+				"en": "Principia Mathematica",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Not published until 1687: 20 years later",
+				"Why such a long silence?",
+				"A question I've asked here before: where does creativity come from?",
+				"This is where things start to get weird"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/NewtonsPrincipia.jpg",
+					"size": 258735
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "uYAdsFjiyTjx2NZbe"
+		},
+		{
+			"name": "arianism",
+			"menu": {
+				"en": "The Arian Heresy",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"God the father, Jesus the son",
+				"Constantine, Council of Nicae 325",
+				"Trinity: father, son and holy ghost = one substance",
+				"Arius held that Jesus was NOT God: he was born, therefore there was a time when he had not existed",
+				"Worship a unique God"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/arianism.jpg",
+					"size": 2695981
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "YryxP5fGrP74oKt3m"
+		},
+		{
+			"name": "pythagoras",
+			"menu": {
+				"en": "Pythagoras",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "pythagoras",
+					"en": "Pythagoras c. 570 – c. 495 BCE",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Secret sect",
+				"Power of numbers",
+				"One = the origin of all things",
+				"No writings, all knowledge from indirect sources",
+				"=> we are free to re-interpret / remove bias as we wish"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/pythagoras.jpg",
+					"size": 198656
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "qKB2xxPBXuMAaaPz7"
+		},
+		{
+			"name": "pythagorasMusic",
+			"menu": {
+				"en": "Music of the Spheres",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "pythagorasMusic",
+					"en": "english",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Music of the Spheres",
+				"Inverse square law for harmonics",
+				"Journey to Egypt"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/pythagorasMusic.png",
+					"size": 46168
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "ETrq6A5S7METrxyAt"
+		},
+		{
+			"name": "moses",
+			"menu": {
+				"en": "Moses",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "moses",
+					"en": "Moses: 1391–1271 BCE? 1592— BCE?",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Rabbinical Judaism, Saint Jerome, ...",
+				"One God",
+				"Met God on Mount Sinai",
+				"Newton: did not just carve tablets of 10 commandments",
+				"=> God explained the way the heavens are made"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/moses.jpg",
+					"size": 714787
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "vi8xtyWNnq8M3d6Zx"
+		},
+		{
+			"name": "chronology",
+			"menu": {
+				"en": "Chronology of the Ancient Kingdoms",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Revise the historical order of civilization",
+				"Make the temple of Solomon the first",
+				"Prove that Pythagoras had travelled to Sidon and met Moses"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/chronology.jpg",
+					"size": 168219
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "Mj7rxab5srpDfadLb"
+		},
+		{
+			"name": "anagram",
+			"menu": {
+				"en": "Anagram",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"He considered that his insights derived from his pure believe in One God"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/anagram.png",
+					"size": 7645
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "cqA4F74PGibeFvzrW"
+		},
+		{
+			"name": "fludd",
+			"menu": {
+				"en": "Pythagoras and Gravity",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "fludd",
+					"en": "1616 image by Robert Fludd (1574-1637)",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Pythagoras had already understood gravity",
+				"He had hidden his knowledge in a riddle",
+				"Aristotle had understood the riddle literally",
+				"Moses and Pythagoras are the 'giants' on who shoulders Newton stands"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/fludd.jpg",
+					"size": 430189
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "7CZ5qmGzvnmD4suZZ"
+		},
+		{
+			"name": "7planets",
+			"menu": {
+				"en": "The Lyre Has 7 Strings",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"The lyre has 7 strings"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/7planets.jpg",
+					"size": 199905
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "HPGjYhu4Y6nB6dHNj"
+		},
+		{
+			"name": "hermes",
+			"menu": {
+				"en": "Hermeticism",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "hermes",
+					"en": "Hermeticism",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"messenger",
+				"eloquent speaker",
+				"guide of souls to the Underworld",
+				"protector of travelers and thieves",
+				"inventor of the lyre",
+				"caduceus: twin snakes symbolize what alchemists considered to be the representation of the reunited male and female souls",
+				"completely closed",
+				"NEWTON DID NOT PUBLISH UNTIL SOMEONE ELSE WAS READY TO BREAK SILENCE"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/hermes.jpg",
+					"size": 98198
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "cwB3qR5EZ3srriDXo"
+		},
+		{
+			"name": "magician",
+			"menu": {
+				"en": "Last of the Magicians",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "quote",
+			"legend": [
+				{
+					"id": "magician",
+					"en": "#John Maynard Keynes:#Newton was not the first of the age of reason. He was the last of the magicians.",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Auction of papers in 1936",
+				"Alchemical papers bought by economist John Maynard Keynes"
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "9Bn2Tg6TKXr6Bifst"
+		},
+		{
+			"name": "toad",
+			"menu": {
+				"en": "To Cure the Plague",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "quote",
+			"legend": [
+				{
+					"id": "toad",
+					"en": "#To Cure the Plague#\"...the best is a toad suspended by the legs in a chimney for three days, which at last vomited up earth with various insects in it, on to a dish of yellow wax, and shortly after died. Combining powdered toad with the excretions and serum made into lozenges and worn about the affected area drove away the contagion and drew out the poison.\"",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Notes on Jan Baptist van Helmont’s 1667 book on plague, De Peste",
+				"Sold at an auction in June 2020",
+				"Not as simple as Donald Trump's bleach remedy"
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "QeC47fFtGESfJimoj"
+		},
+		{
+			"name": "pokeInEye",
+			"menu": {
+				"en": "A Poke in the Eye",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "pokeInEye",
+					"en": "Isaac Newton pokes himself in the eye",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/pokeInEye.jpg",
+					"size": 98659
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "xJKqJDC8MSRyrxL6S"
+		},
+		{
+			"name": "writings",
+			"menu": {
+				"en": "The Philosopher's Stone",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "writings",
+					"en": "Notes on his search for the Philosopher's Stone",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/writings.jpg",
+					"size": 197630
+				}
+			],
+			"notes": [
+				"Transform lead (свинéц) into gold",
+				"Tasted mercury, antimony, arsenic (ртуть, сурьма, мышьяк) and other toxic metals",
+				"Hair had gone grey by the age of 32",
+				"In 1693 - breakdown",
+				"severe insomnia",
+				"loss of appetite",
+				"delusions of persecution",
+				"extreme sensitivity to remarks that he saw as implied criticisms",
+				"loss of memory",
+				"1979 analysis of hair: 4x normal lead, arsenic, and antimony; 15x mercury."
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "6uoqCGBFTxPjvAqAk"
+		},
+		{
+			"name": "mint",
+			"menu": {
+				"en": "Master of the Mint",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "mint",
+					"en": "Master of the Mint",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Friend Charles Montagu (Earl of Halifax)",
+				"Sinecure as Warden => Master of the Mint",
+				"=> Plenty of money for a token amount of work, to have leisure for new discoveries",
+				"",
+				"More wars, clipping of coins",
+				"Obsession with purity",
+				"27 last years"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/mint.jpg",
+					"size": 79625
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "PHsjD6rJupsC4X9XS"
+		},
+		{
+			"name": "guineau",
+			"menu": {
+				"en": "Execution of Counterfeiters",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "guineau",
+					"en": "Coins minted under Isaac Newton's authority",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Coins with milled edges",
+				"£15000 - £100000 coins a week",
+				"Network of informants"
+			],
+			"tweak": {
+				"background-color": "#fff",
+				"color": "#000"
+			},
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/guineau.jpg",
+					"size": 709922
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "v95R2iwFwm4K32Ejk"
+		},
+		{
+			"name": "tyburn",
+			"menu": {
+				"en": "The Tyburn Tree",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"William Chaloner, convicted of high treason",
+				"Detective work, interrogations, over 100 convictions",
+				"Hung, drawn and quartered, disemboweled",
+				"23 March 1699 at Tyburn gallows"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/tyburn.jpg",
+					"size": 87016
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "bHaq2AnMgaGPnn5oH"
+		},
+		{
+			"name": "StillBorn",
+			"menu": {
+				"en": "History without Newton?",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/StillBorn.jpg",
+					"size": 105358
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "FKSGhPyxR2A89m8va"
+		},
+		{
+			"name": "contemporaries",
+			"menu": {
+				"en": "Newton's Contemporaries",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Taylor, Maclaurin, Bernoulli, and soon Lomónosov, ..."
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/contemporaries.jpg",
+					"size": 245163
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "smboBDC56SHNpi8ZH"
+		},
+		{
+			"name": "telescope",
+			"menu": {
+				"en": "Newton's Telescope",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "telescope",
+					"en": "Newton's Telescope",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"January 1672, Newton just turned 29, professor of mathematics",
+				"Been aware of the importance of King Charles II for all his adult life.",
+				"For KCII, Newton just one of many bright young men"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/telescope.jpg",
+					"size": 385328
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "jc2mRTMKNegj2xBhJ"
+		},
+		{
+			"name": "horse",
+			"menu": {
+				"en": "Chromatic Aberation",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "horse",
+					"en": "Chromatic Abberation",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/horse.jpg",
+					"size": 36043
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "2wkm2zXpABDtCYqY9"
+		},
+		{
+			"name": "chromaticAberration",
+			"menu": {
+				"en": "Chromatic Aberation Diagramme",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "chromaticAberration",
+					"en": "Chromatic Abberation",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/chromaticAberration.jpg",
+					"size": 105982
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "NZFmW7uSqFkBLMwgc"
+		},
+		{
+			"name": "schema",
+			"menu": {
+				"en": "Schema of the Telescope",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "schema",
+					"en": "Schema of the Telescope",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"tweak": {
+				"background-color": "#fff"
+			},
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/schema.png",
+					"size": 17158
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "xqvq3tAri9RNm9ftm"
+		},
+		{
+			"name": "parabolic",
+			"menu": {
+				"en": "Spherical Abberation",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/parabolic.jpg",
+					"size": 120481
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "dFXub5pKXsMMsYpJD"
+		},
+		{
+			"name": "JamesGregory",
+			"menu": {
+				"en": "James Gregory",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "JamesGregory",
+					"en": "James Gregory, 1638–1675",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Optica Promota, published in 1663",
+				"Richard Reeve, a professional glass grinder in London",
+				"result 'unsatisfactory'",
+				"In a hurry to travel to Padua, Italy",
+				"abandoned project"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/JamesGregory.jpg",
+					"size": 5444
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "M99RAhgFEfEM9ivZH"
+		},
+		{
+			"name": "spherical",
+			"menu": {
+				"en": "Grinding a Spherical Mirror",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"No tools yet to make a parabolic mirror",
+				"No techniques to measure how close it is to a parabola",
+				"Over 100 hours of work, with no certainty of success"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/spherical.jpg",
+					"size": 98115
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "jLtkfvRPApfAdGbuE"
+		},
+		{
+			"name": "grinding",
+			"menu": {
+				"en": "...and Grinding",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Mindless",
+				"Two ways two objects can fit in all directions: flat and sphere",
+				"Gritty, dirty ... fingernails, skin, clothes",
+				"Finer and finer",
+				"Same movement, same muscles, same pressure, same noise, over and over",
+				"Case made of cardboard, much more quickly"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/grinding.jpg",
+					"size": 64384
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "jcieoHtTKGNvGQJ8Z"
+		},
+		{
+			"name": "RoyalSociety",
+			"menu": {
+				"en": "In Absentia",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"notes": [
+				"Isaac Newton not present when King Charles II looked into telescope",
+				"King unaware of the efforts",
+				"Telescope not returned",
+				"Unused and slowly disintegrating",
+				"1731, only mirrors remained",
+				"After that, who knows...?",
+				"PERSISTENCE"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/RoyalSociety.gif",
+					"size": 246511
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "e9kzNfGyJwWshvmcy"
+		},
+		{
+			"name": "grave",
+			"menu": {
+				"en": "Grave",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "grave",
+					"en": "Isaac Newton's grave in Westminster Abbey",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"notes": [
+				"Voltaire may have been at the funeral",
+				"Sculptors also took many hours to carve the statue"
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/grave.jpg",
+					"size": 1409126
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "LuXoBWRfSJZ6eFgqn"
+		},
+		{
+			"name": "qr",
+			"menu": {
+				"en": "QR Code",
+				"fr": "français",
+				"ru": "русски"
+			},
+			"layout": "solo",
+			"legend": [
+				{
+					"id": "qr",
+					"en": "[http://staging.jazyx.com/ele-newton](http://staging.jazyx.com/ele-newton)",
+					"fr": "français",
+					"ru": "русски"
+				}
+			],
+			"image": [
+				{
+					"src": "/Assets/Show/Newton/image/qr.svg",
+					"size": 11802
+				}
+			],
+			"tags": [
+				"newton"
+			],
+			"_id": "sGFFo7DxYvFTx5KBK"
+		}
+	]
+}
