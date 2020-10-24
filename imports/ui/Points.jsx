@@ -345,8 +345,8 @@ export default withTracker(() => {
   // * If this is a Community group
   // * If the Teacher is logged in to a Teacher-managed group
 
-  const { active, soloPilot } = groupIsActive(group_id)
-  const points = group_id && active
+  const { active, soloPilot, ace } = groupIsActive(group_id)
+  const points = group_id && active && !ace
                ? Points.find({ group_id }).fetch()
                : []
   // console.log("Points active:", active)
@@ -379,9 +379,14 @@ function groupIsActive(_id) {
     fields: {
       active: 1
     , soloPilot: 1
+    , ace: 1
     }
   }
-  const { active, soloPilot } = (Group.findOne(select, options) || {})
+  const {
+    active
+  , soloPilot
+  , ace
+  } = (Group.findOne(select, options) || {})
 
   // console.log( "Pointer active for", _id, ":", active
   //            , "<<< db.group.findOne("
@@ -394,5 +399,6 @@ function groupIsActive(_id) {
   return {
     active: !!active
   , soloPilot
+  , ace
   }
 }

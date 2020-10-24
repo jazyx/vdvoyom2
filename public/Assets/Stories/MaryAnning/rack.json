@@ -1,0 +1,356 @@
+{
+	"set": {
+		"tag": "anning",
+		"name": {
+			"en": "Mary Anning",
+			"fr": "Mary Anning",
+			"ru": "Мэри Эннинг"
+		},
+		"icon": {
+			"src": "/Assets/Stories/MaryAnning/icon.jpg"
+		},
+		"parent": "/Stories",
+		"path": "/Stories/MaryAnning",
+		"_id": "6t2GALbA9Lzg69reu"
+	},
+	"phrases": [
+		{
+			"name": "00_Mary",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/00_Mary.jpg",
+					"size": 99795
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "7ARs2CddBkdkGqByT"
+		},
+		{
+			"name": "01_furniture",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/01_furniture.jpg",
+					"size": 99107
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "d9hwihgiCaN6Sb7Wb"
+		},
+		{
+			"name": "02_Europe",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/02_Europe.jpg",
+					"size": 96830
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "NQXw9HLeoo5uikPeC"
+		},
+		{
+			"name": "03_UK",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/03_UK.jpg",
+					"size": 198397
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "fyryEATuCiT7Nz53N"
+		},
+		{
+			"name": "04_beach",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/04_beach.jpg",
+					"size": 98940
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "S8CfQe5hgubAaB3Q7"
+		},
+		{
+			"name": "05_LymeRegis",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/05_LymeRegis.jpg",
+					"size": 148405
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "LaBiHfoj9nGkcvndC"
+		},
+		{
+			"name": "06_snakeStones",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/06_snakeStones.jpg",
+					"size": 148703
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "PW3QEE6TtnWzdCWn3"
+		},
+		{
+			"name": "07_ichthyosaurvertebrae",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/07_ichthyosaurvertebrae.jpg",
+					"size": 47391
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "WhprmtzgyMS8oqo5x"
+		},
+		{
+			"name": "07_ladyFingers",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/07_ladyFingers.jpg",
+					"size": 149137
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "9hpSAriCRGifrfFhN"
+		},
+		{
+			"name": "08_devilsToenails",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/08_devilsToenails.jpg",
+					"size": 99782
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "EB4C9cRgDkJwrp5Qn"
+		},
+		{
+			"name": "09_house",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/09_house.jpg",
+					"size": 99362
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "9uH7RSa8MiDwYJWr3"
+		},
+		{
+			"name": "10_table",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/10_table.jpg",
+					"size": 78274
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "FESK7CrdjTrcy2XbN"
+		},
+		{
+			"name": "11_icthyosaurJ",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/11_icthyosaurJ.jpg",
+					"size": 47195
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "G4BuCvnks7Pqm4rAv"
+		},
+		{
+			"name": "12_tray",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/12_tray.jpg",
+					"size": 100007
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "Fuq8E8u6Yc997kEKe"
+		},
+		{
+			"name": "13_icthyosaurA",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/13_icthyosaurA.jpg",
+					"size": 96876
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "tZBBcCTBM6JSuNwe6"
+		},
+		{
+			"name": "14_stamp",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/14_stamp.jpg",
+					"size": 98976
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "WRKj4Prde9NYHfPfq"
+		},
+		{
+			"name": "15_drawing",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/15_drawing.jpg",
+					"size": 96396
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "Fx7hvXTaZn2qMy3mk"
+		},
+		{
+			"name": "16_plipli",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/16_plipli.jpg",
+					"size": 73863
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "oukqxD29fto9JsSTd"
+		},
+		{
+			"name": "17_belemnite",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/17_belemnite.jpg",
+					"size": 98624
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "wENrZWQ5rtjoQ9JGP"
+		},
+		{
+			"name": "18_Dapedium",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/18_Dapedium.jpg",
+					"size": 60382
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "au6AnYjLYnhAAt9hD"
+		},
+		{
+			"name": "19_dimorphodon",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/19_dimorphodon.jpg",
+					"size": 34616
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "buMfwriTK24bLktHu"
+		},
+		{
+			"name": "20_Pterosaur",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/20_Pterosaur.jpg",
+					"size": 98162
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "TK3NKEbjoQhvasLge"
+		},
+		{
+			"name": "21_Squaloraja",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/21_Squaloraja.jpg",
+					"size": 94659
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "kuB9sgCgvkbvqX5FQ"
+		},
+		{
+			"name": "22_fossilShop",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/22_fossilShop.jpg",
+					"size": 188877
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "zcypNcuwmR9RMEPPY"
+		},
+		{
+			"name": "23_MaryAnning",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/23_MaryAnning.jpg",
+					"size": 97759
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "usgWj6TizQtNcr9Fy"
+		},
+		{
+			"name": "24_AmelieRosser",
+			"image": [
+				{
+					"src": "/Assets/Stories/MaryAnning/image/24_AmelieRosser.jpg",
+					"size": 99548
+				}
+			],
+			"tags": [
+				"anning"
+			],
+			"_id": "4jeghcAcFn9inj49m"
+		}
+	]
+}

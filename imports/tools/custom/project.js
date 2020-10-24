@@ -1,5 +1,5 @@
 /**
- * /imports/api/tools/custom/project.js
+ * /imports/tools/custom/project.js
  */
 
 

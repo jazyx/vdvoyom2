@@ -1,0 +1,373 @@
+{
+	"set": {
+		"tag": [
+			"furniture"
+		],
+		"name": {
+			"en": "Furniture",
+			"fr": "Mobilier",
+			"ru": "Мебль"
+		},
+		"icon": {
+			"src": "/Assets/Vocabulary/home/furniture/icon.jpg"
+		},
+		"parent": "/Vocabulary/home",
+		"path": "/Vocabulary/home/furniture",
+		"_id": "Tas64o7nne7MqxNGu"
+	},
+	"phrases": [
+		{
+			"name": "armchair",
+			"phrase": {
+				"en": "armchair",
+				"fr": "un fauteil",
+				"ru": "кресло"
+			},
+			"tags": [
+				"living_room",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/armchair.jpg",
+					"size": 49267
+				}
+			],
+			"_id": "mgYwQDqST9rtWmHL9"
+		},
+		{
+			"name": "bin",
+			"phrase": {
+				"en": "bin",
+				"fr": "une poubelle",
+				"ru": "ведро"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/bin.jpg",
+					"size": 48466
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "ZmQ4sPcsxxQAkQPgJ"
+		},
+		{
+			"name": "bookcase",
+			"phrase": {
+				"en": "bookcase",
+				"fr": "un bibliothèque",
+				"ru": "книжный шкаф"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/bookcase.jpg",
+					"size": 49629
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "6shoptvGTRkk6EgH6"
+		},
+		{
+			"name": "chair",
+			"phrase": {
+				"en": "chair",
+				"fr": "une chaise",
+				"ru": "стул"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/chair.jpg",
+					"size": 49909
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "HmW8bKKTtoQ65Rvai"
+		},
+		{
+			"name": "chest_of_drawers",
+			"phrase": {
+				"en": "chest of drawers",
+				"fr": "une commode",
+				"ru": "комод"
+			},
+			"tags": [
+				"bedroom",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/chest_of_drawers.jpg",
+					"size": 49905
+				}
+			],
+			"_id": "ZH8QpBrKhhzsGBGq6"
+		},
+		{
+			"name": "cushions",
+			"phrase": {
+				"en": "cushions",
+				"fr": "des coussins",
+				"ru": "подушки"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/cushions.jpg",
+					"size": 49894
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "kHvo5Qe9bGCnhYGMo"
+		},
+		{
+			"name": "desk",
+			"phrase": {
+				"en": "desk",
+				"fr": "un bureau",
+				"ru": "стол письменный"
+			},
+			"tags": [
+				"study",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/desk.jpg",
+					"size": 49821
+				}
+			],
+			"_id": "NZKpmheYjtqHKRszw"
+		},
+		{
+			"name": "dishwasher",
+			"phrase": {
+				"en": "dishwasher",
+				"fr": "une lave-vaisselle",
+				"ru": "посудомоечная машина"
+			},
+			"tags": [
+				"kitchen",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/dishwasher.jpg",
+					"size": 50026
+				}
+			],
+			"_id": "88PKJ8remShsHB6w2"
+		},
+		{
+			"name": "fridge",
+			"phrase": {
+				"en": "fridge",
+				"fr": "un refrigérateur",
+				"ru": "холодильник"
+			},
+			"tags": [
+				"kitchen",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/fridge.jpg",
+					"size": 55574
+				}
+			],
+			"_id": "6hHWJCAZbBF99SKoD"
+		},
+		{
+			"name": "lamp",
+			"phrase": {
+				"en": "lamp",
+				"fr": "une lampe",
+				"ru": "лампа"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/lamp.jpg",
+					"size": 46067
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "cTWarjjNdamNZyzEd"
+		},
+		{
+			"name": "microwave_oven",
+			"phrase": {
+				"en": "microwave oven",
+				"fr": "un four micro-ondes",
+				"ru": "микроволновая печь"
+			},
+			"tags": [
+				"kitchen",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/microwave_oven.jpg",
+					"size": 58378
+				}
+			],
+			"_id": "fygLLkSxJQ3RZHz2p"
+		},
+		{
+			"name": "mirror",
+			"phrase": {
+				"en": "mirror",
+				"fr": "un miroir",
+				"ru": "зеркало"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/mirror.jpg",
+					"size": 49330
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "pap4quWAvLLvHZjkx"
+		},
+		{
+			"name": "radiator",
+			"phrase": {
+				"en": "radiator",
+				"fr": "un radiateur",
+				"ru": "радиатор"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/radiator.jpg",
+					"size": 49843
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "G7nbJmxT4WgZTt8aw"
+		},
+		{
+			"name": "rug",
+			"phrase": {
+				"en": "rug",
+				"fr": "un tapis",
+				"ru": "коврик"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/rug.jpg",
+					"size": 49378
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "ScxSsQcogPXWfGx7q"
+		},
+		{
+			"name": "sofa",
+			"phrase": {
+				"en": "sofa",
+				"fr": "un canapé",
+				"ru": "диван"
+			},
+			"tags": [
+				"living_room",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/sofa.jpg",
+					"size": 48104
+				}
+			],
+			"_id": "H7oYptkFXg97p4o4Q"
+		},
+		{
+			"name": "table",
+			"phrase": {
+				"en": "table",
+				"fr": "une table",
+				"ru": "стол"
+			},
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/table.jpg",
+					"size": 50002
+				}
+			],
+			"tags": [
+				"furniture"
+			],
+			"_id": "KKmFEkykjki6TH4Wm"
+		},
+		{
+			"name": "television",
+			"phrase": {
+				"en": "television",
+				"fr": "une télévision",
+				"ru": "телевизор"
+			},
+			"tags": [
+				"living_room",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/television.jpg",
+					"size": 49089
+				}
+			],
+			"_id": "YbfwYtMzgXa9zWmeg"
+		},
+		{
+			"name": "wardrobe",
+			"phrase": {
+				"en": "wardrobe",
+				"fr": "une garde-robe",
+				"ru": "гардероб"
+			},
+			"tags": [
+				"bedroom",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/wardrobe.jpg",
+					"size": 49312
+				}
+			],
+			"_id": "BqH5tK2aiCYitzMBs"
+		},
+		{
+			"name": "washing_machine",
+			"phrase": {
+				"en": "washing machine",
+				"fr": "une machine à laver",
+				"ru": "стиральная машина"
+			},
+			"tags": [
+				"kitchen",
+				"bathroom",
+				"furniture"
+			],
+			"image": [
+				{
+					"src": "/Assets/Vocabulary/home/furniture/image/washing_machine.jpg",
+					"size": 49627
+				}
+			],
+			"_id": "kqHTZo7SuxPw7kJqa"
+		}
+	]
+}

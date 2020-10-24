@@ -186,11 +186,14 @@ export default class CollectJSON {
     keys.forEach(key => {
       const value = json[key]
 
+      // console.log("_insertNewItems key", key)
+
       if (Array.isArray(value)) {
         value.forEach(document => {
           if (key !== "") {
             document.type = key
           }
+
           document.version = version
           collection.insert(document)
           counter += 1

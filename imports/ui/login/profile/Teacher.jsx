@@ -25,6 +25,9 @@ import collections from '/imports/api/collections/publisher'
 const { UIText, Teacher } = collections
 
 
+/// <<< HARD-CODED
+const timeOutDelay = 1000 // ms
+/// HARD-CODED >>>
 
 
 class TeacherClass extends Component {
@@ -203,13 +206,15 @@ class TeacherClass extends Component {
   componentDidMount(delay) {
     // HACK: Not all images may have been loaded from MongoDB, so
     // let's wait a little before we scrollIntoView
-    setTimeout(this.scrollIntoView, 200)
+    const timeOut = setTimeout(this.scrollIntoView, 200)
+    // console.log("Teach didMount timeout", timeOut)
   }
 
 
   componentDidUpdate() {
     if (this.scrollFlag) {
-      setTimeout(this.scrollIntoView, 1000) // <<< HARD-CODED
+      const timeOut = setTimeout(this.scrollIntoView, timeOutDelay)
+      // console.log("Teach didUpdate timeout", timeOut)
       this.scrollFlag = false
     }
   }

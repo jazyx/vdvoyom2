@@ -1,5 +1,31 @@
 /**
  * /imports/ui/login/launch/StartUp.js
+ *
+ * Reads data from the URL query string and from Local Storage (query
+ * string data has priority).
+ *
+ * Mode
+ * ====
+ * • once: creates temporary User and Group documents which are
+ *         destroyed when the session ends. Visitor has no access to
+ *         a teacher or other users.
+ * • join: provides page data (and optionally user data). Can be used
+ *         to create a new user account and link it to a teacher
+ *         Group or a named Group. If no user[name] and pin (q_code)
+ *         is given, then data from Local Storage will be used (if
+ *         present), or the user will be given the opportunity to
+ *         create a new User account (if not)
+ * • ace:  May be used in conjunction with `join` to indicate that no
+ *         user will be considered Master, so the display will be
+ *         optimized for each user's device.
+ *         Even if only one user logs in to a group with the `ace`
+ *         flag, the entire Group will become ace.
+ *
+ * Account
+ * =======
+ *
+ * Page data
+ * =========
  */
 
 
@@ -23,7 +49,9 @@ import { preloadCollections } from './PreloadCollections'
 
 // Methods
 import { methods } from '/imports/api/methods/mint'
-const { logIn } = methods
+const { logIn
+      , setAce
+      } = methods
 
 // Constant
 import { SPLASH_DELAY
@@ -124,7 +152,16 @@ class StartUpSingleton {
       query.forEach(function(value, key) {
         data[key] = value
       })
+
+      if (query.has("ace")) {
+        data.ace = data.ace !== "false"
+      }
     }
+
+    // console.log(
+    //   "data"
+    // , JSON.stringify(data, null, "  ")
+    // )
 
     this.setAccountDataAndPage(data)
   }
@@ -152,6 +189,9 @@ class StartUpSingleton {
     , teacher: teacher_id
     , lang:    language
     , pin:     q_code
+    , group:   group_name
+    // mode
+    , ace
       // page
     , view
     , path
@@ -167,6 +207,9 @@ class StartUpSingleton {
     , "teacher"
     , "language"
     , "lang"
+    , "group"
+
+    , "ace"
 
     , "pin"
     , "view"
@@ -192,8 +235,11 @@ class StartUpSingleton {
     , teacher_id // id for teacher who is logging in
     , q_code
     , language
+    , group_name
+    , ace
     }
     deleteFrom(accountData)
+
     if (this.context === "once") {
       this.accountData = this.addNonceDefaults(accountData)
     } else {
@@ -326,15 +372,15 @@ class StartUpSingleton {
     /// HACK >>>
 
     const select = { _id }
-    const project = { fields: {
+    const options = { fields: {
         query: 1
       }
     }
-    const { query } = Shortcut.findOne(select, project) || {}
+    const { query } = Shortcut.findOne(select, options) || {}
     // console.log(
     //   "query", query, `\ndb.shortcut.find(
-    //     ${JSON.stringify(select)} ${project && project.fields ? `
-    //   , ${JSON.stringify(project.fields)}` : ""}
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
     //   )`
     // )
 
@@ -414,7 +460,13 @@ class StartUpSingleton {
     const callback     = this.welcomeGuestUser
 
     const isSingleUse  = false
-    const { username, native, teacher, q_code } = this.accountData
+    const {
+      username
+    , native
+    , teacher
+    , q_code
+    , group_name
+    } = this.accountData
     const canRegister  = !!(username && native && teacher)
     const canAutoLogIn = !!(q_code && canRegister)
     this.accountData.pin_absent = canRegister && !canAutoLogIn
@@ -446,6 +498,12 @@ class StartUpSingleton {
   }
 
 
+  /** Callback from treatUserInvitation()
+   *
+   * @param      {<type>}  error   The error
+   * @param      {<type>}  result  The result
+   * @return     {<type>}  { description_of_the_return_value }
+   */
   welcomeGuestUser(error, result) {
     if (error) {
       return console.log("welcomeGuestUser error:", error)
@@ -454,7 +512,12 @@ class StartUpSingleton {
     // console.log(
     //   "welcomeGuestUser error:", error,
     //   "result:", JSON.stringify(result, null, "  ")
-    //  )
+    // )
+    // console.log(
+    //   "this.accountData"
+    // , JSON.stringify(this.accountData, null, "  ")
+    // )
+
     /*
       "teacher":    "jn",
       "language":   "en-GB",
@@ -483,7 +546,12 @@ class StartUpSingleton {
       pin_absent: true
     */
 
-    this.accountData = result // orginal augmented with new properties
+    Object.assign(this.accountData, result) // orginal augmented with new properties
+
+    // console.log(
+    //   "this.accountData updated"
+    // , JSON.stringify(this.accountData, null, "  ")
+    // )
 
     if (!result.loggedIn || result.pin_absent) {
       // EITHER `pin` was defined and used for q_code, but it was
@@ -498,7 +566,13 @@ class StartUpSingleton {
     const group_id = this.group_id = result.group_id
     result.role = "user"
 
+    this.setAce(group_id, this.accountData.ace)
+
     const groupPage = this.getGroupPage(group_id)
+
+    // ALERT: URL search may indicate a specific page, but if the
+    // group is already active, groupPage will overwrite this.
+
     result.page = groupPage || this.page
     this.setSessionDataFrom(result)
 
@@ -507,15 +581,27 @@ class StartUpSingleton {
   }
 
 
+  setAce(_id, ace) {
+    if (typeof ace === "boolean") {
+      const options = {
+        _id
+      , ace
+      }
+
+      setAce.call(options)
+    }
+  }
+
+
   getGroupPage(_id) {
     const select = { _id }
-    const project = {
+    const options = {
       fields: {
         page: 1
       }
     }
 
-    const { page } = Group.findOne(select, project) || {}
+    const { page } = Group.findOne(select, options) || {}
 
     return page
   }
@@ -646,12 +732,12 @@ class StartUpSingleton {
     const select = { id: this.accountData.teacher_id }
     const teacherData = collections.Teacher.findOne(select)
 
-    console.log(
-      "teacherData", teacherData, "\n"
-    , `db.teacher.findOne(
-        ${JSON.stringify(select)}
-      )`
-    )
+    // console.log(
+    //   "teacherData", teacherData, "\n"
+    // , `db.teacher.findOne(
+    //     ${JSON.stringify(select)}
+    //   )`
+    // )
 
     if (!teacherData) {
       console.log("Unknown teacher:", this.accountData)
@@ -713,6 +799,7 @@ class StartUpSingleton {
     , "auto_login"
     , "restore_all"
     , "role"
+    , "ace"
     ]
 
     keys.forEach( key => {
@@ -766,7 +853,11 @@ class StartUpSingleton {
     const remaining = this.showSplash - new Date()
     if (remaining > 0) {
       // console.log("Polling for", this.showSplash, "in", this.showSplash - + new Date())
-      return setTimeout(this.hideSplash, remaining)
+
+      const timeOut = setTimeout(this.hideSplash, remaining)
+      // console.log("StartUp hideSplash timeout", timeOut)
+
+      return
     }
 
     this.showSplash = 0

@@ -1,0 +1,175 @@
+{
+	"set": {
+		"name": {
+			"en": "Test",
+			"ru": "Тест",
+			"fr": "Test"
+		},
+		"tag": "Cloze",
+		"icon": {
+			"icons": [
+				"en.jpg",
+				"fr.jpg",
+				"ru.jpg"
+			],
+			"src": "/Assets/Cloze/test/icon/^0"
+		},
+		"path": "/Cloze/test",
+		"parent": "/Cloze",
+		"_id": "fe94TYNmQy3NB3Y9L"
+	},
+	"phrases": [
+		{
+			"name": "wakeup",
+			"phrase": {
+				"en": "Good morning, did you sleep %well?",
+				"ru": "Доброе утро, ты #хорошо спала?",
+				"fr": "Bonjour! As-tu %bien dormi ?"
+			},
+			"image": [
+				{
+					"src": "/Assets/Cloze/test/image/wakeup.jpg",
+					"size": 131822
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "xtbjKwBSoQnrMNZXW",
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/Cloze/test/audio/ru/wakeup.mp3",
+						"size": 62202
+					}
+				]
+			}
+		},
+		{
+			"name": "bacon&eggs",
+			"phrase": {
+				"en": "Bacon and eggs for #breakfast",
+				"ru": "Бекон и яйца на #завтрак",
+				"fr": "Des oeufs aux bacon pour le #petit-déjeuner"
+			},
+			"image": [
+				{
+					"src": "/Assets/Cloze/test/image/bacon&eggs.jpg",
+					"size": 122907
+				}
+			],
+			"tags": [
+				"Cloze"
+			],
+			"_id": "WqKJhoQdNpzzpqra7",
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/Cloze/test/audio/ru/bacon&eggs.mp3",
+						"size": 44773
+					}
+				]
+			}
+		},
+		{
+			"name": "clock",
+			"phrase": {
+				"en": "It's three o'%clock",
+				"ru": "Сейчас три %часа",
+				"fr": "Il est trois %heures"
+			},
+			"image": [
+				{
+					"src": "/Assets/shared/images/clock.jpg"
+				}
+			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/clock.mp3",
+						"size": 62202
+					}
+				]
+			},
+			"tags": [
+				"Cloze"
+			],
+			"_id": "r3NnA8jSkQ3QhCRhT"
+		},
+		{
+			"name": "soup",
+			"phrase": {
+				"en": "a bowl of %soup",
+				"ru": "тарелка %супа",
+				"fr": "un bol de %soupe"
+			},
+			"image": [
+				{
+					"src": "/Assets/shared/images/soup.jpg"
+				}
+			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/soup.mp3",
+						"size": 62202
+					}
+				]
+			},
+			"tags": [
+				"Cloze"
+			],
+			"_id": "s6zHW2iddLk4PGXGv"
+		},
+		{
+			"name": "bread",
+			"phrase": {
+				"en": "bread",
+				"ru": "хлеб",
+				"fr": "du #pain"
+			},
+			"image": [
+				{
+					"src": "/Assets/shared/images/bread.jpg"
+				}
+			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/bread.mp3",
+						"size": 62202
+					}
+				]
+			},
+			"tags": [
+				"Cloze"
+			],
+			"_id": "6e2Z2ChC3Tq6Kfs2k"
+		},
+		{
+			"name": "dog",
+			"phrase": {
+				"en": "dog",
+				"ru": "пёс",
+				"fr": "klebs"
+			},
+			"image": [
+				{
+					"src": "/Assets/shared/images/dog.jpg"
+				}
+			],
+			"audio": {
+				"ru": [
+					{
+						"src": "/Assets/shared/audio/ru/dog.mp3",
+						"size": 62202
+					}
+				]
+			},
+			"tags": [
+				"Cloze"
+			],
+			"_id": "5SWrstHd7H82Ry3S3"
+		}
+	]
+}

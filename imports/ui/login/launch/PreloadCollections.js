@@ -59,5 +59,6 @@ export const preloadCollections = new Promise((resolve, reject) => {
 
 
   timeOut = setTimeout(connectionTimedOut, STARTUP_TIMEOUT)
+  // console.log("PreloadCollections timeout", timeOut)
   connectToMongoDB()
 })

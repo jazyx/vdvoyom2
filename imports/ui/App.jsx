@@ -71,6 +71,13 @@ import Activity from './activities/Activity.jsx'
 import views from './activities/mint'
 
 
+/// <<< TEMP: TODELETE 
+import { getGoldenAngleAt
+       , getCodeFrom
+       } from '/imports/tools/custom/project.js'
+import { hsl2hex } from '/imports/tools/generic/utilities.js'
+/// TEMP: TODELETE >>>
+
 
 // Disable the context menu. Everywhere. (TODO - for production )
 document.body.addEventListener("contextmenu", (event) => {
@@ -83,6 +90,9 @@ document.body.addEventListener("contextmenu", (event) => {
 class App extends Component {
   constructor(props) {
     super(props)
+
+    // this.createUsers()
+    // this.createShortcuts = this.createShortcuts.bind(this)
 
     this.views = {
       Profile
@@ -113,6 +123,95 @@ class App extends Component {
     this.setViewSize       = this.setViewSize.bind(this)
     this.storePointsMethod = this.storePointsMethod.bind(this)
   }
+
+
+  // createUsers() {
+  //    /// <<< HARD-CODED
+  //   this.saturation = 60
+  //   this.luminosity = 50
+  //   /// HARD-CODED >>>
+
+  //   let x = [
+  //     "Андрей Филиппов"
+  //   , "Антон Ступников"
+  //   , "Антон Фельдт"
+  //   , "Виталий Мороз"
+  //   , "Евгений Трофимов"
+  //   , "Кирилл Зимнухов"
+  //   , "Леонид Шалухин"
+  //   , "Любовь Кутузова"
+  //   , "Ольга Обухова"
+  //   , "Татьяна Демкина"
+  //   , "Эльвира Розова"
+  //   , "Юлия Аполлоник"    ]
+
+  //   x = x.map(( fullname, index ) => {
+  //     const username = fullname.substring(0, fullname.indexOf(" "))
+  //     const q_index = index + 10
+  //     const hue = getGoldenAngleAt(q_index)
+  //     const q_code  = getCodeFrom(hue)
+  //     const q_color = hsl2hex(hue, this.saturation, this.luminosity)
+
+  //     return {
+  //       fullname
+  //     , username
+  //     , native: "ru"
+  //     , teacher: "jn"
+  //     , language: "en-GB"
+  //     , q_index
+  //     , q_code
+  //     , q_color
+  //     }
+  //   })
+
+  //   console.log(
+  //     "x"
+  //   , JSON.stringify(x, null, "  ")
+  //   )
+  // }
+
+
+  // createShortcuts() {
+  //   const User = collections.User
+  //   if (!User) {
+  //     return "Users not available"
+  //   }
+
+  //   const select = { username: { $exists: true }}
+  //   const options = {
+  //     fields: {
+  //       username: 1
+  //     , q_code: 1
+  //     , teacher: 1
+  //     , native: 1
+  //     , language: 1
+  //     }
+  //   }
+
+  //   const users = User.find(select, options)
+  //                     .fetch()
+  //                     .map( userData => {
+  //                       // {
+  //                       //   "q_code": "8196",
+  //                       //   "teacher": "jn",
+  //                       //   "username": "Андрей",
+  //                       //   "_id": "DXQg6GCK3EuwcpKH2"
+  //                       // }
+  //                       const {
+  //                         username: user
+  //                       , teacher: own
+  //                       , q_code: pin
+  //                       , native: vo
+  //                       , language: lang
+  //                       } = userData
+
+  //                       return `?join&group=lactalis&own=${own}&lang=${lang}&path=Match&tag=people&vo=${vo}&pin=${pin}&user=${user}`
+  //                     })
+  //   console.log(
+  //     "users"
+  //   , JSON.stringify(users, null, "  ")
+  //   )
+  // }
 
 
   /** Called by Share.setViewSize
@@ -167,9 +266,10 @@ class App extends Component {
    */
   setPage(page, group_id = this.props.group_id) {
 
+    // this.createShortcuts()
+
     if (!page) {
       return this.setState({ view: "TimeOut" })
-
     }
 
     const toSet = deleteFrom(page, "settings") // { settings: < > }
@@ -365,13 +465,13 @@ export default withTracker(() => {
   if (group_id) {
     const isTeacher = Session.get("role") === "teacher"
     const groupSelect = { _id: group_id }
-    const groupProject = {
+    const groupOptions = {
       fields: {
         page: 1
       , logged_in: 1
       }
     }
-    const groupData = Group.findOne(groupSelect, groupProject) || {}
+    const groupData = Group.findOne(groupSelect, groupOptions) || {}
     const logged_in = groupData.logged_in || []
 
     if (isTeacher && logged_in.length === 1) {

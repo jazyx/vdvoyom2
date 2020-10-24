@@ -1,0 +1,343 @@
+{
+	"set": {
+		"tag": "materials",
+		"name": {
+			"en": "Materials",
+			"fr": "Matériaux",
+			"ru": "Материалы"
+		},
+		"icon": {
+			"src": "/Assets/Spiral/Materials/icon.jpg"
+		},
+		"parent": "/Spiral",
+		"path": "/Spiral/Materials",
+		"_id": "cDLoATTTgmWG8bopm"
+	},
+	"phrases": [
+		{
+			"name": "alnwick",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/alnwick.jpg",
+					"size": 147382
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "ChFJXeCbrJ6fvzDJz"
+		},
+		{
+			"name": "balancing",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/balancing.jpg",
+					"size": 98970
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "YCFSm8Xg9rdYBfhou"
+		},
+		{
+			"name": "bridge",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/bridge.jpg",
+					"size": 149203
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "ECMLGs7QTXp7339me"
+		},
+		{
+			"name": "brokenGlass",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/brokenGlass.jpg",
+					"size": 98316
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "KzxnwchH6byfQtuBs"
+		},
+		{
+			"name": "cabin",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/cabin.jpg",
+					"size": 99915
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "TeTXc5JrpsbcmryJc"
+		},
+		{
+			"name": "clockwork",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/clockwork.jpg",
+					"size": 149476
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "KzbkzD8TonXssdKFr"
+		},
+		{
+			"name": "cloth",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/cloth.jpg",
+					"size": 99184
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "6k29HAtutAgwEp3vT"
+		},
+		{
+			"name": "clothSculpture",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/clothSculpture.jpg",
+					"size": 98483
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "r5NfPrkHY75mJZRmu"
+		},
+		{
+			"name": "cloughmore",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/cloughmore.jpg",
+					"size": 97446
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "nzNCqX8wgNjG7aBED"
+		},
+		{
+			"name": "dragon",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/dragon.jpg",
+					"size": 99723
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "RZ9YeARHXvdSLksC4"
+		},
+		{
+			"name": "fabrics",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/fabrics.jpg",
+					"size": 98614
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "bCkEDdiuJHzJqEHu5"
+		},
+		{
+			"name": "glass",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/glass.jpg",
+					"size": 48770
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "8tNEM3XSbr7mbZdc3"
+		},
+		{
+			"name": "glassBuilding",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/glassBuilding.jpg",
+					"size": 98606
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "y8aLJ6bRrHLx4Qxz3"
+		},
+		{
+			"name": "glasses",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/glasses.jpg",
+					"size": 46377
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "J2fDuv399mB2dTq77"
+		},
+		{
+			"name": "horse",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/horse.jpg",
+					"size": 99691
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "sN8jLiK7i7WGJyrXC"
+		},
+		{
+			"name": "jeans",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/jeans.jpg",
+					"size": 148973
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "MNocBdxuMJfEWnWQ7"
+		},
+		{
+			"name": "logs",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/logs.jpg",
+					"size": 148988
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "WyqPavQzfgHamFXZw"
+		},
+		{
+			"name": "motor",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/motor.jpg",
+					"size": 129987
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "eAQ4h23eLxPZzfECX"
+		},
+		{
+			"name": "pallets",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/pallets.jpg",
+					"size": 56433
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "XfxTcihqBvmcmpnh8"
+		},
+		{
+			"name": "shelves",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/shelves.jpg",
+					"size": 149658
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "3HKTKmYjrgB67ajQT"
+		},
+		{
+			"name": "stoneLion",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/stoneLion.jpg",
+					"size": 99323
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "3DPtwfYeRC52Bvj4q"
+		},
+		{
+			"name": "stoneWall",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/stoneWall.jpg",
+					"size": 99813
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "WDpv33Wkj8mNzSMDP"
+		},
+		{
+			"name": "tablecloth",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/tablecloth.jpg",
+					"size": 99952
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "cDsJ4qY87dAxxbX84"
+		},
+		{
+			"name": "wood",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/wood.jpg",
+					"size": 98170
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "qwtxZpGjuQyr3QaZb"
+		},
+		{
+			"name": "woodLion",
+			"image": [
+				{
+					"src": "/Assets/Spiral/Materials/image/woodLion.jpg",
+					"size": 84665
+				}
+			],
+			"tags": [
+				"materials"
+			],
+			"_id": "HPHkiHByGvCA2EDWm"
+		}
+	]
+}

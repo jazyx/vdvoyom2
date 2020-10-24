@@ -25,6 +25,11 @@ import { methods } from '../../api/methods/mint'
 const { setPage } = methods
 
 
+/// <<< HARD-CODED
+const timeOutDelay = 1000
+/// HARD-CODED >>>
+
+
 
 /* IMPORTANT NOTES - TO BE REVISED (render = 0 is currently not used)
  * ===============
@@ -287,7 +292,8 @@ class ActivityClass extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.scrollFlag) {
-      setTimeout(this.scrollIntoView, 1000) // <<< HARD-CODED
+      const timeOut = setTimeout(this.scrollIntoView, timeOutDelay)
+      // console.log("Activity didUpdate timeout", timeOut)
       this.scrollFlag = false
     }
   }

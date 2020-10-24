@@ -21,21 +21,27 @@ export default class CreateGroup {
     // in which case, it will have been provided by the URL, or will
     // have defaulted to "en").
     const select = {id: accountData.teacher}
-    const project = {
+    const options = {
       fields: {
         language: 1
       }
     }
-    const { language } = Teacher.findOne(select, project) || {}
+    const { language } = Teacher.findOne(select, options) || {}
 
     if (language) {
       // A teacher doc was found, so we can overwrite accountData
       accountData.language = language
     }
 
+    this.createNewGroup(accountData)
+  }
+
+
+  createNewGroup(accountData) {
     const group = {
       owner:      accountData.teacher
     , language:   accountData.language
+    , name:       accountData.group_name || ""
     , active:     false // becomes true if Teacher logs in personally
     , lobby:      ""
     , chat_room:  ""
@@ -49,12 +55,9 @@ export default class CreateGroup {
     // , view_data: {}
     // , view_size: { width, height }
     }
+
     accountData.group_id = Group.insert(group)
     accountData.groupCreated = true
-
-    if (language) {
-      accountData.language = language
-    }
 
     // console.log("accountData after CreateGroup:", accountData)
   }

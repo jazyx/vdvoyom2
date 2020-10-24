@@ -373,7 +373,8 @@ class Menu extends Component {
     window.addEventListener("beforeunload", this.logOut, false)
 
     this.openMenu()
-    setTimeout(this.closeMenu, CLOSE_MENU_DELAY)
+    const timeOut = setTimeout(this.closeMenu, CLOSE_MENU_DELAY)
+    // console.log("Menu constructor timeout", timeOut)
   }
 
 
@@ -399,6 +400,7 @@ class Menu extends Component {
     if (event && event.type === "touchstart") {
       // Prevent the mouseup from firing right behind
       this.timeout = setTimeout(() => this.timeout = 0, 300)
+      // console.log("Menu closeMenu timeout", this.timeOut)
     } else if (this.timeout) {
       return
     }
@@ -410,7 +412,8 @@ class Menu extends Component {
       // close was on the Icon
 
       this.ignoreOpen = true
-      setTimeout(() => this.ignoreOpen = false, 100)
+      const timeOut = setTimeout(() => this.ignoreOpen = false, 100)
+      // console.log("Menu closeMenu timeout", timeOut)
 
       const listener = this.closeMenu
       document.body.removeEventListener("touchstart", listener,true)
@@ -538,11 +541,13 @@ class MenuTracker{
     const native     = Session.get("native")
 
     const uiData     = this.getUIData(native)
+
     const {
       page
     , menu_open
     , isPilot
     } = this.getGroupData(group_id, d_code)
+
     const { path, index } = page
     const items = this.getMenuItems(path, uiData, native)
 
@@ -624,14 +629,14 @@ class MenuTracker{
   getGroupData(group_id, d_code) {
     if (group_id) {
       const groupSelect = { _id: group_id }
-      const groupProject = {
+      const groupOptions = {
         fields: {
           page: 1
         , menu_open: 1
         , soloPilot: 1
         }
       }
-      const groupData = Group.findOne(groupSelect, groupProject)
+      const groupData = Group.findOne(groupSelect, groupOptions)
 
       // console.log(
       //   "Menu group_id:", group_id, ", groupData"
@@ -659,6 +664,12 @@ class MenuTracker{
         }
       }
     }
+
+    /// <<< HACK: Hide Menu from Lactalis
+    if (page && page.path.startsWith("/Match")) {
+      soloPilot = true // nobody's d_code
+    }
+    /// HACK >>>
 
     // isPilot should be undefined if soloPilot is not defined,
     // true if this user/teacher is the soloPilot, false if not

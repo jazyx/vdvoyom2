@@ -32,34 +32,35 @@ export default class CreateAccount {
     accountData.accountCreated = true
     accountData.status = "CreateGroup"
 
-    // console.log("accountData after createUser:", accountData)
-    // console.log("————————————————————————————")
-    //
-    // d_code: "HABIg"
-    // native: "en-GB"
-    // q_code: "3819"
-    // q_color: "#33cc60"
-    // q_index: 1
-    // status: "CreateAccount"
-    // user_id: "DcMNnhN7meZ7hmSr4"
-    // username: "James"
-    // path:  []
-    //
-    // = username:   "Влад"
-    // = teacher:    "jn"
-    // = d_code:     "d9Uvl"
-    // + q_code:     "0381"
-    // + user_id:    "BqKkMjjBSRzedasyT"
-    // + group_id:   "PWwknSiHCGmsivSXg"
-    // + newAccount: true
-    // + path:       []
-    //
-    // // Not needed in the return value
-    // = language:   "en-GB"
-    // = native:     "ru"
-    // + q_color:    "#33cc60"
-    // + q_index:    1
-    // + logged_in:   []
+    /* console.log("accountData after createUser:", accountData)
+     * console.log("————————————————————————————")
+     *
+     * d_code: "HABIg"
+     * native: "en-GB"
+     * q_code: "3819"
+     * q_color: "#33cc60"
+     * q_index: 1
+     * status: "CreateAccount"
+     * user_id: "DcMNnhN7meZ7hmSr4"
+     * username: "James"
+     * path:  []
+     *
+     * = username:   "Влад"
+     * = teacher:    "jn"
+     * = d_code:     "d9Uvl"
+     * + q_code:     "0381"
+     * + user_id:    "BqKkMjjBSRzedasyT"
+     * + group_id:   "PWwknSiHCGmsivSXg"
+     * + newAccount: true
+     * + path:       []
+     *
+     * // Not needed in the return value
+     * = language:   "en-GB"
+     * = native:     "ru"
+     * + q_color:    "#33cc60"
+     * + q_index:    1
+     * + logged_in:   []
+     */
 
     const notNeeded = [
       "language"
@@ -102,11 +103,12 @@ export default class CreateAccount {
       // TODO: Find a gap in the index numbers
 
     } else {
-      // TODO: We can't have more than 9999 unique q_codes. Find the
-      // User with a name different from this.accountData.username
-      // who logged in last the longest time ago, archive that User
-      // record and reuse that User's q_index and q_code. The q_color
-      // will be reset below.
+      /* TODO: We can't have more than 9999 unique q_codes. Find the
+       * User with a name different from this.accountData.username
+       * who logged in last the longest time ago, archive that User
+       * record and reuse that User's q_index and q_code. The q_color
+       * will be reset below.
+       */
     }
 
     q_color = hsl2hex(hue, this.saturation, this.luminosity)
@@ -118,8 +120,9 @@ export default class CreateAccount {
 
 
   createUser() {
-    const {
+    let {
       username
+    , fullname
     , native
     , q_index
     , q_code
@@ -127,8 +130,13 @@ export default class CreateAccount {
     , d_code
     } = this.accountData
 
+    if (!fullname) {
+      fullname = username
+    }
+
     const fields = {
       username
+    , fullname
     , native
     , q_index
     , q_code

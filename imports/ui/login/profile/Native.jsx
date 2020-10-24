@@ -25,6 +25,10 @@ const { UIText } = collections
 
 
 
+const timeOutDelay = 1000 // ms
+
+
+
 class Native extends Component {
   constructor(props) {
     super(props)
@@ -150,7 +154,10 @@ class Native extends Component {
       // The UIText collection has been reset while a visitor is at
       // this view. Return to the Splash screen until the collection
       // is repopulated
-      setTimeout(() => this.callback({ reset: true }), 0)
+      const timeOut =setTimeout(
+        () => this.callback({ reset: true }
+      ), 0)
+      // console.log("Native getSelected timeOut", timeOut)
       return -1
     }
   }
@@ -270,13 +277,15 @@ class Native extends Component {
   componentDidMount(delay) {
     // HACK: Not all images may have been loaded from the server, so
     // let's wait a little before we scrollIntoView
-    setTimeout(this.scrollIntoView, 200)
+    const timeOut = setTimeout(this.scrollIntoView, 200)
+    // console.log("Native didMount timeOut", timeOut)
   }
 
 
   componentDidUpdate() {
     if (this.scrollFlag) {
-      setTimeout(this.scrollIntoView, 1000) // <<< HARD-CODED
+      const timeOut = setTimeout(this.scrollIntoView, timeOutDelay)
+      // console.log("Native didUpdate timeOut", timeOut)
       this.scrollFlag = false
     }
   }

@@ -31,16 +31,12 @@ export default class JoinGroup {
      * }
      */
 
-    let {user_id, d_code, teacher, group_id, language } = accountData
-    if (teacher) {
-      const result = this.groupWithThisTeacher(user_id, teacher)
-      if (result.group_id) {
-        group_id = result.group_id
-      }
-      if (result.language) {
-        language = result.language
-      }
-    }
+    let {
+      user_id
+    , d_code
+    } = accountData
+
+    const { group_id, language } = this.getGroupAndLang(accountData)
 
     if (group_id) {
       // The user might have chosen a different group from last time
@@ -73,6 +69,83 @@ export default class JoinGroup {
   }
 
 
+  getGroupAndLang(accountData) {
+    let {
+      language
+    , group_id
+
+    , group_name
+    , user_id
+    , teacher
+    } = accountData
+
+    let result = {}
+
+    if (group_name) {
+      result = this.groupWithThisName(user_id, group_name)
+    } else if (teacher) {
+      result = this.groupWithThisTeacher(user_id, teacher)
+    }
+
+    if (result.group_id) {
+      group_id = result.group_id
+    }
+    if (result.language) {
+      language = result.language
+    }
+
+    return { group_id, language }
+  }
+
+
+  groupWithThisName(user_id, name) {
+    const select = { name }
+    let options = {
+      fields: {
+        language: 1
+      , members: 1
+      }
+    }
+
+    let result = Group.findOne(select, options) || {}
+
+    // console.log(
+    //   "result", result, `\ndb.group.findOne(
+    //     ${JSON.stringify(select)} ${options && options.fields ? `
+    //   , ${JSON.stringify(options.fields)}` : ""}
+    //   )`
+    // )
+
+    const {
+      _id: group_id
+    , language
+    , members
+    } = result
+
+    if (members && members.indexOf(user_id) < 0) {
+      options = {
+        $push: {
+          members: {
+            $each: [ user_id ]
+          , $position: 1
+          }
+        }
+      }
+
+      result = Group.update(select, options)
+      // console.log(
+      //   "Add", user_id, "to Group", name
+      // , `db.group.findOne({${name}},{members: 1})`
+      // )
+    }
+
+    return {
+      group_id
+    , language
+    }
+  }
+
+
   groupWithThisTeacher(user_id, teacher) {
     const select = {
       members: {
@@ -83,16 +156,28 @@ export default class JoinGroup {
       , $size: 2
       }
     }
-    const project = {
+    const options = {
       fields: {
         language: 1
       }
     }
 
-    const { _id, language } = (Group.findOne(select, project) || {})
+    const result = Group.findOne(select, options) || {}
+
+    console.log(
+      "result", result, `\ndb.group.findOne(
+        ${JSON.stringify(select)} ${options && options.fields ? `
+      , ${JSON.stringify(options.fields)}` : ""}
+      )`
+    )
+
+    const {
+      _id: group_id
+    , language
+    } = result
 
     return {
-      group_id: _id
+      group_id
     , language
     }
   }

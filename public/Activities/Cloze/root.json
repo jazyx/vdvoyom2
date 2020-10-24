@@ -1,0 +1,23 @@
+{
+	"name": {
+		"en": "Cloze",
+		"fr": "Cloze",
+		"ru": "Заполнить"
+	},
+	"description": {
+		"en": "Type the right word in the blank space.",
+		"fr": "Combler le trou avec le mot approprié.",
+		"ru": "Заполните пробел правильным словом."
+	},
+	"icon": {
+		"icons": [
+			"en.jpg",
+			"fr.jpg",
+			"ru.jpg"
+		],
+		"src": "/Activities/Cloze/icon/^0"
+	},
+	"path": "/Cloze",
+	"modal": false,
+	"_id": "YwuvAWLnbfotXdFwN"
+}

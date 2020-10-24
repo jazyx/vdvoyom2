@@ -49,9 +49,11 @@ class Items extends Component{
       const active = index === slideIndex
       const ref = active ? this.selected : undefined
 
+      // console.log("Menu item.key:", item.key)
+
       if (item.menu) {
         return <StyledShowItem
-          key={item._id}
+          key={item.key}
           onMouseUp={onMouseUp}
           active={active}
           ref={ref}
@@ -275,6 +277,7 @@ export default class Menu extends Component {
     if (event && event.type === "touchstart") {
       // Prevent the mouseup from firing right behind
       this.timeout = setTimeout(() => this.timeout = 0, 300)
+      // console.log("Show menu closeMenu timeout", this.timeOut)
     } else if (this.timeout) {
       return
     }
@@ -287,7 +290,8 @@ export default class Menu extends Component {
       // close was on the Icon
 
       this.ignoreOpen = true
-      setTimeout(() => this.ignoreOpen = false, 100)
+      const timeOut = setTimeout(() => this.ignoreOpen = false, 100)
+      // console.log("Show menu closeMenu timeout", timeOut)
 
       const listener = this.closeMenu
       document.body.removeEventListener("touchstart", listener,true)
