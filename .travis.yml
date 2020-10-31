@@ -26,7 +26,7 @@ before_script:
 
 # Install dependencies
 # - npm install -g eslint coveralls codecov.io codacy-coverage
-  - meteor npm install
+#  - meteor npm install
 
 
 directories:
@@ -37,7 +37,7 @@ directories:
 #   - xvfb
 
 script:
-  - meteor npm test
+  # - meteor npm test
   # - sed 's/packages\/meteor-coverage\///' someapp/.coverage/lcov.info | coveralls || true # ignore coveralls error
   # - sed 's/packages\/meteor-coverage\///' someapp/.coverage/lcov.info | codecov || true # ignore codecov error
   # - sed 's/packages\/meteor-coverage\///' someapp/.coverage/lcov.info | codacy-coverage || true # ignore codacy error
