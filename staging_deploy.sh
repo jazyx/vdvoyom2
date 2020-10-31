@@ -4,6 +4,7 @@
 user=meteor
 group='www-data'
 folder=/var/www/jazyx/staging/
+npm_path=/home/meteor/.nvm/versions/node/v12.16.2/bin/
 mongo_flag=run_mongo
 ### HARD-CODED >>>
 
@@ -74,7 +75,7 @@ sudo -u $user -H bash -l << HERE
 echo -n "Execute code as user "; whoami
 cd bundle/programs/server
 echo -n "Install package at "; pwd
-npm install --production > /dev/null 2>&1
+${npm_path}npm install --production > /dev/null 2>&1
 HERE
 
 echo "Return to sudo to delete package.tar.gz"

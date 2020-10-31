@@ -7,7 +7,7 @@
  * > Which group this user should be assigned to
  * > What page and data is associated with this group. (If no page
  *   is given then the Activity selection page should be shown)
- *   
+ * 
  * This information may be gathered from 3 different places:
  * 
  * 1. The URL
@@ -128,7 +128,7 @@ class StartUpSingleton {
     // console.log(
     //   "this.context"
     // , JSON.stringify(this.context, null, "  ")
-    // )  
+    // ) 
     // console.log(
     //   "this.accountData"
     // , JSON.stringify(this.accountData, null, "  ")
@@ -215,7 +215,7 @@ class StartUpSingleton {
     , vo:      navigator.language || navigator.userLanguage
     , teacher: "none"
     }
-    
+ 
     const overrides = {
       auto_login: true
     }
@@ -234,7 +234,7 @@ class StartUpSingleton {
     //   "params"
     // , JSON.stringify(params, null, "  ")
     // )
-    
+ 
 
 
     return

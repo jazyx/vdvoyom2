@@ -163,7 +163,7 @@ class CreateJSON {
       const ext = path.extname(file).toLowerCase()
       return !(this.imageTypes.indexOf(ext) < 0)
     }
-    
+ 
 
     const folderPath = path.join(this.parentFolder, folderName)
     let contents = fs.readdirSync(folderPath)

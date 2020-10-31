@@ -3,7 +3,7 @@
 
 , "as_is": {
     "folder": "img/teachers/"
-  , "version": 4
+  , "version": 5
   }
 
 , "script": [
@@ -32,6 +32,11 @@
       , "en": "Learn Russian with Anastacia"
       , "fr": "Apprendre le russe avec Anastacia"
       }
+    , "welcome": {
+        "en": "Hi ^0!\nThis is ^1. Welcome!"
+      , "fr": "Bonjour ^0 !\nC'est ^1 qui vous écrit. À bientôt !"
+      , "ru": "Привет ^0!\nЭто ^1. Добро пожаловать!"       
+      }
     , "schools": [
         "jazyx"
       ]
@@ -50,11 +55,38 @@
       , "fr": "Apprendre l'anglais avec James"
       , "ru": "Учить английский с Джеймсом"
       }
+    , "welcome": {
+        "en": "Hi ^0!\nThis is ^1. Welcome!"
+      , "fr": "Bonjour ^0 !\nC'est ^1 qui vous écrit. À bientôt !"
+      , "ru": "Привет ^0!\nЭто ^1. Добро пожаловать!"       
+      }
     , "schools": [
         "jazyx"
       , "prolangue"
       ]
     , "status": "admin"
+    }
+  , { "id": "sv"
+    , "file": "sv.jpg"
+    , "name": {
+         "latn": "Svetlana"
+       , "cyrl": "Светлана"
+       }
+    , "language": "en"
+    , "script": "latn"
+    , "with": {
+        "en": "Learn English with Svetlana"
+      , "fr": "Apprendre l'anglais avec Svetlana"
+      , "ru": "Учить английский Светланой"
+      }
+    , "welcome": {
+        "en": "Hi ^0!\nThis is ^1. Welcome!"
+      , "ru": "Привет ^0!\nЭто ^1. Добро пожаловать!"       
+      }
+    , "schools": [
+        "prolangue"
+      ]
+    , "status": "teacher"
     }
   , { "id": "ml"
     , "file": "ml.jpg"
@@ -66,12 +98,16 @@
     , "script": "latn"
     , "with": {
         "fr": "Apprendre le français avec Michaël"
-      , "ru": "Учить английский с Микаэлем"
+      , "ru": "Учить французский с Микаэлем"
+      }
+    , "welcome": {
+        "fr": "Bonjour ^0 !\nC'est ^1 qui vous écrit. À bientôt !"
+      , "ru": "Привет ^0!\nЭто ^1. Добро пожаловать!"       
       }
     , "schools": [
-        "perso"
+        "trial"
       ]
-    , "status": "user"
+    , "status": "teacher"
     }
   ]
 }

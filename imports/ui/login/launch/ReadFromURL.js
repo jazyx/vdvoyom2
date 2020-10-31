@@ -7,14 +7,14 @@
  * Use:
  *
  *   const params = new ReadFromURL()
- *   
+ * 
  * Note: the call returns an object, not an instance of the class.
  * 
  * 
  * The URL has the following format:
  * 
  *   https://sub.domain.com/shortcut?flag&key=value
- *   
+ * 
  *   shortcut: This should be an _id for a doc in the Shortcut
  *             collection. It may represent a complete query
  *             (flag&key=value) or just the name of a school which
@@ -25,12 +25,12 @@
  *             Shortcuts cannot be read until the Shortcut collection
  *             is available, so this low-priority data source is in
  *             fact the last to be used.
- *   
+ * 
  *   flag:     Flags are keys with no corresponding value. If present
  *             their value is considered to be true, if absent: false.
- *             
+ * 
  *             Expected flags:
- *             
+ * 
  *             anon:  creates temporary User and Group documents
  *                    which are destroyed when the session ends.
  *                    Visitor has no access to a teacher or other
@@ -42,14 +42,14 @@
  *             join:
  *             staff: 
  *             admin:
- *             
+ * 
  *             If a value other than "true" is given to a key with 
  *             one of these flags, the value "true" will override the
- *             value.  
+ *             value. 
  * 
  *   key:      The following values can be set, taking priority over
  *             all other sources for these values¹:
- *             
+ * 
  *             user  - User.name
  *             pin   - User.pin
  *             vo    - User.native
@@ -59,13 +59,13 @@
  *             path  - Collection | /Activity/folder/choice 
  *             index - initial index into path
  *             tag   - tag for records in Collection
- *             
+ * 
  *             [data]- all other key/value pairs are assembled into a
  *                     one-level data object 
  *
  *             ¹ If the "anon" flag is set, group and pin will be
  *               ignored
- *               
+ * 
  * The URL may return all the data needed to launch the app, or it may
  * provide nothing at all. Gaps in the data may be filled from:
  * 
@@ -116,12 +116,12 @@ export default class ReadFromURL {
    * shortcut. For example...
    * 
    *   schoolX/pageY
-   *   
+   * 
    * ... might evoke shortcuts for:
    * 
    *   ?school=bestSchoolEver&lang=en-GB   // en-GB will be
    *   ?page=Activity&tag=task&lang=fr     // overwritten by fr
-   *   
+   * 
    * Normally, each shortcut will add new information, but if a param
    * with a different value appears again in a later shortcut (such
    * as `lang=fr` in the example above), its value will overwrite 
@@ -141,7 +141,7 @@ export default class ReadFromURL {
       /// HACK >>>
 
       const { query } = Shortcut.findOne({ _id }, options) || {}
-      return query    
+      return query 
     }
 
     const shortcut = pathName.split("/")

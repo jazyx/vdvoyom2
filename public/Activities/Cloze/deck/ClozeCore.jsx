@@ -219,7 +219,7 @@ export default class Cloze extends FluencyCore {
 
   /*  Prepares to display the `right` answer on the next render in
    *  front of the input field. Any further input will make it fade.
-   *  
+   * 
    *  May be called:
    *  • When a phrase is first displayed
    *  • When the user presses the Reveal button
@@ -227,7 +227,7 @@ export default class Cloze extends FluencyCore {
    *      - While input field is empty, in Submit mode:
    *      - After an error in submission
    *      - After a pause in input after an error in submission
-   *    
+   * 
    *    > In autoComplete mode
    *      - At any time
    *

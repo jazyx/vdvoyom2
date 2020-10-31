@@ -58,7 +58,7 @@ export default class Tracker{
     , activity
     , data
     , active
-    
+ 
     , isMaster
     , isTeacher
 

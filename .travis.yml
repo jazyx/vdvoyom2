@@ -1,6 +1,21 @@
+# sudo: required
+
 language: node_js
+
+# addons:
+#   chrome: stable
+
 node_js:
 - "12.16"
+
+cache:
+#   directories:
+#     - $HOME/.meteor
+#     - $HOME/.npm
+
+# before_cache:
+#   - rm -f $HOME/.meteor/log/*.log
+
 before_script:
 # Install meteor
 - curl https://install.meteor.com | /bin/sh
@@ -8,6 +23,22 @@ before_script:
 # We can then use the faster container infrastructure - http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 - export PATH=$HOME/.meteor:$PATH
 - npm install -g spacejam
-cache:
+
+# Install dependencies
+# - npm install -g eslint coveralls codecov.io codacy-coverage
+  - meteor npm install
+
+
 directories:
 - node_modules
+
+
+# services:
+#   - xvfb
+
+script:
+  - meteor npm test
+  # - sed 's/packages\/meteor-coverage\///' someapp/.coverage/lcov.info | coveralls || true # ignore coveralls error
+  # - sed 's/packages\/meteor-coverage\///' someapp/.coverage/lcov.info | codecov || true # ignore codecov error
+  # - sed 's/packages\/meteor-coverage\///' someapp/.coverage/lcov.info | codacy-coverage || true # ignore codacy error
+  # - meteor npm run lint || true # ignore eslint error
