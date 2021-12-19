@@ -1,4 +1,4 @@
-FROM node:12.6
+FROM node:12.22.7
 
 ENV METEOR_ALLOW_SUPERUSER=true
 ENV ROOT_URL="http://localhost:3000"
